@@ -63,7 +63,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
         self.viewModel = Scene1ViewModel(dataModel: document.dataModel, viewController: self)
 
         // Registration
-        self.viewModel?.writeActionAndRefresh(owner: self) {
+        self.viewModel?.updateActionAndRefresh(owner: self) {
             self.viewModel?.register(target: self,
                                      registrationDesc: Scene1ViewController.refreshTextFieldREG)
 

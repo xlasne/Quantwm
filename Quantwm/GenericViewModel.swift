@@ -70,26 +70,26 @@ class GenericViewModel: NSObject {
         dataRepositoryObserver.refreshUI()
     }
 
-    func readOnlyAction(owner owner: NSObject?, @noescape handler: ()->())
+    func loadAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        dataRepositoryObserver.readOnlyAction(owner: owner,
+        dataRepositoryObserver.loadAction(owner: owner,
                                               handler: handler)
     }
 
-    func readOnlyActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+    func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
     {
-        return dataRepositoryObserver.readOnlyActionWithReturn(owner: owner,
+        return dataRepositoryObserver.loadActionWithReturn(owner: owner,
                                                                handler: handler)
     }
     
-    func writeAction(owner owner: NSObject?, @noescape handler: ()->())
+    func updateAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        dataRepositoryObserver.writeAction(owner: owner,
+        dataRepositoryObserver.updateAction(owner: owner,
                                            handler: handler)
     }
 
-    func writeActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
-        dataRepositoryObserver.writeActionAndRefresh(owner: owner,
+    func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
+        dataRepositoryObserver.updateActionAndRefresh(owner: owner,
                                                      handler: handler)
     }
 

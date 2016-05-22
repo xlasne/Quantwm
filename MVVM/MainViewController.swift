@@ -33,7 +33,7 @@ class MainViewController: NSViewController {
         self.document = document
         self.viewModel = MainViewModel(dataModel: document.dataModel, viewController: self)
 
-        self.viewModel?.writeActionAndRefresh(owner: self) {
+        self.viewModel?.updateActionAndRefresh(owner: self) {
             self.viewModel?.register(target: self,
                                      registrationDesc: MainViewController.refreshUIREG)
         }
@@ -55,7 +55,7 @@ class MainViewController: NSViewController {
 
     func refreshUI()
     {
-        // Enclosed in a Read-Write transaction when called by refreshUIREG
+        // Enclosed in a Update transaction when called by refreshUIREG
         self.displayTopView()
         self.displayLeftView()
         self.displayRightView()

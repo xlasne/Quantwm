@@ -13,19 +13,19 @@ struct RWContext: Equatable, CustomDebugStringConvertible
 {
     enum RW: Int
     {
-        case ReadOnly
-        case ReadWrite
+        case Loading
+        case Update
         case Refresh
     }
     let rw : RW
     weak var owner: NSObject?
 
-    var isRW: Bool {
-        return self.rw == RW.ReadWrite
+    var isUpdate: Bool {
+        return self.rw == RW.Update
     }
 
-    var isRO: Bool {
-        return self.rw == RW.ReadOnly
+    var isLoading: Bool {
+        return self.rw == RW.Loading
     }
 
     var isRefresh: Bool {
@@ -36,13 +36,13 @@ struct RWContext: Equatable, CustomDebugStringConvertible
         self.rw = rw
         self.owner = owner
     }
-    init(ReadOnlyWithOwner owner:NSObject?) {
-        self.rw = RW.ReadOnly
+    init(LoadingWithOwner owner:NSObject?) {
+        self.rw = RW.Loading
         self.owner = owner
     }
 
-    init(ReadWriteWithOwner owner:NSObject?) {
-        self.rw = RW.ReadWrite
+    init(UpdateWithOwner owner:NSObject?) {
+        self.rw = RW.Update
         self.owner = owner
     }
 
@@ -53,10 +53,10 @@ struct RWContext: Equatable, CustomDebugStringConvertible
 
     var debugDescription: String {
         switch rw {
-        case .ReadOnly:
-            return "RO - \(owner)"
-        case .ReadWrite:
-            return "RW - \(owner)"
+        case .Loading:
+            return "Loading - \(owner)"
+        case .Update:
+            return "Update - \(owner)"
         case .Refresh:
             return "Refresh"
         }
@@ -73,7 +73,6 @@ func ==(lhs: RWContext, rhs: RWContext) -> Bool {
 class DataContext {
 
     var rwContextStack: [RWContext] = []
-    var refreshUIHasBeenCalledOnceWithTheRootReadOnlyTransaction = false
     var readLevel: Int = -1
 
     var rootContext : RWContext? {
@@ -84,19 +83,19 @@ class DataContext {
         return rootContext?.isRefresh ?? false
     }
 
-    var isRootRW: Bool {
-        return rootContext?.isRW ?? false
+    var isRootUpdate: Bool {
+        return rootContext?.isUpdate ?? false
     }
 
-    var isRootRO: Bool {
-        return rootContext?.isRO ?? false
+    var isRootLoading: Bool {
+        return rootContext?.isLoading ?? false
     }
 
     // Rule 1: Push/Pop context should be recursive
-    // Rule 2: It is forbidden to push ReadWrite context while on Refresh or RO root stack
+    // Rule 2: It is forbidden to push Update context while on Refresh or Loading root stack
     // Rule 3: Refresh context shall be root stack
-    var isReadWriteAllowed: Bool {
-        return rwContextStack.isEmpty || isRootRW
+    var isUpdateAllowed: Bool {
+        return rwContextStack.isEmpty || isRootUpdate
     }
 
     var isRefreshAllowed: Bool {
@@ -106,13 +105,13 @@ class DataContext {
     func pushContext(rwContext: RWContext) -> RWContext
     {
         switch rwContext.rw {
-        case .ReadOnly:
+        case .Loading:
             break
         case .Refresh:
             assert(rwContextStack.isEmpty,"Error: Refresh context can only be pushed on an empty stack")
-        case .ReadWrite:
-            assert(!isRootRefresh,"Error: ReadWrite context can not be pushed on Refresh Root Stack")
-            assert(!isRootRO,"Error: ReadWrite context can not be pushed on Read Only Root Stack")
+        case .Update:
+            assert(!isRootRefresh,"Error: Update context can not be pushed on Refresh Root Stack")
+            assert(!isRootLoading,"Error: Update context can not be pushed on Loading Root Stack")
         }
         rwContextStack.append(rwContext)
         return rwContext

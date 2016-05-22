@@ -45,8 +45,7 @@ class DataRepositoryObserver: NSObject {
     private var dataContext: DataContext = DataContext()
 
     // If refreshUI() is called during a refresh transaction it is ignored
-    // If refreshUI() is called during a RO or RW transaction it postponned to the end of the transaction
-    // I keep it in case transaction are public again
+    // If refreshUI() is called during a Loading or Update transaction it postponned to the end of the transaction
     var callRefreshOnEmptyStack = false
 
     // MARK: - Registration - Public
@@ -279,21 +278,21 @@ extension DataRepositoryObserver
             }
         }
 
-        // First, perform Read-Write transaction on configuration Register
+        // First, perform Update transaction on configuration Register
         if !modifiedDataSetNeedingRefreshArray.isEmpty
         {
 
-            // push Read-Write context
-            let outerRwContext = RWContext(ReadWriteWithOwner: self)
-            dataContext.pushContext(outerRwContext)
+            // push Update context
+            let outerUpdateContext = RWContext(UpdateWithOwner: self)
+            dataContext.pushContext(outerUpdateContext)
 
             while !modifiedDataSetNeedingRefreshArray.isEmpty
             {
                 let keySetObserver = modifiedDataSetNeedingRefreshArray.removeFirst()
 
                 if let target = keySetObserver.target {
-                    let rwContext = RWContext(ReadWriteWithOwner: target)
-                    dataContext.pushContext(rwContext)
+                    let updateContext = RWContext(UpdateWithOwner: target)
+                    dataContext.pushContext(updateContext)
 
                     // Evaluate the keypathObserver associated to it
                     // As any write are possible, readAndCompareChain must be redone for each
@@ -308,10 +307,10 @@ extension DataRepositoryObserver
                         }
                     }
                     keySetObserver.triggerIfDirty(dataUsage, dataDict: self.keypathObserverDict)
-                    dataContext.popContext(rwContext)
+                    dataContext.popContext(updateContext)
                 }
             }
-            dataContext.popContext(outerRwContext)
+            dataContext.popContext(outerUpdateContext)
         }
 
 
@@ -329,14 +328,14 @@ extension DataRepositoryObserver
             return k1.schedulingLevel < k2.schedulingLevel
         }
 
-        // Then, perform Read-Only transaction on normal Registred
+        // Then, perform Loading transaction on normal Registred
 
         while !modifiedDataSetNeedingRefreshArray.isEmpty
         {
             let keySetObserver = modifiedDataSetNeedingRefreshArray.removeFirst()
 
             if let target = keySetObserver.target {
-                let roContext = RWContext(ReadOnlyWithOwner: target)
+                let roContext = RWContext(LoadingWithOwner: target)
                 dataContext.pushContext(roContext)
 
                 // Evaluate the keypathObserver associated to it
@@ -403,18 +402,18 @@ extension DataRepositoryObserver
 extension DataRepositoryObserver
 {
 
-    private func pushReadOnlyContext(owner: NSObject?) -> RWContext
+    private func pushLoadingContext(owner: NSObject?) -> RWContext
     {
-        let roContext = RWContext(ReadOnlyWithOwner: owner)
+        let roContext = RWContext(LoadingWithOwner: owner)
         dataContext.pushContext(roContext)
         return roContext
     }
 
-    private func pushReadWriteContext(owner: NSObject?) -> RWContext
+    private func pushUpdateContext(owner: NSObject?) -> RWContext
     {
-        let rwContext = RWContext(ReadWriteWithOwner:owner)
-        dataContext.pushContext(rwContext)
-        return rwContext
+        let updateContext = RWContext(UpdateWithOwner:owner)
+        dataContext.pushContext(updateContext)
+        return updateContext
     }
 
     private func popContext(rwContext: RWContext)
@@ -425,49 +424,49 @@ extension DataRepositoryObserver
         }
     }
 
-    func readOnlyAction(owner owner: NSObject?, @noescape handler: ()->())
+    func loadAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        let readContext = self.pushReadOnlyContext(owner)
+        let loadContext = self.pushLoadingContext(owner)
         handler()
-        self.popContext(readContext)
+        self.popContext(loadContext)
     }
 
-    func readOnlyActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+    func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
     {
-        let readContext = self.pushReadOnlyContext(owner)
-        defer { self.popContext(readContext) } // will be called after handler execution ;)
+        let loadContext = self.pushLoadingContext(owner)
+        defer { self.popContext(loadContext) } // will be called after handler execution ;)
         return handler()
     }
 
-    func writeAction(owner owner: NSObject?, @noescape handler: ()->())
+    func updateAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        let writeContext = self.pushReadWriteContext(owner)
+        let writeContext = self.pushUpdateContext(owner)
         handler()
         self.popContext(writeContext)
     }
 
-    func writeActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->())
+    func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->())
     {
-        let writeContext = self.pushReadWriteContext(owner)
+        let writeContext = self.pushUpdateContext(owner)
         handler()
         self.callRefreshOnEmptyStack = true
         self.popContext(writeContext)
     }
 
-    // The viewModelInputProcessinghandler shall do the ReadWrite access + RefreshUI
-    func writeActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
+    // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
+    func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
     {
         if !dataContext.isRootRefresh {
-            print("writeActionIfPossibleElseDispatch scheduled immediately")
-            let writeContext = self.pushReadWriteContext(owner)
+            print("updateActionIfPossibleElseDispatch scheduled immediately")
+            let writeContext = self.pushUpdateContext(owner)
             escapingHandler()
             self.popContext(writeContext)
         } else {
-            // Write is not allowed. Perform this write later on the main thread
+            // Update is not allowed. Perform this update later on the main thread
             dispatch_async(dispatch_get_main_queue()) {_ in
                 // Modifications are performed while on the main thread which serialize update
-                print("writeActionIfPossibleElseDispatch dispatch begin")
-                let writeContext = self.pushReadWriteContext(owner)
+                print("updateActionIfPossibleElseDispatch dispatch begin")
+                let writeContext = self.pushUpdateContext(owner)
                 escapingHandler()
                 self.popContext(writeContext)
             }
