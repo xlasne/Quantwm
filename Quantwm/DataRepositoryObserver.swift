@@ -1,5 +1,5 @@
 //
-//  DataRepositoryObserver.swift
+//  RepositoryObserver.swift
 //  QUANTWM
 //
 //  Created by Xavier on 18/04/16.
@@ -22,7 +22,7 @@ struct RootNode {
     }
 }
 
-class DataRepositoryObserver: NSObject {
+class RepositoryObserver: NSObject {
 
     // Dictionary of the root nodes
     // Root nodes are the first component of keypath, the path anchor
@@ -55,7 +55,7 @@ class DataRepositoryObserver: NSObject {
     // Register this node as a root node, which can be uniquely identified by its rootDescription.propKey
     // This node does not have to remember this monitoring
     // On node deletion, this registration will end
-    // To unregister root, call, dataRepositoryObserver.unregisterRootNode(property: PropertyDescription)
+    // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
     func registerRoot(associatedObject associatedObject: MonitoredObject, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
     {
         let rootNode = RootNode(rootObject: associatedObject,
@@ -156,7 +156,7 @@ class DataRepositoryObserver: NSObject {
             (writeProperty: PropertyDescription) in
             let writeLevel = writeProperty.level
             if writeLevel <= readLevel {
-                assert(false, "DataRepositoryObserver: Registration of \(name): The writeProperty \(writeProperty.description) has a level of \(writeLevel), which is not strictly greater than the readLevel \(readLevel) of keypath \(keypathWithMaxLevel?.keypath) and level\(keypathWithMaxLevel?.levelDescription)")
+                assert(false, "RepositoryObserver: Registration of \(name): The writeProperty \(writeProperty.description) has a level of \(writeLevel), which is not strictly greater than the readLevel \(readLevel) of keypath \(keypathWithMaxLevel?.keypath) and level\(keypathWithMaxLevel?.levelDescription)")
             }
         }
 
@@ -239,7 +239,7 @@ class DataRepositoryObserver: NSObject {
 
 // MARK: - Refresh UI
 
-extension DataRepositoryObserver
+extension RepositoryObserver
 {
 
     func refreshUI() {
@@ -399,7 +399,7 @@ extension DataRepositoryObserver
 
 // MARK: - Transaction Management - Private
 
-extension DataRepositoryObserver
+extension RepositoryObserver
 {
 
     private func pushLoadingContext(owner: NSObject?) -> RWContext

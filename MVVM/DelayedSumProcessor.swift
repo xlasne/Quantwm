@@ -26,14 +26,14 @@ class DelayedSumProcessor: NSObject
 
     deinit
     {
-        self.dataModel?.dataRepositoryObserver.displayUsageForOwner(self)
+        self.dataModel?.repositoryObserver.displayUsageForOwner(self)
     }
 
     func register()
     {
         let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
         let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2K])
-        self.dataModel?.dataRepositoryObserver.register(
+        self.dataModel?.repositoryObserver.register(
             target: self,
             selector: #selector(DelayedSumProcessor.startProcessing),
             keypathDescriptionSet: Set([obs1,obs2]),
@@ -47,7 +47,7 @@ class DelayedSumProcessor: NSObject
                 // No locking needed.
                 // Modifications are performed while on the main thread which serialize update
                 self?.dataModel?.sumOfNumber = numVal
-                self?.dataModel?.dataRepositoryObserver.refreshUI()
+                self?.dataModel?.repositoryObserver.refreshUI()
             }
         }
         

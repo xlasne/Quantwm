@@ -13,8 +13,8 @@ class Document: NSDocument {
 
     var dataModel: DataModel
 
-    var dataRepositoryObserver: DataRepositoryObserver {
-        return self.dataModel.dataRepositoryObserver
+    var repositoryObserver: RepositoryObserver {
+        return self.dataModel.repositoryObserver
     }
 
     override init() {

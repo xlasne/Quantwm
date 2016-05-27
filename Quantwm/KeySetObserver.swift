@@ -47,7 +47,7 @@ class KeySetObserver: NSObject {
     let type: Any.Type  // used to detect multiple registration with the same type + selector
 
     // The set of keypath triggering this action
-    // DataRepositoryObserver builds and updates the keypathObserverDict:[String : KeypathObserver] indexed by keypath
+    // RepositoryObserver builds and updates the keypathObserverDict:[String : KeypathObserver] indexed by keypath
     // This set define the scheduling level of the KeySetObserver
     var keypathSet: Set<String>
     let schedulingLevel: Int

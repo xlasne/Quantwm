@@ -18,17 +18,17 @@ import Foundation
 
 import Foundation
 
-class GenericViewModel: NSObject {
+class GenericViewModel : NSObject {
 
     unowned var dataModel: DataModel
-    unowned var dataRepositoryObserver : DataRepositoryObserver
+    unowned var repositoryObserver : RepositoryObserver
     unowned var contextMgr  : ContextMgr
     weak var owner: NSObject?
 
     init(dataModel : DataModel, owner: NSObject)
     {
         self.dataModel = dataModel
-        self.dataRepositoryObserver = dataModel.dataRepositoryObserver
+        self.repositoryObserver = dataModel.repositoryObserver
         self.contextMgr   = dataModel.contextMgr
         self.owner = owner
         super.init()
@@ -42,7 +42,7 @@ class GenericViewModel: NSObject {
                          writtenPropertySet: Set<PropertyDescription> = [],
                          maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
     {
-        self.dataRepositoryObserver.register(target: target,
+        self.repositoryObserver.register(target: target,
                                    selector: selector,
                                    keypathDescriptionSet: keypathDescriptionSet,
                                    name: name,
@@ -54,42 +54,42 @@ class GenericViewModel: NSObject {
                          registrationDesc: RegisterDescription,
                          name: String? = nil)
     {
-        self.dataRepositoryObserver.register(target: target,
+        self.repositoryObserver.register(target: target,
                                              registrationDesc: registrationDesc,
                                              name: name)
     }
 
     func unregisterAll(owner: NSObject) {
-        self.dataRepositoryObserver.displayUsageForOwner(owner)
-        self.dataRepositoryObserver.unregisterDataSetWithTarget(owner)
+        self.repositoryObserver.displayUsageForOwner(owner)
+        self.repositoryObserver.unregisterDataSetWithTarget(owner)
     }
 
-    // MARK: - Data Repository Observer wrappers
+    // MARK: - Repository Observer wrappers
     func refreshUI()
     {
-        dataRepositoryObserver.refreshUI()
+        repositoryObserver.refreshUI()
     }
 
     func loadAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        dataRepositoryObserver.loadAction(owner: owner,
+        repositoryObserver.loadAction(owner: owner,
                                               handler: handler)
     }
 
     func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
     {
-        return dataRepositoryObserver.loadActionWithReturn(owner: owner,
+        return repositoryObserver.loadActionWithReturn(owner: owner,
                                                                handler: handler)
     }
     
     func updateAction(owner owner: NSObject?, @noescape handler: ()->())
     {
-        dataRepositoryObserver.updateAction(owner: owner,
+        repositoryObserver.updateAction(owner: owner,
                                            handler: handler)
     }
 
     func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
-        dataRepositoryObserver.updateActionAndRefresh(owner: owner,
+        repositoryObserver.updateActionAndRefresh(owner: owner,
                                                      handler: handler)
     }
 

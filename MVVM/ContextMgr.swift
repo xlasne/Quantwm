@@ -82,7 +82,7 @@ class ContextMgr: NSObject, SwiftKVC, MonitoredObject
     init(dataModel: DataModel)
     {
         super.init()
-        dataModel.dataRepositoryObserver.registerRoot(
+        dataModel.repositoryObserver.registerRoot(
             associatedObject: self,
             changeCounter: self.changeCounter,
             rootDescription: ContextMgr.contextMgrK)

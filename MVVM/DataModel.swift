@@ -23,7 +23,7 @@ class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
     weak var document: Document!
 
     lazy var contextMgr: ContextMgr  = ContextMgr(dataModel: self)
-    let dataRepositoryObserver: DataRepositoryObserver
+    let repositoryObserver: RepositoryObserver
 
     static let dataModelK = RootDescriptor<DataModel>.key("dataModel")
     var changeCounter = ChangeCounter()
@@ -114,13 +114,13 @@ class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
 
     override init()
     {
-        self.dataRepositoryObserver = DataRepositoryObserver()
+        self.repositoryObserver = RepositoryObserver()
 
         self._number1 = 3
         self._number2 = 4
 
         super.init()
-        self.dataRepositoryObserver.registerRoot(
+        self.repositoryObserver.registerRoot(
             associatedObject: self,
             changeCounter: self.changeCounter,
             rootDescription: DataModel.dataModelK)
@@ -134,7 +134,7 @@ class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
         self.delayedSumProcessor.register()
         self.immediateSumProcessor.dataModel = self
         self.immediateSumProcessor.register()
-        self.dataRepositoryObserver.refreshUI()
+        self.repositoryObserver.refreshUI()
     }
 
     //MARK: NSCoding Initialization
@@ -145,12 +145,12 @@ class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
     }
 
     required init?(coder aDecoder: NSCoder) {
-        self.dataRepositoryObserver = DataRepositoryObserver()
+        self.repositoryObserver = RepositoryObserver()
         _number1 = CodingConverter<Int>.decode(aDecoder, propertyDescription: DataModel.number1K) ?? 100
         _number2 = CodingConverter<Int>.decode(aDecoder, propertyDescription: DataModel.number2K) ?? 200
 
         super.init()
-        self.dataRepositoryObserver.registerRoot(
+        self.repositoryObserver.registerRoot(
             associatedObject: self,
             changeCounter: self.changeCounter,
             rootDescription: DataModel.dataModelK)
