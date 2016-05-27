@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class MainViewModel: GenericViewModel
+class MainViewModel: GenericViewModel<DataModel>
 {
 
     // MARK: Interfaces
@@ -26,11 +26,11 @@ class MainViewModel: GenericViewModel
     }
 
     var leftViewPresent: Bool {
-        return self.contextMgr.observed.leftViewPresent
+        return self.dataModel.contextMgr.observed.leftViewPresent
     }
 
     var rightViewPresent: Bool {
-        return self.contextMgr.observed.rightViewPresent
+        return self.dataModel.contextMgr.observed.rightViewPresent
     }
 
 }

@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 
 
-class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
+class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject, RepositoryHolder
 {
 
     // MARK: Interfaces
@@ -24,6 +24,11 @@ class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject
 
     lazy var contextMgr: ContextMgr  = ContextMgr(dataModel: self)
     let repositoryObserver: RepositoryObserver
+
+    func getRepositoryObserver() -> RepositoryObserver
+    {
+        return repositoryObserver
+    }
 
     static let dataModelK = RootDescriptor<DataModel>.key("dataModel")
     var changeCounter = ChangeCounter()

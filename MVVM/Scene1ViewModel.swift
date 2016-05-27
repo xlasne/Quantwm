@@ -28,7 +28,7 @@
 import Foundation
 import AppKit
 
-class Scene1ViewModel: GenericViewModel
+class Scene1ViewModel: GenericViewModel<DataModel>
 {
     // Generic View Model
     init(dataModel : DataModel, viewController: Scene1ViewController)
@@ -49,7 +49,7 @@ class Scene1ViewModel: GenericViewModel
         {
             updateActionAndRefresh(owner: owner) {
                 dataModel.observedSelf.number1 = val
-                contextMgr.currentFocus = focus
+                dataModel.contextMgr.currentFocus = focus
             }
         } else {
             NSBeep()
@@ -59,14 +59,14 @@ class Scene1ViewModel: GenericViewModel
     func toggleLeftView()
     {
         updateActionAndRefresh(owner: owner) {
-            contextMgr.toggleLeftView()
+            dataModel.contextMgr.toggleLeftView()
         }
     }
 
     func toggleRightView()
     {
         updateActionAndRefresh(owner: owner) {
-            contextMgr.toggleRightView()
+            dataModel.contextMgr.toggleRightView()
         }
     }
 
@@ -102,7 +102,7 @@ class Scene1ViewModel: GenericViewModel
     }
 
     func getFocus() -> NSObject? {
-        let value = contextMgr.observed.currentFocus
+        let value = dataModel.contextMgr.observed.currentFocus
         return value
     }
 

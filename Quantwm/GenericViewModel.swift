@@ -8,28 +8,21 @@
 
 import Foundation
 
-//
-//  Generic View Model.swift
-//  Spiky
-//
-//  Created by Xavier on 08/05/16.
-//  Copyright © 2016 XL Software Solutions. All rights reserved.
-//
+protocol RepositoryHolder: class
+{
+    func getRepositoryObserver() -> RepositoryObserver
+}
 
-import Foundation
+class GenericViewModel<Model: RepositoryHolder> : NSObject {
 
-class GenericViewModel : NSObject {
-
-    unowned var dataModel: DataModel
+    unowned var dataModel: Model
     unowned var repositoryObserver : RepositoryObserver
-    unowned var contextMgr  : ContextMgr
     weak var owner: NSObject?
 
-    init(dataModel : DataModel, owner: NSObject)
+    init(dataModel : Model, owner: NSObject)
     {
         self.dataModel = dataModel
-        self.repositoryObserver = dataModel.repositoryObserver
-        self.contextMgr   = dataModel.contextMgr
+        self.repositoryObserver = dataModel.getRepositoryObserver()
         self.owner = owner
         super.init()
     }

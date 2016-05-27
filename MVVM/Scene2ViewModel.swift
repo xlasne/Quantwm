@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-class Scene2ViewModel: GenericViewModel
+class Scene2ViewModel: GenericViewModel<DataModel>
 {
     // Generic View Model
     init(dataModel : DataModel, viewController: Scene2ViewController)
@@ -28,7 +28,7 @@ class Scene2ViewModel: GenericViewModel
                 {
                     self.dataModel.number2 = val
                 }
-                self.contextMgr.currentFocus = focus
+                self.dataModel.contextMgr.currentFocus = focus
             }
         } else {
             NSBeep()
@@ -37,13 +37,13 @@ class Scene2ViewModel: GenericViewModel
     
     func toggleImageColor() {
         updateActionAndRefresh(owner: owner) {
-            let color = self.contextMgr.imageColor
+            let color = dataModel.contextMgr.imageColor
             if color == NSColor.whiteColor() {
                 print("Switch color white to green")
-                self.contextMgr.imageColor = NSColor.greenColor()
+                self.dataModel.contextMgr.imageColor = NSColor.greenColor()
             } else {
                 print("Switch color green to white")
-                self.contextMgr.imageColor = NSColor.whiteColor()
+                self.dataModel.contextMgr.imageColor = NSColor.whiteColor()
             }
         }
     }
@@ -58,7 +58,7 @@ class Scene2ViewModel: GenericViewModel
     }
 
     func getFocus() -> NSObject? {
-        return self.contextMgr.observed.currentFocus
+        return dataModel.contextMgr.observed.currentFocus
     }
 
     //MARK: getValue2
@@ -97,6 +97,6 @@ class Scene2ViewModel: GenericViewModel
 
     func getColor() -> NSColor
     {
-        return self.contextMgr.observed.imageColor
+        return dataModel.contextMgr.observed.imageColor
     }
 }
