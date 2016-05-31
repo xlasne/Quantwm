@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 
 
-class DataModel : NSObject, NSCoding, SwiftKVC, MonitoredObject, RepositoryHolder
+class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
 {
 
     // MARK: Interfaces

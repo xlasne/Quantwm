@@ -8,14 +8,10 @@
 
 import Cocoa
 
-class TransientClass: SwiftKVC, MonitoredNode {
+class TransientClass: MonitoredNode {
 
     let changeCounter = ChangeCounter()
 
-    let properties: [PropertyDescription] = [TransientClass.arrayValueK,
-                                             TransientClass.intValueK,
-                                             TransientClass.transientValK]
-    
     static let transientValK = PropertyDescriptor<TransientClass,String>.key("_transientVal")
     var _transientVal = "Toto"
     var transientVal: String {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NodeStruct: MonitoredNode, SwiftKVC {
+struct NodeStruct: MonitoredStruct {
 
     let changeCounter = ChangeCounter()
 

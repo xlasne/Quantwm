@@ -67,18 +67,23 @@ enum GenericNode {
 
 
 
-protocol MonitoredObject: class, MonitoredNode  // class is required only to have weak pointers to object
+protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
 {
 }
 
-protocol MonitoredNode
+protocol MonitoredStruct: MonitoredNode
+{
+}
+
+
+protocol MonitoredNode: SwiftKVC
 {
     func getNodeChangeCounter() -> ChangeCounter
     func getChildArray<T>(property property: PropertyDescription) -> [T]
 }
 
 
-extension MonitoredNode where Self: SwiftKVC
+extension MonitoredNode
 {
     func getNodeChangeCounter() -> ChangeCounter
     {

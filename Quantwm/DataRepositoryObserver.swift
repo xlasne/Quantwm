@@ -11,10 +11,10 @@ import Foundation
 
 struct RootNode {
     weak var changeCounter: ChangeCounter?
-    weak var rootObject: MonitoredObject?
+    weak var rootObject: MonitoredClass?
     let keypath : String
 
-    init(rootObject: MonitoredObject, changeCounter: ChangeCounter, keypath : String)
+    init(rootObject: MonitoredClass, changeCounter: ChangeCounter, keypath : String)
     {
         self.rootObject = rootObject
         self.changeCounter = changeCounter
@@ -56,7 +56,7 @@ class RepositoryObserver: NSObject {
     // This node does not have to remember this monitoring
     // On node deletion, this registration will end
     // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-    func registerRoot(associatedObject associatedObject: MonitoredObject, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
+    func registerRoot(associatedObject associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
     {
         let rootNode = RootNode(rootObject: associatedObject,
                                 changeCounter: changeCounter,

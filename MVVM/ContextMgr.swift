@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 
 
-class ContextMgr: NSObject, SwiftKVC, MonitoredObject
+class ContextMgr: NSObject, MonitoredClass
 {
     // MARK: InterfacesMonitoredNode,
     static let contextMgrK = RootDescriptor<ContextMgr>.key("contextMgr")

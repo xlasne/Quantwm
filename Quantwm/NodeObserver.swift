@@ -61,7 +61,6 @@ class NodeObserver {
         guard let property = chain.first else { return nil }
         let reducedChain = Array(chain.dropFirst())
         let nextProperty = reducedChain.first
-//        assert(parent.dynamicType == self.propertyDesc.sourceType,"Error on NodeObserver type")
 
         let node = parent.getNodeChangeCounter()
         let foundNodes = parent.getChildArray(property: property)
