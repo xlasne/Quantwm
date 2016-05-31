@@ -2,7 +2,7 @@
 //  QuantwmOSXTests.m
 //  QuantwmOSXTests
 //
-//  Created by Xavier on 31/05/16.
+//  Created by Xavier Lasne on 31/05/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 

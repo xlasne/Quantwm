@@ -2,7 +2,7 @@
 //  Document.swift
 //  MVVM
 //
-//  Created by Xavier on 08/04/16.
+//  Created by Xavier Lasne on 08/04/16.
 //  Copyright © 2016 XL Software Solutions
 //
 

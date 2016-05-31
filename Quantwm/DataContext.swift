@@ -2,7 +2,7 @@
 //  DataContext.swift
 //  QUANTWM
 //
-//  Created by Xavier on 23/04/16.
+//  Created by Xavier Lasne on 23/04/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  DataUsage.swift
 //  QUANTWM
 //
-//  Created by Xavier on 15/04/16.
+//  Created by Xavier Lasne on 15/04/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 

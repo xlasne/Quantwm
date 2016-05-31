@@ -2,7 +2,7 @@
 //  RegisterDescription.swift
 //  QUANTWM
 //
-//  Created by Xavier on 19/05/16.
+//  Created by Xavier Lasne on 19/05/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 

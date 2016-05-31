@@ -2,7 +2,7 @@
 //  CodingConverter.swift
 //  Spiky
 //
-//  Created by Xavier on 26/04/16.
+//  Created by Xavier Lasne on 26/04/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 

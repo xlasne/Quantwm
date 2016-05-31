@@ -2,7 +2,7 @@
 //  PropertyDescriptionOption.h
 //  QUANTWM
 //
-//  Created by Xavier on 16/05/16.
+//  Created by Xavier Lasne on 16/05/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 
