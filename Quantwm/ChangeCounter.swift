@@ -19,7 +19,7 @@ import Foundation
 
 typealias NodeId = Int32
 
-class ChangeCounter: NSObject {
+public class ChangeCounter: NSObject {
 
     //MARK: Properties
 
@@ -38,7 +38,7 @@ class ChangeCounter: NSObject {
 
     //MARK: - Read / Write monitoring
 
-    func performedReadOnMainThread(property: PropertyDescription)
+public func performedReadOnMainThread(property: PropertyDescription)
     {
         let childKey = property.propKey
         if !NSThread.isMainThread() {
@@ -49,7 +49,7 @@ class ChangeCounter: NSObject {
         }
     }
 
-    func performedWriteOnMainThread(property: PropertyDescription)
+public  func performedWriteOnMainThread(property: PropertyDescription)
     {
         let childKey = property.propKey
         if !NSThread.isMainThread() {

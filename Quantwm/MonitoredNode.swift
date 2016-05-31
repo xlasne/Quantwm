@@ -67,25 +67,25 @@ enum GenericNode {
 
 
 
-protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
+public protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
 {
 }
 
-protocol MonitoredStruct: MonitoredNode
+public protocol MonitoredStruct: MonitoredNode
 {
 }
 
 
-protocol MonitoredNode: SwiftKVC
+public protocol MonitoredNode: SwiftKVC
 {
     func getNodeChangeCounter() -> ChangeCounter
     func getChildArray<T>(property property: PropertyDescription) -> [T]
 }
 
 
-extension MonitoredNode
+public extension MonitoredNode
 {
-    func getNodeChangeCounter() -> ChangeCounter
+    public func getNodeChangeCounter() -> ChangeCounter
     {
         if let nodeValue = self.KVC_valueForKeyPath("changeCounter") as? ChangeCounter
         {
@@ -95,7 +95,7 @@ extension MonitoredNode
         }
     }
 
-    func getChildArray<T>(property property: PropertyDescription) -> [T]
+    public func getChildArray<T>(property property: PropertyDescription) -> [T]
     {
         // The child shall be an object or a struct
         // which contains a changeCounter: ChangeCounter object

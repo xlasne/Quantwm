@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum CodingConverterResult<T> {
+public enum CodingConverterResult<T> {
     case Success(T)
     case NoTypeMatch
     case KeyNotFound
 }
 
-class CodingConverter<T> {
+public class CodingConverter<T> {
 
 
-    static func encode(aCoder: NSCoder, value: T, propertyDescription: PropertyDescription)
+    static public func encode(aCoder: NSCoder, value: T, propertyDescription: PropertyDescription)
     {
         let codingKey = propertyDescription.propKey
         assert(T.self == propertyDescription.destType,"Error: type do not match")
@@ -37,7 +37,7 @@ class CodingConverter<T> {
         }
     }
 
-    static func decode(aDecoder: NSCoder, propertyDescription: PropertyDescription) -> T?
+    static public func decode(aDecoder: NSCoder, propertyDescription: PropertyDescription) -> T?
     {
         let codingKey = propertyDescription.propKey
         assert(T.self == propertyDescription.destType,"Error: type do not match")
@@ -57,7 +57,7 @@ class CodingConverter<T> {
     }
 
 
-    static func encodeAsNSNumber(aCoder: NSCoder, value: T, codingKey: String) -> CodingConverterResult<T>
+    static public func encodeAsNSNumber(aCoder: NSCoder, value: T, codingKey: String) -> CodingConverterResult<T>
     {
         var success = false
         if T.self == Bool.self {
@@ -165,7 +165,7 @@ class CodingConverter<T> {
         }
     }
 
-    static func decodeAsNSNumber(aDecoder: NSCoder, codingKey: String) -> CodingConverterResult<T>
+    static public func decodeAsNSNumber(aDecoder: NSCoder, codingKey: String) -> CodingConverterResult<T>
     {
         if T.self == Bool.self {
             if let val = aDecoder.decodeObjectForKey(codingKey) as? NSNumber,

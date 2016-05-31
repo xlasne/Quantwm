@@ -22,7 +22,7 @@ struct RootNode {
     }
 }
 
-class RepositoryObserver: NSObject {
+public class RepositoryObserver: NSObject {
 
     // Dictionary of the root nodes
     // Root nodes are the first component of keypath, the path anchor
@@ -56,7 +56,7 @@ class RepositoryObserver: NSObject {
     // This node does not have to remember this monitoring
     // On node deletion, this registration will end
     // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-    func registerRoot(associatedObject associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
+    public func registerRoot(associatedObject associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
     {
         let rootNode = RootNode(rootObject: associatedObject,
                                 changeCounter: changeCounter,
@@ -75,7 +75,7 @@ class RepositoryObserver: NSObject {
         self.rootDataDict[keypath] = rootNode
     }
 
-    func unregisterRootNode(property: PropertyDescription)
+    public func unregisterRootNode(property: PropertyDescription)
     {
         let keypath = property.propKey
         if let _ = self.rootDataDict[keypath] {
@@ -88,12 +88,12 @@ class RepositoryObserver: NSObject {
 
     // MARK: ObserverSet Registration - Public
 
-    func registerForEachCycle(target target: NSObject, selector: Selector, name: String,
+    public func registerForEachCycle(target target: NSObject, selector: Selector, name: String,
                                      maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)  {
         self.register(target: target, selector: selector, keypathDescriptionSet: [], name: name)
     }
 
-    func register(target target: NSObject,
+    public func register(target target: NSObject,
                          registrationDesc: RegisterDescription,
                          name: String? = nil)
     {
@@ -110,7 +110,7 @@ class RepositoryObserver: NSObject {
                       configurationPriority: registrationDesc.configurationPriority)
     }
 
-    func register(target target: NSObject,
+    public func register(target target: NSObject,
                          selector: Selector,
                          keypathDescriptionSet: Set<KeypathDescription>,
                          name: String,
@@ -173,7 +173,7 @@ class RepositoryObserver: NSObject {
         self.keySetObserverSet.insert(keySetObserver)
     }
 
-    func unregisterDataSetWithTarget(target: NSObject, selector: Selector? = nil)
+    public func unregisterDataSetWithTarget(target: NSObject, selector: Selector? = nil)
     {
         let unregisterArray = keySetObserverSet.filter({$0.matchesTarget(target, selector: selector)})
         keySetObserverSet.subtractInPlace(unregisterArray)
@@ -203,7 +203,7 @@ class RepositoryObserver: NSObject {
         return dataSet.first
     }
 
-    func displayUsageForOwner(owner: NSObject) {
+    public func displayUsageForOwner(owner: NSObject) {
         let observerArray = self.getKeySetObserverArrayForTarget(owner)
         for observer in observerArray    // .filter({!$0.isValid()})
         {
@@ -242,7 +242,7 @@ class RepositoryObserver: NSObject {
 extension RepositoryObserver
 {
 
-    func refreshUI() {
+    public func refreshUI() {
         // Check Pre-conditions
         if dataContext.isRootRefresh {
             print("Info: Call of RefreshUI inside RefreshUI ignored")
@@ -424,28 +424,28 @@ extension RepositoryObserver
         }
     }
 
-    func loadAction(owner owner: NSObject?, @noescape handler: ()->())
+    public func loadAction(owner owner: NSObject?, @noescape handler: ()->())
     {
         let loadContext = self.pushLoadingContext(owner)
         handler()
         self.popContext(loadContext)
     }
 
-    func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+    public func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
     {
         let loadContext = self.pushLoadingContext(owner)
         defer { self.popContext(loadContext) } // will be called after handler execution ;)
         return handler()
     }
 
-    func updateAction(owner owner: NSObject?, @noescape handler: ()->())
+    public func updateAction(owner owner: NSObject?, @noescape handler: ()->())
     {
         let writeContext = self.pushUpdateContext(owner)
         handler()
         self.popContext(writeContext)
     }
 
-    func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->())
+    public func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->())
     {
         let writeContext = self.pushUpdateContext(owner)
         handler()
@@ -454,7 +454,7 @@ extension RepositoryObserver
     }
 
     // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
-    func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
+    public func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
     {
         if !dataContext.isRootRefresh {
             print("updateActionIfPossibleElseDispatch scheduled immediately")

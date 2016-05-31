@@ -13,7 +13,7 @@ import Foundation
 typealias ParentAndNode = (parent: SwiftKVC, node: ChangeCounter)
 
 
-protocol SwiftKVC
+public protocol SwiftKVC
 {
     func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool)
     func KVC_valueForKey(key : String) -> Any?
@@ -21,9 +21,9 @@ protocol SwiftKVC
     subscript (KVC_key key: String) -> Any? { get }
 }
 
-extension SwiftKVC {
+public extension SwiftKVC {
 
-    func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool) {
+    public func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool) {
         let mirror = Mirror(reflecting: self)
         for myChild in mirror.children {
             if myChild.label == key {
@@ -43,7 +43,7 @@ extension SwiftKVC {
     }
 
     /// Returns the value for the property identified by a given key.
-    func KVC_valueForKey(key : String) -> Any? {
+    public func KVC_valueForKey(key : String) -> Any? {
 
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {
@@ -55,7 +55,7 @@ extension SwiftKVC {
     }
 
     /// Returns the value for the derived property identified by a given key path.
-    func KVC_valueForKeyPath(keyPath : String) -> Any? {
+    public func KVC_valueForKeyPath(keyPath : String) -> Any? {
         let keys = keyPath.componentsSeparatedByString(".")
         var mirror = Mirror(reflecting: self)
         for key in keys {
@@ -97,7 +97,7 @@ extension SwiftKVC {
     }
 
     /// Returns the value for the property identified by a given key.
-    subscript (KVC_key key: String) -> Any? {
+    public subscript (KVC_key key: String) -> Any? {
         get {
             return self.KVC_valueForKeyPath(key)
         }

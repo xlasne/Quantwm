@@ -25,7 +25,7 @@ import Foundation
 // value type leaf destination is thus optional
 
 
-@objc class PropertyDescription: NSObject
+@objc public class PropertyDescription: NSObject
 {
     let propKey: String
     let sourceType: Any.Type?
@@ -35,7 +35,7 @@ import Foundation
     let option: PropertyDescriptionOption
     let dependFromPropertySet: Set<PropertyDescription>
 
-    init(swift_propKey: String, sourceType: Any.Type, destType: Any.Type, option: PropertyDescriptionOption,
+    public init(swift_propKey: String, sourceType: Any.Type, destType: Any.Type, option: PropertyDescriptionOption,
          dependFromPropertySet: Set<PropertyDescription> = [])
     {
         self.propKey = swift_propKey
@@ -47,7 +47,7 @@ import Foundation
         self.dependFromPropertySet = dependFromPropertySet
     }
 
-    init(objc_propKey: String, sourceTypeStr: String, destTypeStr: String?, option: PropertyDescriptionOption,
+    public init(objc_propKey: String, sourceTypeStr: String, destTypeStr: String?, option: PropertyDescriptionOption,
          dependFromPropertySet: Set<PropertyDescription> = [])
     {
         self.propKey = objc_propKey
@@ -71,7 +71,7 @@ import Foundation
         return previousProperty.dest == self.source
     }
 
-    override var description: String {
+    public override var description: String {
         return "\(source).\(propKey)"
     }
 
@@ -106,9 +106,9 @@ import Foundation
     }
 }
 
-class PropertyDescriptor<Source,Dest>
+public class PropertyDescriptor<Source,Dest>
 {
-    static func key(key: String, propertyDescriptionOption: PropertyDescriptionOption = [],
+    public static func key(key: String, propertyDescriptionOption: PropertyDescriptionOption = [],
                     dependFromPropertySet: Set<PropertyDescription> = []) -> PropertyDescription
     {
         return PropertyDescription(swift_propKey: key,
@@ -119,9 +119,9 @@ class PropertyDescriptor<Source,Dest>
     }
 }
 
-class RootDescriptor<Source>
+public class RootDescriptor<Source>
 {
-    static func key(key: String) -> PropertyDescription
+    public static func key(key: String) -> PropertyDescription
     {
         return PropertyDescription(swift_propKey: key,
                              sourceType: Source.self,

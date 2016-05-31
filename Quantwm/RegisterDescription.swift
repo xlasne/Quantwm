@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RegisterDescription
+public class RegisterDescription
 {
     let selector: Selector
     let keypathDescriptionSet: Set<KeypathDescription>
@@ -17,7 +17,7 @@ class RegisterDescription
     let maximumAllowedRegistrationWithSameTypeSelector: Int?
     let configurationPriority: Int?
 
-    init(selector: Selector,
+    public init(selector: Selector,
          keypathDescriptionSet: [Set<KeypathDescription>],
          name: String?,
          writtenPropertySet: Set<PropertyDescription> = [],

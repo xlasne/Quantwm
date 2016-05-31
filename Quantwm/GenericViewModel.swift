@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol RepositoryHolder: class
+public protocol RepositoryHolder: class
 {
     func getRepositoryObserver() -> RepositoryObserver
 }
 
-class GenericViewModel<Model: RepositoryHolder> : NSObject {
+public class GenericViewModel<Model: RepositoryHolder> : NSObject {
 
-    unowned var dataModel: Model
-    unowned var repositoryObserver : RepositoryObserver
-    weak var owner: NSObject?
+    public unowned var dataModel: Model
+    public unowned var repositoryObserver : RepositoryObserver
+    public weak var owner: NSObject?
 
-    init(dataModel : Model, owner: NSObject)
+    public init(dataModel : Model, owner: NSObject)
     {
         self.dataModel = dataModel
         self.repositoryObserver = dataModel.getRepositoryObserver()
@@ -28,7 +28,7 @@ class GenericViewModel<Model: RepositoryHolder> : NSObject {
     }
 
     // MARK: - Registration
-    func register(target target: NSObject,
+    public func register(target target: NSObject,
                          selector: Selector,
                          keypathDescriptionSet: Set<KeypathDescription>,
                          name: String,
@@ -43,7 +43,7 @@ class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                    maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
     }
 
-    func register(target target: NSObject,
+    public func register(target target: NSObject,
                          registrationDesc: RegisterDescription,
                          name: String? = nil)
     {
@@ -52,36 +52,36 @@ class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                              name: name)
     }
 
-    func unregisterAll(owner: NSObject) {
+    public func unregisterAll(owner: NSObject) {
         self.repositoryObserver.displayUsageForOwner(owner)
         self.repositoryObserver.unregisterDataSetWithTarget(owner)
     }
 
     // MARK: - Repository Observer wrappers
-    func refreshUI()
+    public func refreshUI()
     {
         repositoryObserver.refreshUI()
     }
 
-    func loadAction(owner owner: NSObject?, @noescape handler: ()->())
+    public func loadAction(owner owner: NSObject?, @noescape handler: ()->())
     {
         repositoryObserver.loadAction(owner: owner,
                                               handler: handler)
     }
 
-    func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+    public func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
     {
         return repositoryObserver.loadActionWithReturn(owner: owner,
                                                                handler: handler)
     }
     
-    func updateAction(owner owner: NSObject?, @noescape handler: ()->())
+    public func updateAction(owner owner: NSObject?, @noescape handler: ()->())
     {
         repositoryObserver.updateAction(owner: owner,
                                            handler: handler)
     }
 
-    func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
+    public func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
         repositoryObserver.updateActionAndRefresh(owner: owner,
                                                      handler: handler)
     }

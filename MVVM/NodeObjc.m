@@ -6,6 +6,7 @@
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 
+#import <QuantwmOSX/QuantwmOSX.h>
 #import "NodeObjc.h"
 #import "MVVM-Swift.h"
 

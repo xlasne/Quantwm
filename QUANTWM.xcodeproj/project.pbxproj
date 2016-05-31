@@ -28,20 +28,26 @@
 		253EB06D1CEC893900253BBB /* DelayedSumProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */; };
 		25597FFB1CBE9E000004699B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25597FFA1CBE9E000004699B /* MainViewModel.swift */; };
 		256A84641CC39F9D00C8C072 /* TransientClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256A84631CC39F9D00C8C072 /* TransientClass.swift */; };
-		25EA3A3B1CF05428002D5962 /* ChangeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */; };
-		25EA3A3C1CF05428002D5962 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2D1CF05428002D5962 /* DataContext.swift */; };
-		25EA3A3D1CF05428002D5962 /* DataRepositoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */; };
-		25EA3A3E1CF05428002D5962 /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2F1CF05428002D5962 /* DataUsage.swift */; };
-		25EA3A3F1CF05428002D5962 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A301CF05428002D5962 /* GenericViewModel.swift */; };
-		25EA3A401CF05428002D5962 /* KeypathDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A311CF05428002D5962 /* KeypathDescription.swift */; };
-		25EA3A411CF05428002D5962 /* KeypathObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A321CF05428002D5962 /* KeypathObserver.swift */; };
-		25EA3A421CF05428002D5962 /* KeySetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A331CF05428002D5962 /* KeySetObserver.swift */; };
-		25EA3A431CF05428002D5962 /* MonitoredNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A341CF05428002D5962 /* MonitoredNode.swift */; };
-		25EA3A441CF05428002D5962 /* NodeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A351CF05428002D5962 /* NodeObserver.swift */; };
-		25EA3A451CF05428002D5962 /* PropertyDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A361CF05428002D5962 /* PropertyDescription.swift */; };
-		25EA3A461CF05428002D5962 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
-		25EA3A471CF05428002D5962 /* CodingConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A391CF05428002D5962 /* CodingConverter.swift */; };
-		25EA3A481CF05428002D5962 /* KeyValueCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */; };
+		25E2A4041CFDA55800F42FD3 /* QuantwmOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25E2A40B1CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; };
+		25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */; };
+		25E2A4161CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; };
+		25E2A4171CFDA55800F42FD3 /* QuantwmOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */; };
+		25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2D1CF05428002D5962 /* DataContext.swift */; };
+		25E2A4211CFDA5FE00F42FD3 /* DataRepositoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */; };
+		25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2F1CF05428002D5962 /* DataUsage.swift */; };
+		25E2A4231CFDA5FE00F42FD3 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A301CF05428002D5962 /* GenericViewModel.swift */; };
+		25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A311CF05428002D5962 /* KeypathDescription.swift */; };
+		25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A321CF05428002D5962 /* KeypathObserver.swift */; };
+		25E2A4261CFDA5FE00F42FD3 /* KeySetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A331CF05428002D5962 /* KeySetObserver.swift */; };
+		25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A341CF05428002D5962 /* MonitoredNode.swift */; };
+		25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A351CF05428002D5962 /* NodeObserver.swift */; };
+		25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A361CF05428002D5962 /* PropertyDescription.swift */; };
+		25E2A42A1CFDA5FE00F42FD3 /* PropertyDescriptionOption.h in Headers */ = {isa = PBXBuildFile; fileRef = 25EA3A371CF05428002D5962 /* PropertyDescriptionOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
+		25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A391CF05428002D5962 /* CodingConverter.swift */; };
+		25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +58,42 @@
 			remoteGlobalIDString = 2534824A1CB7C9A900F61BB4;
 			remoteInfo = MVVM;
 		};
+		25E2A40C1CFDA55800F42FD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253482431CB7C9A900F61BB4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25E2A4001CFDA55800F42FD3;
+			remoteInfo = QuantwmOSX;
+		};
+		25E2A40E1CFDA55800F42FD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253482431CB7C9A900F61BB4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2534824A1CB7C9A900F61BB4;
+			remoteInfo = MVVM;
+		};
+		25E2A4141CFDA55800F42FD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 253482431CB7C9A900F61BB4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25E2A4001CFDA55800F42FD3;
+			remoteInfo = QuantwmOSX;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		25E2A41B1CFDA55900F42FD3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				25E2A4171CFDA55800F42FD3 /* QuantwmOSX.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		250EFD9E1CD7F61600CE8869 /* NodeStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeStruct.swift; sourceTree = "<group>"; };
@@ -82,6 +123,12 @@
 		253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayedSumProcessor.swift; sourceTree = "<group>"; };
 		25597FFA1CBE9E000004699B /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		256A84631CC39F9D00C8C072 /* TransientClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientClass.swift; sourceTree = "<group>"; };
+		25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuantwmOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuantwmOSX.h; sourceTree = "<group>"; };
+		25E2A4051CFDA55800F42FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25E2A40A1CFDA55800F42FD3 /* QuantwmOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuantwmOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuantwmOSXTests.m; sourceTree = "<group>"; };
+		25E2A4131CFDA55800F42FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeCounter.swift; path = Quantwm/ChangeCounter.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2D1CF05428002D5962 /* DataContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataContext.swift; path = Quantwm/DataContext.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataRepositoryObserver.swift; path = Quantwm/DataRepositoryObserver.swift; sourceTree = SOURCE_ROOT; };
@@ -104,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E2A4161CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,14 +162,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25E2A3FD1CFDA55800F42FD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25E2A4071CFDA55800F42FD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E2A40B1CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		253482421CB7C9A900F61BB4 = {
 			isa = PBXGroup;
 			children = (
-				256A84651CC4130F00C8C072 /* Quantum MVVM */,
-				2534824D1CB7C9A900F61BB4 /* MVVM Main */,
+				256A84651CC4130F00C8C072 /* Quantwm */,
+				25E2A4101CFDA55800F42FD3 /* QuantwmOSXTests */,
+				2534824D1CB7C9A900F61BB4 /* MVVM Demo App */,
 				2534829D1CB8F73400F61BB4 /* Data Model */,
 				2534829E1CB8F74800F61BB4 /* Context Manager */,
 				25597FFC1CBEA1F60004699B /* MainView */,
@@ -137,11 +201,13 @@
 			children = (
 				2534824B1CB7C9A900F61BB4 /* MVVM.app */,
 				253A172A1CCB8CC10048E524 /* MVVMTests.xctest */,
+				25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */,
+				25E2A40A1CFDA55800F42FD3 /* QuantwmOSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2534824D1CB7C9A900F61BB4 /* MVVM Main */ = {
+		2534824D1CB7C9A900F61BB4 /* MVVM Demo App */ = {
 			isa = PBXGroup;
 			children = (
 				2534824E1CB7C9A900F61BB4 /* AppDelegate.swift */,
@@ -151,7 +217,7 @@
 				253482591CB7C9A900F61BB4 /* Info.plist */,
 				253482901CB7E74400F61BB4 /* Helper.swift */,
 			);
-			name = "MVVM Main";
+			name = "MVVM Demo App";
 			path = MVVM;
 			sourceTree = "<group>";
 		};
@@ -221,9 +287,10 @@
 			path = MVVM;
 			sourceTree = "<group>";
 		};
-		256A84651CC4130F00C8C072 /* Quantum MVVM */ = {
+		256A84651CC4130F00C8C072 /* Quantwm */ = {
 			isa = PBXGroup;
 			children = (
+				25E2A4021CFDA55800F42FD3 /* QuantwmOSX */,
 				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
 				25EA3A2D1CF05428002D5962 /* DataContext.swift */,
 				25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */,
@@ -240,11 +307,42 @@
 				25EA3A391CF05428002D5962 /* CodingConverter.swift */,
 				25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */,
 			);
-			name = "Quantum MVVM";
+			name = Quantwm;
 			path = MVVM;
 			sourceTree = "<group>";
 		};
+		25E2A4021CFDA55800F42FD3 /* QuantwmOSX */ = {
+			isa = PBXGroup;
+			children = (
+				25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */,
+				25E2A4051CFDA55800F42FD3 /* Info.plist */,
+			);
+			name = QuantwmOSX;
+			path = ../QuantwmOSX;
+			sourceTree = "<group>";
+		};
+		25E2A4101CFDA55800F42FD3 /* QuantwmOSXTests */ = {
+			isa = PBXGroup;
+			children = (
+				25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */,
+				25E2A4131CFDA55800F42FD3 /* Info.plist */,
+			);
+			path = QuantwmOSXTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		25E2A3FE1CFDA55800F42FD3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E2A4041CFDA55800F42FD3 /* QuantwmOSX.h in Headers */,
+				25E2A42A1CFDA5FE00F42FD3 /* PropertyDescriptionOption.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		2534824A1CB7C9A900F61BB4 /* MVVM */ = {
@@ -254,10 +352,12 @@
 				253482471CB7C9A900F61BB4 /* Sources */,
 				253482481CB7C9A900F61BB4 /* Frameworks */,
 				253482491CB7C9A900F61BB4 /* Resources */,
+				25E2A41B1CFDA55900F42FD3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				25E2A4151CFDA55800F42FD3 /* PBXTargetDependency */,
 			);
 			name = MVVM;
 			productName = MVVM;
@@ -282,6 +382,43 @@
 			productReference = 253A172A1CCB8CC10048E524 /* MVVMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		25E2A4001CFDA55800F42FD3 /* QuantwmOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25E2A4181CFDA55900F42FD3 /* Build configuration list for PBXNativeTarget "QuantwmOSX" */;
+			buildPhases = (
+				25E2A3FC1CFDA55800F42FD3 /* Sources */,
+				25E2A3FD1CFDA55800F42FD3 /* Frameworks */,
+				25E2A3FE1CFDA55800F42FD3 /* Headers */,
+				25E2A3FF1CFDA55800F42FD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuantwmOSX;
+			productName = QuantwmOSX;
+			productReference = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		25E2A4091CFDA55800F42FD3 /* QuantwmOSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25E2A41C1CFDA55900F42FD3 /* Build configuration list for PBXNativeTarget "QuantwmOSXTests" */;
+			buildPhases = (
+				25E2A4061CFDA55800F42FD3 /* Sources */,
+				25E2A4071CFDA55800F42FD3 /* Frameworks */,
+				25E2A4081CFDA55800F42FD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25E2A40D1CFDA55800F42FD3 /* PBXTargetDependency */,
+				25E2A40F1CFDA55800F42FD3 /* PBXTargetDependency */,
+			);
+			name = QuantwmOSXTests;
+			productName = QuantwmOSXTests;
+			productReference = 25E2A40A1CFDA55800F42FD3 /* QuantwmOSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -296,6 +433,13 @@
 						CreatedOnToolsVersion = 7.3;
 					};
 					253A17291CCB8CC10048E524 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 2534824A1CB7C9A900F61BB4;
+					};
+					25E2A4001CFDA55800F42FD3 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					25E2A4091CFDA55800F42FD3 = {
 						CreatedOnToolsVersion = 7.3;
 						TestTargetID = 2534824A1CB7C9A900F61BB4;
 					};
@@ -314,6 +458,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				25E2A4001CFDA55800F42FD3 /* QuantwmOSX */,
+				25E2A4091CFDA55800F42FD3 /* QuantwmOSXTests */,
 				2534824A1CB7C9A900F61BB4 /* MVVM */,
 				253A17291CCB8CC10048E524 /* MVVMTests */,
 			);
@@ -339,6 +485,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25E2A3FF1CFDA55800F42FD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25E2A4081CFDA55800F42FD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -346,15 +506,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25EA3A481CF05428002D5962 /* KeyValueCodable.swift in Sources */,
 				2534828E1CB7E2D900F61BB4 /* Scene2ViewController.swift in Sources */,
-				25EA3A3E1CF05428002D5962 /* DataUsage.swift in Sources */,
-				25EA3A3C1CF05428002D5962 /* DataContext.swift in Sources */,
 				253482A01CB8F79500F61BB4 /* ImmediateSumProcessor.swift in Sources */,
-				25EA3A421CF05428002D5962 /* KeySetObserver.swift in Sources */,
 				253482511CB7C9A900F61BB4 /* MainViewController.swift in Sources */,
-				25EA3A401CF05428002D5962 /* KeypathDescription.swift in Sources */,
-				25EA3A471CF05428002D5962 /* CodingConverter.swift in Sources */,
 				253EB0671CE98D6B00253BBB /* NodeObjc.m in Sources */,
 				253482A21CB915B000F61BB4 /* Scene2ViewModel.swift in Sources */,
 				253482841CB7E1C100F61BB4 /* Scene1ViewModel.swift in Sources */,
@@ -362,18 +516,10 @@
 				25597FFB1CBE9E000004699B /* MainViewModel.swift in Sources */,
 				253482811CB7DC7000F61BB4 /* DataModel.swift in Sources */,
 				253482911CB7E74400F61BB4 /* Helper.swift in Sources */,
-				25EA3A3F1CF05428002D5962 /* GenericViewModel.swift in Sources */,
 				2534824F1CB7C9A900F61BB4 /* AppDelegate.swift in Sources */,
-				25EA3A3B1CF05428002D5962 /* ChangeCounter.swift in Sources */,
-				25EA3A3D1CF05428002D5962 /* DataRepositoryObserver.swift in Sources */,
 				2534828A1CB7E2BB00F61BB4 /* Scene1ViewController.swift in Sources */,
-				25EA3A431CF05428002D5962 /* MonitoredNode.swift in Sources */,
 				256A84641CC39F9D00C8C072 /* TransientClass.swift in Sources */,
-				25EA3A441CF05428002D5962 /* NodeObserver.swift in Sources */,
 				253482531CB7C9A900F61BB4 /* Document.swift in Sources */,
-				25EA3A451CF05428002D5962 /* PropertyDescription.swift in Sources */,
-				25EA3A411CF05428002D5962 /* KeypathObserver.swift in Sources */,
-				25EA3A461CF05428002D5962 /* RegisterDescription.swift in Sources */,
 				250EFD9F1CD7F61600CE8869 /* NodeStruct.swift in Sources */,
 				253EB06D1CEC893900253BBB /* DelayedSumProcessor.swift in Sources */,
 			);
@@ -387,6 +533,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25E2A3FC1CFDA55800F42FD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E2A4231CFDA5FE00F42FD3 /* GenericViewModel.swift in Sources */,
+				25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */,
+				25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */,
+				25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */,
+				25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */,
+				25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */,
+				25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */,
+				25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */,
+				25E2A4261CFDA5FE00F42FD3 /* KeySetObserver.swift in Sources */,
+				25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */,
+				25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */,
+				25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */,
+				25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */,
+				25E2A4211CFDA5FE00F42FD3 /* DataRepositoryObserver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25E2A4061CFDA55800F42FD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -394,6 +569,21 @@
 			isa = PBXTargetDependency;
 			target = 2534824A1CB7C9A900F61BB4 /* MVVM */;
 			targetProxy = 253A172F1CCB8CC10048E524 /* PBXContainerItemProxy */;
+		};
+		25E2A40D1CFDA55800F42FD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25E2A4001CFDA55800F42FD3 /* QuantwmOSX */;
+			targetProxy = 25E2A40C1CFDA55800F42FD3 /* PBXContainerItemProxy */;
+		};
+		25E2A40F1CFDA55800F42FD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2534824A1CB7C9A900F61BB4 /* MVVM */;
+			targetProxy = 25E2A40E1CFDA55800F42FD3 /* PBXContainerItemProxy */;
+		};
+		25E2A4151CFDA55800F42FD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25E2A4001CFDA55800F42FD3 /* QuantwmOSX */;
+			targetProxy = 25E2A4141CFDA55800F42FD3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -497,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MVVM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MVVM;
@@ -512,6 +703,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MVVM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MVVM;
@@ -546,6 +738,72 @@
 			};
 			name = Release;
 		};
+		25E2A4191CFDA55900F42FD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = QuantwmOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		25E2A41A1CFDA55900F42FD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = QuantwmOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		25E2A41D1CFDA55900F42FD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = QuantwmOSXTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
+			};
+			name = Debug;
+		};
+		25E2A41E1CFDA55900F42FD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = QuantwmOSXTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -575,6 +833,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		25E2A4181CFDA55900F42FD3 /* Build configuration list for PBXNativeTarget "QuantwmOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25E2A4191CFDA55900F42FD3 /* Debug */,
+				25E2A41A1CFDA55900F42FD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		25E2A41C1CFDA55900F42FD3 /* Build configuration list for PBXNativeTarget "QuantwmOSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25E2A41D1CFDA55900F42FD3 /* Debug */,
+				25E2A41E1CFDA55900F42FD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,14 +8,14 @@
 
 import Foundation
 
-class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
+public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
     let root: PropertyDescription
     let chain: [PropertyDescription]
 
     // Set disableValidation to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
     // match the source and destination types between Objective-C and Swift
-    init(root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+    public init(root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
     {
         self.root = root
         self.chain = chain
@@ -77,11 +77,11 @@ class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
         return true
     }
 
-    var debugDescription: String {
+    public var debugDescription: String {
         return "\(keypath)"
     }
 
-    var hashValue: Int {
+    public var hashValue: Int {
         return  root.hashValue &+ chain.reduce(0) {
             (cumulated: Int, prop: PropertyDescription) -> Int in
             return cumulated &+ prop.hashValue
@@ -100,7 +100,7 @@ class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
     }
 }
 
-func ==(lhs: KeypathDescription, rhs: KeypathDescription) -> Bool {
+public func ==(lhs: KeypathDescription, rhs: KeypathDescription) -> Bool {
     let areEqual =
         lhs.root == rhs.root &&
             lhs.chain == rhs.chain
