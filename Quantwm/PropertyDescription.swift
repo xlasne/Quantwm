@@ -15,9 +15,9 @@ import Foundation
 //        self.rawValue = rawValue
 //    }
 //
-//    static let ContainsNode       = PropertyDescriptionOption(rawValue:1)
-//    static let ContainsCollection = PropertyDescriptionOption(rawValue:2)
-//    static let IsRoot             = PropertyDescriptionOption(rawValue:4)
+//    static let ContainsNode           = PropertyDescriptionOption(rawValue:1)
+//    static let ContainsNodeCollection = PropertyDescriptionOption(rawValue:2)
+//    static let IsRoot                 = PropertyDescriptionOption(rawValue:4)
 //}
 
 
@@ -80,11 +80,11 @@ import Foundation
     }
 
     var containsNode: Bool {
-        return option.contains(.ContainsNode)
+        return option.contains(.ContainsNode) || option.contains(.ContainsNodeCollection)
     }
 
-    var containsCollection: Bool {
-        return option.contains(.ContainsCollection)
+    var containsNodeCollection: Bool {
+        return option.contains(.ContainsNodeCollection)
     }
 
     var containsObjc: Bool {
@@ -111,12 +111,6 @@ class PropertyDescriptor<Source,Dest>
     static func key(key: String, propertyDescriptionOption: PropertyDescriptionOption = [],
                     dependFromPropertySet: Set<PropertyDescription> = []) -> PropertyDescription
     {
-        if propertyDescriptionOption.contains(.ContainsCollection) &&
-            !propertyDescriptionOption.contains(.ContainsNode)
-        {
-            assert(false,"Error: collections shall contain nodes")
-        }
-
         return PropertyDescription(swift_propKey: key,
                              sourceType: Source.self,
                              destType: Dest.self,

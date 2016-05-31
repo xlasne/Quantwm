@@ -97,7 +97,6 @@
 		25EA3A381CF05428002D5962 /* RegisterDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterDescription.swift; path = Quantwm/RegisterDescription.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A391CF05428002D5962 /* CodingConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodingConverter.swift; path = Quantwm/CodingConverter.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyValueCodable.swift; path = Quantwm/KeyValueCodable.swift; sourceTree = SOURCE_ROOT; };
-		25EAC10E1CC3116C00140B29 /* Todo list */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 2; path = "Todo list"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +120,6 @@
 		253482421CB7C9A900F61BB4 = {
 			isa = PBXGroup;
 			children = (
-				25EAC10E1CC3116C00140B29 /* Todo list */,
 				256A84651CC4130F00C8C072 /* Quantum MVVM */,
 				2534824D1CB7C9A900F61BB4 /* MVVM Main */,
 				2534829D1CB8F73400F61BB4 /* Data Model */,

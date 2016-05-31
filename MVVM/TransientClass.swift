@@ -43,7 +43,7 @@ class TransientClass: MonitoredNode {
     }
 
     static let arrayValueK = PropertyDescriptor<TransientClass,NodeObjc>.key("_arrayVal",
-            propertyDescriptionOption: [.ContainsNode, .ContainsCollection, .IsObjectiveC])
+            propertyDescriptionOption: [.ContainsNodeCollection, .IsObjectiveC])
     private var _arrayVal: [NodeObjc] = [NodeObjc(val: 1), NodeObjc(val: 3)]
     var arrayVal: [NodeObjc] {
         get {

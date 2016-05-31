@@ -64,7 +64,7 @@ class NodeObserver {
 
         let node = parent.getNodeChangeCounter()
         let foundNodes = parent.getChildArray(property: property)
-        if property.containsCollection {
+        if property.containsNodeCollection {
             // Item contains node
             self.nextNodes = []
             for monitoredNode in foundNodes {

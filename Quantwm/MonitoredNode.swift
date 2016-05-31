@@ -108,7 +108,7 @@ extension MonitoredNode
         // Then, find the child node if present
         if childCheck.isSome
         {
-            if property.containsCollection {
+            if property.containsNodeCollection {
                 var result : [T] = []
                 if let value = self.KVC_valueForKeyPath(childKey)
                 {
@@ -163,7 +163,7 @@ class MonitoredNodeObjcParser
             return  []
         }
 
-        if property.containsCollection {
+        if property.containsNodeCollection {
             if let arrayValue = childValue as? [T]
             {
                 return arrayValue
