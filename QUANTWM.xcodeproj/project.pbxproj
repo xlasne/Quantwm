@@ -48,6 +48,7 @@
 		25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
 		25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A391CF05428002D5962 /* CodingConverter.swift */; };
 		25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */; };
+		25E2A4301CFDBE7900F42FD3 /* QuantwmTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,8 @@
 		25E2A40A1CFDA55800F42FD3 /* QuantwmOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuantwmOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuantwmOSXTests.m; sourceTree = "<group>"; };
 		25E2A4131CFDA55800F42FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25E2A42E1CFDBE7900F42FD3 /* QuantwmOSXTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuantwmOSXTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuantwmTest.swift; sourceTree = "<group>"; };
 		25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeCounter.swift; path = Quantwm/ChangeCounter.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2D1CF05428002D5962 /* DataContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataContext.swift; path = Quantwm/DataContext.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataRepositoryObserver.swift; path = Quantwm/DataRepositoryObserver.swift; sourceTree = SOURCE_ROOT; };
@@ -325,7 +328,9 @@
 			isa = PBXGroup;
 			children = (
 				25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */,
+				25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */,
 				25E2A4131CFDA55800F42FD3 /* Info.plist */,
+				25E2A42E1CFDBE7900F42FD3 /* QuantwmOSXTests-Bridging-Header.h */,
 			);
 			path = QuantwmOSXTests;
 			sourceTree = "<group>";
@@ -559,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */,
+				25E2A4301CFDBE7900F42FD3 /* QuantwmTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,11 +789,14 @@
 		25E2A41D1CFDA55900F42FD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuantwmOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "QuantwmOSXTests/QuantwmOSXTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
 			};
 			name = Debug;
@@ -795,11 +804,13 @@
 		25E2A41E1CFDA55900F42FD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = QuantwmOSXTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "QuantwmOSXTests/QuantwmOSXTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
 			};
 			name = Release;
