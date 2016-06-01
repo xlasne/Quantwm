@@ -9,7 +9,6 @@
 import XCTest
 @testable import QuantwmOSX
 
-
 class TestStruct: MonitoredStruct
 {
     let changeCounter = ChangeCounter()
@@ -28,12 +27,30 @@ class TestStruct: MonitoredStruct
     }
 }
 
-class TestClass: MonitoredClass
+enum TestEnum
+{
+    case item1(TestStruct)
+    case item2(TestStruct)
+
+    func getTestStruct() -> TestStruct
+    {
+        switch self
+        {
+        case item1(let node):
+            return node
+        case item2(let node):
+            return node
+        }
+    }
+}
+
+
+class TestClass: MonitoredClass, MonitoredNodeGetter
 {
     let changeCounter = ChangeCounter()
 
-  static let testStructK = PropertyDescriptor<TestClass,TestStruct>.key("_testStruct",
-                                                propertyDescriptionOption: [.ContainsNode])
+    static let testStructK = PropertyDescriptor<TestClass,TestStruct>
+        .key("_testStruct", propertyDescriptionOption: [.ContainsNode])
     private var _testStruct = TestStruct()
     var testStruct : TestStruct {
         get {
@@ -43,6 +60,50 @@ class TestClass: MonitoredClass
         set {
             self.changeCounter.performedWriteOnMainThread(TestClass.testStructK)
             _testStruct = newValue
+        }
+    }
+
+    static let testDictK = PropertyDescriptor<TestClass,TestStruct>.key("_testDict",
+                propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+                                                                )
+    private var _testDict: [String:TestStruct] = [:]
+    var testDict : [String:TestStruct] {
+        get {
+            self.changeCounter.performedReadOnMainThread(TestClass.testDictK)
+            return _testDict
+        }
+        set {
+            self.changeCounter.performedWriteOnMainThread(TestClass.testDictK)
+            _testDict = newValue
+        }
+    }
+
+    static let testEnumK = PropertyDescriptor<TestClass,TestStruct>.key("_testEnum",
+                                propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+    )
+    private var _testEnum = TestEnum.item1(TestStruct())
+    var testEnum : TestEnum {
+        get {
+            self.changeCounter.performedReadOnMainThread(TestClass.testEnumK)
+            return _testEnum
+        }
+        set {
+            self.changeCounter.performedWriteOnMainThread(TestClass.testEnumK)
+            _testEnum = newValue
+        }
+    }
+
+    func getMonitoredNodeArray(property: PropertyDescription) -> [MonitoredNode] {
+        switch property {
+        case TestClass.testDictK:
+            let retVal = testDict.values.map({$0 as MonitoredNode})
+            return Array(retVal)
+        case TestClass.testEnumK:
+            let retVal = testEnum.getTestStruct() as MonitoredNode
+            return [retVal]
+        default:
+            assert(false,"Error: Missing case for property \(property.propKey) configured as MonitoredNodeGetter")
+            return []
         }
     }
 }
@@ -96,16 +157,15 @@ class TestCall: NSObject
 
     func testCall()
     {
-        self.isCalled = true
+        isCalled = true
     }
 
-    func reset()
+    func checkIfCalled() -> Bool
     {
-        self.isCalled = false
+        defer {isCalled = false}
+        return isCalled
     }
-
 }
-
 
 class QuantwmTest: XCTestCase {
 
@@ -116,14 +176,6 @@ class QuantwmTest: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         self.base = TestBase()
-        let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testStructK,TestStruct.numberK])
-        let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                               keypathDescriptionSet: [Set([keypath])],
-                                               name: "testCall")
-        self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
-        self.base.getRepositoryObserver().refreshUI()
-        self.testCall.reset()
-
     }
 
     override func tearDown() {
@@ -132,15 +184,107 @@ class QuantwmTest: XCTestCase {
     }
 
     func testBasicUpdate() {
-
-        XCTAssert(testCall.isCalled == false, "Initial state")
+        let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testStructK,TestStruct.numberK])
+        let registration = RegisterDescription(selector: #selector(TestCall.testCall),
+                                               keypathDescriptionSet: [Set([keypath])],
+                                               name: "testCall")
+        self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
         self.base.getRepositoryObserver().refreshUI()
-        XCTAssert(testCall.isCalled == false, "no update -> no call")
+        XCTAssert(testCall.checkIfCalled() == true, "Initial state")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
 
         self.base.testClass.testStruct.number = 2
 
         self.base.getRepositoryObserver().refreshUI()
-        XCTAssert(testCall.isCalled == true, "update -> call")
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+    }
+
+    func testDictUpdate() {
+        let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK])
+        let registration = RegisterDescription(selector: #selector(TestCall.testCall),
+                                               keypathDescriptionSet: [Set([keypath])],
+                                               name: "testCall")
+        self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "Initial state")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        self.base.testClass.testDict["toto"] = TestStruct()
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+}
+
+    func testDictUpdate2() {
+        let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK,TestStruct.numberK])
+        let registration = RegisterDescription(selector: #selector(TestCall.testCall),
+                                               keypathDescriptionSet: [Set([keypath])],
+                                               name: "testCall")
+        self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "Initial state")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        self.base.testClass.testDict["toto"] = TestStruct()
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        self.base.testClass.testDict["toto"]!.number = 3
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+}
+
+    func testEnumUpdate() {
+        let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testEnumK,TestStruct.numberK])
+        let registration = RegisterDescription(selector: #selector(TestCall.testCall),
+                                               keypathDescriptionSet: [Set([keypath])],
+                                               name: "testCall")
+        self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "Initial state")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        var testStruct = TestStruct()
+        testStruct.number = 3
+        self.base.testClass.testEnum = TestEnum.item1(testStruct)
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        testStruct.number = 4
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
+        testStruct = TestStruct()
+        testStruct.number = 4
+        self.base.testClass.testEnum = TestEnum.item2(testStruct)
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == true, "update -> call")
+
+        self.base.getRepositoryObserver().refreshUI()
+        XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
+
     }
 
 //    func testPerformanceExample() {

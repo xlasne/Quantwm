@@ -58,23 +58,33 @@ enum GenericNode {
                 let objectArray: [NSObject] = myNode.getChildArray(property: property)
                 return objectArray.map({GenericNode.ObjectType($0)})
             } else {
-                let objectArray: [MonitoredNode] = myNode.getChildArray(property: property)
-                return objectArray.map({GenericNode.MonitoredNodeType($0)})
+                if property.isMonitoredNodeGetter {
+                    if let myGetterNode = myNode as? MonitoredNodeGetter {
+                        let objectArray = myGetterNode.getMonitoredNodeArray(property)
+                        return objectArray.map({GenericNode.MonitoredNodeType($0)})
+                    } else {
+                        assert(false,"Error: Object type \(property.source) is not conformant to protocol MonitoredNodeGetter")
+                        return []
+                    }
+                } else {
+                    let objectArray: [MonitoredNode] = myNode.getChildArray(property: property)
+                    return objectArray.map({GenericNode.MonitoredNodeType($0)})
+                }
             }
         }
     }
 }
 
-
+public protocol MonitoredNodeGetter
+{
+    func getMonitoredNodeArray(property: PropertyDescription) -> [MonitoredNode]
+}
 
 public protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
 {
 }
 
-public protocol MonitoredStruct: MonitoredNode
-{
-}
-
+public typealias MonitoredStruct = MonitoredNode
 
 public protocol MonitoredNode: SwiftKVC
 {

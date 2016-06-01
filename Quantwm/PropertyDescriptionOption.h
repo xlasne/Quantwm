@@ -15,6 +15,7 @@ typedef NS_OPTIONS(NSInteger, PropertyDescriptionOption)
     PropertyDescriptionOptionContainsNodeCollection = 1 << 2,
     PropertyDescriptionOptionIsRoot                 = 1 << 3,
     PropertyDescriptionOptionIsObjectiveC           = 1 << 4,
+    PropertyDescriptionOptionMonitoredNodeGetter    = 1 << 5
 };
 
 

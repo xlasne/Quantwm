@@ -27,7 +27,7 @@ import Foundation
 
 @objc public class PropertyDescription: NSObject
 {
-    let propKey: String
+    public let propKey: String
     let sourceType: Any.Type?
     let destType: Any.Type?
     let source: String
@@ -35,8 +35,13 @@ import Foundation
     let option: PropertyDescriptionOption
     let dependFromPropertySet: Set<PropertyDescription>
 
-    public init(swift_propKey: String, sourceType: Any.Type, destType: Any.Type, option: PropertyDescriptionOption,
-         dependFromPropertySet: Set<PropertyDescription> = [])
+    public init(
+        swift_propKey: String,
+        sourceType: Any.Type,
+        destType: Any.Type,
+        option: PropertyDescriptionOption,
+        dependFromPropertySet: Set<PropertyDescription> = []
+        )
     {
         self.propKey = swift_propKey
         self.sourceType = sourceType
@@ -45,10 +50,16 @@ import Foundation
         self.dest = String(destType)
         self.option = option
         self.dependFromPropertySet = dependFromPropertySet
+        super.init()
     }
 
-    public init(objc_propKey: String, sourceTypeStr: String, destTypeStr: String?, option: PropertyDescriptionOption,
-         dependFromPropertySet: Set<PropertyDescription> = [])
+    public init(
+        objc_propKey: String,
+        sourceTypeStr: String,
+        destTypeStr: String?,
+        option: PropertyDescriptionOption,
+        dependFromPropertySet: Set<PropertyDescription> = []
+        )
     {
         self.propKey = objc_propKey
         self.sourceType = nil
@@ -57,6 +68,7 @@ import Foundation
         self.dest = destTypeStr ?? ""
         self.option = option
         self.dependFromPropertySet = dependFromPropertySet
+        super.init()
     }
 
     func checkSourceTypeMatchesDestinationTypeOf(previousProperty previousProperty:PropertyDescription) -> Bool
@@ -91,6 +103,10 @@ import Foundation
         return option.contains(.IsObjectiveC)
     }
 
+    var isMonitoredNodeGetter: Bool {
+        return option.contains(.MonitoredNodeGetter)
+    }
+
     static var maxLevelFunc: (currentMax: Int, otherProperty: PropertyDescription) -> Int =
         {
             (currentMax: Int, otherProperty: PropertyDescription) -> Int in
@@ -108,14 +124,18 @@ import Foundation
 
 public class PropertyDescriptor<Source,Dest>
 {
-    public static func key(key: String, propertyDescriptionOption: PropertyDescriptionOption = [],
-                    dependFromPropertySet: Set<PropertyDescription> = []) -> PropertyDescription
+    public static func key(
+        key: String,
+        propertyDescriptionOption: PropertyDescriptionOption = [],
+        dependFromPropertySet: Set<PropertyDescription> = []
+        ) -> PropertyDescription
     {
         return PropertyDescription(swift_propKey: key,
                              sourceType: Source.self,
                              destType: Dest.self,
                              option: propertyDescriptionOption,
-                             dependFromPropertySet: dependFromPropertySet)
+                             dependFromPropertySet: dependFromPropertySet
+        )
     }
 }
 
