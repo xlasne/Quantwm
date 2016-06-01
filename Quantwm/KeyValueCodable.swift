@@ -26,7 +26,7 @@ public extension SwiftKVC {
     public func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool) {
         let mirror = Mirror(reflecting: self)
         for myChild in mirror.children {
-            if myChild.label == key {
+          if (myChild.label == key) || (myChild.label == key + ".storage") {
                 if myChild.value is OptionalProtocol
                 {
                     if let optChild = myChild.value as? OptionalProtocol {
@@ -62,7 +62,7 @@ public extension SwiftKVC {
             for child in mirror.children {
                 if (child.label == key) ||
                     (child.label == key + ".storage")  // Case of Lazy initialization
-                {           //
+                {
                     if child.value is OptionalProtocol
                     {
                         if let optChild = child.value as? OptionalProtocol {
@@ -79,7 +79,7 @@ public extension SwiftKVC {
                                 return nil
                             }
                         }
-                        assert(false,"Why did I reach this line ?")
+                        assert(false,"I shall not reach this line")
                     }
                     else
                     {

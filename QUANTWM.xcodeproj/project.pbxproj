@@ -35,7 +35,7 @@
 		25E2A4171CFDA55800F42FD3 /* QuantwmOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */; };
 		25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2D1CF05428002D5962 /* DataContext.swift */; };
-		25E2A4211CFDA5FE00F42FD3 /* DataRepositoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */; };
+		25E2A4211CFDA5FE00F42FD3 /* RepositoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */; };
 		25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2F1CF05428002D5962 /* DataUsage.swift */; };
 		25E2A4231CFDA5FE00F42FD3 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A301CF05428002D5962 /* GenericViewModel.swift */; };
 		25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A311CF05428002D5962 /* KeypathDescription.swift */; };
@@ -134,7 +134,7 @@
 		25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuantwmTest.swift; sourceTree = "<group>"; };
 		25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeCounter.swift; path = Quantwm/ChangeCounter.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2D1CF05428002D5962 /* DataContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataContext.swift; path = Quantwm/DataContext.swift; sourceTree = SOURCE_ROOT; };
-		25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataRepositoryObserver.swift; path = Quantwm/DataRepositoryObserver.swift; sourceTree = SOURCE_ROOT; };
+		25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryObserver.swift; path = Quantwm/RepositoryObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2F1CF05428002D5962 /* DataUsage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataUsage.swift; path = Quantwm/DataUsage.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A301CF05428002D5962 /* GenericViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericViewModel.swift; path = Quantwm/GenericViewModel.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A311CF05428002D5962 /* KeypathDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeypathDescription.swift; path = Quantwm/KeypathDescription.swift; sourceTree = SOURCE_ROOT; };
@@ -296,7 +296,7 @@
 				25E2A4021CFDA55800F42FD3 /* QuantwmOSX */,
 				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
 				25EA3A2D1CF05428002D5962 /* DataContext.swift */,
-				25EA3A2E1CF05428002D5962 /* DataRepositoryObserver.swift */,
+				25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */,
 				25EA3A2F1CF05428002D5962 /* DataUsage.swift */,
 				25EA3A301CF05428002D5962 /* GenericViewModel.swift */,
 				25EA3A311CF05428002D5962 /* KeypathDescription.swift */,
@@ -555,7 +555,7 @@
 				25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */,
 				25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */,
 				25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */,
-				25E2A4211CFDA5FE00F42FD3 /* DataRepositoryObserver.swift in Sources */,
+				25E2A4211CFDA5FE00F42FD3 /* RepositoryObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +852,7 @@
 				25E2A41A1CFDA55900F42FD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		25E2A41C1CFDA55900F42FD3 /* Build configuration list for PBXNativeTarget "QuantwmOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -860,6 +861,7 @@
 				25E2A41E1CFDA55900F42FD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

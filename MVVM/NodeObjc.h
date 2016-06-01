@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PropertyDescriptionOption.h"
 
 @class ChangeCounter;
 @class PropertyDescription;
