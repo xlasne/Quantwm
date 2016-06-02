@@ -51,22 +51,17 @@ class Scene2ViewModel: GenericViewModel<DataModel>
     // MARK: - Get Data Model
 
     //MARK: getFocus
-    static func getFocusKeypath() -> Set<KeypathDescription>
-    {
-        let keypathDescription = KeypathDescription(root: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
-        return [keypathDescription]
-    }
+    static let getFocusKeypathSet =
+        KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
+
 
     func getFocus() -> NSObject? {
         return dataModel.contextMgr.observed.currentFocus
     }
 
     //MARK: getValue2
-    static func getValue2Keypaths() -> Set<KeypathDescription>
-    {
-        let keypathDescription = KeypathDescription(root:DataModel.dataModelK, chain:[DataModel.number2K])
-        return [keypathDescription]
-    }
+    static let getValue2KeypathSet =
+       KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
 
     func getValue2() -> String {
         let formatter = NSNumberFormatter()
@@ -76,11 +71,9 @@ class Scene2ViewModel: GenericViewModel<DataModel>
 
 
     //MARK: getSum
-    static func getSumKeypaths() -> Set<KeypathDescription>
-    {
-        let keypathDescription = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
-        return [keypathDescription]
-    }
+    static let getSumKeypathSet =
+      KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
+
 
     func getSum() -> Int?
     {
@@ -89,11 +82,8 @@ class Scene2ViewModel: GenericViewModel<DataModel>
     }
 
     //MARK: getColor
-    static func getColorKeypaths() -> Set<KeypathDescription>
-    {
-        let keypathDescription = KeypathDescription(root:ContextMgr.contextMgrK, chain: [ContextMgr._imageColorK])
-        return [keypathDescription]
-    }
+    static let getColorKeypathSet =
+       KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.imageColorK])
 
     func getColor() -> NSColor
     {

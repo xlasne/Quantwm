@@ -97,13 +97,12 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 
     static let refreshViewREG = RegisterDescription(
         selector: #selector(Scene2ViewController.refreshView),
-        keypathDescriptionSet: [
-            Scene2ViewModel.getFocusKeypath(),
-            Scene2ViewModel.getValue2Keypaths(),
-            Scene2ViewModel.getSumKeypaths()],
+        keypathSet:
+            Scene2ViewModel.getFocusKeypathSet +
+            Scene2ViewModel.getValue2KeypathSet +
+            Scene2ViewModel.getSumKeypathSet,
         name: nil,
         maximumAllowedRegistrationWithSameTypeSelector: 2)
-    
     
     func refreshView()
     {
@@ -129,7 +128,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
     //MARK: - Refresh Section
     static let refreshColorREG = RegisterDescription(
         selector: #selector(Scene2ViewController.refreshColor),
-        keypathDescriptionSet: [Scene2ViewModel.getColorKeypaths()],
+        keypathSet: Scene2ViewModel.getColorKeypathSet,
         name: nil,
         maximumAllowedRegistrationWithSameTypeSelector: 2)
 

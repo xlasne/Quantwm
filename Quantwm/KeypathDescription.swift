@@ -8,6 +8,43 @@
 
 import Foundation
 
+public class KeypathSet
+{
+  public var readKeypathSet : Set<KeypathDescription> = []
+  public var writtenPropertySet: Set<PropertyDescription> = []
+
+  public init()
+  { }
+
+  public init(readWithRoot root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  {
+    let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
+    readKeypathSet = [keypathDesc]
+  }
+
+  public func addRead(root root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  {
+    let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
+    readKeypathSet.insert(keypathDesc)
+  }
+
+  public func addWrittenProperty(property: PropertyDescription)
+  {
+    writtenPropertySet.insert(property)
+  }
+}
+
+public func +(lhs: KeypathSet, rhs: KeypathSet) -> KeypathSet
+{
+  let keypathSet = KeypathSet()
+  for item in lhs.readKeypathSet { keypathSet.readKeypathSet.insert(item)}
+  for item in rhs.readKeypathSet { keypathSet.readKeypathSet.insert(item)}
+  for item in lhs.writtenPropertySet { keypathSet.writtenPropertySet.insert(item)}
+  for item in rhs.writtenPropertySet { keypathSet.writtenPropertySet.insert(item)}
+  return keypathSet
+}
+
+
 public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
     let root: PropertyDescription

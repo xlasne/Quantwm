@@ -213,9 +213,9 @@ class QuantwmTest: XCTestCase {
   }
 
   func testBasicUpdate() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testStructK,TestStruct.numberK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testStructK,TestStruct.numberK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -231,9 +231,9 @@ class QuantwmTest: XCTestCase {
   }
 
   func testOptionalUpdate() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.optNumberK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.optNumberK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -264,9 +264,9 @@ class QuantwmTest: XCTestCase {
 }
 
   func testLazyUpdate() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.lazyNumberK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.lazyNumberK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -290,9 +290,9 @@ class QuantwmTest: XCTestCase {
 
 
   func testDictUpdate() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -310,9 +310,9 @@ class QuantwmTest: XCTestCase {
   }
 
   func testDictUpdate2() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK,TestStruct.numberK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testDictK,TestStruct.numberK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -337,9 +337,9 @@ class QuantwmTest: XCTestCase {
   }
 
   func testEnumUpdate() {
-    let keypath = KeypathDescription(root:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testEnumK,TestStruct.numberK])
+    let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.testClassK, TestClass.testEnumK,TestStruct.numberK])
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
-                                           keypathDescriptionSet: [Set([keypath])],
+                                           keypathSet: keypath,
                                            name: "testCall")
     self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
@@ -374,12 +374,5 @@ class QuantwmTest: XCTestCase {
     XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
 
   }
-
-  //    func testPerformanceExample() {
-  //        // This is an example of a performance test case.
-  //        self.measureBlock {
-  //            // Put the code you want to measure the time of here.
-  //        }
-  //    }
 
 }

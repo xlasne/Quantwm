@@ -40,41 +40,41 @@ class ContextMgr: NSObject, MonitoredClass
         }
     }
 
-    static let _leftViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_leftViewPresent")
+    static let leftViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_leftViewPresent")
     private var _leftViewPresent = true
     var leftViewPresent: Bool {
         get {
-            self.changeCounter.performedReadOnMainThread(ContextMgr._leftViewPresentK)
+            self.changeCounter.performedReadOnMainThread(ContextMgr.leftViewPresentK)
             return _leftViewPresent
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(ContextMgr._leftViewPresentK)
+            self.changeCounter.performedWriteOnMainThread(ContextMgr.leftViewPresentK)
             _leftViewPresent = newValue
         }
     }
 
-    static let _rightViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_rightViewPresent")
+    static let rightViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_rightViewPresent")
     private var _rightViewPresent = true
     var rightViewPresent: Bool {
         get {
-            self.changeCounter.performedReadOnMainThread(ContextMgr._rightViewPresentK)
+            self.changeCounter.performedReadOnMainThread(ContextMgr.rightViewPresentK)
             return _rightViewPresent
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(ContextMgr._rightViewPresentK)
+            self.changeCounter.performedWriteOnMainThread(ContextMgr.rightViewPresentK)
             _rightViewPresent = newValue
         }
     }
 
-    static let _imageColorK = PropertyDescriptor<ContextMgr,NSColor>.key("_imageColor")
+    static let imageColorK = PropertyDescriptor<ContextMgr,NSColor>.key("_imageColor")
     private var _imageColor: NSColor = NSColor.whiteColor()
     var imageColor: NSColor {
         get {
-            self.changeCounter.performedReadOnMainThread(ContextMgr._imageColorK)
+            self.changeCounter.performedReadOnMainThread(ContextMgr.imageColorK)
             return _imageColor
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(ContextMgr._imageColorK)
+            self.changeCounter.performedWriteOnMainThread(ContextMgr.imageColorK)
             _imageColor = newValue
         }
     }

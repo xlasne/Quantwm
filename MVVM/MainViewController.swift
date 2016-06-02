@@ -49,7 +49,8 @@ class MainViewController: NSViewController {
     //MARK: refreshSum
     static let refreshUIREG = RegisterDescription(
         selector: #selector(MainViewController.refreshUI),
-        keypathDescriptionSet: [MainViewModel.getLeftRightKeypaths()],
+        keypathSet: MainViewModel.leftViewPresentKeypathSet +
+          MainViewModel.rightViewPresentKeypathSet,
         name: "MainViewController",
         configurationPriority: 1)
 

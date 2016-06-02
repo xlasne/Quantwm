@@ -17,25 +17,32 @@ public class RegisterDescription
     let maximumAllowedRegistrationWithSameTypeSelector: Int?
     let configurationPriority: Int?
 
-    public init(selector: Selector,
-         keypathDescriptionSet: [Set<KeypathDescription>],
-         name: String?,
-         writtenPropertySet: Set<PropertyDescription> = [],
-         maximumAllowedRegistrationWithSameTypeSelector: Int? = nil,
-         configurationPriority: Int? = nil)
-    {
-        self.selector = selector
+  public init(selector: Selector,
+              keypathSet: KeypathSet,
+              name: String?,
+              maximumAllowedRegistrationWithSameTypeSelector: Int? = nil,
+              configurationPriority: Int? = nil)
+  {
+    self.selector = selector
+    self.keypathDescriptionSet = keypathSet.readKeypathSet
+    self.name = name
+    self.writtenPropertySet = keypathSet.writtenPropertySet
+    self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
+    self.configurationPriority = configurationPriority
+  }
 
-        var keypathUnion: Set<KeypathDescription> = []
-        for item in keypathDescriptionSet {
-            keypathUnion.unionInPlace(item)
-        }
-
-        self.keypathDescriptionSet = keypathUnion
-        self.name = name
-        self.writtenPropertySet = writtenPropertySet
-        self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
-        self.configurationPriority = configurationPriority
-    }
-
+  public init(selector: Selector,
+              keypathDescriptionSet: Set<KeypathDescription>,
+              name: String?,
+              writtenPropertySet: Set<PropertyDescription> = [],
+              maximumAllowedRegistrationWithSameTypeSelector: Int? = nil,
+              configurationPriority: Int? = nil)
+  {
+    self.selector = selector
+    self.keypathDescriptionSet = keypathDescriptionSet
+    self.name = name
+    self.writtenPropertySet = writtenPropertySet
+    self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
+    self.configurationPriority = configurationPriority
+  }
 }

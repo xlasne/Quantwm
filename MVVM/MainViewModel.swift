@@ -11,27 +11,31 @@ import Cocoa
 class MainViewModel: GenericViewModel<DataModel>
 {
 
-    // MARK: Interfaces
+  var contextMgr: ContextMgr {
+    return self.dataModel.contextMgr.observed
+  }
 
-    init(dataModel : DataModel, viewController : MainViewController)
-    {
-        super.init(dataModel: dataModel, owner: viewController)
-    }
+  // MARK: Interfaces
 
-    static func getLeftRightKeypaths() -> Set<KeypathDescription>
-    {
-        let leftM = KeypathDescription(root:ContextMgr.contextMgrK, chain: [ContextMgr._leftViewPresentK])
-        let rightM = KeypathDescription(root:ContextMgr.contextMgrK, chain:[ContextMgr._rightViewPresentK])
-        return Set([leftM, rightM])
-    }
+  init(dataModel : DataModel, viewController : MainViewController)
+  {
+    super.init(dataModel: dataModel, owner: viewController)
+  }
 
-    var leftViewPresent: Bool {
-        return self.dataModel.contextMgr.observed.leftViewPresent
-    }
+  static let leftViewPresentKeypathSet =
+    KeypathSet(readWithRoot:ContextMgr.contextMgrK, chain: [ContextMgr.leftViewPresentK])
 
-    var rightViewPresent: Bool {
-        return self.dataModel.contextMgr.observed.rightViewPresent
-    }
+  var leftViewPresent: Bool {
+    let contextMgr = repositoryObserver.rootForKey(ContextMgr.contextMgrK) as? ContextMgr
+    return contextMgr?.leftViewPresent ?? false
+  }
+
+  static let rightViewPresentKeypathSet =
+    KeypathSet(readWithRoot:ContextMgr.contextMgrK, chain: [ContextMgr.rightViewPresentK])
+
+  var rightViewPresent: Bool {
+    return contextMgr.rightViewPresent
+  }
 
 }
 
