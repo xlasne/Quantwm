@@ -10,12 +10,12 @@ import Foundation
 
 public class RegisterDescription
 {
-    let selector: Selector
-    let keypathDescriptionSet: Set<KeypathDescription>
-    let name: String?
-    let writtenPropertySet: Set<PropertyDescription>
-    let maximumAllowedRegistrationWithSameTypeSelector: Int?
-    let configurationPriority: Int?
+  let selector: Selector
+  let keypathDescriptionSet: Set<KeypathDescription>
+  let name: String?
+  let writtenPropertySet: Set<PropertyDescription>
+  let maximumAllowedRegistrationWithSameTypeSelector: Int?
+  let configurationPriority: Int?
 
   public init(selector: Selector,
               keypathSet: KeypathSet,

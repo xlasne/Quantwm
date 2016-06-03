@@ -11,82 +11,82 @@ import AppKit
 
 class Scene2ViewModel: GenericViewModel<DataModel>
 {
-    // Generic View Model
-    init(dataModel : DataModel, viewController: Scene2ViewController)
-    {
-        super.init(dataModel: dataModel, owner: viewController)
-    }
+  // Generic View Model
+  init(dataModel : DataModel, viewController: Scene2ViewController)
+  {
+    super.init(dataModel: dataModel, owner: viewController)
+  }
 
-    // MARK: - Input Processing
-    func setValue2(numberStr: String, focus: NSObject?)
+  // MARK: - Input Processing
+  func setValue2(numberStr: String, focus: NSObject?)
+  {
+    let formatter = NSNumberFormatter()
+    if let val = formatter.numberFromString(numberStr)?.integerValue
     {
-        let formatter = NSNumberFormatter()
-        if let val = formatter.numberFromString(numberStr)?.integerValue
+      updateActionAndRefresh(owner: owner) {
+        if val != self.dataModel.number2
         {
-            updateActionAndRefresh(owner: owner) {
-                if val != self.dataModel.number2
-                {
-                    self.dataModel.number2 = val
-                }
-                self.dataModel.contextMgr.currentFocus = focus
-            }
-        } else {
-            NSBeep()
+          self.dataModel.number2 = val
         }
+        self.dataModel.contextMgr.currentFocus = focus
+      }
+    } else {
+      NSBeep()
     }
-    
-    func toggleImageColor() {
-        updateActionAndRefresh(owner: owner) {
-            let color = dataModel.contextMgr.imageColor
-            if color == NSColor.whiteColor() {
-                print("Switch color white to green")
-                self.dataModel.contextMgr.imageColor = NSColor.greenColor()
-            } else {
-                print("Switch color green to white")
-                self.dataModel.contextMgr.imageColor = NSColor.whiteColor()
-            }
-        }
+  }
+
+  func toggleImageColor() {
+    updateActionAndRefresh(owner: owner) {
+      let color = dataModel.contextMgr.imageColor
+      if color == NSColor.whiteColor() {
+        print("Switch color white to green")
+        self.dataModel.contextMgr.imageColor = NSColor.greenColor()
+      } else {
+        print("Switch color green to white")
+        self.dataModel.contextMgr.imageColor = NSColor.whiteColor()
+      }
     }
+  }
 
-    // MARK: - Get Data Model
+  // MARK: - Get Data Model
 
-    //MARK: getFocus
-    static let getFocusKeypathSet =
-        KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
-
-
-    func getFocus() -> NSObject? {
-        return dataModel.contextMgr.observed.currentFocus
-    }
-
-    //MARK: getValue2
-    static let getValue2KeypathSet =
-       KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
-
-    func getValue2() -> String {
-        let formatter = NSNumberFormatter()
-        let val = self.dataModel.observedSelf.number2
-        return  formatter.stringFromNumber(val) ?? "Error"
-    }
+  //MARK: getFocus
+  static let getFocusKeypathSet =
+    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
 
 
-    //MARK: getSum
-    static let getSumKeypathSet =
-      KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
+  func getFocus() -> NSObject? {
+    return dataModel.contextMgr.observed.currentFocus
+  }
+
+  //MARK: getValue2
+  static let getValue2KeypathSet =
+    KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
+
+  func getValue2() -> String {
+    let formatter = NSNumberFormatter()
+    let val = self.dataModel.observedSelf.number2
+    return  formatter.stringFromNumber(val) ?? "Error"
+  }
 
 
-    func getSum() -> Int?
-    {
-        let sum = self.dataModel.observedSelf.getSum()
-        return sum
-    }
+  //MARK: getSum
+  static let getSumKeypathSet =
+    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
 
-    //MARK: getColor
-    static let getColorKeypathSet =
-       KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.imageColorK])
 
-    func getColor() -> NSColor
-    {
-        return dataModel.contextMgr.observed.imageColor
-    }
+  func getSum() -> Int?
+  {
+    let sum = self.dataModel.observedSelf.getSum()
+    return sum
+  }
+
+  //MARK: getColor
+  static let getColorKeypathSet =
+    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.imageColorK])
+
+  func getColor() -> NSColor
+  {
+    return dataModel.contextMgr.observed.imageColor
+  }
 }

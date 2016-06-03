@@ -17,36 +17,36 @@ import Foundation
 class ImmediateSumProcessor: NSObject
 {
 
-    weak var dataModel : DataModel?
+  weak var dataModel : DataModel?
 
-    override init()
-    {
-        super.init()
-    }
+  override init()
+  {
+    super.init()
+  }
 
-    deinit
-    {
-        self.dataModel?.repositoryObserver.displayUsageForOwner(self)
-    }
+  deinit
+  {
+    self.dataModel?.repositoryObserver.displayUsageForOwner(self)
+  }
 
-    func register()
-    {
-        let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
-        let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2K])
-        self.dataModel?.repositoryObserver.register(
-            target: self,
-            selector: #selector(ImmediateSumProcessor.startProcessing),
-            keypathDescriptionSet: Set([obs1,obs2]),
-            name: "ImmediateSumProcessor",
-            writtenPropertySet: Set([DataModel.invSumOfNumberK]))
-    }
+  func register()
+  {
+    let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
+    let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2K])
+    self.dataModel?.repositoryObserver.register(
+      target: self,
+      selector: #selector(ImmediateSumProcessor.startProcessing),
+      keypathDescriptionSet: Set([obs1,obs2]),
+      name: "ImmediateSumProcessor",
+      writtenPropertySet: Set([DataModel.invSumOfNumberK]))
+  }
 
-    func startProcessing()
+  func startProcessing()
+  {
+    if let number1 = self.dataModel?.observedSelf.number1,
+      let number2 = self.dataModel?.observedSelf.number2
     {
-        if let number1 = self.dataModel?.observedSelf.number1,
-            let number2 = self.dataModel?.observedSelf.number2
-        {
-            self.dataModel?.observedSelf.invSumOfNumber = -(number1 + number2)
-        }
+      self.dataModel?.observedSelf.invSumOfNumber = -(number1 + number2)
     }
+  }
 }

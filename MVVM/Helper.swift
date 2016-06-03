@@ -12,47 +12,47 @@ import AppKit
 class Helper
 {
 
-    class func addToContainerView(myView: NSView, subView subViewZ: NSView?) {
-        if let subView = subViewZ
-        {
-            myView.addSubview(subView)
-
-            let views = ["view": myView, "subView": subView]
-
-            subView.translatesAutoresizingMaskIntoConstraints = false
-
-            let constH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[subView]-0-|", options: .AlignAllCenterY, metrics: nil, views: views)
-            myView.addConstraints(constH)
-            let constW = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[subView]-0-|", options: .AlignAllCenterX, metrics: nil, views: views)
-            myView.addConstraints(constW)
-        }
-    }
-
-    class func documentForViewController(viewController: NSViewController) -> Document?
+  class func addToContainerView(myView: NSView, subView subViewZ: NSView?) {
+    if let subView = subViewZ
     {
-        guard let window = viewController.view.window else { return nil}
-        guard let document = NSDocumentController.sharedDocumentController().documentForWindow(window) as? Document else { return nil }
-        return document
+      myView.addSubview(subView)
+
+      let views = ["view": myView, "subView": subView]
+
+      subView.translatesAutoresizingMaskIntoConstraints = false
+
+      let constH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[subView]-0-|", options: .AlignAllCenterY, metrics: nil, views: views)
+      myView.addConstraints(constH)
+      let constW = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[subView]-0-|", options: .AlignAllCenterX, metrics: nil, views: views)
+      myView.addConstraints(constW)
     }
+  }
 
-    class func generateRoundedCornerImage(color: NSColor, size: CGSize, inset : CGFloat) -> NSImage
-    {
-        let image = NSImage(size: size)
-        image.lockFocus()
+  class func documentForViewController(viewController: NSViewController) -> Document?
+  {
+    guard let window = viewController.view.window else { return nil}
+    guard let document = NSDocumentController.sharedDocumentController().documentForWindow(window) as? Document else { return nil }
+    return document
+  }
 
-        let x = inset
-        let y = inset
-        let w = size.width  - 2 * inset
-        let h = size.height - 2 * inset
-        let rect = NSMakeRect(x,y,w,h)
+  class func generateRoundedCornerImage(color: NSColor, size: CGSize, inset : CGFloat) -> NSImage
+  {
+    let image = NSImage(size: size)
+    image.lockFocus()
 
-        let ovalPath = NSBezierPath(roundedRect: rect, xRadius: 4,yRadius: 4)
-        color.setFill()
-        ovalPath.fill()
+    let x = inset
+    let y = inset
+    let w = size.width  - 2 * inset
+    let h = size.height - 2 * inset
+    let rect = NSMakeRect(x,y,w,h)
 
-        image.unlockFocus()
-        return image
-    }
+    let ovalPath = NSBezierPath(roundedRect: rect, xRadius: 4,yRadius: 4)
+    color.setFill()
+    ovalPath.fill()
+
+    image.unlockFocus()
+    return image
+  }
 
 
 }

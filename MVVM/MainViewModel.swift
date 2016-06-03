@@ -36,6 +36,6 @@ class MainViewModel: GenericViewModel<DataModel>
   var rightViewPresent: Bool {
     return contextMgr.rightViewPresent
   }
-
+  
 }
 

@@ -194,7 +194,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.transientArrayLabel.stringValue = "Sum: _"
     }
   }
-
+  
 }
 
 

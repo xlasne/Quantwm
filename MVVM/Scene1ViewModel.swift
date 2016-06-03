@@ -30,122 +30,127 @@ import AppKit
 
 class Scene1ViewModel: GenericViewModel<DataModel>
 {
-    // Generic View Model
-    init(dataModel : DataModel, viewController: Scene1ViewController)
+  // Generic View Model
+  init(dataModel : DataModel, viewController: Scene1ViewController)
+  {
+    super.init(dataModel: dataModel, owner: viewController)
+  }
+
+
+  // MARK: - Input Processing
+  // 1: First update data model variable without UI refresh
+  // 2: Then update context variable with UI Refresh
+
+  func updateValue(numberStr: String, focus: NSObject?)
+  {
+
+    let formatter = NSNumberFormatter()
+    if let val = formatter.numberFromString(numberStr)?.integerValue
     {
-        super.init(dataModel: dataModel, owner: viewController)
+      updateActionAndRefresh(owner: owner) {
+        dataModel.observedSelf.number1 = val
+        dataModel.contextMgr.currentFocus = focus
+      }
+    } else {
+      NSBeep()
     }
+  }
 
-
-    // MARK: - Input Processing
-    // 1: First update data model variable without UI refresh
-    // 2: Then update context variable with UI Refresh
-
-    func updateValue(numberStr: String, focus: NSObject?)
-    {
-
-        let formatter = NSNumberFormatter()
-        if let val = formatter.numberFromString(numberStr)?.integerValue
-        {
-            updateActionAndRefresh(owner: owner) {
-                dataModel.observedSelf.number1 = val
-                dataModel.contextMgr.currentFocus = focus
-            }
-        } else {
-            NSBeep()
-        }
+  func toggleLeftView()
+  {
+    updateActionAndRefresh(owner: owner) {
+      dataModel.contextMgr.toggleLeftView()
     }
+  }
 
-    func toggleLeftView()
-    {
-        updateActionAndRefresh(owner: owner) {
-            dataModel.contextMgr.toggleLeftView()
-        }
+  func toggleRightView()
+  {
+    updateActionAndRefresh(owner: owner) {
+      dataModel.contextMgr.toggleRightView()
     }
+  }
 
-    func toggleRightView()
-    {
-        updateActionAndRefresh(owner: owner) {
-            dataModel.contextMgr.toggleRightView()
-        }
+  func toggleTransientAndRefresh()
+  {
+    updateActionAndRefresh(owner: owner) {
+      if let _ = self.dataModel.transientClass {
+        print("Removing Transient")
+        dataModel.removeTransient()
+      } else {
+        print("Creating Transient")
+        dataModel.createTransient()
+      }
     }
+  }
 
-    func toggleTransientAndRefresh()
-    {
-        updateActionAndRefresh(owner: owner) {
-            if let _ = self.dataModel.transientClass {
-                print("Removing Transient")
-                dataModel.removeTransient()
-            } else {
-                print("Creating Transient")
-                dataModel.createTransient()
-            }
-        }
+  func transientAddtoArray()
+  {
+    updateActionAndRefresh(owner: owner) {
+      let value = dataModel.number1
+      dataModel.transientClass?.arrayVal[0].intValue += value
     }
+  }
 
-    func transientAddtoArray()
-    {
-        updateActionAndRefresh(owner: owner) {
-            let value = dataModel.number1
-            dataModel.transientClass?.arrayVal[0].intValue += value
-        }
+
+  // MARK: - Get Data Model - Read Only request
+
+  //MARK: getFocus
+  static let getFocusKeypathSet =
+    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
+
+  func getFocus() -> NSObject? {
+    let value = dataModel.contextMgr.observed.currentFocus
+    return value
+  }
+
+  //MARK: getValue1
+  static let getValue1KeypathSet =
+    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.number1K])
+
+  var value1: String {
+    get {
+      let formatter = NSNumberFormatter()
+      let val = dataModel.observedSelf.number1
+      return  formatter.stringFromNumber(val) ?? "Error"
     }
+  }
+
+  //MARK: getSum
+  static let getInvSumKeypathSet =
+    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.invSumOfNumberK])
 
 
-    // MARK: - Get Data Model - Read Only request
+  func getInvSum() -> Int?
+  {
+    return dataModel.observedSelf.invSumOfNumber
+  }
 
-    //MARK: getFocus
-    static let getFocusKeypathSet =
-      KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
+  //MARK: getArraySum
+  static let getArraySumKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
+                                                chain: [DataModel.transientClassK, TransientClass.arrayValueK, NodeObjc.intValueK()])
 
-    func getFocus() -> NSObject? {
-        let value = dataModel.contextMgr.observed.currentFocus
-        return value
-    }
-
-    //MARK: getValue1
-    static let getValue1KeypathSet =
-       KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.number1K])
-
-    var value1: String {
-        get {
-            let formatter = NSNumberFormatter()
-            let val = dataModel.observedSelf.number1
-            return  formatter.stringFromNumber(val) ?? "Error"
-        }
-    }
-
-    //MARK: getSum
-    static let getInvSumKeypathSet =
-      KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.invSumOfNumberK])
+  func getArraySum() -> Int?
+  {
+    return dataModel
+      .observedSelf
+      .transientClass?
+      .arrayVal
+      .map({$0.intValue})
+      .reduce(0, combine: +)
+  }
 
 
-    func getInvSum() -> Int?
-    {
-        return dataModel.observedSelf.invSumOfNumber
-    }
-
-    //MARK: getArraySum
-    static let getArraySumKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                chain: [DataModel.transientClassK, TransientClass.arrayValueK, NodeObjc.intValueK()])
-
-    func getArraySum() -> Int?
-    {
-        return dataModel.observedSelf.transientClass?.arrayVal.map({$0.intValue}).reduce(0, combine: +)
-    }
-
-    //MARK: getTransient
-    static let getTransientKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                chain: [DataModel.transientClassK, TransientClass.transientValK])
+  //MARK: getTransient
+  static let getTransientKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
+                                                 chain: [DataModel.transientClassK, TransientClass.transientValK])
 
 
-    func getTransient() -> String?
-    {
-        if let transient = dataModel.observedSelf.transientClass {
-            let val = transient.transientVal
-            return val
-        }
-        return nil
-    }
+  func getTransient() -> String?
+  {
+    return dataModel
+      .observedSelf
+      .transientClass?
+      .transientVal
+  }
 
 }

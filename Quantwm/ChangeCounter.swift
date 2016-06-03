@@ -21,72 +21,72 @@ typealias NodeId = Int32
 
 public class ChangeCounter: NSObject {
 
-    //MARK: Properties
+  //MARK: Properties
 
-    // Unique NodeId Generator
-    static var nodeIdGenerator: NodeId = 0
-    static func generateUniqueNodeId() -> NodeId {
-        return OSAtomicIncrement32(&ChangeCounter.nodeIdGenerator)
+  // Unique NodeId Generator
+  static var nodeIdGenerator: NodeId = 0
+  static func generateUniqueNodeId() -> NodeId {
+    return OSAtomicIncrement32(&ChangeCounter.nodeIdGenerator)
+  }
+
+  // NodeId uniquely identify this node. Used by DataUsage
+  let nodeId: NodeId  = ChangeCounter.generateUniqueNodeId()
+
+  // Maintain a change counter for each value or reference property of its parent object/struct
+  // Counter is created at 0 when requested
+  var changeCountDict: [String:Int] = [:]
+
+  //MARK: - Read / Write monitoring
+
+  public func performedReadOnMainThread(property: PropertyDescription)
+  {
+    let childKey = property.propKey
+    if !NSThread.isMainThread() {
+      assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
     }
-
-    // NodeId uniquely identify this node. Used by DataUsage
-    let nodeId: NodeId  = ChangeCounter.generateUniqueNodeId()
-
-    // Maintain a change counter for each value or reference property of its parent object/struct
-    // Counter is created at 0 when requested
-    var changeCountDict: [String:Int] = [:]
-
-    //MARK: - Read / Write monitoring
-
-public func performedReadOnMainThread(property: PropertyDescription)
-    {
-        let childKey = property.propKey
-        if !NSThread.isMainThread() {
-            assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
-        }
-        if let dataUsage = DataUsage.currentInstance() {
-            dataUsage.addRead(self, property: property)
-        }
+    if let dataUsage = DataUsage.currentInstance() {
+      dataUsage.addRead(self, property: property)
     }
+  }
 
-public  func performedWriteOnMainThread(property: PropertyDescription)
-    {
-        let childKey = property.propKey
-        if !NSThread.isMainThread() {
-            assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
-        }
-        self.setDirty(childKey)
-
-        if let dataUsage = DataUsage.currentInstance() {
-            dataUsage.addWrite(self, property: property)
-        }
+  public  func performedWriteOnMainThread(property: PropertyDescription)
+  {
+    let childKey = property.propKey
+    if !NSThread.isMainThread() {
+      assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
     }
+    self.setDirty(childKey)
 
-    //MARK: - Update Property Management
-
-    // Increment changeCount for a property
-    func setDirty(childKey: String) -> Int
-    {
-        print("Monitoring Node: Child \(childKey) dirty")
-        if let previousValue = self.changeCountDict[childKey] {
-            self.changeCountDict[childKey] = previousValue + 1
-            return previousValue + 1
-        } else {
-            self.changeCountDict[childKey] = 1
-            return 1
-        }
+    if let dataUsage = DataUsage.currentInstance() {
+      dataUsage.addWrite(self, property: property)
     }
+  }
 
-    // Get current changeCount for a property
-    func changeCount(childKey: String) -> Int
-    {
-        if let changeCount = self.changeCountDict[childKey] {
-            return changeCount
-        } else {
-            self.changeCountDict[childKey] = 0
-            return 0
-        }
+  //MARK: - Update Property Management
+
+  // Increment changeCount for a property
+  func setDirty(childKey: String) -> Int
+  {
+    print("Monitoring Node: Child \(childKey) dirty")
+    if let previousValue = self.changeCountDict[childKey] {
+      self.changeCountDict[childKey] = previousValue + 1
+      return previousValue + 1
+    } else {
+      self.changeCountDict[childKey] = 1
+      return 1
     }
+  }
+
+  // Get current changeCount for a property
+  func changeCount(childKey: String) -> Int
+  {
+    if let changeCount = self.changeCountDict[childKey] {
+      return changeCount
+    } else {
+      self.changeCountDict[childKey] = 0
+      return 0
+    }
+  }
 
 }
 

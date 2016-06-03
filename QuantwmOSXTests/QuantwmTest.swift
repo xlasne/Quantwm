@@ -64,7 +64,7 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
   }
 
   static let testDictK = PropertyDescriptor<TestClass,TestStruct>.key("_testDict",
-              propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+                                                                      propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
   )
   private var _testDict: [String:TestStruct] = [:]
   var testDict : [String:TestStruct] {
@@ -79,7 +79,7 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
   }
 
   static let testEnumK = PropertyDescriptor<TestClass,TestStruct>.key("_testEnum",
-                    propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+                                                                      propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
   )
   private var _testEnum = TestEnum.item1(TestStruct())
   var testEnum : TestEnum {
@@ -261,7 +261,7 @@ class QuantwmTest: XCTestCase {
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "update -> call")
 
-}
+  }
 
   func testLazyUpdate() {
     let keypath = KeypathSet(readWithRoot:TestBase.testRootK, chain: [TestBase.lazyNumberK])
@@ -369,10 +369,10 @@ class QuantwmTest: XCTestCase {
     self.base.testClass.testEnum = TestEnum.item2(testStruct)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "update -> call")
-
+    
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == false, "no update -> no call")
-
+    
   }
-
+  
 }
