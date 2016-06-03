@@ -97,4 +97,10 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                               handler: handler)
   }
 
+  public func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
+  {
+    repositoryObserver.updateActionIfPossibleElseDispatch(owner: owner,
+                                                          escapingHandler: escapingHandler)
+  }
+
 }
