@@ -22,7 +22,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
   // MARK: Interfaces
   weak var document: Document!
 
-  lazy var contextMgr: ContextMgr  = ContextMgr(dataModel: self)
+  let contextMgr: ContextMgr = ContextMgr()
   let repositoryObserver: RepositoryObserver
 
   func getRepositoryObserver() -> RepositoryObserver
@@ -129,6 +129,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
       associatedObject: self,
       changeCounter: self.changeCounter,
       rootDescription: DataModel.dataModelK)
+    self.contextMgr.registerRoot(self)
   }
 
   func postInit(document document: Document)
@@ -159,6 +160,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
       associatedObject: self,
       changeCounter: self.changeCounter,
       rootDescription: DataModel.dataModelK)
+    self.contextMgr.registerRoot(self)
   }
 }
 
@@ -177,8 +179,6 @@ extension DataModel
   {
     return self.sumOfNumber
   }
-
-
 }
 
 //MARK: Actions

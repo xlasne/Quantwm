@@ -79,9 +79,13 @@ class ContextMgr: NSObject, MonitoredClass
     }
   }
 
-  init(dataModel: DataModel)
+  override init()
   {
     super.init()
+  }
+
+  func registerRoot(dataModel: DataModel)
+  {
     dataModel.repositoryObserver.registerRoot(
       associatedObject: self,
       changeCounter: self.changeCounter,
