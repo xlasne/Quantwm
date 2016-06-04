@@ -8,10 +8,6 @@ I encourage you to also try it on test version, and provide me feedback.
 
 The current version is mainly targetted toward swift, with limited support of Objective-C.
 
-For the description of how it works and the associated concepts, I have started a nice book explaining it all on leanpub. This is all work in progress, but its 70% complete.
-
-https://leanpub.com/quantummvvm
-
 ****************
 
 # Introduction
@@ -270,12 +266,17 @@ The Part 2 will provide detailed Quantum user guide and API details for each com
 - View Controller
 - View Model
 
-The Part 3 will consider more advanced topics:
+The Part 3 will consider more advanced topics (TO DO):
 
 - Quantum Migration Guide
 - Interaction with background threads
 - Evolution toward standard Quantum User Interface components
 - Unit Testing
 
+**********************
 
+The rest of the manual is in my nice book, containing a detailled description of how it works and the associated concepts.
+This is all work in progress, but its 70% complete.
+
+[Quantum MVVM](https://leanpub.com/quantummvvm)
 
