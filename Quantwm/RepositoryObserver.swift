@@ -103,10 +103,10 @@ public class RepositoryObserver: NSObject {
 
   public func registerForEachCycle(target target: NSObject, selector: Selector, name: String,
                                           maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)  {
-    self.register(target: target, selector: selector, keypathDescriptionSet: [], name: name)
+    self.registerObserver(target: target, selector: selector, keypathDescriptionSet: [], name: name)
   }
 
-  public func register(target target: NSObject,
+  public func registerObserver(target target: NSObject,
                               registrationDesc: RegisterDescription,
                               name: String? = nil)
   {
@@ -114,7 +114,7 @@ public class RepositoryObserver: NSObject {
       assert(false,"RegisterDescription: Error name is not set in static or dynamic call")
     }
 
-    self.register(target: target,
+    self.registerObserver(target: target,
                   selector: registrationDesc.selector,
                   keypathDescriptionSet: registrationDesc.keypathDescriptionSet,
                   name: name,
@@ -123,7 +123,7 @@ public class RepositoryObserver: NSObject {
                   configurationPriority: registrationDesc.configurationPriority)
   }
 
-  public func register(target target: NSObject,
+  public func registerObserver(target target: NSObject,
                               selector: Selector,
                               keypathDescriptionSet: Set<KeypathDescription>,
                               name: String,

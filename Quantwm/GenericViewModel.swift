@@ -28,14 +28,14 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
   }
 
   // MARK: - Registration
-  public func register(target target: NSObject,
+  public func registerObserver(target target: NSObject,
                               selector: Selector,
                               keypathDescriptionSet: Set<KeypathDescription>,
                               name: String,
                               writtenPropertySet: Set<PropertyDescription> = [],
                               maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
   {
-    self.repositoryObserver.register(target: target,
+    self.repositoryObserver.registerObserver(target: target,
                                      selector: selector,
                                      keypathDescriptionSet: keypathDescriptionSet,
                                      name: name,
@@ -43,11 +43,11 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                      maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
   }
 
-  public func register(target target: NSObject,
+  public func registerObserver(target target: NSObject,
                               registrationDesc: RegisterDescription,
                               name: String? = nil)
   {
-    self.repositoryObserver.register(target: target,
+    self.repositoryObserver.registerObserver(target: target,
                                      registrationDesc: registrationDesc,
                                      name: name)
   }

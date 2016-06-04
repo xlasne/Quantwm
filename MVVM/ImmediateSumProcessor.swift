@@ -33,7 +33,7 @@ class ImmediateSumProcessor: NSObject
   {
     let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
     let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2K])
-    self.dataModel?.repositoryObserver.register(
+    self.dataModel?.repositoryObserver.registerObserver(
       target: self,
       selector: #selector(ImmediateSumProcessor.startProcessing),
       keypathDescriptionSet: Set([obs1,obs2]),

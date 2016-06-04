@@ -50,11 +50,11 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 
     self.viewModel?.updateActionAndRefresh(owner: self) {
 
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene2ViewController.refreshViewREG,
                                name:sceneName)
 
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc:Scene2ViewController.refreshColorREG,
                                name: sceneName+"Color")
       self.toogleColor()

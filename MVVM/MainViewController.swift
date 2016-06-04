@@ -31,7 +31,7 @@ class MainViewController: NSViewController {
     self.viewModel = MainViewModel(dataModel: document.dataModel, viewController: self)
 
     self.viewModel?.updateActionAndRefresh(owner: self) {
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: MainViewController.refreshUIREG)
     }
   }

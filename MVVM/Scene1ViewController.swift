@@ -64,16 +64,16 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
 
     // Registration
     self.viewModel?.updateActionAndRefresh(owner: self) {
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshTextFieldREG)
 
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshArraySumREG)
 
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshTransientREG)
 
-      self.viewModel?.register(target: self,
+      self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshInvSumREG)
     }
   }
