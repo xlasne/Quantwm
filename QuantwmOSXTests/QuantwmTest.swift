@@ -217,7 +217,8 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall,
+                                                       registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -235,7 +236,7 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -268,7 +269,7 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -294,7 +295,7 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -314,7 +315,7 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -341,7 +342,7 @@ class QuantwmTest: XCTestCase {
     let registration = RegisterDescription(selector: #selector(TestCall.testCall),
                                            keypathSet: keypath,
                                            name: "testCall")
-    self.base.getRepositoryObserver().register(target: testCall, registrationDesc: registration)
+    self.base.getRepositoryObserver().registerObserver(target: testCall, registrationDesc: registration)
     self.base.getRepositoryObserver().refreshUI()
     XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 

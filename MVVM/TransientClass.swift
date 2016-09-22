@@ -27,7 +27,7 @@ class TransientClass: MonitoredNode {
     }
   }
 
-  static let intValueK = PropertyDescriptor<TransientClass,Int>.key("intValue")
+  static let intValueK = PropertyDescriptor<TransientClass,Int>.key("_intValue")
   var _intValue: Int = 0
   var intValue: Int {
     get {
