@@ -33,7 +33,7 @@ class KeypathObserver
     self.keypathDesc = keypathDesc
   }
 
-  func readAndCompareChain(rootNode rootNode: RootNode)
+  func readAndCompareChain(rootNode: RootNode)
   {
     guard let rootChangeCounter = rootNode.changeCounter,
       let rootObject = rootNode.rootObject else {
@@ -66,12 +66,12 @@ class KeypathObserver
 
   }
 
-  func readChain(keypathDesc: KeypathDescription, fromRootChangeCounter rootChangeCounter: ChangeCounter, rootObject: MonitoredNode) -> NodeObserver
+  func readChain(_ keypathDesc: KeypathDescription, fromRootChangeCounter rootChangeCounter: ChangeCounter, rootObject: MonitoredNode) -> NodeObserver
   {
     if let firstProp = keypathDesc.chain.first
     {
       let nodeObserver = NodeObserver(node: rootChangeCounter, propertyDesc: firstProp)
-      nodeObserver.readChain(keypathDesc.chain, fromParent: GenericNode.MonitoredNodeType(rootObject))
+      nodeObserver.readChain(keypathDesc.chain, fromParent: GenericNode.monitoredNodeType(rootObject))
       return nodeObserver
     } else {
       let nodeObserver = NodeObserver(node: rootChangeCounter, propertyDesc: keypathDesc.root)
@@ -99,7 +99,7 @@ class KeypathObserver
 
   var propertyDescriptionSet: Set<String> {
     var result = Set(arrayLiteral: keypathDesc.root.description)
-    result.unionInPlace(keypathDesc.chain.map({$0.description}))
+    result.formUnion(keypathDesc.chain.map({$0.description}))
     return result
   }
 

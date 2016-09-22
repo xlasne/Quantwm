@@ -25,9 +25,9 @@ import Foundation
 // value type leaf destination is thus optional
 
 
-@objc public class PropertyDescription: NSObject
+@objc open class PropertyDescription: NSObject
 {
-  public let propKey: String
+  open let propKey: String
   let sourceType: Any.Type?
   let destType: Any.Type?
   let source: String
@@ -45,9 +45,9 @@ import Foundation
   {
     self.propKey = swift_propKey
     self.sourceType = sourceType
-    self.source = String(sourceType)
+    self.source = String(describing: sourceType)
     self.destType = destType
-    self.dest = String(destType)
+    self.dest = String(describing: destType)
     self.option = option
     self.dependFromPropertySet = dependFromPropertySet
     super.init()
@@ -71,7 +71,7 @@ import Foundation
     super.init()
   }
 
-  func checkSourceTypeMatchesDestinationTypeOf(previousProperty previousProperty:PropertyDescription) -> Bool
+  func checkSourceTypeMatchesDestinationTypeOf(previousProperty:PropertyDescription) -> Bool
   {
     // Check on Swift only AnyType
     if let sourceType = self.sourceType,
@@ -83,31 +83,31 @@ import Foundation
     return previousProperty.dest == self.source
   }
 
-  public override var description: String {
+  open override var description: String {
     return "\(source).\(propKey)"
   }
 
   var isRoot: Bool {
-    return option.contains(.IsRoot)
+    return option.contains(.isRoot)
   }
 
   var containsNode: Bool {
-    return option.contains(.ContainsNode) || option.contains(.ContainsNodeCollection)
+    return option.contains(.containsNode) || option.contains(.containsNodeCollection)
   }
 
   var containsNodeCollection: Bool {
-    return option.contains(.ContainsNodeCollection)
+    return option.contains(.containsNodeCollection)
   }
 
   var containsObjc: Bool {
-    return option.contains(.IsObjectiveC)
+    return option.contains(.isObjectiveC)
   }
 
   var isMonitoredNodeGetter: Bool {
-    return option.contains(.MonitoredNodeGetter)
+    return option.contains(.monitoredNodeGetter)
   }
 
-  static var maxLevelFunc: (currentMax: Int, otherProperty: PropertyDescription) -> Int =
+  static var maxLevelFunc: (_ currentMax: Int, _ otherProperty: PropertyDescription) -> Int =
     {
       (currentMax: Int, otherProperty: PropertyDescription) -> Int in
       return max(currentMax, otherProperty.level)
@@ -117,15 +117,15 @@ import Foundation
     if dependFromPropertySet.isEmpty {
       return 1
     } else {
-      return dependFromPropertySet.reduce(1, combine: PropertyDescription.maxLevelFunc) + 1
+      return dependFromPropertySet.reduce(1, PropertyDescription.maxLevelFunc) + 1
     }
   }
 }
 
-public class PropertyDescriptor<Source,Dest>
+open class PropertyDescriptor<Source,Dest>
 {
-  public static func key(
-    key: String,
+  open static func key(
+    _ key: String,
     propertyDescriptionOption: PropertyDescriptionOption = [],
     dependFromPropertySet: Set<PropertyDescription> = []
     ) -> PropertyDescription
@@ -139,14 +139,14 @@ public class PropertyDescriptor<Source,Dest>
   }
 }
 
-public class RootDescriptor<Source>
+open class RootDescriptor<Source>
 {
-  public static func key(key: String) -> PropertyDescription
+  open static func key(_ key: String) -> PropertyDescription
   {
     return PropertyDescription(swift_propKey: key,
                                sourceType: Source.self,
                                destType: Source.self,
-                               option: [.ContainsNode, .IsRoot])
+                               option: [.containsNode, .isRoot])
   }
 }
 

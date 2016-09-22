@@ -27,7 +27,7 @@ class ContextMgr: NSObject, MonitoredClass
   }
 
   static let currentFocusK = PropertyDescriptor<ContextMgr,NSObject?>.key("_currentFocus")
-  private var _currentFocus: NSObject? = nil
+  fileprivate var _currentFocus: NSObject? = nil
   var currentFocus: NSObject? {
     get {
       self.changeCounter.performedReadOnMainThread(ContextMgr.currentFocusK)
@@ -41,7 +41,7 @@ class ContextMgr: NSObject, MonitoredClass
   }
 
   static let leftViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_leftViewPresent")
-  private var _leftViewPresent = true
+  fileprivate var _leftViewPresent = true
   var leftViewPresent: Bool {
     get {
       self.changeCounter.performedReadOnMainThread(ContextMgr.leftViewPresentK)
@@ -54,7 +54,7 @@ class ContextMgr: NSObject, MonitoredClass
   }
 
   static let rightViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_rightViewPresent")
-  private var _rightViewPresent = true
+  fileprivate var _rightViewPresent = true
   var rightViewPresent: Bool {
     get {
       self.changeCounter.performedReadOnMainThread(ContextMgr.rightViewPresentK)
@@ -67,7 +67,7 @@ class ContextMgr: NSObject, MonitoredClass
   }
 
   static let imageColorK = PropertyDescriptor<ContextMgr,NSColor>.key("_imageColor")
-  private var _imageColor: NSColor = NSColor.whiteColor()
+  fileprivate var _imageColor: NSColor = NSColor.white
   var imageColor: NSColor {
     get {
       self.changeCounter.performedReadOnMainThread(ContextMgr.imageColorK)
@@ -84,7 +84,7 @@ class ContextMgr: NSObject, MonitoredClass
     super.init()
   }
 
-  func registerRoot(dataModel: DataModel)
+  func registerRoot(_ dataModel: DataModel)
   {
     dataModel.repositoryObserver.registerRoot(
       associatedObject: self,
@@ -104,7 +104,7 @@ class ContextMgr: NSObject, MonitoredClass
 
   // For Monitoring<> example
   func getFocus()-> NSObject? { return currentFocus }
-  func setFocus(focus: NSObject?) { currentFocus = focus }
+  func setFocus(_ focus: NSObject?) { currentFocus = focus }
 
 }
 

@@ -91,20 +91,20 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
 
   //MARK: - Input Section
 
-  override func controlTextDidChange(obj: NSNotification) {
-    if let sender = obj.object as? NSTextField where  sender == self.textField
+  override func controlTextDidChange(_ obj: Notification) {
+    if let sender = obj.object as? NSTextField ,  sender == self.textField
     {
       self.numberFieldUpdated(sender)
     }
   }
 
-  func numberFieldUpdated(sender: NSTextField)
+  func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.updateValue(numberStr, focus: sender)
   }
 
-  func showHideView(sender: NSButton)
+  func showHideView(_ sender: NSButton)
   {
     if sender == self.showHideLeft
     {
@@ -116,12 +116,12 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     }
   }
 
-  func transientButtonAction(sender: NSButton)
+  func transientButtonAction(_ sender: NSButton)
   {
     self.viewModel?.toggleTransientAndRefresh()
   }
 
-  func transientAddtoArrayButtonAction(sender: NSButton)
+  func transientAddtoArrayButtonAction(_ sender: NSButton)
   {
     self.viewModel?.transientAddtoArray()
   }

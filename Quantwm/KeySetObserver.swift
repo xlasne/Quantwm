@@ -10,32 +10,32 @@ import Foundation
 
 enum DataSetComparisonResult<T: Hashable>
 {
-  case Error_WriteDataSetNotEmpty(Set<T>)
-  case Warning_ReadDataSetContainsMoreDataThanKeySetObserver(Set<T>)
-  case Info_ReadDataSetIsContainedIntoKeySetObserver(Set<T>)
-  case Info_TargetIsNil
-  case Identical
-  case NotDirty
+  case error_WriteDataSetNotEmpty(Set<T>)
+  case warning_ReadDataSetContainsMoreDataThanKeySetObserver(Set<T>)
+  case info_ReadDataSetIsContainedIntoKeySetObserver(Set<T>)
+  case info_TargetIsNil
+  case identical
+  case notDirty
 }
 
 class KeySetObserver: NSObject {
 
   enum TriggerState {
-    case Normal
-    case Created
-    case Updated(description: String)
+    case normal
+    case created
+    case updated(description: String)
 
     var description: String {
       switch self {
-      case .Normal:            return ""
-      case .Created:           return "Created"
-      case .Updated(let desc): return desc
+      case .normal:            return ""
+      case .created:           return "Created"
+      case .updated(let desc): return desc
       }
     }
 
     func isDirty() -> Bool {
       switch self {
-      case .Normal: return false
+      case .normal: return false
       default:      return true
       }
     }
@@ -67,7 +67,7 @@ class KeySetObserver: NSObject {
   let name: String
 
   // force dirty when TriggetDataSet is created or its keypathSet modified
-  var forcedDirty = TriggerState.Created
+  var forcedDirty = TriggerState.created
   var updateCounter: [String:Int] = [:]
 
   // Maintain the union of all the RW_Action which are actually read
@@ -81,14 +81,14 @@ class KeySetObserver: NSObject {
        schedulingLevel: Int, writtenPropertySet: Set<String>,
        configurationSchedulingLevel: Int?)
   {
-    if !target.respondsToSelector(selector) {
+    if !target.responds(to: selector) {
       assert(false,"Error \(target) does not respond to selector \(selector)")
     }
 
     self.target = target
     self.targetAction = selector
     self.keypathSet = keypathSet
-    self.type = target.dynamicType
+    self.type = type(of: target)
     self.name = name
     self.unionReadKeypathSet = []
     self.writtenPropertySet = writtenPropertySet
@@ -98,16 +98,16 @@ class KeySetObserver: NSObject {
     print("KeySetObserver: target \(name) type \(self.type) created with \(keypathSet)")
   }
 
-  func insertValue(dataValue: String)
+  func insertValue(_ dataValue: String)
   {
     keypathSet.insert(dataValue)
-    forcedDirty = TriggerState.Updated(description: "\(dataValue) Inserted")
+    forcedDirty = TriggerState.updated(description: "\(dataValue) Inserted")
   }
 
-  func removeValue(dataValue: String)
+  func removeValue(_ dataValue: String)
   {
     keypathSet.remove(dataValue)
-    forcedDirty = TriggerState.Updated(description: "\(dataValue) Removed")
+    forcedDirty = TriggerState.updated(description: "\(dataValue) Removed")
   }
 
   // Return true is the delegate is nil => should discard this KeySetObserver
@@ -117,7 +117,7 @@ class KeySetObserver: NSObject {
   }
 
   // return true is target matches, and if selector matches. Nil matches all selectors
-  func matchesTarget(target: NSObject, selector: Selector? = nil) -> Bool
+  func matchesTarget(_ target: NSObject, selector: Selector? = nil) -> Bool
   {
     if target == self.target {
       if let selector = selector {
@@ -134,7 +134,7 @@ class KeySetObserver: NSObject {
     return keypathSet
   }
 
-  private func updateDirtyStatus(dataDict: [String:KeypathObserver]) ->  (isDirty:Bool, description: String) {
+  fileprivate func updateDirtyStatus(_ dataDict: [String:KeypathObserver]) ->  (isDirty:Bool, description: String) {
     var desc: String = ""
     var isDirty = false
 
@@ -156,7 +156,7 @@ class KeySetObserver: NSObject {
 
     if forcedDirty.isDirty() {
       desc = forcedDirty.description
-      forcedDirty = .Normal
+      forcedDirty = .normal
       isDirty = true
     }
 
@@ -171,21 +171,21 @@ class KeySetObserver: NSObject {
     return (isDirty:false, description: "Not Dirty")
   }
 
-  private func readNodeSet(dataDict: [String:KeypathObserver]) ->  Set<RW_Action> {
+  fileprivate func readNodeSet(_ dataDict: [String:KeypathObserver]) ->  Set<RW_Action> {
     var result: Set<RW_Action> = []
     for keypath in keypathSet
     {
       if let keypathObserver = dataDict[keypath]
       {
         let nodes = keypathObserver.collectNodeSet()
-        result.unionInPlace(nodes)
+        result.formUnion(nodes)
       }
     }
     return result
   }
 
 
-  func triggerIfDirty(dataUsage: DataUsage?, dataDict: [String:KeypathObserver])
+  func triggerIfDirty(_ dataUsage: DataUsage?, dataDict: [String:KeypathObserver])
   {
     // Let check this if target has been released since last removal.
     guard let target = target else {
@@ -208,7 +208,7 @@ class KeySetObserver: NSObject {
     let nodeSet = self.readNodeSet(dataDict)
 
 
-    target.performSelector(self.targetAction, withObject: nil)
+    target.perform(self.targetAction, with: nil)
 
     // Check consistency
     if let dataUsage = dataUsage {
@@ -219,16 +219,16 @@ class KeySetObserver: NSObject {
       }
 
       let commonPropertySet = commonProperties(actionSet1: readKeypathSet, actionSet2: nodeSet)
-      unionReadKeypathSet.unionInPlace(commonPropertySet)
+      unionReadKeypathSet.formUnion(commonPropertySet)
       let writeKeypathSet = dataUsage.getWriteKeypathObserverSet(target)
       let result = KeySetObserver.compareArrays(
         readAction: readKeypathSet, configuredReadAction: nodeSet,
         writeAction: writeKeypathSet, configuredWriteProperties: writtenPropertySet,
         name: name)
       switch result {
-      case .Error_WriteDataSetNotEmpty(let delta):
+      case .error_WriteDataSetNotEmpty(let delta):
         print("Warning: \(name) performs a write of \(delta) which is not part of the registered writtenProperty KeySetObserver. Consider manually adding these writtenProperty to the registered \(name) KeySetObserver")
-      case .Warning_ReadDataSetContainsMoreDataThanKeySetObserver(let delta):
+      case .warning_ReadDataSetContainsMoreDataThanKeySetObserver(let delta):
         print("Warning: \(name) performs a read of \(delta) which is not part of the registered KeySetObserver. Consider manually adding this keypath to the registered \(name) KeySetObserver")
       default:
         break
@@ -236,47 +236,47 @@ class KeySetObserver: NSObject {
     }
   }
 
-  func commonProperties(actionSet1 actionSet1:Set<RW_Action>, actionSet2:Set<RW_Action>) -> Set<String>
+  func commonProperties(actionSet1:Set<RW_Action>, actionSet2:Set<RW_Action>) -> Set<String>
   {
     var propertySet : [String] = []
     for action in actionSet1 {
       let commonActions = actionSet2
         .filter({ action.isEquivalentTo($0) })
         .map({$0.propertyDesc})
-      propertySet.appendContentsOf(commonActions)
+      propertySet.append(contentsOf: commonActions)
     }
     return Set(propertySet)
   }
 
 
-  func displayUsage(dataDict: [String:KeypathObserver]) -> DataSetComparisonResult<String>
+  func displayUsage(_ dataDict: [String:KeypathObserver]) -> DataSetComparisonResult<String>
   {
     var configuredProperties: Set<String> = []
     for keypath in keypathSet
     {
       if let dataValue = dataDict[keypath] {
-        configuredProperties.unionInPlace(dataValue.propertyDescriptionSet)
+        configuredProperties.formUnion(dataValue.propertyDescriptionSet)
       }
     }
 
     if unionReadKeypathSet == configuredProperties {
       print("Data Usage: Info: \(name) matches exactly its KeySetObserver")
-      return DataSetComparisonResult.Identical
+      return DataSetComparisonResult.identical
     }
 
-    if unionReadKeypathSet.isSubsetOf(configuredProperties) {
-      let delta = configuredProperties.subtract(unionReadKeypathSet)
+    if unionReadKeypathSet.isSubset(of: configuredProperties) {
+      let delta = configuredProperties.subtracting(unionReadKeypathSet)
       print("Data Usage: Info: Read of \(name) does not perform read of \(delta) which is part of the registered KeySetObserver. This is normal if these values are not read at each refresh cycle")
-      return DataSetComparisonResult.Info_ReadDataSetIsContainedIntoKeySetObserver(delta)
+      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoKeySetObserver(delta)
     }
 
-    let delta = unionReadKeypathSet.subtract(configuredProperties)
+    let delta = unionReadKeypathSet.subtracting(configuredProperties)
     print("Data Usage: Warning: Read of \(name) performs a read of \(delta) which is not part of the registered KeySetObserver. Consider manually adding this keypath to the registered \(name) KeySetObserver")
-    return DataSetComparisonResult.Warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
+    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
   }
 
 
-  static func compareArrays(readAction readAction:Set<RW_Action>, configuredReadAction:Set<RW_Action>,
+  static func compareArrays(readAction:Set<RW_Action>, configuredReadAction:Set<RW_Action>,
                                        writeAction:Set<RW_Action>, configuredWriteProperties:Set<String>,
                                        name: String) -> DataSetComparisonResult<RW_Action>
   {
@@ -284,18 +284,18 @@ class KeySetObserver: NSObject {
       return !configuredWriteProperties.contains(action.propertyDesc)
     }
     if !writeDelta.isEmpty {
-      return DataSetComparisonResult.Error_WriteDataSetNotEmpty(Set(writeDelta))
+      return DataSetComparisonResult.error_WriteDataSetNotEmpty(Set(writeDelta))
     }
     if readAction == configuredReadAction {
-      return DataSetComparisonResult.Identical
+      return DataSetComparisonResult.identical
     }
 
-    if readAction.isSubsetOf(configuredReadAction) {
-      let delta = configuredReadAction.subtract(readAction)
-      return DataSetComparisonResult.Info_ReadDataSetIsContainedIntoKeySetObserver(delta)
+    if readAction.isSubset(of: configuredReadAction) {
+      let delta = configuredReadAction.subtracting(readAction)
+      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoKeySetObserver(delta)
     }
-    let delta = readAction.subtract(configuredReadAction)
-    return DataSetComparisonResult.Warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
+    let delta = readAction.subtracting(configuredReadAction)
+    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
   }
 
 }

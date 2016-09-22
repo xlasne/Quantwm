@@ -13,23 +13,23 @@ struct RWContext: Equatable, CustomDebugStringConvertible
 {
   enum RW: Int
   {
-    case Loading
-    case Update
-    case Refresh
+    case loading
+    case update
+    case refresh
   }
   let rw : RW
   weak var owner: NSObject?
 
   var isUpdate: Bool {
-    return self.rw == RW.Update
+    return self.rw == RW.update
   }
 
   var isLoading: Bool {
-    return self.rw == RW.Loading
+    return self.rw == RW.loading
   }
 
   var isRefresh: Bool {
-    return self.rw == RW.Refresh
+    return self.rw == RW.refresh
   }
 
   init(rw: RW, owner:NSObject?) {
@@ -37,27 +37,27 @@ struct RWContext: Equatable, CustomDebugStringConvertible
     self.owner = owner
   }
   init(LoadingWithOwner owner:NSObject?) {
-    self.rw = RW.Loading
+    self.rw = RW.loading
     self.owner = owner
   }
 
   init(UpdateWithOwner owner:NSObject?) {
-    self.rw = RW.Update
+    self.rw = RW.update
     self.owner = owner
   }
 
   init(refreshOwner:NSObject?) {
-    self.rw = RW.Refresh
+    self.rw = RW.refresh
     self.owner = refreshOwner
   }
 
   var debugDescription: String {
     switch rw {
-    case .Loading:
+    case .loading:
       return "Loading - \(owner)"
-    case .Update:
+    case .update:
       return "Update - \(owner)"
-    case .Refresh:
+    case .refresh:
       return "Refresh"
     }
   }
@@ -102,14 +102,14 @@ class DataContext {
     return rwContextStack.isEmpty
   }
 
-  func pushContext(rwContext: RWContext) -> RWContext
+  func pushContext(_ rwContext: RWContext) -> RWContext
   {
     switch rwContext.rw {
-    case .Loading:
+    case .loading:
       break
-    case .Refresh:
+    case .refresh:
       assert(rwContextStack.isEmpty,"Error: Refresh context can only be pushed on an empty stack")
-    case .Update:
+    case .update:
       assert(!isRootRefresh,"Error: Update context can not be pushed on Refresh Root Stack")
       assert(!isRootLoading,"Error: Update context can not be pushed on Loading Root Stack")
     }
@@ -117,7 +117,7 @@ class DataContext {
     return rwContext
   }
 
-  func popContext(rwContext: RWContext)
+  func popContext(_ rwContext: RWContext)
   {
     if let topContext = rwContextStack.last
     {
@@ -137,6 +137,6 @@ class DataContext {
 
   var stackDescription: String {
     let desc = self.rwContextStack.map({$0.debugDescription})
-    return "Level(\(readLevel))[\(desc.joinWithSeparator("]["))]"
+    return "Level(\(readLevel))[\(desc.joined(separator: "]["))]"
   }
 }

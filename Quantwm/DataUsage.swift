@@ -40,7 +40,7 @@ class RW_Action: Equatable, CustomStringConvertible, Hashable {
     return propertyDesc.hashValue ^ Int(nodeId ?? 0)
   }
 
-  func isEquivalentTo(action: RW_Action) -> Bool
+  func isEquivalentTo(_ action: RW_Action) -> Bool
   {
     // 2 RW_actions are equivalent if either 2 nodes are non nul and identical
     // or if one of them is nil
@@ -74,7 +74,7 @@ class DataUsage: NSObject
 
   static let quantumKey = "QuantwmDataUsage"
 
-  static func registerContext(dataContext: DataContext, uuid: String) -> DataUsage
+  static func registerContext(_ dataContext: DataContext, uuid: String) -> DataUsage
   {
     // Under the hypothesis that monitoring will occurs only inside the current thread
     // and during the execution of a single method
@@ -83,7 +83,7 @@ class DataUsage: NSObject
     // end of the refreshUI, + the risk of missing some used nodes.
     // and to avoid the singleton ...
     // The advantage over a singleton is that there is one instance per thread
-    let currentThread = NSThread.currentThread()
+    let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     if let _ = threadDictionary[quantumKey] {
       assert(false,"Error in DataUsage: Context has not been unregistered")
@@ -94,9 +94,9 @@ class DataUsage: NSObject
     return dataUsage
   }
 
-  static func unregisterContext(uuid uuid: String)
+  static func unregisterContext(uuid: String)
   {
-    let currentThread = NSThread.currentThread()
+    let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     if let currentUsage = threadDictionary[quantumKey] as? QuantwmDataUsage {
       assert(currentUsage.id == uuid,"Error: Mismatch in DataUsage register")
@@ -106,7 +106,7 @@ class DataUsage: NSObject
 
   static func currentInstance() -> DataUsage?
   {
-    let currentThread = NSThread.currentThread()
+    let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     let currentUsage = threadDictionary[quantumKey] as? QuantwmDataUsage
     return currentUsage?.dataUsage
@@ -119,8 +119,8 @@ class DataUsage: NSObject
 
   let checkStack = true
 
-  private var contextDict: [NSObject:ReadWriteSet] = [:]
-  private unowned var dataContext: DataContext
+  fileprivate var contextDict: [NSObject:ReadWriteSet] = [:]
+  fileprivate unowned var dataContext: DataContext
 
   required init(dataContext: DataContext) {
     self.dataContext = dataContext
@@ -131,7 +131,7 @@ class DataUsage: NSObject
     contextDict = [:]
   }
 
-  func clearContext(owner: NSObject) {
+  func clearContext(_ owner: NSObject) {
     contextDict[owner] = nil
   }
 
@@ -145,7 +145,7 @@ class DataUsage: NSObject
     }
   }
 
-  func getReadWriteSetForOwner(owner: NSObject) -> ReadWriteSet
+  func getReadWriteSetForOwner(_ owner: NSObject) -> ReadWriteSet
   {
     if let readWriteSet = contextDict[owner] {
       return readWriteSet
@@ -156,7 +156,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addRead(node: ChangeCounter, property: PropertyDescription) {
+  func addRead(_ node: ChangeCounter, property: PropertyDescription) {
     let readAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {
@@ -175,7 +175,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addWrite(node: ChangeCounter, property: PropertyDescription) {
+  func addWrite(_ node: ChangeCounter, property: PropertyDescription) {
     let writeAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {
@@ -196,7 +196,7 @@ class DataUsage: NSObject
 
   // Return nil if and only if there is write performed
   // Else return read [KeypathObserver]
-  func getMonitoredNodeReadArray(owner: NSObject) -> [RW_Action]?
+  func getMonitoredNodeReadArray(_ owner: NSObject) -> [RW_Action]?
   {
     guard let readWriteSet = contextDict[owner] else { return [] }
     if readWriteSet.writeSet.count > 0 {
@@ -205,7 +205,7 @@ class DataUsage: NSObject
     return Array(readWriteSet.readSet)
   }
 
-  func getReadKeypathObserverSet(owner: NSObject?) -> Set<RW_Action> {
+  func getReadKeypathObserverSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
       guard let readWriteSet = contextDict[owner] else { return [] }
       return readWriteSet.readSet
@@ -213,12 +213,12 @@ class DataUsage: NSObject
       let readWriteSet = contextDict
         .values
         .map({$0.readSet})
-        .flatten()
+        .joined()
       return Set(readWriteSet)
     }
   }
 
-  func getWriteKeypathObserverSet(owner: NSObject?) -> Set<RW_Action> {
+  func getWriteKeypathObserverSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
       guard let readWriteSet = contextDict[owner] else { return [] }
       return readWriteSet.writeSet
@@ -226,7 +226,7 @@ class DataUsage: NSObject
       let readWriteSet = contextDict
         .values
         .map({$0.writeSet})
-        .flatten()
+        .joined()
       return Set(readWriteSet)
     }
   }

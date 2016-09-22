@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class KeypathSet
+open class KeypathSet
 {
-  public var readKeypathSet : Set<KeypathDescription> = []
-  public var writtenPropertySet: Set<PropertyDescription> = []
+  open var readKeypathSet : Set<KeypathDescription> = []
+  open var writtenPropertySet: Set<PropertyDescription> = []
 
   public init()
   { }
@@ -22,13 +22,13 @@ public class KeypathSet
     readKeypathSet = [keypathDesc]
   }
 
-  public func addRead(root root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  open func addRead(root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
     readKeypathSet.insert(keypathDesc)
   }
 
-  public func addWrittenProperty(property: PropertyDescription)
+  open func addWrittenProperty(_ property: PropertyDescription)
   {
     writtenPropertySet.insert(property)
   }
@@ -45,7 +45,7 @@ public func +(lhs: KeypathSet, rhs: KeypathSet) -> KeypathSet
 }
 
 
-public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
+open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
   let root: PropertyDescription
   let chain: [PropertyDescription]
@@ -69,7 +69,7 @@ public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatab
     }
   }
 
-  func key(index: Int)-> String? {
+  func key(_ index: Int)-> String? {
     if index == 0 {
       return root.propKey
     }
@@ -87,7 +87,7 @@ public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatab
 
   var extensionPath: String? {
     if !chain.isEmpty {
-      return chain.map({$0.propKey}).joinWithSeparator(".")
+      return chain.map({$0.propKey}).joined(separator: ".")
     } else {
       return nil
     }
@@ -114,11 +114,11 @@ public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatab
     return true
   }
 
-  public var debugDescription: String {
+  open var debugDescription: String {
     return "\(keypath)"
   }
 
-  public var hashValue: Int {
+  open var hashValue: Int {
     return  root.hashValue &+ chain.reduce(0) {
       (cumulated: Int, prop: PropertyDescription) -> Int in
       return cumulated &+ prop.hashValue
@@ -126,7 +126,7 @@ public class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatab
   }
 
   var level: Int {
-    return chain.reduce(1, combine: PropertyDescription.maxLevelFunc)
+    return chain.reduce(1, PropertyDescription.maxLevelFunc)
   }
 
   var levelDescription: String {

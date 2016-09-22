@@ -31,16 +31,16 @@ class Document: NSDocument {
   override func makeWindowControllers() {
     // Returns the Storyboard that contains your Document window.
     let storyboard = NSStoryboard(name: "Main", bundle: nil)
-    let windowController = storyboard.instantiateControllerWithIdentifier("Document Window Controller") as! NSWindowController
+    let windowController = storyboard.instantiateController(withIdentifier: "Document Window Controller") as! NSWindowController
     self.addWindowController(windowController)
   }
 
-  override func dataOfType(typeName: String) throws -> NSData {
-    return NSKeyedArchiver.archivedDataWithRootObject(dataModel)
+  override func data(ofType typeName: String) throws -> Data {
+    return NSKeyedArchiver.archivedData(withRootObject: dataModel)
   }
 
-  override func readFromData(data: NSData, ofType typeName: String) throws {
-    if let model = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? DataModel {
+  override func read(from data: Data, ofType typeName: String) throws {
+    if let model = NSKeyedUnarchiver.unarchiveObject(with: data) as? DataModel {
       self.dataModel = model
     } else {
       self.dataModel = DataModel()
@@ -48,7 +48,7 @@ class Document: NSDocument {
     self.dataModel.postInit(document: self)
   }
 
-  func windowDidDeminiaturize(notification: NSNotification)
+  func windowDidDeminiaturize(_ notification: Notification)
   {
     self.dataModel.postInit(document: self)
   }

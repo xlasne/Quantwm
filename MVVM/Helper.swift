@@ -12,7 +12,7 @@ import AppKit
 class Helper
 {
 
-  class func addToContainerView(myView: NSView, subView subViewZ: NSView?) {
+  class func addToContainerView(_ myView: NSView, subView subViewZ: NSView?) {
     if let subView = subViewZ
     {
       myView.addSubview(subView)
@@ -21,21 +21,21 @@ class Helper
 
       subView.translatesAutoresizingMaskIntoConstraints = false
 
-      let constH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[subView]-0-|", options: .AlignAllCenterY, metrics: nil, views: views)
+      let constH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[subView]-0-|", options: .alignAllCenterY, metrics: nil, views: views)
       myView.addConstraints(constH)
-      let constW = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[subView]-0-|", options: .AlignAllCenterX, metrics: nil, views: views)
+      let constW = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[subView]-0-|", options: .alignAllCenterX, metrics: nil, views: views)
       myView.addConstraints(constW)
     }
   }
 
-  class func documentForViewController(viewController: NSViewController) -> Document?
+  class func documentForViewController(_ viewController: NSViewController) -> Document?
   {
     guard let window = viewController.view.window else { return nil}
-    guard let document = NSDocumentController.sharedDocumentController().documentForWindow(window) as? Document else { return nil }
+    guard let document = NSDocumentController.shared().document(for: window) as? Document else { return nil }
     return document
   }
 
-  class func generateRoundedCornerImage(color: NSColor, size: CGSize, inset : CGFloat) -> NSImage
+  class func generateRoundedCornerImage(_ color: NSColor, size: CGSize, inset : CGFloat) -> NSImage
   {
     let image = NSImage(size: size)
     image.lockFocus()

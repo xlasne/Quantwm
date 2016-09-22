@@ -27,7 +27,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
   //View Model
   var sceneName : String = "Scene2ViewController"
   var viewModel : Scene2ViewModel?
-  var keySetObserverId: NSUUID?
+  var keySetObserverId: UUID?
 
   @IBOutlet weak var textField: NSTextField!
   @IBOutlet weak var label: NSTextField!
@@ -75,14 +75,14 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 
 
   //MARK: - Input Section
-  override func controlTextDidChange(obj: NSNotification) {
-    if let sender = obj.object as? NSTextField where  sender == self.textField
+  override func controlTextDidChange(_ obj: Notification) {
+    if let sender = obj.object as? NSTextField ,  sender == self.textField
     {
       self.numberFieldUpdated(sender)
     }
   }
 
-  func numberFieldUpdated(sender: NSTextField)
+  func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.setValue2(numberStr, focus: sender)

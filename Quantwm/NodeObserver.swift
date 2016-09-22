@@ -53,10 +53,10 @@ class NodeObserver {
 
   var count: Int {
     // = 1 (me) + sum of the next nodes count
-    return nextNodes.map({$0.count}).reduce(1,combine: +)
+    return nextNodes.map({$0.count}).reduce(1,+)
   }
 
-  func readChain(chain:[PropertyDescription], fromParent parent: GenericNode) -> NodeObserver?
+  func readChain(_ chain:[PropertyDescription], fromParent parent: GenericNode) -> NodeObserver?
   {
     guard let property = chain.first else { return nil }
     let reducedChain = Array(chain.dropFirst())
@@ -97,7 +97,7 @@ class NodeObserver {
   }
 
 
-  func compareWithPreviousChain(previousChain: NodeObserver?) -> (isDirty:Bool, description: String)
+  func compareWithPreviousChain(_ previousChain: NodeObserver?) -> (isDirty:Bool, description: String)
   {
     guard let previousChain = previousChain else {
       return (isDirty:true, description: "Node created")
@@ -154,14 +154,14 @@ class NodeObserver {
 
       // Check 1 to 1 correspondance for non empty matching
       for nextNode in nonEmptyCurrentNodeArray {
-        if let index = nonEmptyPreviousNodeArray.indexOf({$0.changeCounter == nextNode.changeCounter })
+        if let index = nonEmptyPreviousNodeArray.index(where: {$0.changeCounter == nextNode.changeCounter })
         {
           let matchingPreviousNode = nonEmptyPreviousNodeArray[index]
           let result = nextNode.compareWithPreviousChain(matchingPreviousNode)
           if result.isDirty {
             return result
           }
-          nonEmptyPreviousNodeArray.removeAtIndex(index)
+          nonEmptyPreviousNodeArray.remove(at: index)
         } else {
           return (isDirty:true, description: "Node Set \(childKey) are different)")
         }
@@ -181,7 +181,7 @@ class NodeObserver {
   }
 
 
-  func collectNodeSet(inout nodeSet:Set<RW_Action>)
+  func collectNodeSet(_ nodeSet:inout Set<RW_Action>)
   {
     var action: RW_Action
     if let node = self.changeCounter {

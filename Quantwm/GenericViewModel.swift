@@ -13,11 +13,11 @@ public protocol RepositoryHolder: class
   func getRepositoryObserver() -> RepositoryObserver
 }
 
-public class GenericViewModel<Model: RepositoryHolder> : NSObject {
+open class GenericViewModel<Model: RepositoryHolder> : NSObject {
 
-  public unowned var dataModel: Model
-  public unowned var repositoryObserver : RepositoryObserver
-  public weak var owner: NSObject?
+  open unowned var dataModel: Model
+  open unowned var repositoryObserver : RepositoryObserver
+  open weak var owner: NSObject?
 
   public init(dataModel : Model, owner: NSObject)
   {
@@ -28,7 +28,7 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
   }
 
   // MARK: - Registration
-  public func registerObserver(target target: NSObject,
+  open func registerObserver(target: NSObject,
                               selector: Selector,
                               keypathDescriptionSet: Set<KeypathDescription>,
                               name: String,
@@ -43,7 +43,7 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                      maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
   }
 
-  public func registerObserver(target target: NSObject,
+  open func registerObserver(target: NSObject,
                               registrationDesc: RegisterDescription,
                               name: String? = nil)
   {
@@ -52,7 +52,7 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                      name: name)
   }
 
-  public func registerForEachCycle(target: NSObject,
+  open func registerForEachCycle(_ target: NSObject,
                                    selector: Selector,
                                    name: String,
                                    maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
@@ -63,41 +63,41 @@ public class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                                  maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
   }
 
-  public func unregisterAll(owner: NSObject) {
+  open func unregisterAll(_ owner: NSObject) {
     self.repositoryObserver.displayUsageForOwner(owner)
     self.repositoryObserver.unregisterDataSetWithTarget(owner)
   }
 
   // MARK: - Repository Observer wrappers
-  public func refreshUI()
+  open func refreshUI()
   {
     repositoryObserver.refreshUI()
   }
 
-  public func loadAction(owner owner: NSObject?, @noescape handler: ()->())
+  open func loadAction(owner: NSObject?, handler: ()->())
   {
     repositoryObserver.loadAction(owner: owner,
                                   handler: handler)
   }
 
-  public func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+  open func loadActionWithReturn<T>(owner: NSObject?, handler: ()->(T)) -> T
   {
     return repositoryObserver.loadActionWithReturn(owner: owner,
                                                    handler: handler)
   }
 
-  public func updateAction(owner owner: NSObject?, @noescape handler: ()->())
+  open func updateAction(owner: NSObject?, handler: ()->())
   {
     repositoryObserver.updateAction(owner: owner,
                                     handler: handler)
   }
 
-  public func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->()) {
+  open func updateActionAndRefresh(owner: NSObject?, handler: ()->()) {
     repositoryObserver.updateActionAndRefresh(owner: owner,
                                               handler: handler)
   }
 
-  public func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
+  open func updateActionIfPossibleElseDispatch(owner: NSObject?, escapingHandler: @escaping ()->())
   {
     repositoryObserver.updateActionIfPossibleElseDispatch(owner: owner,
                                                           escapingHandler: escapingHandler)

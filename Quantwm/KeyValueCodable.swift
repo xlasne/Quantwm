@@ -15,15 +15,15 @@ typealias ParentAndNode = (parent: SwiftKVC, node: ChangeCounter)
 
 public protocol SwiftKVC
 {
-  func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool)
-  func KVC_valueForKey(key : String) -> Any?
-  func KVC_valueForKeyPath(keyPath : String) -> Any?
+  func KVC_valueExistForKey(_ key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool)
+  func KVC_valueForKey(_ key : String) -> Any?
+  func KVC_valueForKeyPath(_ keyPath : String) -> Any?
   subscript (KVC_key key: String) -> Any? { get }
 }
 
 public extension SwiftKVC {
 
-  public func KVC_valueExistForKey(key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool) {
+  public func KVC_valueExistForKey(_ key : String) -> (exist:Bool, isOptional: Bool?, isSome: Bool) {
     let mirror = Mirror(reflecting: self)
     for myChild in mirror.children {
       if (myChild.label == key) || (myChild.label == key + ".storage") {
@@ -43,7 +43,7 @@ public extension SwiftKVC {
   }
 
   /// Returns the value for the property identified by a given key.
-  public func KVC_valueForKey(key : String) -> Any? {
+  public func KVC_valueForKey(_ key : String) -> Any? {
 
     let mirror = Mirror(reflecting: self)
     for child in mirror.children {
@@ -55,8 +55,8 @@ public extension SwiftKVC {
   }
 
   /// Returns the value for the derived property identified by a given key path.
-  public func KVC_valueForKeyPath(keyPath : String) -> Any? {
-    let keys = keyPath.componentsSeparatedByString(".")
+  public func KVC_valueForKeyPath(_ keyPath : String) -> Any? {
+    let keys = keyPath.components(separatedBy: ".")
     var mirror = Mirror(reflecting: self)
     for key in keys {
       for child in mirror.children {
@@ -112,16 +112,16 @@ protocol OptionalProtocol {
 extension Optional : OptionalProtocol {
   func isSome() -> Bool {
     switch self {
-    case .None: return false
-    case .Some: return true
+    case .none: return false
+    case .some: return true
     }
   }
 
   func unwrap() -> Any {
     switch self {
     // If a nil is unwrapped it will crash!
-    case .None: preconditionFailure("nill unwrap")
-    case .Some(let unwrapped): return unwrapped
+    case .none: preconditionFailure("nill unwrap")
+    case .some(let unwrapped): return unwrapped
     }
   }
 }

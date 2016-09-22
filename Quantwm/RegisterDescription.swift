@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class RegisterDescription
+open class RegisterDescription
 {
   let selector: Selector
   let keypathDescriptionSet: Set<KeypathDescription>

@@ -18,10 +18,10 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   }
 
   // MARK: - Input Processing
-  func setValue2(numberStr: String, focus: NSObject?)
+  func setValue2(_ numberStr: String, focus: NSObject?)
   {
-    let formatter = NSNumberFormatter()
-    if let val = formatter.numberFromString(numberStr)?.integerValue
+    let formatter = NumberFormatter()
+    if let val = formatter.number(from: numberStr)?.intValue
     {
       updateActionAndRefresh(owner: owner) {
         if val != self.dataModel.number2
@@ -38,12 +38,12 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   func toggleImageColor() {
     updateActionAndRefresh(owner: owner) {
       let color = dataModel.contextMgr.imageColor
-      if color == NSColor.whiteColor() {
+      if color == NSColor.white {
         print("Switch color white to green")
-        self.dataModel.contextMgr.imageColor = NSColor.greenColor()
+        self.dataModel.contextMgr.imageColor = NSColor.green
       } else {
         print("Switch color green to white")
-        self.dataModel.contextMgr.imageColor = NSColor.whiteColor()
+        self.dataModel.contextMgr.imageColor = NSColor.white
       }
     }
   }
@@ -64,9 +64,9 @@ class Scene2ViewModel: GenericViewModel<DataModel>
     KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
 
   func getValue2() -> String {
-    let formatter = NSNumberFormatter()
+    let formatter = NumberFormatter()
     let val = self.dataModel.observedSelf.number2
-    return  formatter.stringFromNumber(val) ?? "Error"
+    return  formatter.string(from: NSNumber(value: val)) ?? "Error"
   }
 
 

@@ -43,7 +43,7 @@ class DelayedSumProcessor: NSObject
   func startProcessing()
   {
     let completionHandler = { (numVal:Int)->() in
-      dispatch_async(dispatch_get_main_queue()) {[weak self] _ in
+      DispatchQueue.main.async {[weak self] _ in
         // No locking needed.
         // Modifications are performed while on the main thread which serialize update
         self?.dataModel?.sumOfNumber = numVal
@@ -54,7 +54,7 @@ class DelayedSumProcessor: NSObject
     if let number1 = self.dataModel?.observedSelf.number1,
       let number2 = self.dataModel?.observedSelf.number2
     {
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+      DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
         // DO SOMETHING ON THE BACKGROUND THREAD
         // Avoid threading conflict with Data Model
         sleep(2)

@@ -19,7 +19,7 @@ import Foundation
 
 typealias NodeId = Int32
 
-public class ChangeCounter: NSObject {
+open class ChangeCounter: NSObject {
 
   //MARK: Properties
 
@@ -38,10 +38,10 @@ public class ChangeCounter: NSObject {
 
   //MARK: - Read / Write monitoring
 
-  public func performedReadOnMainThread(property: PropertyDescription)
+  open func performedReadOnMainThread(_ property: PropertyDescription)
   {
     let childKey = property.propKey
-    if !NSThread.isMainThread() {
+    if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
     }
     if let dataUsage = DataUsage.currentInstance() {
@@ -49,10 +49,10 @@ public class ChangeCounter: NSObject {
     }
   }
 
-  public  func performedWriteOnMainThread(property: PropertyDescription)
+  open  func performedWriteOnMainThread(_ property: PropertyDescription)
   {
     let childKey = property.propKey
-    if !NSThread.isMainThread() {
+    if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
     }
     self.setDirty(childKey)
@@ -65,7 +65,7 @@ public class ChangeCounter: NSObject {
   //MARK: - Update Property Management
 
   // Increment changeCount for a property
-  func setDirty(childKey: String) -> Int
+  func setDirty(_ childKey: String) -> Int
   {
     print("Monitoring Node: Child \(childKey) dirty")
     if let previousValue = self.changeCountDict[childKey] {
@@ -78,7 +78,7 @@ public class ChangeCounter: NSObject {
   }
 
   // Get current changeCount for a property
-  func changeCount(childKey: String) -> Int
+  func changeCount(_ childKey: String) -> Int
   {
     if let changeCount = self.changeCountDict[childKey] {
       return changeCount

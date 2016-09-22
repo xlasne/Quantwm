@@ -13,7 +13,7 @@ struct NodeStruct: MonitoredStruct {
   let changeCounter = ChangeCounter()
 
   static let intValueK = PropertyDescriptor<NodeStruct,Int>.key("_intValue")
-  private var _intValue: Int = 0
+  fileprivate var _intValue: Int = 0
   var intValue: Int {
     get {
       self.changeCounter.performedReadOnMainThread(NodeStruct.intValueK)

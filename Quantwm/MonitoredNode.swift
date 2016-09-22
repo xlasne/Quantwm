@@ -29,46 +29,46 @@
 import Foundation
 
 enum GenericNode {
-  case ObjectType(NSObject)
-  case MonitoredNodeType(MonitoredNode)
+  case objectType(NSObject)
+  case monitoredNodeType(MonitoredNode)
 
   func getNodeChangeCounter() -> ChangeCounter
   {
     switch self {
-    case ObjectType(let myObject):
+    case .objectType(let myObject):
       return MonitoredNodeObjcParser.getNodeChangeCounter(myObject)
-    case MonitoredNodeType(let myNode):
+    case .monitoredNodeType(let myNode):
       return myNode.getNodeChangeCounter()
     }
   }
 
-  func getChildArray(property property: PropertyDescription) -> [GenericNode]
+  func getChildArray(property: PropertyDescription) -> [GenericNode]
   {
     switch self {
-    case ObjectType(let myObject):
+    case .objectType(let myObject):
       if property.containsObjc {
         let objectArray: [NSObject] = MonitoredNodeObjcParser.getChildArray(property: property, node: myObject)
-        return objectArray.map({GenericNode.ObjectType($0)})
+        return objectArray.map({GenericNode.objectType($0)})
       } else {
         let objectArray: [MonitoredNode] = MonitoredNodeObjcParser.getChildArray(property: property, node: myObject)
-        return objectArray.map({GenericNode.MonitoredNodeType($0)})
+        return objectArray.map({GenericNode.monitoredNodeType($0)})
       }
-    case MonitoredNodeType(let myNode):
+    case .monitoredNodeType(let myNode):
       if property.containsObjc {
         let objectArray: [NSObject] = myNode.getChildArray(property: property)
-        return objectArray.map({GenericNode.ObjectType($0)})
+        return objectArray.map({GenericNode.objectType($0)})
       } else {
         if property.isMonitoredNodeGetter {
           if let myGetterNode = myNode as? MonitoredNodeGetter {
             let objectArray = myGetterNode.getMonitoredNodeArray(property)
-            return objectArray.map({GenericNode.MonitoredNodeType($0)})
+            return objectArray.map({GenericNode.monitoredNodeType($0)})
           } else {
             assert(false,"Error: Object type \(property.source) is not conformant to protocol MonitoredNodeGetter")
             return []
           }
         } else {
           let objectArray: [MonitoredNode] = myNode.getChildArray(property: property)
-          return objectArray.map({GenericNode.MonitoredNodeType($0)})
+          return objectArray.map({GenericNode.monitoredNodeType($0)})
         }
       }
     }
@@ -77,7 +77,7 @@ enum GenericNode {
 
 public protocol MonitoredNodeGetter
 {
-  func getMonitoredNodeArray(property: PropertyDescription) -> [MonitoredNode]
+  func getMonitoredNodeArray(_ property: PropertyDescription) -> [MonitoredNode]
 }
 
 public protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
@@ -89,7 +89,7 @@ public typealias MonitoredStruct = MonitoredNode
 public protocol MonitoredNode: SwiftKVC
 {
   func getNodeChangeCounter() -> ChangeCounter
-  func getChildArray<T>(property property: PropertyDescription) -> [T]
+  func getChildArray<T>(property: PropertyDescription) -> [T]
 }
 
 
@@ -101,11 +101,11 @@ public extension MonitoredNode
     {
       return nodeValue
     } else {
-      assert(false,"KeyNodeCodable: Class \(self.dynamicType) is configured with MonitoredNode, but does not contains changeCounter:ChangeCounter property")
+      assert(false,"KeyNodeCodable: Class \(type(of: self)) is configured with MonitoredNode, but does not contains changeCounter:ChangeCounter property")
     }
   }
 
-  public func getChildArray<T>(property property: PropertyDescription) -> [T]
+  public func getChildArray<T>(property: PropertyDescription) -> [T]
   {
     // The child shall be an object or a struct
     // which contains a changeCounter: ChangeCounter object
@@ -151,24 +151,24 @@ public extension MonitoredNode
 
 class MonitoredNodeObjcParser
 {
-  static func getNodeChangeCounter(node: NSObject) -> ChangeCounter
+  static func getNodeChangeCounter(_ node: NSObject) -> ChangeCounter
   {
-    if let nodeValue = node.valueForKey("changeCounter") as? ChangeCounter
+    if let nodeValue = node.value(forKey: "changeCounter") as? ChangeCounter
     {
       return nodeValue
     } else {
-      assert(false,"MonitoredNode: Objective-C Class \(node.dynamicType) is configured with containsNode, but does not contains changeCounter:ChangeCounter property")
+      assert(false,"MonitoredNode: Objective-C Class \(type(of: node)) is configured with containsNode, but does not contains changeCounter:ChangeCounter property")
     }
   }
 
-  static func getChildArray<T>(property property: PropertyDescription, node: NSObject) -> [T]
+  static func getChildArray<T>(property: PropertyDescription, node: NSObject) -> [T]
   {
     // The child shall be an object or a struct
     // which contains a changeCounter: ChangeCounter object
     // First, check if a value exist
 
     let childKey = property.propKey
-    guard let childValue = node.valueForKey(childKey) else {
+    guard let childValue = node.value(forKey: childKey) else {
       // shall I assert here ?
       return  []
     }
@@ -183,7 +183,7 @@ class MonitoredNodeObjcParser
     }
 
     if property.containsNode {
-      if let childValue = node.valueForKey(childKey) as? T
+      if let childValue = node.value(forKey: childKey) as? T
       {
         return [childValue]
       } else {

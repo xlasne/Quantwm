@@ -14,7 +14,7 @@ class TestStruct: MonitoredStruct
   let changeCounter = ChangeCounter()
 
   static let numberK = PropertyDescriptor<TestStruct,Int>.key("_number")
-  private var _number: Int = 1
+  fileprivate var _number: Int = 1
   var number : Int {
     get {
       self.changeCounter.performedReadOnMainThread(TestStruct.numberK)
@@ -36,9 +36,9 @@ enum TestEnum
   {
     switch self
     {
-    case item1(let node):
+    case .item1(let node):
       return node
-    case item2(let node):
+    case .item2(let node):
       return node
     }
   }
@@ -50,8 +50,8 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
   let changeCounter = ChangeCounter()
 
   static let testStructK = PropertyDescriptor<TestClass,TestStruct>
-    .key("_testStruct", propertyDescriptionOption: [.ContainsNode])
-  private var _testStruct = TestStruct()
+    .key("_testStruct", propertyDescriptionOption: [.containsNode])
+  fileprivate var _testStruct = TestStruct()
   var testStruct : TestStruct {
     get {
       self.changeCounter.performedReadOnMainThread(TestClass.testStructK)
@@ -64,9 +64,9 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
   }
 
   static let testDictK = PropertyDescriptor<TestClass,TestStruct>.key("_testDict",
-                                                                      propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+                                                                      propertyDescriptionOption: [.monitoredNodeGetter,.containsNode]
   )
-  private var _testDict: [String:TestStruct] = [:]
+  fileprivate var _testDict: [String:TestStruct] = [:]
   var testDict : [String:TestStruct] {
     get {
       self.changeCounter.performedReadOnMainThread(TestClass.testDictK)
@@ -79,9 +79,9 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
   }
 
   static let testEnumK = PropertyDescriptor<TestClass,TestStruct>.key("_testEnum",
-                                                                      propertyDescriptionOption: [.MonitoredNodeGetter,.ContainsNode]
+                                                                      propertyDescriptionOption: [.monitoredNodeGetter,.containsNode]
   )
-  private var _testEnum = TestEnum.item1(TestStruct())
+  fileprivate var _testEnum = TestEnum.item1(TestStruct())
   var testEnum : TestEnum {
     get {
       self.changeCounter.performedReadOnMainThread(TestClass.testEnumK)
@@ -93,7 +93,7 @@ class TestClass: MonitoredClass, MonitoredNodeGetter
     }
   }
 
-  func getMonitoredNodeArray(property: PropertyDescription) -> [MonitoredNode]
+  func getMonitoredNodeArray(_ property: PropertyDescription) -> [MonitoredNode]
   {
     switch property {
     case TestClass.testDictK:
@@ -126,8 +126,8 @@ class TestBase: MonitoredClass, RepositoryHolder
   }
 
   static let testClassK = PropertyDescriptor<TestBase,TestClass>.key("_testClass",
-                                                                     propertyDescriptionOption: [.ContainsNode])
-  private var _testClass: TestClass
+                                                                     propertyDescriptionOption: [.containsNode])
+  fileprivate var _testClass: TestClass
   var testClass : TestClass {
     get {
       self.changeCounter.performedReadOnMainThread(TestBase.testClassK)
@@ -140,7 +140,7 @@ class TestBase: MonitoredClass, RepositoryHolder
   }
 
   static let optNumberK = PropertyDescriptor<TestBase,Int>.key("_optNumber")
-  private var _optNumber: Int? = nil
+  fileprivate var _optNumber: Int? = nil
   var optNumber : Int? {
     get {
       self.changeCounter.performedReadOnMainThread(TestBase.optNumberK)
@@ -153,7 +153,7 @@ class TestBase: MonitoredClass, RepositoryHolder
   }
 
   static let lazyNumberK = PropertyDescriptor<TestBase,Int>.key("_lazyNumber")
-  private lazy var _lazyNumber = { () -> (Int) in
+  fileprivate lazy var _lazyNumber = { () -> (Int) in
     return 3 + 5
   }()
   var lazyNumber : Int {

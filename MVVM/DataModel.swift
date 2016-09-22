@@ -39,7 +39,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
   }
 
   static let number1K = PropertyDescriptor<DataModel,Int>.key("_number1")
-  private var _number1: Int = 1
+  fileprivate var _number1: Int = 1
   var number1 : Int {
     get {
       self.changeCounter.performedReadOnMainThread(DataModel.number1K)
@@ -48,12 +48,12 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     set {
       self.changeCounter.performedWriteOnMainThread(DataModel.number1K)
       _number1 = newValue
-      self.document.updateChangeCount(NSDocumentChangeType.ChangeDone)
+      self.document.updateChangeCount(NSDocumentChangeType.changeDone)
     }
   }
 
   static let number2K = PropertyDescriptor<DataModel,Int>.key("_number2")
-  private var _number2: Int = 2
+  fileprivate var _number2: Int = 2
   var number2 : Int {
     get {
       self.changeCounter.performedReadOnMainThread(DataModel.number2K)
@@ -62,16 +62,16 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     set {
       self.changeCounter.performedWriteOnMainThread(DataModel.number2K)
       _number2 = newValue
-      self.document.updateChangeCount(NSDocumentChangeType.ChangeDone)
+      self.document.updateChangeCount(NSDocumentChangeType.changeDone)
     }
   }
 
   // MARK: Computed Content
   static let sumOfNumberK = PropertyDescriptor<DataModel,Int>.key("_sumOfNumber",
-                                                                  propertyDescriptionOption: .None,
+                                                                  propertyDescriptionOption: PropertyDescriptionOption(),
                                                                   dependFromPropertySet: [DataModel.number1K, DataModel.number2K])
 
-  private var _sumOfNumber: Int = 0
+  fileprivate var _sumOfNumber: Int = 0
   var sumOfNumber : Int {
     get {
       self.changeCounter.performedReadOnMainThread(DataModel.sumOfNumberK)
@@ -84,9 +84,9 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
   }
 
   static let invSumOfNumberK = PropertyDescriptor<DataModel,Int>.key("_invSumOfNumber",
-                                                                     propertyDescriptionOption: .None,
+                                                                     propertyDescriptionOption: PropertyDescriptionOption(),
                                                                      dependFromPropertySet: [DataModel.number1K, DataModel.number2K])
-  private var _invSumOfNumber: Int = 0
+  fileprivate var _invSumOfNumber: Int = 0
   var invSumOfNumber : Int {
     get {
       self.changeCounter.performedReadOnMainThread(DataModel.invSumOfNumberK)
@@ -102,8 +102,8 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
   let delayedSumProcessor: DelayedSumProcessor = DelayedSumProcessor()
 
   static let transientClassK = PropertyDescriptor<DataModel,TransientClass>
-    .key("_transientClass", propertyDescriptionOption: [.ContainsNode])
-  private var _transientClass: TransientClass?
+    .key("_transientClass", propertyDescriptionOption: [.containsNode])
+  fileprivate var _transientClass: TransientClass?
   var transientClass: TransientClass? {
     get {
       self.changeCounter.performedReadOnMainThread(DataModel.transientClassK)
@@ -132,7 +132,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     self.contextMgr.registerRoot(self)
   }
 
-  func postInit(document document: Document)
+  func postInit(document: Document)
   {
     self.document = document
 
@@ -145,7 +145,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
 
   //MARK: NSCoding Initialization
 
-  func encodeWithCoder(aCoder: NSCoder) {
+  func encode(with aCoder: NSCoder) {
     CodingConverter<Int>.encode(aCoder, value: _number1, propertyDescription: DataModel.number1K)
     CodingConverter<Int>.encode(aCoder, value: _number2, propertyDescription: DataModel.number2K)
   }

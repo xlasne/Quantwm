@@ -41,11 +41,11 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   // 1: First update data model variable without UI refresh
   // 2: Then update context variable with UI Refresh
 
-  func updateValue(numberStr: String, focus: NSObject?)
+  func updateValue(_ numberStr: String, focus: NSObject?)
   {
 
-    let formatter = NSNumberFormatter()
-    if let val = formatter.numberFromString(numberStr)?.integerValue
+    let formatter = NumberFormatter()
+    if let val = formatter.number(from: numberStr)?.intValue
     {
       updateActionAndRefresh(owner: owner) {
         dataModel.observedSelf.number1 = val
@@ -109,9 +109,9 @@ class Scene1ViewModel: GenericViewModel<DataModel>
 
   var value1: String {
     get {
-      let formatter = NSNumberFormatter()
+      let formatter = NumberFormatter()
       let val = dataModel.observedSelf.number1
-      return  formatter.stringFromNumber(val) ?? "Error"
+        return  formatter.string(from: NSNumber(value:val)) ?? "Error"
     }
   }
 
@@ -136,7 +136,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
       .transientClass?
       .arrayVal
       .map({$0.intValue})
-      .reduce(0, combine: +)
+      .reduce(0, +)
   }
 
 

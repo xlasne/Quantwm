@@ -22,7 +22,7 @@ struct RootNode {
   }
 }
 
-public class RepositoryObserver: NSObject {
+open class RepositoryObserver: NSObject {
 
   // Dictionary of the root nodes
   // Root nodes are the first component of keypath, the path anchor
@@ -39,10 +39,10 @@ public class RepositoryObserver: NSObject {
 
   // Monitor data read and write during a transaction
   var dataUsage: DataUsage?
-  let dataUsageId = NSUUID().UUIDString
+  let dataUsageId = UUID().uuidString
 
   // Track the transaction context
-  private var dataContext: DataContext = DataContext()
+  fileprivate var dataContext: DataContext = DataContext()
 
   // If refreshUI() is called during a refresh transaction it is ignored
   // If refreshUI() is called during a Loading or Update transaction it postponned to the end of the transaction
@@ -56,7 +56,7 @@ public class RepositoryObserver: NSObject {
   // This node does not have to remember this monitoring
   // On node deletion, this registration will end
   // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-  public func registerRoot(associatedObject associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
+  open func registerRoot(associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: PropertyDescription)
   {
     let rootNode = RootNode(rootObject: associatedObject,
                             changeCounter: changeCounter,
@@ -75,7 +75,7 @@ public class RepositoryObserver: NSObject {
     self.rootDataDict[keypath] = rootNode
   }
 
-  public func unregisterRootNode(property: PropertyDescription)
+  open func unregisterRootNode(_ property: PropertyDescription)
   {
     let keypath = property.propKey
     assert(property.isRoot,"RepositoryObserver: Calling unregisterRootNode with non root \(keypath)")
@@ -87,7 +87,7 @@ public class RepositoryObserver: NSObject {
     self.rootDataDict[keypath] = nil
   }
 
-  public func rootForKey(property: PropertyDescription) -> MonitoredClass?
+  open func rootForKey(_ property: PropertyDescription) -> MonitoredClass?
   {
     let keypath = property.propKey
     assert(property.isRoot,"RepositoryObserver: Calling rootForKey with non root \(keypath)")
@@ -101,12 +101,12 @@ public class RepositoryObserver: NSObject {
 
   // MARK: ObserverSet Registration - Public
 
-  public func registerForEachCycle(target target: NSObject, selector: Selector, name: String,
+  open func registerForEachCycle(target: NSObject, selector: Selector, name: String,
                                           maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)  {
     self.registerObserver(target: target, selector: selector, keypathDescriptionSet: [], name: name)
   }
 
-  public func registerObserver(target target: NSObject,
+  open func registerObserver(target: NSObject,
                               registrationDesc: RegisterDescription,
                               name: String? = nil)
   {
@@ -123,7 +123,7 @@ public class RepositoryObserver: NSObject {
                   configurationPriority: registrationDesc.configurationPriority)
   }
 
-  public func registerObserver(target target: NSObject,
+  open func registerObserver(target: NSObject,
                               selector: Selector,
                               keypathDescriptionSet: Set<KeypathDescription>,
                               name: String,
@@ -186,14 +186,14 @@ public class RepositoryObserver: NSObject {
     self.keySetObserverSet.insert(keySetObserver)
   }
 
-  public func unregisterDataSetWithTarget(target: NSObject, selector: Selector? = nil)
+  open func unregisterDataSetWithTarget(_ target: NSObject, selector: Selector? = nil)
   {
     let unregisterArray = keySetObserverSet.filter({$0.matchesTarget(target, selector: selector)})
-    keySetObserverSet.subtractInPlace(unregisterArray)
+    keySetObserverSet.subtract(unregisterArray)
   }
 
   //MARK: Helper functions
-  private func getDataSetArrayForTypeFromTarget(target: NSObject, selector: Selector) -> [KeySetObserver]
+  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> [KeySetObserver]
   {
     let dataSet = self.keySetObserverSet.filter({
       let mirror = Mirror(reflecting: target)
@@ -202,12 +202,12 @@ public class RepositoryObserver: NSObject {
     return dataSet
   }
 
-  private func getKeySetObserverArrayForTarget(target: NSObject, selector: Selector? = nil) -> [KeySetObserver]
+  fileprivate func getKeySetObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> [KeySetObserver]
   {
     return keySetObserverSet.filter({$0.matchesTarget(target, selector: selector)})
   }
 
-  private func getKeySetObserverForTarget(target: NSObject, selector: Selector) -> KeySetObserver?
+  fileprivate func getKeySetObserverForTarget(_ target: NSObject, selector: Selector) -> KeySetObserver?
   {
     let dataSet = self.getKeySetObserverArrayForTarget(target, selector: selector)
     if dataSet.count > 1 {
@@ -216,7 +216,7 @@ public class RepositoryObserver: NSObject {
     return dataSet.first
   }
 
-  public func displayUsageForOwner(owner: NSObject) {
+  open func displayUsageForOwner(_ owner: NSObject) {
     let observerArray = self.getKeySetObserverArrayForTarget(owner)
     for observer in observerArray    // .filter({!$0.isValid()})
     {
@@ -226,7 +226,7 @@ public class RepositoryObserver: NSObject {
 
   // MARK: Observer Registration - Private
 
-  private func registerKeypathObserver(keypathObserver: KeypathObserver)
+  fileprivate func registerKeypathObserver(_ keypathObserver: KeypathObserver)
   {
     let keypath = keypathObserver.keypath
     if let _ = self.keypathObserverDict[keypath] {
@@ -237,7 +237,7 @@ public class RepositoryObserver: NSObject {
     self.keypathObserverDict[keypath] = keypathObserver
   }
 
-  private func unregisterKeypathObserver(keypathObserver: KeypathObserver)
+  fileprivate func unregisterKeypathObserver(_ keypathObserver: KeypathObserver)
   {
     let keypath = keypathObserver.keypath
     if let _ = self.keypathObserverDict[keypath]
@@ -282,7 +282,7 @@ extension RepositoryObserver
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isValid()})
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isConfigurationType})
 
-    modifiedDataSetNeedingRefreshArray.sortInPlace {
+    modifiedDataSetNeedingRefreshArray.sort {
       (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
       if k1.configurationSchedulingLevel! == k2.configurationSchedulingLevel! {
         return k1.schedulingLevel < k2.schedulingLevel
@@ -336,7 +336,7 @@ extension RepositoryObserver
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isValid()})
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({!$0.isConfigurationType})
 
-    modifiedDataSetNeedingRefreshArray.sortInPlace {
+    modifiedDataSetNeedingRefreshArray.sort {
       (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
       return k1.schedulingLevel < k2.schedulingLevel
     }
@@ -415,21 +415,21 @@ extension RepositoryObserver
 extension RepositoryObserver
 {
 
-  private func pushLoadingContext(owner: NSObject?) -> RWContext
+  fileprivate func pushLoadingContext(_ owner: NSObject?) -> RWContext
   {
     let roContext = RWContext(LoadingWithOwner: owner)
     dataContext.pushContext(roContext)
     return roContext
   }
 
-  private func pushUpdateContext(owner: NSObject?) -> RWContext
+  fileprivate func pushUpdateContext(_ owner: NSObject?) -> RWContext
   {
     let updateContext = RWContext(UpdateWithOwner:owner)
     dataContext.pushContext(updateContext)
     return updateContext
   }
 
-  private func popContext(rwContext: RWContext)
+  fileprivate func popContext(_ rwContext: RWContext)
   {
     dataContext.popContext(rwContext)
     if dataContext.isStackEmpty && callRefreshOnEmptyStack {
@@ -437,28 +437,28 @@ extension RepositoryObserver
     }
   }
 
-  public func loadAction(owner owner: NSObject?, @noescape handler: ()->())
+  public func loadAction(owner: NSObject?, handler: ()->())
   {
     let loadContext = self.pushLoadingContext(owner)
     handler()
     self.popContext(loadContext)
   }
 
-  public func loadActionWithReturn<T>(owner owner: NSObject?, @noescape handler: ()->(T)) -> T
+  public func loadActionWithReturn<T>(owner: NSObject?, handler: ()->(T)) -> T
   {
     let loadContext = self.pushLoadingContext(owner)
     defer { self.popContext(loadContext) } // will be called after handler execution ;)
     return handler()
   }
 
-  public func updateAction(owner owner: NSObject?, @noescape handler: ()->())
+  public func updateAction(owner: NSObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
     self.popContext(writeContext)
   }
 
-  public func updateActionAndRefresh(owner owner: NSObject?, @noescape handler: ()->())
+  public func updateActionAndRefresh(owner: NSObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
@@ -467,7 +467,7 @@ extension RepositoryObserver
   }
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
-  public func updateActionIfPossibleElseDispatch(owner owner: NSObject?, escapingHandler: ()->())
+  public func updateActionIfPossibleElseDispatch(owner: NSObject?, escapingHandler: @escaping ()->())
   {
     if !dataContext.isRootRefresh {
       print("updateActionIfPossibleElseDispatch scheduled immediately")
@@ -476,7 +476,7 @@ extension RepositoryObserver
       self.popContext(writeContext)
     } else {
       // Update is not allowed. Perform this update later on the main thread
-      dispatch_async(dispatch_get_main_queue()) {_ in
+      DispatchQueue.main.async {_ in
         // Modifications are performed while on the main thread which serialize update
         print("updateActionIfPossibleElseDispatch dispatch begin")
         let writeContext = self.pushUpdateContext(owner)
