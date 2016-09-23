@@ -44,7 +44,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 
   override func viewWillAppear() {
     super.viewWillAppear()
-    guard let document = self.representedObject as? Document else { return }
+    guard let document = self.representedObject as? DemoDocument else { return }
 
     self.viewModel = Scene2ViewModel(dataModel: document.dataModel, viewController: self)
 

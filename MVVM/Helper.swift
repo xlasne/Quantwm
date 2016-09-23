@@ -28,11 +28,20 @@ class Helper
     }
   }
 
-  class func documentForViewController(_ viewController: NSViewController) -> Document?
+  class func documentForViewController(_ viewController: NSViewController) -> DemoDocument?
   {
     guard let window = viewController.view.window else { return nil}
-    guard let document = NSDocumentController.shared().document(for: window) as? Document else { return nil }
-    return document
+    guard let document = NSDocumentController.shared().document(for: window) else {
+        return nil
+    }
+    if let document = document as? DemoDocument
+    {
+        return document
+    }
+    else
+    {
+        return nil
+    }
   }
 
   class func generateRoundedCornerImage(_ color: NSColor, size: CGSize, inset : CGFloat) -> NSImage

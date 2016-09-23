@@ -20,7 +20,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
 {
 
   // MARK: Interfaces
-  weak var document: Document!
+  weak var document: DemoDocument!
 
   let contextMgr: ContextMgr = ContextMgr()
   let repositoryObserver: RepositoryObserver
@@ -132,7 +132,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     self.contextMgr.registerRoot(self)
   }
 
-  func postInit(document: Document)
+  func postInit(document: DemoDocument)
   {
     self.document = document
 

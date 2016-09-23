@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  DemoDocument.swift
 //  MVVM
 //
 //  Created by Xavier Lasne on 08/04/16.
@@ -9,7 +9,7 @@
 
 import Cocoa
 
-class Document: NSDocument {
+class DemoDocument: NSDocument {
 
   var dataModel: DataModel
 
@@ -29,7 +29,7 @@ class Document: NSDocument {
   }
 
   override func makeWindowControllers() {
-    // Returns the Storyboard that contains your Document window.
+    // Returns the Storyboard that contains your DemoDocument window.
     let storyboard = NSStoryboard(name: "Main", bundle: nil)
     let windowController = storyboard.instantiateController(withIdentifier: "Document Window Controller") as! NSWindowController
     self.addWindowController(windowController)

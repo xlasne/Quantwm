@@ -12,7 +12,7 @@ import Cocoa
 class MainViewController: NSViewController {
 
   // MARK: Interfaces
-  weak var document: Document?
+  weak var document: DemoDocument?
   var viewModel: MainViewModel?
 
   @IBOutlet weak var viewTop : NSView!
