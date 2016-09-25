@@ -102,7 +102,7 @@ class DataContext {
     return rwContextStack.isEmpty
   }
 
-  func pushContext(_ rwContext: RWContext) -> RWContext
+  func pushContext(_ rwContext: RWContext)
   {
     switch rwContext.rw {
     case .loading:
@@ -114,7 +114,6 @@ class DataContext {
       assert(!isRootLoading,"Error: Update context can not be pushed on Loading Root Stack")
     }
     rwContextStack.append(rwContext)
-    return rwContext
   }
 
   func popContext(_ rwContext: RWContext)
@@ -122,7 +121,7 @@ class DataContext {
     if let topContext = rwContextStack.last
     {
       if topContext == rwContext {
-        rwContextStack.popLast()
+        let _ = rwContextStack.popLast()
       } else {
         assert(false,"Error: DataUsage trying to pop context \(rwContext) which is not matching top context \(rwContextStack.last)")
       }

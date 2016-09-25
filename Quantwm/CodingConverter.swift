@@ -27,11 +27,7 @@ open class CodingConverter<T> {
       assert(false,"MonitoredValue: Programming Error - encode never returns KeyNotFound")
       break
     case .noTypeMatch:
-      if let value = value as? AnyObject {
         aCoder.encode(value, forKey: codingKey)
-      } else {
-        assert(false, "MonitoredValue: encodeWithCoder: Failed to encode value")
-      }
     case .success:
       break
     }

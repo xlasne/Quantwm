@@ -54,7 +54,7 @@ class DelayedSumProcessor: NSObject
     if let number1 = self.dataModel?.observedSelf.number1,
       let number2 = self.dataModel?.observedSelf.number2
     {
-      DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global().async {
         // DO SOMETHING ON THE BACKGROUND THREAD
         // Avoid threading conflict with Data Model
         sleep(2)

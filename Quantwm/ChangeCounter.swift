@@ -65,15 +65,13 @@ open class ChangeCounter: NSObject {
   //MARK: - Update Property Management
 
   // Increment changeCount for a property
-  func setDirty(_ childKey: String) -> Int
+  func setDirty(_ childKey: String)
   {
     print("Monitoring Node: Child \(childKey) dirty")
     if let previousValue = self.changeCountDict[childKey] {
       self.changeCountDict[childKey] = previousValue + 1
-      return previousValue + 1
     } else {
       self.changeCountDict[childKey] = 1
-      return 1
     }
   }
 

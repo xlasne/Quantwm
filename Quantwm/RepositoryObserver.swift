@@ -220,7 +220,7 @@ open class RepositoryObserver: NSObject {
     let observerArray = self.getKeySetObserverArrayForTarget(owner)
     for observer in observerArray    // .filter({!$0.isValid()})
     {
-      observer.displayUsage(keypathObserverDict)
+      let _ = observer.displayUsage(keypathObserverDict)
     }
   }
 
@@ -376,7 +376,7 @@ extension RepositoryObserver
 
     for observer in keySetObserverSet.filter({!$0.isValid()})
     {
-      observer.displayUsage(keypathObserverDict)
+      let _ = observer.displayUsage(keypathObserverDict)
     }
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
 

@@ -56,9 +56,9 @@ class NodeObserver {
     return nextNodes.map({$0.count}).reduce(1,+)
   }
 
-  func readChain(_ chain:[PropertyDescription], fromParent parent: GenericNode) -> NodeObserver?
+  func readChain(_ chain:[PropertyDescription], fromParent parent: GenericNode)
   {
-    guard let property = chain.first else { return nil }
+    guard let property = chain.first else { return }
     let reducedChain = Array(chain.dropFirst())
     let nextProperty = reducedChain.first
 
@@ -93,7 +93,6 @@ class NodeObserver {
                                       changeCount: node.changeCountDict)
       self.nextNodes = [nodeObserver]
     }
-    return self
   }
 
 
