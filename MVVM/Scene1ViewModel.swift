@@ -47,7 +47,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
     let formatter = NumberFormatter()
     if let val = formatter.number(from: numberStr)?.intValue
     {
-      updateActionAndRefresh(owner: owner) {
+      updateActionAndRefresh() {
         dataModel.observedSelf.number1 = val
         dataModel.contextMgr.currentFocus = focus
       }
@@ -58,21 +58,21 @@ class Scene1ViewModel: GenericViewModel<DataModel>
 
   func toggleLeftView()
   {
-    updateActionAndRefresh(owner: owner) {
+    updateActionAndRefresh() {
       dataModel.contextMgr.toggleLeftView()
     }
   }
 
   func toggleRightView()
   {
-    updateActionAndRefresh(owner: owner) {
+    updateActionAndRefresh() {
       dataModel.contextMgr.toggleRightView()
     }
   }
 
   func toggleTransientAndRefresh()
   {
-    updateActionAndRefresh(owner: owner) {
+    updateActionAndRefresh() {
       if let _ = self.dataModel.transientClass {
         print("Removing Transient")
         dataModel.removeTransient()
@@ -85,7 +85,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
 
   func transientAddtoArray()
   {
-    updateActionAndRefresh(owner: owner) {
+    updateActionAndRefresh() {
       let value = dataModel.number1
       dataModel.transientClass?.arrayVal[0].intValue += value
     }

@@ -63,7 +63,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     self.viewModel = Scene1ViewModel(dataModel: document.dataModel, viewController: self)
 
     // Registration
-    self.viewModel?.updateActionAndRefresh(owner: self) {
+    self.viewModel?.updateActionAndRefresh() {
       self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshTextFieldREG)
 
@@ -83,9 +83,8 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
   }
 
   override func viewWillDisappear() {
-    self.viewModel?.unregisterAll(self)
-    super.viewWillDisappear()
     self.viewModel = nil
+    super.viewWillDisappear()
   }
 
 

@@ -30,18 +30,16 @@ class MainViewController: NSViewController {
     self.document = document
     self.viewModel = MainViewModel(dataModel: document.dataModel, viewController: self)
 
-    self.viewModel?.updateActionAndRefresh(owner: self) {
-      self.viewModel?.registerObserver(target: self,
-                               registrationDesc: MainViewController.refreshUIREG)
+    self.viewModel?.updateActionAndRefresh() {
+        self.viewModel?.registerObserver(target: self,
+                                         registrationDesc: MainViewController.refreshUIREG)
     }
   }
 
   override func viewWillDisappear() {
-    self.viewModel?.unregisterAll(self)
-    super.viewWillDisappear()
     self.viewModel = nil
+    super.viewWillDisappear()
   }
-
 
   //MARK: refreshSum
   static let refreshUIREG = RegisterDescription(

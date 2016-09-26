@@ -23,7 +23,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
     let formatter = NumberFormatter()
     if let val = formatter.number(from: numberStr)?.intValue
     {
-      updateActionAndRefresh(owner: owner) {
+      updateActionAndRefresh() {
         if val != self.dataModel.number2
         {
           self.dataModel.number2 = val
@@ -36,7 +36,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   }
 
   func toggleImageColor() {
-    updateActionAndRefresh(owner: owner) {
+    updateActionAndRefresh() {
       let color = dataModel.contextMgr.imageColor
       if color == NSColor.white {
         print("Switch color white to green")
