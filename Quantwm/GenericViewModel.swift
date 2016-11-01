@@ -31,7 +31,7 @@ open class GenericViewModel<Model: RepositoryHolder> : NSObject {
     }
 
     deinit {
-        self.repositoryObserver.displayUsageForOwner(owner)
+        self.repositoryObserver.displayUsage(owner: owner)
         for selector in registeredSelectorArray {
             self.repositoryObserver.unregisterDataSetWithTarget(owner, selector: selector)
         }

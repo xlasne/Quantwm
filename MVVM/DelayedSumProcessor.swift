@@ -26,7 +26,7 @@ class DelayedSumProcessor: NSObject
 
   deinit
   {
-    self.dataModel?.repositoryObserver.displayUsageForOwner(self)
+    self.dataModel?.repositoryObserver.displayUsage(owner:self)
   }
 
   func register()

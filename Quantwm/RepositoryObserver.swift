@@ -75,7 +75,7 @@ open class RepositoryObserver: NSObject {
     self.rootDataDict[keypath] = rootNode
   }
 
-  open func unregisterRootNode(_ property: PropertyDescription)
+  open func unregisterRootNode(property: PropertyDescription)
   {
     let keypath = property.propKey
     assert(property.isRoot,"RepositoryObserver: Calling unregisterRootNode with non root \(keypath)")
@@ -156,7 +156,7 @@ open class RepositoryObserver: NSObject {
     var readLevel = 0
     var keypathWithMaxLevel: KeypathDescription? = nil
     for keypathDescription in keypathDescriptionSet {
-      self.registerKeypathObserver(KeypathObserver(keypathDesc: keypathDescription))
+      self.register(keypathObserver: KeypathObserver(keypathDesc: keypathDescription))
       keypathSet.insert(keypathDescription.keypath)
       if keypathDescription.level > readLevel {
         readLevel = keypathDescription.level
@@ -216,7 +216,7 @@ open class RepositoryObserver: NSObject {
     return dataSet.first
   }
 
-  open func displayUsageForOwner(_ owner: NSObject) {
+  open func displayUsage(owner: NSObject) {
     let observerArray = self.getKeySetObserverArrayForTarget(owner)
     for observer in observerArray    // .filter({!$0.isValid()})
     {
@@ -226,7 +226,7 @@ open class RepositoryObserver: NSObject {
 
   // MARK: Observer Registration - Private
 
-  fileprivate func registerKeypathObserver(_ keypathObserver: KeypathObserver)
+  fileprivate func register(keypathObserver: KeypathObserver)
   {
     let keypath = keypathObserver.keypath
     if let _ = self.keypathObserverDict[keypath] {
