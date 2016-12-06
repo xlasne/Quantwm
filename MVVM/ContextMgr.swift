@@ -18,9 +18,11 @@ import AppKit
 
 class ContextMgr: NSObject, MonitoredClass
 {
-  // MARK: InterfacesMonitoredNode,
+  // MARK: InterfacesMonitoredNode
   static let contextMgrK = RootDescriptor<ContextMgr>.key("contextMgr")
+
   let changeCounter = ChangeCounter()
+
   var observed: ContextMgr {
     changeCounter.performedReadOnMainThread(ContextMgr.contextMgrK)
     return self

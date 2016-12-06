@@ -57,7 +57,7 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
     self.root = root
     self.chain = chain
     if !disableValidation {
-      self.validate()
+      let _ = self.validate()
     }
   }
 
@@ -93,9 +93,11 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
     }
   }
 
-  func validate()   {
+  func validate() -> Bool
+  {
     if !root.isRoot {
       assert(false,"Error: \(root.description) is not a root element. Declare it with isRoot == true")
+      return false
     }
     var previousProperty = root
 
@@ -105,9 +107,11 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
       if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
         assert(false,"Error: \(previousProperty.description) is declared of " +
           "type \(previousProperty.dest) instead of type \(property.description)")
+        return false
       }
       previousProperty = property
     }
+    return true
   }
 
   open var debugDescription: String {

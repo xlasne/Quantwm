@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct RootNode {
+class RootNode {
   weak var changeCounter: ChangeCounter?
   weak var rootObject: MonitoredClass?
   let keypath : String
@@ -75,7 +75,7 @@ open class RepositoryObserver: NSObject {
     self.rootDataDict[keypath] = rootNode
   }
 
-  open func unregisterRootNode(property: PropertyDescription)
+  open func unregisterRootNode(_ property: PropertyDescription)
   {
     let keypath = property.propKey
     assert(property.isRoot,"RepositoryObserver: Calling unregisterRootNode with non root \(keypath)")
@@ -84,7 +84,7 @@ open class RepositoryObserver: NSObject {
     } else {
       print("Data Observer: Warning - unregister non-existing Root \(keypath)")
     }
-    self.rootDataDict[keypath] = nil
+    self.rootDataDict.removeValue(forKey: keypath)
   }
 
   open func rootForKey(_ property: PropertyDescription) -> MonitoredClass?
@@ -111,7 +111,8 @@ open class RepositoryObserver: NSObject {
                               name: String? = nil)
   {
     guard let name = name ?? registrationDesc.name else {
-      assert(false,"RegisterDescription: Error name is not set in static or dynamic call")
+      assert(false,"RegisterDescription: Name is not set in static or dynamic call")
+      return
     }
 
     self.registerObserver(target: target,
@@ -137,7 +138,7 @@ open class RepositoryObserver: NSObject {
 
     if let _ = self.getKeySetObserverForTarget(target, selector: selector)
     {
-      assert(false,"Error: multiple dataset registration for the same (target,selector). Use addMonitorData / removeMonitorData to modify a dataset, or delete it before with unregisterDataSetWithTarget")
+      print("Warning: multiple dataset registration for the same (target:\(target.description),selector:\(selector.description)). Use addMonitorData / removeMonitorData to modify a dataset, or delete it before with unregisterDataSetWithTarget")
       self.unregisterDataSetWithTarget(target, selector: selector)
     }
 
@@ -156,7 +157,7 @@ open class RepositoryObserver: NSObject {
     var readLevel = 0
     var keypathWithMaxLevel: KeypathDescription? = nil
     for keypathDescription in keypathDescriptionSet {
-      self.register(keypathObserver: KeypathObserver(keypathDesc: keypathDescription))
+      self.registerKeypathObserver(KeypathObserver(keypathDesc: keypathDescription))
       keypathSet.insert(keypathDescription.keypath)
       if keypathDescription.level > readLevel {
         readLevel = keypathDescription.level
@@ -220,13 +221,13 @@ open class RepositoryObserver: NSObject {
     let observerArray = self.getKeySetObserverArrayForTarget(owner)
     for observer in observerArray    // .filter({!$0.isValid()})
     {
-      let _ = observer.displayUsage(keypathObserverDict)
+      observer.displayUsage(keypathObserverDict)
     }
   }
 
   // MARK: Observer Registration - Private
 
-  fileprivate func register(keypathObserver: KeypathObserver)
+  fileprivate func registerKeypathObserver(_ keypathObserver: KeypathObserver)
   {
     let keypath = keypathObserver.keypath
     if let _ = self.keypathObserverDict[keypath] {
@@ -376,7 +377,7 @@ extension RepositoryObserver
 
     for observer in keySetObserverSet.filter({!$0.isValid()})
     {
-      let _ = observer.displayUsage(keypathObserverDict)
+      observer.displayUsage(keypathObserverDict)
     }
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
 
@@ -481,7 +482,7 @@ extension RepositoryObserver
         print("updateActionIfPossibleElseDispatch dispatch begin")
         if let writeContext = self?.pushUpdateContext(owner)
         {
-        escapingHandler()
+            escapingHandler()
             self?.popContext(writeContext)
         }
       }

@@ -101,7 +101,8 @@ public extension MonitoredNode
     {
       return nodeValue
     } else {
-      assert(false,"KeyNodeCodable: Class \(type(of: self)) is configured with MonitoredNode, but does not contains changeCounter:ChangeCounter property")
+        assert(false,"KeyNodeCodable: Class \(type(of: self)) is configured with MonitoredNode, but does not contains changeCounter:ChangeCounter property")
+        return ChangeCounter()
     }
   }
 
@@ -155,9 +156,10 @@ class MonitoredNodeObjcParser
   {
     if let nodeValue = node.value(forKey: "changeCounter") as? ChangeCounter
     {
-      return nodeValue
+        return nodeValue
     } else {
-      assert(false,"MonitoredNode: Objective-C Class \(type(of: node)) is configured with containsNode, but does not contains changeCounter:ChangeCounter property")
+        assert(false,"MonitoredNode: Objective-C Class \(type(of: node)) is configured with containsNode, but does not contains changeCounter:ChangeCounter property")
+        return ChangeCounter()
     }
   }
 
@@ -189,8 +191,7 @@ class MonitoredNodeObjcParser
       } else {
         assert(false,"ChangeCounter: MonitoredChild \(childKey) is configured with containsNode = true, but does not contains a changeCounter: ChangeCounter")
       }
-    } else {
-      return  []
     }
+    return  []
   }
 }
