@@ -16,6 +16,12 @@ public enum CodingConverterResult<T> {
 
 open class CodingConverter<T> {
 
+    static func encodeOpt(_ aCoder: NSCoder, value: T?, propertyDescription: PropertyDescription)
+    {
+        if let value = value {
+            CodingConverter<T>.encode(aCoder, value: value, propertyDescription: propertyDescription)
+        }
+    }
 
   static open func encode(_ aCoder: NSCoder, value: T, propertyDescription: PropertyDescription)
   {
@@ -27,11 +33,27 @@ open class CodingConverter<T> {
       assert(false,"MonitoredValue: Programming Error - encode never returns KeyNotFound")
       break
     case .noTypeMatch:
+        let value = value as AnyObject
         aCoder.encode(value, forKey: codingKey)
     case .success:
       break
     }
   }
+
+    static func decodeOpt(_ aDecoder: NSCoder, value: inout T?, propertyDescription: PropertyDescription)
+    {
+        if let val = CodingConverter<T>.decode(aDecoder, propertyDescription: propertyDescription) {
+            value = val
+        }
+    }
+
+    static func decodeNonOpt(_ aDecoder: NSCoder, value: inout T, propertyDescription: PropertyDescription)
+    {
+        if let val = CodingConverter<T>.decode(aDecoder, propertyDescription: propertyDescription) {
+            value = val
+        }
+    }
+
 
   static open func decode(_ aDecoder: NSCoder, propertyDescription: PropertyDescription) -> T?
   {
