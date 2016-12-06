@@ -476,12 +476,14 @@ extension RepositoryObserver
       self.popContext(writeContext)
     } else {
       // Update is not allowed. Perform this update later on the main thread
-      DispatchQueue.main.async {_ in
+      DispatchQueue.main.async {[weak self] _ in
         // Modifications are performed while on the main thread which serialize update
         print("updateActionIfPossibleElseDispatch dispatch begin")
-        let writeContext = self.pushUpdateContext(owner)
+        if let writeContext = self?.pushUpdateContext(owner)
+        {
         escapingHandler()
-        self.popContext(writeContext)
+            self?.popContext(writeContext)
+        }
       }
     }
   }

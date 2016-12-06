@@ -126,8 +126,8 @@ open class PropertyDescriptor<Source,Dest>
 {
   open static func key(
     _ key: String,
-    propertyDescriptionOption: PropertyDescriptionOption = [],
-    dependFromPropertySet: Set<PropertyDescription> = []
+    propertyDescriptionOption: PropertyDescriptionOption,
+    dependFromPropertySet: Set<PropertyDescription>
     ) -> PropertyDescription
   {
     return PropertyDescription(swift_propKey: key,
@@ -137,6 +137,27 @@ open class PropertyDescriptor<Source,Dest>
                                dependFromPropertySet: dependFromPropertySet
     )
   }
+
+    open static func key(
+        _ key: String,
+        propertyDescriptionOption: PropertyDescriptionOption
+        ) -> PropertyDescription
+    {
+        return PropertyDescription(swift_propKey: key,
+                                   sourceType: Source.self,
+                                   destType: Dest.self,
+                                   option: propertyDescriptionOption)
+    }
+
+    open static func key(
+        _ key: String) -> PropertyDescription
+    {
+        return PropertyDescription(swift_propKey: key,
+                                   sourceType: Source.self,
+                                   destType: Dest.self,
+                                   option: []
+        )
+    }
 }
 
 open class RootDescriptor<Source>
