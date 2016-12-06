@@ -12,9 +12,10 @@ import AppKit
 class Scene2ViewModel: GenericViewModel<DataModel>
 {
   // Generic View Model
-  init(dataModel : DataModel, viewController: Scene2ViewController)
+  override init(dataModel : DataModel, owner: String)
   {
-    super.init(dataModel: dataModel, owner: viewController)
+    let composedOwner = "\(owner)+Scene2ViewModel"
+    super.init(dataModel: dataModel, owner: composedOwner)
   }
 
   // MARK: - Input Processing

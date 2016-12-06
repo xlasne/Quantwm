@@ -17,9 +17,10 @@ class MainViewModel: GenericViewModel<DataModel>
 
   // MARK: Interfaces
 
-  init(dataModel : DataModel, viewController : MainViewController)
+  override init(dataModel : DataModel, owner: String)
   {
-    super.init(dataModel: dataModel, owner: viewController)
+     let composedOwner = "\(owner)+MainViewModel"
+     super.init(dataModel: dataModel, owner: composedOwner)
   }
 
   static let leftViewPresentKeypathSet =

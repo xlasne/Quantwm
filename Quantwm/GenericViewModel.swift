@@ -17,25 +17,24 @@ open class GenericViewModel<Model: RepositoryHolder> : NSObject {
 
     open unowned var dataModel: Model
     open unowned var repositoryObserver : RepositoryObserver
-    open unowned var owner: NSObject
+    open let owner: NSString
     var registeredSelectorArray : [Selector]
 
 
-    public init(dataModel : Model, owner: NSObject)
+    public init(dataModel : Model, owner: String)
     {
         self.dataModel = dataModel
         self.repositoryObserver = dataModel.getRepositoryObserver()
-        self.owner = owner
+        self.owner = NSString(string: owner)
         self.registeredSelectorArray = []
         super.init()
     }
 
     deinit {
+        // Can not keep a reference to the target here, as target weak or unowned reference 
+        // are zeroed when reaching this point.
+        // -> Owner is build as a string containing the name of the view controller + view model
         self.repositoryObserver.displayUsage(owner: owner)
-        for selector in registeredSelectorArray {
-            self.repositoryObserver.unregisterDataSetWithTarget(owner, selector: selector)
-        }
-        self.registeredSelectorArray = []
     }
 
 
@@ -76,6 +75,11 @@ open class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                                      selector: selector,
                                                      name: name,
                                                      maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
+    }
+
+    open func unregisterDataSet(target: NSObject)
+    {
+        self.repositoryObserver.unregisterDataSetWithTarget(target)
     }
 
     // MARK: - Repository Observer wrappers

@@ -31,9 +31,10 @@ import AppKit
 class Scene1ViewModel: GenericViewModel<DataModel>
 {
   // Generic View Model
-  init(dataModel : DataModel, viewController: Scene1ViewController)
+  override init(dataModel : DataModel, owner: String)
   {
-    super.init(dataModel: dataModel, owner: viewController)
+    let composedOwner = "\(owner)+Scene1ViewModel"
+    super.init(dataModel: dataModel, owner: composedOwner)
   }
 
 

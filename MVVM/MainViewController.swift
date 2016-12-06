@@ -28,7 +28,7 @@ class MainViewController: NSViewController {
 
     guard let document = Helper.documentForViewController(self) else { return }
     self.document = document
-    self.viewModel = MainViewModel(dataModel: document.dataModel, viewController: self)
+    self.viewModel = MainViewModel(dataModel: document.dataModel, owner: self.description)
 
     self.viewModel?.updateActionAndRefresh() {
         self.viewModel?.registerObserver(target: self,
@@ -37,6 +37,7 @@ class MainViewController: NSViewController {
   }
 
   override func viewWillDisappear() {
+    self.viewModel?.unregisterDataSet(target: self)
     self.viewModel = nil
     super.viewWillDisappear()
   }

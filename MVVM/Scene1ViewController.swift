@@ -60,7 +60,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     super.viewWillAppear()
 
     guard let document = self.representedObject as? DemoDocument else { return }
-    self.viewModel = Scene1ViewModel(dataModel: document.dataModel, viewController: self)
+    self.viewModel = Scene1ViewModel(dataModel: document.dataModel, owner: self.description)
 
     // Registration
     self.viewModel?.updateActionAndRefresh() {
@@ -83,6 +83,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
   }
 
   override func viewWillDisappear() {
+    self.viewModel?.unregisterDataSet(target: self)
     self.viewModel = nil
     super.viewWillDisappear()
   }
