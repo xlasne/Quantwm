@@ -50,7 +50,7 @@ class MainViewController: NSViewController {
     name: "MainViewController",
     configurationPriority: 1)
 
-  func refreshUI()
+  @objc func refreshUI()
   {
     // Enclosed in a Update transaction when called by refreshUIREG
 

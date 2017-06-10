@@ -31,7 +31,7 @@ class Helper
   class func documentForViewController(_ viewController: NSViewController) -> DemoDocument?
   {
     guard let window = viewController.view.window else { return nil}
-    guard let document = NSDocumentController.shared().document(for: window) else {
+    guard let document = NSDocumentController.shared.document(for: window) else {
         return nil
     }
     if let document = document as? DemoDocument

@@ -40,10 +40,10 @@ class DelayedSumProcessor: NSObject
       name: "DelayedSumProcessor")
   }
 
-  func startProcessing()
+  @objc func startProcessing()
   {
     let completionHandler = { (numVal:Int)->() in
-      DispatchQueue.main.async {[weak self] _ in
+      DispatchQueue.main.async {[weak self]  in
         // No locking needed.
         // Modifications are performed while on the main thread which serialize update
         self?.dataModel?.sumOfNumber = numVal

@@ -88,7 +88,7 @@ class KeySetObserver: NSObject {
     self.target = target
     self.targetAction = selector
     self.keypathSet = keypathSet
-    self.type = type(of: target)
+    self.type = Swift.type(of: target)
     self.name = name
     self.unionReadKeypathSet = []
     self.writtenPropertySet = writtenPropertySet

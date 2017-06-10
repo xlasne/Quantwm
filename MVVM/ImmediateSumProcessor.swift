@@ -41,7 +41,7 @@ class ImmediateSumProcessor: NSObject
       writtenPropertySet: Set([DataModel.invSumOfNumberK]))
   }
 
-  func startProcessing()
+  @objc func startProcessing()
   {
     if let number1 = self.dataModel?.observedSelf.number1,
       let number2 = self.dataModel?.observedSelf.number2

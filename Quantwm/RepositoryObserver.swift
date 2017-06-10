@@ -194,7 +194,7 @@ open class RepositoryObserver: NSObject {
   }
 
   //MARK: Helper functions
-  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> [KeySetObserver]
+  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> Set<KeySetObserver>
   {
     let dataSet = self.keySetObserverSet.filter({
       let mirror = Mirror(reflecting: target)
@@ -203,7 +203,7 @@ open class RepositoryObserver: NSObject {
     return dataSet
   }
 
-  fileprivate func getKeySetObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> [KeySetObserver]
+  fileprivate func getKeySetObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<KeySetObserver>
   {
     return keySetObserverSet.filter({$0.matchesTarget(target, selector: selector)})
   }
@@ -477,7 +477,7 @@ extension RepositoryObserver
       self.popContext(writeContext)
     } else {
       // Update is not allowed. Perform this update later on the main thread
-      DispatchQueue.main.async {[weak self] _ in
+      DispatchQueue.main.async {[weak self]  in
         // Modifications are performed while on the main thread which serialize update
         print("updateActionIfPossibleElseDispatch dispatch begin")
         if let writeContext = self?.pushUpdateContext(owner)

@@ -184,7 +184,7 @@ class TestCall: NSObject
 {
   var isCalled = false
 
-  func testCall()
+  @objc func testCall()
   {
     isCalled = true
   }

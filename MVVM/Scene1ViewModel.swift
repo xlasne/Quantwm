@@ -53,7 +53,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
         dataModel.contextMgr.currentFocus = focus
       }
     } else {
-      NSBeep()
+      NSSound.beep()
     }
   }
 

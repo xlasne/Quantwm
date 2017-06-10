@@ -48,7 +48,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     set {
       self.changeCounter.performedWriteOnMainThread(DataModel.number1K)
       _number1 = newValue
-      self.document.updateChangeCount(NSDocumentChangeType.changeDone)
+      self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
     }
   }
 
@@ -62,7 +62,7 @@ class DataModel : NSObject, NSCoding, MonitoredClass, RepositoryHolder
     set {
       self.changeCounter.performedWriteOnMainThread(DataModel.number2K)
       _number2 = newValue
-      self.document.updateChangeCount(NSDocumentChangeType.changeDone)
+      self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
     }
   }
 

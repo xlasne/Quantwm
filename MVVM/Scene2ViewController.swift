@@ -20,9 +20,13 @@ import Cocoa
 
 class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 
-  override var nibName: String? {
-    return "Scene2ViewController"
-  }
+    override var nibName: NSNib.Name? {
+        return NSNib.Name("Scene2ViewController")
+    }
+
+//  override var nibName: NSNib.Name? {
+//    return "Scene2ViewController"
+//  }
 
   //View Model
   var sceneName : String = "Scene2ViewController"
@@ -82,7 +86,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
     }
   }
 
-  func numberFieldUpdated(_ sender: NSTextField)
+  @objc func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.setValue2(numberStr, focus: sender)
@@ -104,7 +108,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
     name: nil,
     maximumAllowedRegistrationWithSameTypeSelector: 2)
 
-  func refreshView()
+  @objc func refreshView()
   {
     if let vm = self.viewModel
     {
@@ -132,7 +136,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
     name: nil,
     maximumAllowedRegistrationWithSameTypeSelector: 2)
 
-  func refreshColor()
+  @objc func refreshColor()
   {
     if let color = viewModel?.getColor()
     {

@@ -20,8 +20,8 @@ import Cocoa
 
 class Scene1ViewController: NSViewController, NSTextFieldDelegate {
 
-  override var nibName: String? {
-    return "Scene1ViewController"
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("Scene1ViewController")
   }
 
   //View Model
@@ -98,13 +98,13 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     }
   }
 
-  func numberFieldUpdated(_ sender: NSTextField)
+  @objc func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.updateValue(numberStr, focus: sender)
   }
 
-  func showHideView(_ sender: NSButton)
+  @objc func showHideView(_ sender: NSButton)
   {
     if sender == self.showHideLeft
     {
@@ -116,12 +116,12 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     }
   }
 
-  func transientButtonAction(_ sender: NSButton)
+  @objc func transientButtonAction(_ sender: NSButton)
   {
     self.viewModel?.toggleTransientAndRefresh()
   }
 
-  func transientAddtoArrayButtonAction(_ sender: NSButton)
+  @objc func transientAddtoArrayButtonAction(_ sender: NSButton)
   {
     self.viewModel?.transientAddtoArray()
   }
@@ -134,7 +134,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     keypathSet: Scene1ViewModel.getFocusKeypathSet + Scene1ViewModel.getValue1KeypathSet,
     name: "Scene1ViewControllerTextField")
 
-  func refreshTextField()
+  @objc func refreshTextField()
   {
     guard let vm = self.viewModel else { return }
     let focus = vm.getFocus()
@@ -152,7 +152,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     keypathSet: Scene1ViewModel.getInvSumKeypathSet,
     name: "Scene1ViewControllerSum")
 
-  func refreshInvSum()
+  @objc func refreshInvSum()
   {
     guard let vm = self.viewModel else { return }
     if let sumVal = vm.getInvSum() {
@@ -169,7 +169,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     keypathSet: Scene1ViewModel.getTransientKeypathSet,
     name: "Scene1ViewControllerTransient")
 
-  func refreshTransient()
+  @objc func refreshTransient()
   {
     guard let vm = self.viewModel else { return }
     if let transientVal = vm.getTransient() {
@@ -185,7 +185,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     keypathSet: Scene1ViewModel.getArraySumKeypathSet,
     name: "Scene1ViewControllerArraySum")
 
-  func refreshArraySum()
+  @objc func refreshArraySum()
   {
     guard let vm = self.viewModel else { return }
     if let sumVal = vm.getArraySum() {
