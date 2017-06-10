@@ -172,7 +172,7 @@ class NodeObserver {
         return nextNode.compareWithPreviousChain(previousChain.firstNode)
       } else {
         if previousChain.firstNode != nil {
-          return (isDirty:true, description: "Child \(previousChain.firstNode?.childKey) released)")
+            return (isDirty:true, description: "Child \(String(describing: previousChain.firstNode?.childKey)) released)")
         }
       }
     }

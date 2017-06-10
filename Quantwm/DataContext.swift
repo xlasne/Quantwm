@@ -54,9 +54,9 @@ struct RWContext: Equatable, CustomDebugStringConvertible
   var debugDescription: String {
     switch rw {
     case .loading:
-      return "Loading - \(owner)"
+        return "Loading - \(String(describing: owner))"
     case .update:
-      return "Update - \(owner)"
+        return "Update - \(String(describing: owner))"
     case .refresh:
       return "Refresh"
     }
@@ -123,7 +123,7 @@ class DataContext {
       if topContext == rwContext {
         let _ = rwContextStack.popLast()
       } else {
-        assert(false,"Error: DataUsage trying to pop context \(rwContext) which is not matching top context \(rwContextStack.last)")
+        assert(false,"Error: DataUsage trying to pop context \(rwContext) which is not matching top context \(String(describing: rwContextStack.last))")
       }
     } else {
       assert(false,"Error: DataUsage trying to pop context \(rwContext) on an empty stack")

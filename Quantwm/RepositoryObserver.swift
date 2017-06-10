@@ -145,7 +145,7 @@ open class RepositoryObserver: NSObject {
     let sameTypeArray = self.getDataSetArrayForTypeFromTarget(target, selector: selector)
     if let count = maximumAllowedRegistrationWithSameTypeSelector {
       if (count > 0) && (sameTypeArray.count > count-1) { // count-1 because we are not registered yet
-        assert(false,"Error: The number of registration for the same (type,selector) exceed the configured \(maximumAllowedRegistrationWithSameTypeSelector) value")
+        assert(false,"Error: The number of registration for the same (type,selector) exceed the configured \(String(describing: maximumAllowedRegistrationWithSameTypeSelector)) value")
       }
     } else {
       if sameTypeArray.count > 0 {
@@ -170,7 +170,7 @@ open class RepositoryObserver: NSObject {
       (writeProperty: PropertyDescription) in
       let writeLevel = writeProperty.level
       if writeLevel <= readLevel {
-        assert(false, "RepositoryObserver: Registration of \(name): The writeProperty \(writeProperty.description) has a level of \(writeLevel), which is not strictly greater than the readLevel \(readLevel) of keypath \(keypathWithMaxLevel?.keypath) and level\(keypathWithMaxLevel?.levelDescription)")
+        assert(false, "RepositoryObserver: Registration of \(name): The writeProperty \(writeProperty.description) has a level of \(writeLevel), which is not strictly greater than the readLevel \(readLevel) of keypath \(String(describing: keypathWithMaxLevel?.keypath)) and level\(String(describing: keypathWithMaxLevel?.levelDescription))")
       }
     }
 
@@ -218,11 +218,11 @@ open class RepositoryObserver: NSObject {
   }
 
   open func displayUsage(owner: NSObject) {
-    let observerArray = self.getKeySetObserverArrayForTarget(owner)
-    for observer in observerArray    // .filter({!$0.isValid()})
-    {
-      observer.displayUsage(keypathObserverDict)
-    }
+//    let observerArray = self.getKeySetObserverArrayForTarget(owner)
+//    for observer in observerArray    // .filter({!$0.isValid()})
+//    {
+//      observer.displayUsage(keypathObserverDict)
+//    }
   }
 
   // MARK: Observer Registration - Private
@@ -375,10 +375,10 @@ extension RepositoryObserver
 
     dataContext.popContext(refreshContext)
 
-    for observer in keySetObserverSet.filter({!$0.isValid()})
-    {
-      observer.displayUsage(keypathObserverDict)
-    }
+//    for observer in keySetObserverSet.filter({!$0.isValid()})
+//    {
+//      observer.displayUsage(keypathObserverDict)
+//    }
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
 
     if QUANTUM_MVVM_DEBUG {
