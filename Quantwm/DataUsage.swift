@@ -18,17 +18,24 @@ class RW_Action: Equatable, CustomStringConvertible, Hashable {
   let propertyDesc: String
   let nodeId: NodeId?
 
-  init(node: ChangeCounter, property: PropertyDescription)
+  init(node: ChangeCounter, property: RootDescriptor)
   {
     self.node = node
-    self.propertyDesc = property.description
+    self.propertyDesc = property.propDescription
     self.nodeId = node.nodeId
   }
 
-  init(emptyNodeWithProperty property: PropertyDescription)
+    init(node: ChangeCounter, property: PropertyDescriptor)
+    {
+        self.node = node
+        self.propertyDesc = property.propDescription
+        self.nodeId = node.nodeId
+    }
+
+  init(emptyNodeWithProperty property: PropertyDescriptor)
   {
     self.node = nil
-    self.propertyDesc = property.description
+    self.propertyDesc = property.propDescription
     self.nodeId = nil
   }
 
@@ -156,7 +163,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addRead(_ node: ChangeCounter, property: PropertyDescription) {
+  func addRead(_ node: ChangeCounter, property: PropertyDescriptor) {
     let readAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {
@@ -175,7 +182,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addWrite(_ node: ChangeCounter, property: PropertyDescription) {
+  func addWrite(_ node: ChangeCounter, property: PropertyDescriptor) {
     let writeAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {

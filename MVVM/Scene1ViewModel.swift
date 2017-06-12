@@ -127,9 +127,9 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   }
 
   //MARK: getArraySum
-  static let getArraySumKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                                                chain: [DataModel.transientClassK, TransientClass.arrayValueK, NodeObjc.intValueK()])
-
+//  static let getArraySumKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
+//                                                chain: [DataModel.transientClassK, TransientClass.arrayValueK, NodeObjc.intValueK()])
+//
   func getArraySum() -> Int?
   {
     return dataModel
@@ -142,9 +142,9 @@ class Scene1ViewModel: GenericViewModel<DataModel>
 
 
   //MARK: getTransient
-  static let getTransientKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                                                 chain: [DataModel.transientClassK, TransientClass.transientValK])
-
+//  static let getTransientKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
+//                                                 chain: [DataModel.transientClassK, TransientClass.transientValK])
+//
 
   func getTransient() -> String?
   {

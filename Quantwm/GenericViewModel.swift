@@ -43,7 +43,7 @@ open class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                selector: Selector,
                                keypathDescriptionSet: Set<KeypathDescription>,
                                name: String,
-                               writtenPropertySet: Set<PropertyDescription> = [],
+                               writtenPropertySet: Set<PropertyDescriptor> = [],
                                maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
     {
         self.registeredSelectorArray.append(selector)

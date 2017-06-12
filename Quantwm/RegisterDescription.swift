@@ -13,7 +13,7 @@ open class RegisterDescription
   let selector: Selector
   let keypathDescriptionSet: Set<KeypathDescription>
   let name: String?
-  let writtenPropertySet: Set<PropertyDescription>
+  let writtenPropertySet: Set<PropertyDescriptor>
   let maximumAllowedRegistrationWithSameTypeSelector: Int?
   let configurationPriority: Int?
 
@@ -34,7 +34,7 @@ open class RegisterDescription
   public init(selector: Selector,
               keypathDescriptionSet: Set<KeypathDescription>,
               name: String?,
-              writtenPropertySet: Set<PropertyDescription> = [],
+              writtenPropertySet: Set<PropertyDescriptor> = [],
               maximumAllowedRegistrationWithSameTypeSelector: Int? = nil,
               configurationPriority: Int? = nil)
   {

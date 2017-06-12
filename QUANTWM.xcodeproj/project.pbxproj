@@ -289,7 +289,6 @@
 			isa = PBXGroup;
 			children = (
 				25E2A4021CFDA55800F42FD3 /* QuantwmOSX */,
-				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
 				25EA3A2D1CF05428002D5962 /* DataContext.swift */,
 				25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */,
 				25EA3A2F1CF05428002D5962 /* DataUsage.swift */,
@@ -297,8 +296,9 @@
 				25EA3A311CF05428002D5962 /* KeypathDescription.swift */,
 				25EA3A321CF05428002D5962 /* KeypathObserver.swift */,
 				25EA3A331CF05428002D5962 /* KeySetObserver.swift */,
-				25EA3A341CF05428002D5962 /* MonitoredNode.swift */,
 				25EA3A351CF05428002D5962 /* NodeObserver.swift */,
+				25EA3A341CF05428002D5962 /* MonitoredNode.swift */,
+				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
 				25EA3A371CF05428002D5962 /* PropertyDescriptionOption.h */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
@@ -431,21 +431,20 @@
 				TargetAttributes = {
 					2534824A1CB7C9A900F61BB4 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					253A17291CCB8CC10048E524 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 						TestTargetID = 2534824A1CB7C9A900F61BB4;
 					};
 					25E2A4001CFDA55800F42FD3 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					25E2A4091CFDA55800F42FD3 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
-						TestTargetID = 2534824A1CB7C9A900F61BB4;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -716,7 +715,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MVVM/MVVM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -732,7 +732,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MVVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MVVM/MVVM-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -745,7 +746,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XLSoftwareSolutions.MVVMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
 			};
 			name = Debug;
@@ -759,7 +761,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XLSoftwareSolutions.MVVMTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
 			};
 			name = Release;
@@ -782,7 +785,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -806,7 +810,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -823,8 +828,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QuantwmOSXTests/QuantwmOSXTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -838,8 +843,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = swift.QuantwmOSXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QuantwmOSXTests/QuantwmOSXTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVVM.app/Contents/MacOS/MVVM";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -17,7 +17,7 @@ class NodeObserver {
   weak var changeCounter: ChangeCounter?
 
   // The changeCounter.associatedObject shall be of type propertyDesc.sourceType
-  let propertyDesc: PropertyDescription
+  let propertyDesc: PropertyDescriptor
 
   // If not a collection, nextNode point to the next element
   // If a collection, nodeCollection
@@ -29,13 +29,17 @@ class NodeObserver {
   }
   // capture node change counter dictionary
   // for comparison with previous capture
-  var changeCountDict: [String:Int] = [:]
+  var changeCountDict: [AnyKeyPath:Int] = [:]
 
-  var childKey: String  {
+  var childKeypath: AnyKeyPath  {
     return propertyDesc.propKey
   }
 
-  init(node: ChangeCounter, propertyDesc: PropertyDescription)
+    var childKey: String  {
+        return propertyDesc.propDescription
+    }
+
+  init(node: ChangeCounter, propertyDesc: PropertyDescriptor)
   {
     self.changeCounter = node
     self.changeCountDict = node.changeCountDict
@@ -43,7 +47,7 @@ class NodeObserver {
     self.nextNodes = []
   }
 
-  init(node: ChangeCounter, propertyDesc: PropertyDescription, changeCount: [String:Int])
+  init(node: ChangeCounter, propertyDesc: PropertyDescriptor, changeCount: [AnyKeyPath:Int])
   {
     self.changeCounter = node
     self.changeCountDict = changeCount
@@ -56,16 +60,18 @@ class NodeObserver {
     return nextNodes.map({$0.count}).reduce(1,+)
   }
 
-  func readChain(_ chain:[PropertyDescription], fromParent parent: GenericNode)
+  func readChain(_ chain:[PropertyDescriptor], fromParent parent: MonitoredNode)
   {
     guard let property = chain.first else { return }
     let reducedChain = Array(chain.dropFirst())
     let nextProperty = reducedChain.first
 
     let node = parent.getNodeChangeCounter()
-    let foundNodes = parent.getChildArray(property: property)
-    if property.containsNodeCollection {
-      // Item contains node
+    let foundNodes: [MonitoredNode] = property.getChildArray?(parent) ?? []
+
+    if foundNodes.count > 1
+    {
+        // Item contains node
       self.nextNodes = []
       for monitoredNode in foundNodes {
         let childNode = monitoredNode.getNodeChangeCounter()
@@ -75,8 +81,7 @@ class NodeObserver {
           self.nextNodes.append(nodeObserver)
         }
       }
-    } else if property.containsNode {
-
+    } else if foundNodes.count == 1 {
       // Item contains node
       if let monitoredNode = foundNodes.first {
         let childNode = monitoredNode.getNodeChangeCounter()
@@ -118,13 +123,8 @@ class NodeObserver {
     }
 
     // As the nodes are identical, check if node is dirty for the childKey
-    if previousChain.changeCountDict[childKey] != self.changeCountDict[childKey] {
-      if self.propertyDesc.containsNode
-      {
+    if previousChain.changeCountDict[childKeypath] != self.changeCountDict[childKeypath] {
         return (isDirty:true, description: "Node \(childKey) dirty")
-      } else {
-        return (isDirty:true, description: "Child \(childKey) dirty")
-      }
     }
 
     if self.nextNodes.count > 1

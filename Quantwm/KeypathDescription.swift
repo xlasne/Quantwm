@@ -11,24 +11,24 @@ import Foundation
 open class KeypathSet
 {
   open var readKeypathSet : Set<KeypathDescription> = []
-  open var writtenPropertySet: Set<PropertyDescription> = []
+  open var writtenPropertySet: Set<PropertyDescriptor> = []
 
   public init()
   { }
 
-  public init(readWithRoot root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  public init(readWithRoot root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
     readKeypathSet = [keypathDesc]
   }
 
-  open func addRead(root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  open func addRead(root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
     readKeypathSet.insert(keypathDesc)
   }
 
-  open func addWrittenProperty(_ property: PropertyDescription)
+  open func addWrittenProperty(_ property: PropertyDescriptor)
   {
     writtenPropertySet.insert(property)
   }
@@ -47,12 +47,12 @@ public func +(lhs: KeypathSet, rhs: KeypathSet) -> KeypathSet
 
 open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
-  let root: PropertyDescription
-  let chain: [PropertyDescription]
+  let root: RootDescriptor
+  let chain: [PropertyDescriptor]
 
   // Set disableValidation to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
   // match the source and destination types between Objective-C and Swift
-  public init(root: PropertyDescription, chain: [PropertyDescription], disableValidation: Bool = false)
+  public init(root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
   {
     self.root = root
     self.chain = chain
@@ -63,31 +63,31 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 
   var keypath: String {
     if let extensionPath = self.extensionPath {
-      return root.propKey + "." + extensionPath
+      return root.propDescription + "." + extensionPath
     } else {
-      return root.propKey
+      return root.propDescription
     }
   }
 
   func key(_ index: Int)-> String? {
     if index == 0 {
-      return root.propKey
+      return root.propDescription
     }
     let chainIndex = index - 1
     if (chainIndex >= 0) && (chainIndex < chain.count) {
-      return chain[chainIndex].propKey
+      return chain[chainIndex].propDescription
     }
     assert(true,"Error: Invalid index \(index) for \(keypath)")
     return nil
   }
 
   var rootPath: String {
-    return root.propKey
+    return root.propDescription
   }
 
   var extensionPath: String? {
     if !chain.isEmpty {
-      return chain.map({$0.propKey}).joined(separator: ".")
+      return chain.map({$0.propDescription}).joined(separator: ".")
     } else {
       return nil
     }
@@ -95,22 +95,22 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 
   func validate() -> Bool
   {
-    if !root.isRoot {
-      assert(false,"Error: \(root.description) is not a root element. Declare it with isRoot == true")
-      return false
-    }
-    var previousProperty = root
-
-    for property in chain {
-      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
-        " and is not the last element of the keypath")
-      if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
-        assert(false,"Error: \(previousProperty.description) is declared of " +
-          "type \(previousProperty.dest) instead of type \(property.description)")
-        return false
-      }
-      previousProperty = property
-    }
+//    if !root.isRoot {
+//      assert(false,"Error: \(root.propDescription) is not a root element. Declare it with isRoot == true")
+//      return false
+//    }
+//    var previousProperty = root.sourceType
+//
+//    for property in chain {
+////      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
+////        " and is not the last element of the keypath")
+//      if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
+//        assert(false,"Error: \(previousProperty) is declared of " +
+//          "type \(previousProperty) instead of type \(property.source)")
+//        return false
+//      }
+//        previousProperty = property.destType
+//    }
     return true
   }
 
@@ -120,19 +120,19 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 
   open var hashValue: Int {
     return  root.hashValue &+ chain.reduce(0) {
-      (cumulated: Int, prop: PropertyDescription) -> Int in
+      (cumulated: Int, prop: PropertyDescriptor) -> Int in
       return cumulated &+ prop.hashValue
     }
   }
 
   var level: Int {
-    return chain.reduce(1, PropertyDescription.maxLevelFunc)
+    return chain.reduce(1, PropertyDescriptor.maxLevelFunc)
   }
 
   var levelDescription: String {
     return chain.reduce("") {
-      (current: String, prop: PropertyDescription) -> String in
-      return current + ":\(prop.description)[\(prop.level)]"
+      (current: String, prop: PropertyDescriptor) -> String in
+      return current + ":\(prop.propDescription)[\(prop.level)]"
     }
   }
 }

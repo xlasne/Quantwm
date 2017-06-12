@@ -22,14 +22,14 @@
 }
 
 
-+(PropertyDescription*) intValueK {
-
-    return [[PropertyDescription alloc] initWithObjc_propKey:@"_intValue"
-                                               sourceTypeStr:NSStringFromClass ([NodeObjc class])
-                                                 destTypeStr:nil
-                                                      option:PropertyDescriptionOptionNone
-                                       dependFromPropertySet:[NSSet<PropertyDescription*> set]];
-}
+//+(PropertyDescription*) intValueK {
+//
+//    return [[PropertyDescription alloc] initWithObjc_propKey:@"_intValue"
+//                                               sourceTypeStr:NSStringFromClass ([NodeObjc class])
+//                                                 destTypeStr:nil
+//                                                      option:PropertyDescriptionOptionNone
+//                                       dependFromPropertySet:[NSSet<PropertyDescription*> set]];
+//}
 
 -(NSInteger) intValue
 {
@@ -45,3 +45,4 @@
 
 
 @end
+

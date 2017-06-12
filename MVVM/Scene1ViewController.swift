@@ -67,11 +67,11 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshTextFieldREG)
 
-      self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshArraySumREG)
-
-      self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshTransientREG)
+//      self.viewModel?.registerObserver(target: self,
+//                               registrationDesc: Scene1ViewController.refreshArraySumREG)
+//
+//      self.viewModel?.registerObserver(target: self,
+//                               registrationDesc: Scene1ViewController.refreshTransientREG)
 
       self.viewModel?.registerObserver(target: self,
                                registrationDesc: Scene1ViewController.refreshInvSumREG)
@@ -164,37 +164,37 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
 
   //MARK: refreshTransient
 
-  static let refreshTransientREG = RegisterDescription(
-    selector: #selector(Scene1ViewController.refreshTransient),
-    keypathSet: Scene1ViewModel.getTransientKeypathSet,
-    name: "Scene1ViewControllerTransient")
-
-  @objc func refreshTransient()
-  {
-    guard let vm = self.viewModel else { return }
-    if let transientVal = vm.getTransient() {
-      self.transientLabel.stringValue = transientVal
-    } else {
-      self.transientLabel.stringValue = "no value defined"
-    }
-  }
+//  static let refreshTransientREG = RegisterDescription(
+//    selector: #selector(Scene1ViewController.refreshTransient),
+//    keypathSet: Scene1ViewModel.getTransientKeypathSet,
+//    name: "Scene1ViewControllerTransient")
+//
+//  @objc func refreshTransient()
+//  {
+//    guard let vm = self.viewModel else { return }
+//    if let transientVal = vm.getTransient() {
+//      self.transientLabel.stringValue = transientVal
+//    } else {
+//      self.transientLabel.stringValue = "no value defined"
+//    }
+//  }
 
   //MARK: refreshSum
-  static let refreshArraySumREG = RegisterDescription(
-    selector: #selector(Scene1ViewController.refreshArraySum),
-    keypathSet: Scene1ViewModel.getArraySumKeypathSet,
-    name: "Scene1ViewControllerArraySum")
+//  static let refreshArraySumREG = RegisterDescription(
+//    selector: #selector(Scene1ViewController.refreshArraySum),
+//    keypathSet: Scene1ViewModel.getArraySumKeypathSet,
+//    name: "Scene1ViewControllerArraySum")
+//
+//  @objc func refreshArraySum()
+//  {
+//    guard let vm = self.viewModel else { return }
+//    if let sumVal = vm.getArraySum() {
+//      self.transientArrayLabel.stringValue = "Sum: \(sumVal)"
+//    } else {
+//      self.transientArrayLabel.stringValue = "Sum: _"
+//    }
+//  }
 
-  @objc func refreshArraySum()
-  {
-    guard let vm = self.viewModel else { return }
-    if let sumVal = vm.getArraySum() {
-      self.transientArrayLabel.stringValue = "Sum: \(sumVal)"
-    } else {
-      self.transientArrayLabel.stringValue = "Sum: _"
-    }
-  }
-  
 }
 
 

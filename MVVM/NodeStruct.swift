@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct NodeStruct: MonitoredStruct {
+struct NodeStruct: MonitoredNode {
+    func getNodeChangeCounter() -> ChangeCounter {
+        return changeCounter
+    }
 
   let changeCounter = ChangeCounter()
 
-  static let intValueK = PropertyDescriptor<NodeStruct,Int>.key("_intValue")
-  fileprivate var _intValue: Int = 0
+  static let intValueK = PropertyDescriptor(keypath: \NodeStruct.intValue, description: "intValue")
+
+    fileprivate var _intValue: Int = 0
   var intValue: Int {
     get {
       self.changeCounter.performedReadOnMainThread(NodeStruct.intValueK)

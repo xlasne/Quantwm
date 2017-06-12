@@ -34,13 +34,13 @@ open class ChangeCounter: NSObject {
 
   // Maintain a change counter for each value or reference property of its parent object/struct
   // Counter is created at 0 when requested
-  var changeCountDict: [String:Int] = [:]
+  var changeCountDict: [AnyKeyPath:Int] = [:]
 
   //MARK: - Read / Write monitoring
 
-  open func performedReadOnMainThread(_ property: PropertyDescription)
+  open func performedReadOnMainThread(_ property: PropertyDescriptor)
   {
-    let childKey = property.propKey
+    let childKey = property
     if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
     }
@@ -49,13 +49,13 @@ open class ChangeCounter: NSObject {
     }
   }
 
-  open  func performedWriteOnMainThread(_ property: PropertyDescription)
+  open  func performedWriteOnMainThread(_ property: PropertyDescriptor)
   {
     let childKey = property.propKey
     if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
     }
-    self.setDirty(childKey)
+    self.setDirty(property)
 
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property)
@@ -65,23 +65,23 @@ open class ChangeCounter: NSObject {
   //MARK: - Update Property Management
 
   // Increment changeCount for a property
-  func setDirty(_ childKey: String)
+  func setDirty(_ property: PropertyDescriptor)
   {
-    print("Monitoring Node: Child \(childKey) dirty")
-    if let previousValue = self.changeCountDict[childKey] {
-      self.changeCountDict[childKey] = previousValue + 1
+    print("Monitoring Node: Child \(property.propDescription) dirty")
+    if let previousValue = self.changeCountDict[property.propKey] {
+      self.changeCountDict[property.propKey] = previousValue + 1
     } else {
-      self.changeCountDict[childKey] = 1
+      self.changeCountDict[property.propKey] = 1
     }
   }
 
   // Get current changeCount for a property
-  func changeCount(_ childKey: String) -> Int
+  func changeCount(_ property: PropertyDescriptor) -> Int
   {
-    if let changeCount = self.changeCountDict[childKey] {
+    if let changeCount = self.changeCountDict[property.propKey] {
       return changeCount
     } else {
-      self.changeCountDict[childKey] = 0
+      self.changeCountDict[property.propKey] = 0
       return 0
     }
   }

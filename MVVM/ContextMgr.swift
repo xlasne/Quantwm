@@ -19,16 +19,22 @@ import AppKit
 class ContextMgr: NSObject, MonitoredClass
 {
   // MARK: InterfacesMonitoredNode
-  static let contextMgrK = RootDescriptor<ContextMgr>.key("contextMgr")
+    static let contextMgrK = RootDescriptor(description:"ContextMgr",
+                                            sourceType: ContextMgr.self)
 
+
+    func getNodeChangeCounter() -> ChangeCounter
+    {
+        return changeCounter
+    }
   let changeCounter = ChangeCounter()
 
   var observed: ContextMgr {
-    changeCounter.performedReadOnMainThread(ContextMgr.contextMgrK)
     return self
   }
 
-  static let currentFocusK = PropertyDescriptor<ContextMgr,NSObject?>.key("_currentFocus")
+    static let currentFocusK = PropertyDescriptor(keypath: \ContextMgr.currentFocus,
+                                                  description: "_currentFocus")
   fileprivate var _currentFocus: NSObject? = nil
   var currentFocus: NSObject? {
     get {
@@ -42,7 +48,9 @@ class ContextMgr: NSObject, MonitoredClass
     }
   }
 
-  static let leftViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_leftViewPresent")
+    static let leftViewPresentK = PropertyDescriptor(keypath: \ContextMgr.leftViewPresent,
+                                                     description: "leftViewPresent")
+
   fileprivate var _leftViewPresent = true
   var leftViewPresent: Bool {
     get {
@@ -55,7 +63,8 @@ class ContextMgr: NSObject, MonitoredClass
     }
   }
 
-  static let rightViewPresentK = PropertyDescriptor<ContextMgr,Bool>.key("_rightViewPresent")
+    static let rightViewPresentK = PropertyDescriptor(keypath: \ContextMgr.rightViewPresent,
+                                                      description: "rightViewPresent")
   fileprivate var _rightViewPresent = true
   var rightViewPresent: Bool {
     get {
@@ -68,7 +77,8 @@ class ContextMgr: NSObject, MonitoredClass
     }
   }
 
-  static let imageColorK = PropertyDescriptor<ContextMgr,NSColor>.key("_imageColor")
+    static let imageColorK = PropertyDescriptor(keypath: \ContextMgr.imageColor,
+                                                description: "imageColor")
   fileprivate var _imageColor: NSColor = NSColor.white
   var imageColor: NSColor {
     get {
