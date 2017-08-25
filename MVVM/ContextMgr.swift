@@ -14,7 +14,7 @@
 
 import Foundation
 import AppKit
-
+import QuantwmOSX
 
 class ContextMgr: NSObject, MonitoredClass
 {

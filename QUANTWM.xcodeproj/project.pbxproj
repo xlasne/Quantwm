@@ -24,10 +24,11 @@
 		253482A01CB8F79500F61BB4 /* ImmediateSumProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2534829F1CB8F79500F61BB4 /* ImmediateSumProcessor.swift */; };
 		253482A21CB915B000F61BB4 /* Scene2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253482A11CB915B000F61BB4 /* Scene2ViewModel.swift */; };
 		253A172D1CCB8CC10048E524 /* MVVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253A172C1CCB8CC10048E524 /* MVVMTests.swift */; };
-		253EB0671CE98D6B00253BBB /* NodeObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 253EB0661CE98D6B00253BBB /* NodeObjc.m */; };
 		253EB06D1CEC893900253BBB /* DelayedSumProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */; };
 		25597FFB1CBE9E000004699B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25597FFA1CBE9E000004699B /* MainViewModel.swift */; };
 		256A84641CC39F9D00C8C072 /* TransientClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256A84631CC39F9D00C8C072 /* TransientClass.swift */; };
+		25D27DA61F0F809B00097E8D /* NodeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27DA41F0F7E9F00097E8D /* NodeSwift.swift */; };
+		25D380BA1F27400800AF5747 /* idea_chris_eidof.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D380B91F27400800AF5747 /* idea_chris_eidof.swift */; };
 		25E2A4041CFDA55800F42FD3 /* QuantwmOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25E2A40B1CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; };
 		25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */; };
@@ -44,10 +45,8 @@
 		25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A341CF05428002D5962 /* MonitoredNode.swift */; };
 		25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A351CF05428002D5962 /* NodeObserver.swift */; };
 		25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A361CF05428002D5962 /* PropertyDescription.swift */; };
-		25E2A42A1CFDA5FE00F42FD3 /* PropertyDescriptionOption.h in Headers */ = {isa = PBXBuildFile; fileRef = 25EA3A371CF05428002D5962 /* PropertyDescriptionOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
 		25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A391CF05428002D5962 /* CodingConverter.swift */; };
-		25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */; };
 		25E2A4301CFDBE7900F42FD3 /* QuantwmTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,11 +118,11 @@
 		253A172C1CCB8CC10048E524 /* MVVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVMTests.swift; sourceTree = "<group>"; };
 		253A172E1CCB8CC10048E524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		253EB0641CE98D6B00253BBB /* MVVM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MVVM-Bridging-Header.h"; sourceTree = "<group>"; };
-		253EB0651CE98D6B00253BBB /* NodeObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeObjc.h; sourceTree = "<group>"; };
-		253EB0661CE98D6B00253BBB /* NodeObjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeObjc.m; sourceTree = "<group>"; };
 		253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayedSumProcessor.swift; sourceTree = "<group>"; };
 		25597FFA1CBE9E000004699B /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		256A84631CC39F9D00C8C072 /* TransientClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientClass.swift; sourceTree = "<group>"; };
+		25D27DA41F0F7E9F00097E8D /* NodeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSwift.swift; sourceTree = "<group>"; };
+		25D380B91F27400800AF5747 /* idea_chris_eidof.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = idea_chris_eidof.swift; sourceTree = "<group>"; };
 		25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuantwmOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuantwmOSX.h; sourceTree = "<group>"; };
 		25E2A4051CFDA55800F42FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,10 +142,8 @@
 		25EA3A341CF05428002D5962 /* MonitoredNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredNode.swift; path = Quantwm/MonitoredNode.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A351CF05428002D5962 /* NodeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeObserver.swift; path = Quantwm/NodeObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A361CF05428002D5962 /* PropertyDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertyDescription.swift; path = Quantwm/PropertyDescription.swift; sourceTree = SOURCE_ROOT; };
-		25EA3A371CF05428002D5962 /* PropertyDescriptionOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyDescriptionOption.h; path = Quantwm/PropertyDescriptionOption.h; sourceTree = SOURCE_ROOT; };
 		25EA3A381CF05428002D5962 /* RegisterDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterDescription.swift; path = Quantwm/RegisterDescription.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A391CF05428002D5962 /* CodingConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodingConverter.swift; path = Quantwm/CodingConverter.swift; sourceTree = SOURCE_ROOT; };
-		25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyValueCodable.swift; path = Quantwm/KeyValueCodable.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,8 +247,7 @@
 				253482801CB7DC7000F61BB4 /* DataModel.swift */,
 				256A84631CC39F9D00C8C072 /* TransientClass.swift */,
 				250EFD9E1CD7F61600CE8869 /* NodeStruct.swift */,
-				253EB0651CE98D6B00253BBB /* NodeObjc.h */,
-				253EB0661CE98D6B00253BBB /* NodeObjc.m */,
+				25D27DA41F0F7E9F00097E8D /* NodeSwift.swift */,
 				2534829F1CB8F79500F61BB4 /* ImmediateSumProcessor.swift */,
 				253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */,
 				253EB0641CE98D6B00253BBB /* MVVM-Bridging-Header.h */,
@@ -300,10 +296,9 @@
 				25EA3A341CF05428002D5962 /* MonitoredNode.swift */,
 				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
-				25EA3A371CF05428002D5962 /* PropertyDescriptionOption.h */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
 				25EA3A391CF05428002D5962 /* CodingConverter.swift */,
-				25EA3A3A1CF05428002D5962 /* KeyValueCodable.swift */,
+				25D380B91F27400800AF5747 /* idea_chris_eidof.swift */,
 			);
 			name = Quantwm;
 			path = MVVM;
@@ -338,7 +333,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				25E2A4041CFDA55800F42FD3 /* QuantwmOSX.h in Headers */,
-				25E2A42A1CFDA5FE00F42FD3 /* PropertyDescriptionOption.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,7 +506,6 @@
 				2534828E1CB7E2D900F61BB4 /* Scene2ViewController.swift in Sources */,
 				253482A01CB8F79500F61BB4 /* ImmediateSumProcessor.swift in Sources */,
 				253482511CB7C9A900F61BB4 /* MainViewController.swift in Sources */,
-				253EB0671CE98D6B00253BBB /* NodeObjc.m in Sources */,
 				253482A21CB915B000F61BB4 /* Scene2ViewModel.swift in Sources */,
 				253482841CB7E1C100F61BB4 /* Scene1ViewModel.swift in Sources */,
 				253482931CB814A500F61BB4 /* ContextMgr.swift in Sources */,
@@ -523,6 +516,7 @@
 				2534828A1CB7E2BB00F61BB4 /* Scene1ViewController.swift in Sources */,
 				256A84641CC39F9D00C8C072 /* TransientClass.swift in Sources */,
 				253482531CB7C9A900F61BB4 /* Document.swift in Sources */,
+				25D27DA61F0F809B00097E8D /* NodeSwift.swift in Sources */,
 				250EFD9F1CD7F61600CE8869 /* NodeStruct.swift in Sources */,
 				253EB06D1CEC893900253BBB /* DelayedSumProcessor.swift in Sources */,
 			);
@@ -544,6 +538,7 @@
 				25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */,
 				25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */,
 				25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */,
+				25D380BA1F27400800AF5747 /* idea_chris_eidof.swift in Sources */,
 				25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */,
 				25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */,
 				25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */,
@@ -552,7 +547,6 @@
 				25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */,
 				25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */,
 				25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */,
-				25E2A42D1CFDA5FE00F42FD3 /* KeyValueCodable.swift in Sources */,
 				25E2A4211CFDA5FE00F42FD3 /* RepositoryObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

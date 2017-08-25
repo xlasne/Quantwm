@@ -13,6 +13,7 @@
 
 
 import Foundation
+import QuantwmOSX
 
 class ImmediateSumProcessor: NSObject
 {

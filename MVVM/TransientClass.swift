@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import QuantwmOSX
 
 class TransientClass: MonitoredNode {
     func getNodeChangeCounter() -> ChangeCounter {
@@ -51,8 +52,8 @@ class TransientClass: MonitoredNode {
     static let arrayValueK = PropertyDescriptor(keypath:\TransientClass.arrayVal,
                                                 description: "arrayVal")
 
-    fileprivate var _arrayVal: [NodeObjc] = [NodeObjc(val: 1), NodeObjc(val: 3)]
-    var arrayVal: [NodeObjc] {
+    fileprivate var _arrayVal: [NodeSwift] = [NodeSwift(val: 1), NodeSwift(val: 3)]
+    var arrayVal: [NodeSwift] {
         get {
             self.changeCounter.performedReadOnMainThread(TransientClass.arrayValueK)
             return _arrayVal

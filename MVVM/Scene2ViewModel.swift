@@ -8,6 +8,7 @@
 
 import Foundation
 import AppKit
+import QuantwmOSX
 
 class Scene2ViewModel: GenericViewModel<DataModel>
 {

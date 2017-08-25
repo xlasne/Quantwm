@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import QuantwmOSX
 
 struct NodeStruct: MonitoredNode {
+    
     func getNodeChangeCounter() -> ChangeCounter {
         return changeCounter
     }

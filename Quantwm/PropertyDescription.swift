@@ -16,23 +16,6 @@ import Foundation
 // or a Keypath<Root,[Value]>
 // where Root and Value are MonitoredNode
 
-
-//public struct PropertyDescriptionOption : OptionSetType
-//{
-//    public let rawValue : Int
-//    public init(rawValue:Int) {
-//        self.rawValue = rawValue
-//    }
-//
-//    static let ContainsNode           = PropertyDescriptionOption(rawValue:1)
-//    static let ContainsNodeCollection = PropertyDescriptionOption(rawValue:2)
-//    static let IsRoot                 = PropertyDescriptionOption(rawValue:4)
-//}
-
-
-// source and destination type are only present to perform chain type checking
-// value type leaf destination is thus optional
-
 open class RootDescriptor: NSObject
 {
 
@@ -57,7 +40,7 @@ open class RootDescriptor: NSObject
 
 }
 
-open class PropertyDescriptor: NSObject
+@objc open class PropertyDescriptor: NSObject
 {
     let propKey: AnyKeyPath
     let propDescription: String
@@ -98,7 +81,7 @@ open class PropertyDescriptor: NSObject
         super.init()
     }
 
-    fileprivate init(
+    public init(
         keypath: AnyKeyPath,
         sourceType: Any.Type,
         destType: Any.Type,
@@ -138,7 +121,7 @@ open class PropertyDescriptor: NSObject
 
 }
 
-public class ChildPropertyDescriptor: PropertyDescriptor
+open class ChildPropertyDescriptor: PropertyDescriptor
 {
     init(keypath: AnyKeyPath,
          description: String,
@@ -156,10 +139,10 @@ public class ChildPropertyDescriptor: PropertyDescriptor
     }
 }
 
-public class PropertyDescription<Root,Value>: ChildPropertyDescriptor
+open class PropertyDescription<Root,Value>: ChildPropertyDescriptor
 where Root: MonitoredNode, Value: MonitoredNode {
 
-    init(keypath: KeyPath<Root,Value>,
+    public init(keypath: KeyPath<Root,Value>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
@@ -178,7 +161,7 @@ where Root: MonitoredNode, Value: MonitoredNode {
                    dependFromPropertySet: dependFromPropertySet)
     }
 
-    init(keypath: WritableKeyPath<Root,Value?>,
+    public init(keypath: KeyPath<Root,Value?>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
 
@@ -199,28 +182,7 @@ where Root: MonitoredNode, Value: MonitoredNode {
                    dependFromPropertySet: dependFromPropertySet)
     }
 
-    init(keypath: KeyPath<Root,Value?>,
-         description: String,
-         dependFromPropertySet: Set<PropertyDescriptor> = [])
-
-    {
-        let getChildArray = {
-            (root: MonitoredNode) -> [MonitoredNode] in
-            if let root = root as? Root,
-                let child = root[keyPath: keypath]
-            {
-                return [child]
-            }
-            return []
-        }
-        super.init(keypath: keypath,
-                   description: description,
-                   sourceType: Root.Type.self, destType: Value.Type.self,
-                   getChildArray: getChildArray,
-                   dependFromPropertySet: dependFromPropertySet)
-    }
-
-    init(keypath: KeyPath<Root,[Value]>,
+    public init(keypath: KeyPath<Root,[Value]>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
@@ -241,7 +203,7 @@ where Root: MonitoredNode, Value: MonitoredNode {
                    dependFromPropertySet: dependFromPropertySet)
     }
 
-    init(keypath: KeyPath<Root,[Value]?>,
+    public init(keypath: KeyPath<Root,[Value]?>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
@@ -263,7 +225,7 @@ where Root: MonitoredNode, Value: MonitoredNode {
                    dependFromPropertySet: dependFromPropertySet)
     }
 
-    func descriptor() -> ChildPropertyDescriptor {
+    public func descriptor() -> ChildPropertyDescriptor {
         return ChildPropertyDescriptor(keypath: propKey,
                                   description: description,
                                   sourceType: sourceType,
@@ -275,122 +237,4 @@ where Root: MonitoredNode, Value: MonitoredNode {
 }
 
 
-//  public init(
-//    swift_propKey: String,
-//    sourceType: Any.Type,
-//    destType: Any.Type,
-//    option: PropertyDescriptionOption,
-//    dependFromPropertySet: Set<PropertyDescription> = []
-//    )
-//  {
-//    self.propKey = swift_propKey
-//    self.sourceType = sourceType
-//    self.source = String(describing: sourceType)
-//    self.destType = destType
-//    self.dest = String(describing: destType)
-//    self.option = option
-//    self.dependFromPropertySet = dependFromPropertySet
-//    super.init()
-//  }
-//
-//  public init(
-//    objc_propKey: String,
-//    sourceTypeStr: String,
-//    destTypeStr: String?,
-//    option: PropertyDescriptionOption,
-//    dependFromPropertySet: Set<PropertyDescription> = []
-//    )
-//  {
-//    self.propKey = objc_propKey
-//    self.sourceType = nil
-//    self.source = sourceTypeStr
-//    self.destType = nil
-//    self.dest = destTypeStr ?? ""
-//    self.option = option
-//    self.dependFromPropertySet = dependFromPropertySet
-//    super.init()
-//  }
-//
-
-//
-//  open override var description: String {
-//    return "\(source).\(propKey)"
-//  }
-//
-//  var isRoot: Bool {
-//    return option.contains(.isRoot)
-//  }
-//
-//  var containsNode: Bool {
-//    return option.contains(.containsNode) || option.contains(.containsNodeCollection)
-//  }
-//
-//  var containsNodeCollection: Bool {
-//    return option.contains(.containsNodeCollection)
-//  }
-//
-//  var containsObjc: Bool {
-//    return option.contains(.isObjectiveC)
-//  }
-//
-//  var isMonitoredNodeGetter: Bool {
-//    return option.contains(.monitoredNodeGetter)
-//  }
-//
-//  static var maxLevelFunc: (_ currentMax: Int, _ otherProperty: PropertyDescription) -> Int =
-//    {
-//      (currentMax: Int, otherProperty: PropertyDescription) -> Int in
-//      return max(currentMax, otherProperty.level)
-//  }
-//
-//  var level: Int {
-//    if dependFromPropertySet.isEmpty {
-//      return 1
-//    } else {
-//      return dependFromPropertySet.reduce(1, PropertyDescription.maxLevelFunc) + 1
-//    }
-//  }
-//}
-
-//open class PropertyDescriptor<Source,Dest>
-//{
-//  open static func key(
-//    _ key: String,
-//    propertyDescriptionOption: PropertyDescriptionOption,
-//    dependFromPropertySet: Set<PropertyDescription>
-//    ) -> PropertyDescription
-//  {
-//    return PropertyDescription(swift_propKey: key,
-//                               sourceType: Source.self,
-//                               destType: Dest.self,
-//                               option: propertyDescriptionOption,
-//                               dependFromPropertySet: dependFromPropertySet
-//    )
-//  }
-//
-//    open static func key(
-//        _ key: String,
-//        propertyDescriptionOption: PropertyDescriptionOption
-//        ) -> PropertyDescription
-//    {
-//        return PropertyDescription(swift_propKey: key,
-//                                   sourceType: Source.self,
-//                                   destType: Dest.self,
-//                                   option: propertyDescriptionOption)
-//    }
-//
-//    open static func key(
-//        _ key: String) -> PropertyDescription
-//    {
-//        return PropertyDescription(swift_propKey: key,
-//                                   sourceType: Source.self,
-//                                   destType: Dest.self,
-//                                   option: []
-//        )
-//    }
-//}
-//
-
-//
-//
 

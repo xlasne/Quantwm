@@ -45,4 +45,5 @@ open class RegisterDescription
     self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
     self.configurationPriority = configurationPriority
   }
+
 }

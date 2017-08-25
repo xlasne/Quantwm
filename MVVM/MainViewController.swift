@@ -8,6 +8,7 @@
 
 
 import Cocoa
+import QuantwmOSX
 
 class MainViewController: NSViewController {
 

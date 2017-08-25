@@ -17,6 +17,7 @@
 // - View Controller contains a Refresh Section with UI refresh and no update
 
 import Cocoa
+import QuantwmOSX
 
 class Scene2ViewController: NSViewController, NSTextFieldDelegate {
 

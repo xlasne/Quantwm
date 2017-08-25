@@ -111,18 +111,29 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     let immediateSumProcessor: ImmediateSumProcessor = ImmediateSumProcessor()
     let delayedSumProcessor: DelayedSumProcessor = DelayedSumProcessor()
 
-//    static let transientClassK = PropertyDescription(
-//        keypath: \DataModel.transientClass,
-//        description: "transientClass").descriptor()
+    static let transientClassK = PropertyDescriptor(
+        keypath: \DataModel.transientClass,
+        sourceType: DataModel.self,
+        destType: TransientClass.self,
+        description: "transientClass",
+        getChildArray: { (root:MonitoredNode) -> [MonitoredNode] in
+            guard let root = root as? DataModel else { return []}
+            if let trans = root.transientClass {
+                return [trans]
+            } else {
+                return []
+            }
+    },
+        dependFromPropertySet: [])
 
-    fileprivate var _transientClass: TransientClass?
+    var _transientClass: TransientClass?
     var transientClass: TransientClass? {
         get {
-//            self.changeCounter.performedReadOnMainThread(DataModel.transientClassK)
+            self.changeCounter.performedReadOnMainThread(DataModel.transientClassK)
             return _transientClass
         }
         set {
-//            self.changeCounter.performedWriteOnMainThread(DataModel.transientClassK)
+            self.changeCounter.performedWriteOnMainThread(DataModel.transientClassK)
             _transientClass = newValue
         }
     }

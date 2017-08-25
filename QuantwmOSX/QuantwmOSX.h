@@ -16,5 +16,4 @@ FOUNDATION_EXPORT const unsigned char QuantwmOSXVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <QuantwmOSX/PublicHeader.h>
 
-#import <QuantwmOSX/PropertyDescriptionOption.h>
 
