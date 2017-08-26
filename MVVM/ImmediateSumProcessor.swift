@@ -44,10 +44,10 @@ class ImmediateSumProcessor: NSObject
 
   @objc func startProcessing()
   {
-    if let number1 = self.dataModel?.observedSelf.number1,
-      let number2 = self.dataModel?.observedSelf.number2
+    if let number1 = self.dataModel?.number1,
+      let number2 = self.dataModel?.number2
     {
-      self.dataModel?.observedSelf.invSumOfNumber = -(number1 + number2)
+      self.dataModel?.invSumOfNumber = -(number1 + number2)
     }
   }
 }

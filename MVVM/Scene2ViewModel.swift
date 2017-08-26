@@ -58,7 +58,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
 
 
   func getFocus() -> NSObject? {
-    return dataModel.contextMgr.observed.currentFocus
+    return dataModel.contextMgr.currentFocus
   }
 
   //MARK: getValue2
@@ -67,7 +67,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
 
   func getValue2() -> String {
     let formatter = NumberFormatter()
-    let val = self.dataModel.observedSelf.number2
+    let val = self.dataModel.number2
     return  formatter.string(from: NSNumber(value: val)) ?? "Error"
   }
 
@@ -79,7 +79,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
 
   func getSum() -> Int?
   {
-    let sum = self.dataModel.observedSelf.getSum()
+    let sum = self.dataModel.getSum()
     return sum
   }
 
@@ -89,6 +89,6 @@ class Scene2ViewModel: GenericViewModel<DataModel>
 
   func getColor() -> NSColor
   {
-    return dataModel.contextMgr.observed.imageColor
+    return dataModel.contextMgr.imageColor
   }
 }

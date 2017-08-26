@@ -50,7 +50,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
     if let val = formatter.number(from: numberStr)?.intValue
     {
       updateActionAndRefresh() {
-        dataModel.observedSelf.number1 = val
+        dataModel.number1 = val
         dataModel.contextMgr.currentFocus = focus
       }
     } else {
@@ -101,7 +101,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
     KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
 
   func getFocus() -> NSObject? {
-    let value = dataModel.contextMgr.observed.currentFocus
+    let value = dataModel.contextMgr.currentFocus
     return value
   }
 
@@ -112,7 +112,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   var value1: String {
     get {
       let formatter = NumberFormatter()
-      let val = dataModel.observedSelf.number1
+      let val = dataModel.number1
         return  formatter.string(from: NSNumber(value:val)) ?? "Error"
     }
   }
@@ -124,7 +124,7 @@ class Scene1ViewModel: GenericViewModel<DataModel>
 
   func getInvSum() -> Int?
   {
-    return dataModel.observedSelf.invSumOfNumber
+    return dataModel.invSumOfNumber
   }
 
   //MARK: getArraySum
@@ -134,7 +134,6 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   func getArraySum() -> Int?
   {
     return dataModel
-      .observedSelf
       .transientClass?
       .arrayVal
       .map({$0.intValue})
@@ -150,7 +149,6 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   func getTransient() -> String?
   {
     return dataModel
-      .observedSelf
       .transientClass?
       .transientVal
   }

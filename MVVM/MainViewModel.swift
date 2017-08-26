@@ -13,7 +13,7 @@ class MainViewModel: GenericViewModel<DataModel>
 {
 
   var contextMgr: ContextMgr {
-    return self.dataModel.contextMgr.observed
+    return self.dataModel.contextMgr
   }
 
   // MARK: Interfaces

@@ -29,10 +29,6 @@ class ContextMgr: NSObject, MonitoredClass
     }
   let changeCounter = QWChangeCounter()
 
-  var observed: ContextMgr {
-    return self
-  }
-
     static let currentFocusK = PropertyDescriptor(keypath: \ContextMgr.currentFocus,
                                                   description: "_currentFocus")
   fileprivate var _currentFocus: NSObject? = nil

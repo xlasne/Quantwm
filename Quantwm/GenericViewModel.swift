@@ -47,13 +47,14 @@ open class GenericViewModel<Model: RepositoryHolder> : NSObject {
                                maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
     {
         self.registeredSelectorArray.append(selector)
-        self.repositoryObserver.registerObserver(target: target,
-                                                 selector: selector,
-                                                 keypathDescriptionSet: keypathDescriptionSet,
-                                                 name: name,
-                                                 writtenPropertySet: writtenPropertySet,
-                                                 maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
-    }
+        self.repositoryObserver.registerObserver(
+          target: target,
+          selector: selector,
+          keypathDescriptionSet: keypathDescriptionSet,
+          name: name,
+          writtenPropertySet: writtenPropertySet,
+          maximumAllowedRegistrationWithSameTypeSelector: maximumAllowedRegistrationWithSameTypeSelector)
+  }
 
     open func registerObserver(target: NSObject,
                                registrationDesc: RegisterDescription,

@@ -38,7 +38,7 @@ open class QWChangeCounter: NSObject {
 
   //MARK: - Read / Write monitoring
 
-  open func performedReadOnMainThread(_ property: PropertyDescriptor)
+  func performedReadOnMainThread(_ property: PropertyDescriptor)
   {
     let childKey = property
     if !Thread.isMainThread {
@@ -49,7 +49,7 @@ open class QWChangeCounter: NSObject {
     }
   }
 
-  open  func performedWriteOnMainThread(_ property: PropertyDescriptor)
+  func performedWriteOnMainThread(_ property: PropertyDescriptor)
   {
     let childKey = property.propKey
     if !Thread.isMainThread {
@@ -74,7 +74,7 @@ open class QWChangeCounter: NSObject {
       self.changeCountDict[property.propKey] = 1
     }
   }
-
+  
   // Get current changeCount for a property
   func changeCount(_ property: PropertyDescriptor) -> Int
   {
