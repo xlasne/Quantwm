@@ -26,8 +26,8 @@ open class RootDescriptor: NSObject
     let dest: String
 
     public init(
-        description: String,
-        sourceType: Any.Type
+        sourceType: Any.Type,
+        description: String
         )
     {
         self.propDescription = description
@@ -37,7 +37,6 @@ open class RootDescriptor: NSObject
         self.dest = String(describing: destType)
         super.init()
     }
-
 }
 
 @objc open class PropertyDescriptor: NSObject
@@ -164,7 +163,6 @@ where Root: MonitoredNode, Value: MonitoredNode {
     public init(keypath: KeyPath<Root,Value?>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
-
     {
         let getChildArray = {
             (root: MonitoredNode) -> [MonitoredNode] in

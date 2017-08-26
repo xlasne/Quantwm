@@ -1,5 +1,5 @@
 //
-//  ChangeCounter.swift
+//  QWChangeCounter.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 15/04/16.
@@ -8,29 +8,29 @@
 
 import Foundation
 
-//MARK: - ChangeCounter
+//MARK: - QWChangeCounter
 // Each monitored class or struct shall have a changeCounter property
-// ChangeCounter increments the property counter each time the property is updated
-// ChangeCounter checks that reads and writes are performed on Main Thread
-// ChangeCounter also increments read or write dataUsage for debug monitoring
+// QWChangeCounter increments the property counter each time the property is updated
+// QWChangeCounter checks that reads and writes are performed on Main Thread
+// QWChangeCounter also increments read or write dataUsage for debug monitoring
 
 // Change watcher shall not be copied from an object to the other.
 // If the object is copied, create a new changeCounter
 
 typealias NodeId = Int32
 
-open class ChangeCounter: NSObject {
+open class QWChangeCounter: NSObject {
 
   //MARK: Properties
 
   // Unique NodeId Generator
   static var nodeIdGenerator: NodeId = 0
   static func generateUniqueNodeId() -> NodeId {
-    return OSAtomicIncrement32(&ChangeCounter.nodeIdGenerator)
+    return OSAtomicIncrement32(&QWChangeCounter.nodeIdGenerator)
   }
 
   // NodeId uniquely identify this node. Used by DataUsage
-  let nodeId: NodeId  = ChangeCounter.generateUniqueNodeId()
+  let nodeId: NodeId  = QWChangeCounter.generateUniqueNodeId()
 
   // Maintain a change counter for each value or reference property of its parent object/struct
   // Counter is created at 0 when requested

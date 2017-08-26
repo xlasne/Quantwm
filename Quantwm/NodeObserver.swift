@@ -14,7 +14,7 @@ class NodeObserver {
   // Capture an observable value of a monitored node or a child node
 
   // Weak pointer to the node watcher, in order to monitor if the node was released
-  weak var changeCounter: ChangeCounter?
+  weak var changeCounter: QWChangeCounter?
 
   // The changeCounter.associatedObject shall be of type propertyDesc.sourceType
   let propertyDesc: PropertyDescriptor
@@ -39,7 +39,7 @@ class NodeObserver {
         return propertyDesc.propDescription
     }
 
-  init(node: ChangeCounter, propertyDesc: PropertyDescriptor)
+  init(node: QWChangeCounter, propertyDesc: PropertyDescriptor)
   {
     self.changeCounter = node
     self.changeCountDict = node.changeCountDict
@@ -47,7 +47,7 @@ class NodeObserver {
     self.nextNodes = []
   }
 
-  init(node: ChangeCounter, propertyDesc: PropertyDescriptor, changeCount: [AnyKeyPath:Int])
+  init(node: QWChangeCounter, propertyDesc: PropertyDescriptor, changeCount: [AnyKeyPath:Int])
   {
     self.changeCounter = node
     self.changeCountDict = changeCount

@@ -10,11 +10,11 @@ import Foundation
 
 
 class RootNode {
-    weak var changeCounter: ChangeCounter?
+    weak var changeCounter: QWChangeCounter?
     weak var rootObject: MonitoredClass?
     let keypath : String
     
-    init(rootObject: MonitoredClass, changeCounter: ChangeCounter, keypath : String)
+    init(rootObject: MonitoredClass, changeCounter: QWChangeCounter, keypath : String)
     {
         self.rootObject = rootObject
         self.changeCounter = changeCounter
@@ -56,7 +56,7 @@ open class RepositoryObserver: NSObject {
     // This node does not have to remember this monitoring
     // On node deletion, this registration will end
     // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-    open func registerRoot(associatedObject: MonitoredClass, changeCounter: ChangeCounter, rootDescription: RootDescriptor)
+    open func registerRoot(associatedObject: MonitoredClass, changeCounter: QWChangeCounter, rootDescription: RootDescriptor)
     {
         let rootNode = RootNode(rootObject: associatedObject,
                                 changeCounter: changeCounter,
@@ -372,10 +372,10 @@ extension RepositoryObserver
         
         dataContext.popContext(refreshContext)
         
-        //    for observer in keySetObserverSet.filter({!$0.isValid()})
-        //    {
-        //      observer.displayUsage(keypathObserverDict)
-        //    }
+            for observer in keySetObserverSet.filter({!$0.isValid()})
+            {
+              observer.displayUsage(keypathObserverDict)
+            }
         keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
         
         if QUANTUM_MVVM_DEBUG {

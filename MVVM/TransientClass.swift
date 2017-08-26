@@ -10,12 +10,12 @@ import Cocoa
 import QuantwmOSX
 
 class TransientClass: MonitoredNode {
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 
 
-    let changeCounter = ChangeCounter()
+    let changeCounter = QWChangeCounter()
 
     static let transientValK = PropertyDescriptor(keypath:\TransientClass.transientVal,
                                                   description: "transientVal")

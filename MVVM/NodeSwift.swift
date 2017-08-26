@@ -13,9 +13,9 @@ import QuantwmOSX
 class NodeSwift: MonitoredNode
 {
 
-    let changeCounter = ChangeCounter()
+    let changeCounter = QWChangeCounter()
 
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 

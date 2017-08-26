@@ -14,18 +14,18 @@ let QUANTUM_MVVM_DEBUG = true
 import Foundation
 
 class RW_Action: Equatable, CustomStringConvertible, Hashable {
-  weak var node: ChangeCounter?
+  weak var node: QWChangeCounter?
   let propertyDesc: String
   let nodeId: NodeId?
 
-  init(node: ChangeCounter, property: RootDescriptor)
+  init(node: QWChangeCounter, property: RootDescriptor)
   {
     self.node = node
     self.propertyDesc = property.propDescription
     self.nodeId = node.nodeId
   }
 
-    init(node: ChangeCounter, property: PropertyDescriptor)
+    init(node: QWChangeCounter, property: PropertyDescriptor)
     {
         self.node = node
         self.propertyDesc = property.propDescription
@@ -163,7 +163,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addRead(_ node: ChangeCounter, property: PropertyDescriptor) {
+  func addRead(_ node: QWChangeCounter, property: PropertyDescriptor) {
     let readAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {
@@ -182,7 +182,7 @@ class DataUsage: NSObject
     }
   }
 
-  func addWrite(_ node: ChangeCounter, property: PropertyDescriptor) {
+  func addWrite(_ node: QWChangeCounter, property: PropertyDescriptor) {
     let writeAction = RW_Action(node: node, property: property)
     if checkStack {
       guard let lastContext = dataContext.rwContextStack.last else {

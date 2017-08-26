@@ -31,14 +31,14 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
         return repositoryObserver
     }
 
-    static let dataModelK = RootDescriptor(description: "DataModel",
-                                           sourceType: DataModel.self)
+    static let dataModelK = RootDescriptor(sourceType: DataModel.self,
+                                           description: "DataModel")
 
 
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
-    var changeCounter = ChangeCounter()
+    var changeCounter = QWChangeCounter()
 
     var observedSelf: DataModel {
         return self
@@ -50,7 +50,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     fileprivate var _number1: Int = 1
     var number1 : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(DataModel.number1K)
+            self.qwRead(property: DataModel.number1K)
             return _number1
         }
         set {
@@ -65,7 +65,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     fileprivate var _number2: Int = 2
     var number2 : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(DataModel.number2K)
+            self.qwRead(property: DataModel.number2K)
             return _number2
         }
         set {
@@ -83,7 +83,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     fileprivate var _sumOfNumber: Int = 0
     var sumOfNumber : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(DataModel.sumOfNumberK)
+            self.qwRead(property: DataModel.sumOfNumberK)
             return _sumOfNumber
         }
         set {

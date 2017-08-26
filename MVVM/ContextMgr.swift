@@ -19,15 +19,15 @@ import QuantwmOSX
 class ContextMgr: NSObject, MonitoredClass
 {
   // MARK: InterfacesMonitoredNode
-    static let contextMgrK = RootDescriptor(description:"ContextMgr",
-                                            sourceType: ContextMgr.self)
+    static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,
+                                            description:"ContextMgr")
 
 
-    func getNodeChangeCounter() -> ChangeCounter
+    func getNodeChangeCounter() -> QWChangeCounter
     {
         return changeCounter
     }
-  let changeCounter = ChangeCounter()
+  let changeCounter = QWChangeCounter()
 
   var observed: ContextMgr {
     return self

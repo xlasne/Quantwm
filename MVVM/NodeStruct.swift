@@ -11,11 +11,11 @@ import QuantwmOSX
 
 struct NodeStruct: MonitoredNode {
     
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 
-  let changeCounter = ChangeCounter()
+  let changeCounter = QWChangeCounter()
 
   static let intValueK = PropertyDescriptor(keypath: \NodeStruct.intValue, description: "intValue")
 

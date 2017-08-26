@@ -34,7 +34,7 @@
 		25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */; };
 		25E2A4161CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; };
 		25E2A4171CFDA55800F42FD3 /* QuantwmOSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */; };
+		25E2A41F1CFDA5FE00F42FD3 /* QWChangeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */; };
 		25E2A4201CFDA5FE00F42FD3 /* DataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2D1CF05428002D5962 /* DataContext.swift */; };
 		25E2A4211CFDA5FE00F42FD3 /* RepositoryObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */; };
 		25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A2F1CF05428002D5962 /* DataUsage.swift */; };
@@ -131,7 +131,7 @@
 		25E2A4131CFDA55800F42FD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25E2A42E1CFDBE7900F42FD3 /* QuantwmOSXTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuantwmOSXTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuantwmTest.swift; sourceTree = "<group>"; };
-		25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeCounter.swift; path = Quantwm/ChangeCounter.swift; sourceTree = SOURCE_ROOT; };
+		25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QWChangeCounter.swift; path = Quantwm/QWChangeCounter.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2D1CF05428002D5962 /* DataContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataContext.swift; path = Quantwm/DataContext.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryObserver.swift; path = Quantwm/RepositoryObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A2F1CF05428002D5962 /* DataUsage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataUsage.swift; path = Quantwm/DataUsage.swift; sourceTree = SOURCE_ROOT; };
@@ -294,7 +294,7 @@
 				25EA3A331CF05428002D5962 /* KeySetObserver.swift */,
 				25EA3A351CF05428002D5962 /* NodeObserver.swift */,
 				25EA3A341CF05428002D5962 /* MonitoredNode.swift */,
-				25EA3A2C1CF05428002D5962 /* ChangeCounter.swift */,
+				25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
 				25EA3A391CF05428002D5962 /* CodingConverter.swift */,
@@ -539,7 +539,7 @@
 				25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */,
 				25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */,
 				25D380BA1F27400800AF5747 /* idea_chris_eidof.swift in Sources */,
-				25E2A41F1CFDA5FE00F42FD3 /* ChangeCounter.swift in Sources */,
+				25E2A41F1CFDA5FE00F42FD3 /* QWChangeCounter.swift in Sources */,
 				25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */,
 				25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */,
 				25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */,

@@ -23,7 +23,7 @@
 // If Objective-C child, return NSObject
 
 // Build NodeObserver hierarchy
-// NodeObserver points toward ChangeCounter objects (common to Swift and ObjectiveC)
+// NodeObserver points toward QWChangeCounter objects (common to Swift and ObjectiveC)
 
 
 import Foundation
@@ -38,7 +38,17 @@ public protocol MonitoredClass: class, MonitoredNode  // class is required only 
 
 public protocol MonitoredNode //: SwiftKVC
 {
-  func getNodeChangeCounter() -> ChangeCounter
+  func getNodeChangeCounter() -> QWChangeCounter
 }
+public extension MonitoredNode {
+    func qwWrite(property: PropertyDescriptor) {
+        self.getNodeChangeCounter().performedWriteOnMainThread(property)
+    }
+    func qwRead(property: PropertyDescriptor) {
+        self.getNodeChangeCounter().performedWriteOnMainThread(property)
+    }
+}
+
+
 
 

@@ -11,11 +11,11 @@ import XCTest
 
 class TestStruct: MonitoredNode
 {
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 
-    let changeCounter = ChangeCounter()
+    let changeCounter = QWChangeCounter()
 
     static let numberK = PropertyDescriptor(keypath: \TestStruct.number,
                                             description: "number")
@@ -52,11 +52,11 @@ enum TestEnum
 
 class TestClass: MonitoredClass
 {
-    func getNodeChangeCounter() -> ChangeCounter {
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 
-    let changeCounter = ChangeCounter()
+    let changeCounter = QWChangeCounter()
 
     static let testStructK = PropertyDescription<TestClass,TestStruct>(
         keypath: \TestClass.testStruct,
@@ -132,8 +132,8 @@ class TestClass: MonitoredClass
 
 class TestBase: MonitoredClass, RepositoryHolder
 {
-    let changeCounter = ChangeCounter()
-    func getNodeChangeCounter() -> ChangeCounter {
+    let changeCounter = QWChangeCounter()
+    func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
 
@@ -143,7 +143,7 @@ class TestBase: MonitoredClass, RepositoryHolder
         return repositoryObserver
     }
 
-    static let testRootK = RootDescriptor(description: "testBase", sourceType: TestBase.self)
+    static let testRootK = RootDescriptor(sourceType: TestBase.self, description: "testBase")
     var observedSelf: TestBase {
 //        changeCounter.performedReadOnMainThread(TestBase.testRootK)
         return self
