@@ -9,7 +9,7 @@
 import Foundation
 import QuantwmOSX
 
-struct NodeStruct: MonitoredNode {
+struct NodeStruct: QWMonitoredNode {
     
     func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
@@ -22,12 +22,12 @@ struct NodeStruct: MonitoredNode {
     fileprivate var _intValue: Int = 0
   var intValue: Int {
     get {
-      self.changeCounter.performedReadOnMainThread(NodeStruct.intValueK)
+      self.qwRead(property: NodeStruct.intValueK)
       return _intValue
     }
     set {
       if (newValue != _intValue) {
-        self.changeCounter.performedWriteOnMainThread(NodeStruct.intValueK)
+        self.qwWrite(property: NodeStruct.intValueK)
         _intValue = newValue
       }
     }

@@ -9,7 +9,7 @@
 import XCTest
 @testable import QuantwmOSX
 
-class TestStruct: MonitoredNode
+class TestStruct: QWMonitoredNode
 {
     func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
@@ -22,11 +22,11 @@ class TestStruct: MonitoredNode
     fileprivate var _number: Int = 1
     var number : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(TestStruct.numberK)
+            self.qwRead(property: TestStruct.numberK)
             return _number
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestStruct.numberK)
+            self.qwWrite(property: TestStruct.numberK)
             _number = newValue
         }
     }
@@ -65,11 +65,11 @@ class TestClass: MonitoredClass
     fileprivate var _testStruct = TestStruct()
     var testStruct : TestStruct {
         get {
-            self.changeCounter.performedReadOnMainThread(TestClass.testStructK)
+            self.qwRead(property: TestClass.testStructK)
             return _testStruct
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestClass.testStructK)
+            self.qwWrite(property: TestClass.testStructK)
             _testStruct = newValue
         }
     }
@@ -79,10 +79,10 @@ class TestClass: MonitoredClass
         sourceType: TestClass.self,
         destType: TestStruct.self,
         description: "testDict",
-        getChildArray: { (testClass:MonitoredNode) -> [MonitoredNode] in
+        getChildArray: { (testClass:QWMonitoredNode) -> [QWMonitoredNode] in
             guard let testClass = testClass as? TestClass else { return []}
             let nodeArray = testClass.testDict.values
-            return Array(nodeArray) as [MonitoredNode]
+            return Array(nodeArray) as [QWMonitoredNode]
             },
         dependFromPropertySet: [])
 //    PropertyDescription<TestClass,TestStruct>(
@@ -92,11 +92,11 @@ class TestClass: MonitoredClass
     fileprivate var _testDict: [String:TestStruct] = [:]
     var testDict : [String:TestStruct] {
         get {
-            self.changeCounter.performedReadOnMainThread(TestClass.testDictK)
+            self.qwRead(property: TestClass.testDictK)
             return _testDict
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestClass.testDictK)
+            self.qwWrite(property: TestClass.testDictK)
             _testDict = newValue
         }
     }
@@ -104,11 +104,11 @@ class TestClass: MonitoredClass
     static let testEnumK = PropertyDescriptor(
         keypath: \TestClass.testEnum,
         sourceType: TestClass.self,
-        destType: MonitoredNode.self,
+        destType: QWMonitoredNode.self,
         description: "testEnum",
-        getChildArray: { (testClass:MonitoredNode) -> [MonitoredNode] in
+        getChildArray: { (testClass:QWMonitoredNode) -> [QWMonitoredNode] in
             guard let testClass = testClass as? TestClass else { return []}
-            let retVal = testClass.testEnum.getTestStruct() as MonitoredNode
+            let retVal = testClass.testEnum.getTestStruct() as QWMonitoredNode
             return [retVal]
     },
         dependFromPropertySet: [])
@@ -119,11 +119,11 @@ class TestClass: MonitoredClass
     fileprivate var _testEnum = TestEnum.item1(TestStruct())
     var testEnum : TestEnum {
         get {
-            self.changeCounter.performedReadOnMainThread(TestClass.testEnumK)
+            self.qwRead(property: TestClass.testEnumK)
             return _testEnum
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestClass.testEnumK)
+            self.qwWrite(property: TestClass.testEnumK)
             _testEnum = newValue
         }
     }
@@ -157,11 +157,11 @@ class TestBase: MonitoredClass, RepositoryHolder
     fileprivate var _testClass: TestClass
     var testClass : TestClass {
         get {
-            self.changeCounter.performedReadOnMainThread(TestBase.testClassK)
+            self.qwRead(property: TestBase.testClassK)
             return _testClass
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestBase.testClassK)
+            self.qwWrite(property: TestBase.testClassK)
             _testClass = newValue
         }
     }
@@ -170,11 +170,11 @@ class TestBase: MonitoredClass, RepositoryHolder
     fileprivate var _optNumber: Int? = nil
     var optNumber : Int? {
         get {
-            self.changeCounter.performedReadOnMainThread(TestBase.optNumberK)
+            self.qwRead(property: TestBase.optNumberK)
             return _optNumber
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestBase.optNumberK)
+            self.qwWrite(property: TestBase.optNumberK)
             _optNumber = newValue
         }
     }
@@ -185,11 +185,11 @@ class TestBase: MonitoredClass, RepositoryHolder
     }()
     var lazyNumber : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(TestBase.lazyNumberK)
+            self.qwRead(property: TestBase.lazyNumberK)
             return _lazyNumber
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TestBase.lazyNumberK)
+            self.qwWrite(property: TestBase.lazyNumberK)
             _lazyNumber = newValue
         }
     }
@@ -202,7 +202,6 @@ class TestBase: MonitoredClass, RepositoryHolder
 
         self.repositoryObserver.registerRoot(
             associatedObject: self,
-            changeCounter: self.changeCounter,
             rootDescription: TestBase.testRootK)
     }
 }

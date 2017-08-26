@@ -51,7 +51,7 @@ open class RootDescriptor: NSObject
 
     // If getChildArray is nil, this is a value descriptor (last keypath element)
     // else this is a ChildPropertyDescriptor
-    let getChildArray: ((MonitoredNode) -> [MonitoredNode])?
+    let getChildArray: ((QWMonitoredNode) -> [QWMonitoredNode])?
 
     public convenience init(
         keypath: AnyKeyPath,
@@ -85,7 +85,7 @@ open class RootDescriptor: NSObject
         sourceType: Any.Type,
         destType: Any.Type,
         description: String,
-        getChildArray: ((MonitoredNode) -> [MonitoredNode])?,
+        getChildArray: ((QWMonitoredNode) -> [QWMonitoredNode])?,
         dependFromPropertySet: Set<PropertyDescriptor> = []
         )
     {
@@ -126,7 +126,7 @@ open class ChildPropertyDescriptor: PropertyDescriptor
          description: String,
          sourceType: Any.Type,
          destType: Any.Type,
-         getChildArray: @escaping (MonitoredNode) -> [MonitoredNode],
+         getChildArray: @escaping (QWMonitoredNode) -> [QWMonitoredNode],
          dependFromPropertySet: Set<PropertyDescriptor>)
     {
         super.init(keypath: keypath,
@@ -139,14 +139,14 @@ open class ChildPropertyDescriptor: PropertyDescriptor
 }
 
 open class PropertyDescription<Root,Value>: ChildPropertyDescriptor
-where Root: MonitoredNode, Value: MonitoredNode {
+where Root: QWMonitoredNode, Value: QWMonitoredNode {
 
     public init(keypath: KeyPath<Root,Value>,
          description: String,
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
         let getChildArray = {
-            (root: MonitoredNode) -> [MonitoredNode] in
+            (root: QWMonitoredNode) -> [QWMonitoredNode] in
             if let root = root as? Root {
                 let child = root[keyPath: keypath]
                 return [child]
@@ -165,7 +165,7 @@ where Root: MonitoredNode, Value: MonitoredNode {
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
         let getChildArray = {
-            (root: MonitoredNode) -> [MonitoredNode] in
+            (root: QWMonitoredNode) -> [QWMonitoredNode] in
             if let root = root as? Root,
                 let child = root[keyPath: keypath]
             {
@@ -185,9 +185,9 @@ where Root: MonitoredNode, Value: MonitoredNode {
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
         let getChildArray = {
-            (root: MonitoredNode) -> [MonitoredNode] in
+            (root: QWMonitoredNode) -> [QWMonitoredNode] in
             guard let root = root as? Root else { return[] }
-            var result: [MonitoredNode] = []
+            var result: [QWMonitoredNode] = []
             let child = root[keyPath: keypath]
             for children in child {
                 result.append(children)
@@ -206,9 +206,9 @@ where Root: MonitoredNode, Value: MonitoredNode {
          dependFromPropertySet: Set<PropertyDescriptor> = [])
     {
         let getChildArray = {
-            (root: MonitoredNode) -> [MonitoredNode] in
+            (root: QWMonitoredNode) -> [QWMonitoredNode] in
             guard let root = root as? Root else { return[] }
-            var result: [MonitoredNode] = []
+            var result: [QWMonitoredNode] = []
             if let child = root[keyPath: keypath] {
                 for children in child {
                     result.append(children)

@@ -1,5 +1,5 @@
 //
-//  MonitoredNode.swift
+//  QWMonitoredNode.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 10/05/16.
@@ -8,10 +8,10 @@
 
 // Problem:
 
-// Get Swift MonitoredNode from ObjectiveC NSObject parent
-// Get Swift MonitoredNode from Swift MonitoredNode parent
+// Get Swift QWMonitoredNode from ObjectiveC NSObject parent
+// Get Swift QWMonitoredNode from Swift QWMonitoredNode parent
 // Get Swift Object Watcher from ObjectiveC parent
-// Get Swift Object Watcher from Swift MonitoredNode parent
+// Get Swift Object Watcher from Swift QWMonitoredNode parent
 
 // Manage Swift child with protocol compliance
 // ObjectiveC child with keyValue introspection
@@ -19,7 +19,7 @@
 // Perform all the job from swift side
 
 // On return:
-// If Swift child, return MonitoredNode
+// If Swift child, return QWMonitoredNode
 // If Objective-C child, return NSObject
 
 // Build NodeObserver hierarchy
@@ -29,23 +29,23 @@
 import Foundation
 
 
-public protocol MonitoredClass: class, MonitoredNode  // class is required only to have weak pointers to object
+public protocol MonitoredClass: class, QWMonitoredNode  // class is required only to have weak pointers to object
 {
 }
 
 //
-//public typealias MonitoredStruct = MonitoredNode
+//public typealias MonitoredStruct = QWMonitoredNode
 
-public protocol MonitoredNode //: SwiftKVC
+public protocol QWMonitoredNode //: SwiftKVC
 {
   func getNodeChangeCounter() -> QWChangeCounter
 }
-public extension MonitoredNode {
+public extension QWMonitoredNode {
     func qwWrite(property: PropertyDescriptor) {
         self.getNodeChangeCounter().performedWriteOnMainThread(property)
     }
     func qwRead(property: PropertyDescriptor) {
-        self.getNodeChangeCounter().performedWriteOnMainThread(property)
+        self.getNodeChangeCounter().performedReadOnMainThread(property)
     }
 }
 

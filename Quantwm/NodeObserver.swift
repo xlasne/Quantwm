@@ -60,14 +60,14 @@ class NodeObserver {
     return nextNodes.map({$0.count}).reduce(1,+)
   }
 
-  func readChain(_ chain:[PropertyDescriptor], fromParent parent: MonitoredNode)
+  func readChain(_ chain:[PropertyDescriptor], fromParent parent: QWMonitoredNode)
   {
     guard let property = chain.first else { return }
     let reducedChain = Array(chain.dropFirst())
     let nextProperty = reducedChain.first
 
     let node = parent.getNodeChangeCounter()
-    let foundNodes: [MonitoredNode] = property.getChildArray?(parent) ?? []
+    let foundNodes: [QWMonitoredNode] = property.getChildArray?(parent) ?? []
 
     if foundNodes.count > 1
     {

@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
+class DataModel : NSObject, MonitoredClass, RepositoryHolder, QWMonitoredNode
 {
 
 
@@ -54,7 +54,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
             return _number1
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(DataModel.number1K)
+            self.qwWrite(property: DataModel.number1K)
             _number1 = newValue
             self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
         }
@@ -69,7 +69,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
             return _number2
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(DataModel.number2K)
+            self.qwWrite(property: DataModel.number2K)
             _number2 = newValue
             self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
         }
@@ -87,7 +87,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
             return _sumOfNumber
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(DataModel.sumOfNumberK)
+            self.qwWrite(property: DataModel.sumOfNumberK)
             _sumOfNumber = newValue
         }
     }
@@ -99,11 +99,11 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     fileprivate var _invSumOfNumber: Int = 0
     var invSumOfNumber : Int {
         get {
-            self.changeCounter.performedReadOnMainThread(DataModel.invSumOfNumberK)
+            self.qwRead(property: DataModel.invSumOfNumberK)
             return _invSumOfNumber
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(DataModel.invSumOfNumberK)
+            self.qwWrite(property: DataModel.invSumOfNumberK)
             _invSumOfNumber = newValue
         }
     }
@@ -116,7 +116,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
         sourceType: DataModel.self,
         destType: TransientClass.self,
         description: "transientClass",
-        getChildArray: { (root:MonitoredNode) -> [MonitoredNode] in
+        getChildArray: { (root:QWMonitoredNode) -> [QWMonitoredNode] in
             guard let root = root as? DataModel else { return []}
             if let trans = root.transientClass {
                 return [trans]
@@ -129,11 +129,11 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     var _transientClass: TransientClass?
     var transientClass: TransientClass? {
         get {
-            self.changeCounter.performedReadOnMainThread(DataModel.transientClassK)
+            self.qwRead(property: DataModel.transientClassK)
             return _transientClass
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(DataModel.transientClassK)
+            self.qwWrite(property: DataModel.transientClassK)
             _transientClass = newValue
         }
     }
@@ -150,7 +150,6 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
         super.init()
         self.repositoryObserver.registerRoot(
             associatedObject: self,
-            changeCounter: self.changeCounter,
             rootDescription: DataModel.dataModelK)
         self.contextMgr.registerRoot(self)
     }
@@ -182,7 +181,6 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, MonitoredNode
     //    super.init()
     //    self.repositoryObserver.registerRoot(
     //      associatedObject: self,
-    //      changeCounter: self.changeCounter,
     //      rootDescription: DataModel.dataModelK)
     //    self.contextMgr.registerRoot(self)
     //  }

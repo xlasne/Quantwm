@@ -10,7 +10,7 @@ import Foundation
 import QuantwmOSX
 
 
-class NodeSwift: MonitoredNode
+class NodeSwift: QWMonitoredNode
 {
 
     let changeCounter = QWChangeCounter()
@@ -24,11 +24,11 @@ class NodeSwift: MonitoredNode
     var _intValue: Int = 0
     var intValue: Int {
         get {
-            self.changeCounter.performedReadOnMainThread(NodeSwift.intValueK)
+            self.qwRead(property: NodeSwift.intValueK)
             return _intValue
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(NodeSwift.intValueK)
+            self.qwWrite(property: NodeSwift.intValueK)
             _intValue = newValue
         }
     }

@@ -38,11 +38,11 @@ class ContextMgr: NSObject, MonitoredClass
   fileprivate var _currentFocus: NSObject? = nil
   var currentFocus: NSObject? {
     get {
-      self.changeCounter.performedReadOnMainThread(ContextMgr.currentFocusK)
+      self.qwRead(property: ContextMgr.currentFocusK)
       return _currentFocus
     }
     set {
-      self.changeCounter.performedWriteOnMainThread(ContextMgr.currentFocusK)
+      self.qwWrite(property: ContextMgr.currentFocusK)
       _currentFocus = newValue
       print("Focus has been changed")
     }
@@ -54,11 +54,11 @@ class ContextMgr: NSObject, MonitoredClass
   fileprivate var _leftViewPresent = true
   var leftViewPresent: Bool {
     get {
-      self.changeCounter.performedReadOnMainThread(ContextMgr.leftViewPresentK)
+      self.qwRead(property: ContextMgr.leftViewPresentK)
       return _leftViewPresent
     }
     set {
-      self.changeCounter.performedWriteOnMainThread(ContextMgr.leftViewPresentK)
+      self.qwWrite(property: ContextMgr.leftViewPresentK)
       _leftViewPresent = newValue
     }
   }
@@ -68,11 +68,11 @@ class ContextMgr: NSObject, MonitoredClass
   fileprivate var _rightViewPresent = true
   var rightViewPresent: Bool {
     get {
-      self.changeCounter.performedReadOnMainThread(ContextMgr.rightViewPresentK)
+      self.qwRead(property: ContextMgr.rightViewPresentK)
       return _rightViewPresent
     }
     set {
-      self.changeCounter.performedWriteOnMainThread(ContextMgr.rightViewPresentK)
+      self.qwWrite(property: ContextMgr.rightViewPresentK)
       _rightViewPresent = newValue
     }
   }
@@ -82,11 +82,11 @@ class ContextMgr: NSObject, MonitoredClass
   fileprivate var _imageColor: NSColor = NSColor.white
   var imageColor: NSColor {
     get {
-      self.changeCounter.performedReadOnMainThread(ContextMgr.imageColorK)
+      self.qwRead(property: ContextMgr.imageColorK)
       return _imageColor
     }
     set {
-      self.changeCounter.performedWriteOnMainThread(ContextMgr.imageColorK)
+      self.qwWrite(property: ContextMgr.imageColorK)
       _imageColor = newValue
     }
   }
@@ -100,7 +100,6 @@ class ContextMgr: NSObject, MonitoredClass
   {
     dataModel.repositoryObserver.registerRoot(
       associatedObject: self,
-      changeCounter: self.changeCounter,
       rootDescription: ContextMgr.contextMgrK)
   }
 

@@ -28,7 +28,6 @@
 		25597FFB1CBE9E000004699B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25597FFA1CBE9E000004699B /* MainViewModel.swift */; };
 		256A84641CC39F9D00C8C072 /* TransientClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256A84631CC39F9D00C8C072 /* TransientClass.swift */; };
 		25D27DA61F0F809B00097E8D /* NodeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27DA41F0F7E9F00097E8D /* NodeSwift.swift */; };
-		25D380BA1F27400800AF5747 /* idea_chris_eidof.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D380B91F27400800AF5747 /* idea_chris_eidof.swift */; };
 		25E2A4041CFDA55800F42FD3 /* QuantwmOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E2A4031CFDA55800F42FD3 /* QuantwmOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25E2A40B1CFDA55800F42FD3 /* QuantwmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */; };
 		25E2A4121CFDA55800F42FD3 /* QuantwmOSXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A4111CFDA55800F42FD3 /* QuantwmOSXTests.m */; };
@@ -42,7 +41,7 @@
 		25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A311CF05428002D5962 /* KeypathDescription.swift */; };
 		25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A321CF05428002D5962 /* KeypathObserver.swift */; };
 		25E2A4261CFDA5FE00F42FD3 /* KeySetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A331CF05428002D5962 /* KeySetObserver.swift */; };
-		25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A341CF05428002D5962 /* MonitoredNode.swift */; };
+		25E2A4271CFDA5FE00F42FD3 /* QWMonitoredNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A341CF05428002D5962 /* QWMonitoredNode.swift */; };
 		25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A351CF05428002D5962 /* NodeObserver.swift */; };
 		25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A361CF05428002D5962 /* PropertyDescription.swift */; };
 		25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
@@ -64,13 +63,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 25E2A4001CFDA55800F42FD3;
 			remoteInfo = QuantwmOSX;
-		};
-		25E2A40E1CFDA55800F42FD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253482431CB7C9A900F61BB4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2534824A1CB7C9A900F61BB4;
-			remoteInfo = MVVM;
 		};
 		25E2A4141CFDA55800F42FD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -139,7 +131,7 @@
 		25EA3A311CF05428002D5962 /* KeypathDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeypathDescription.swift; path = Quantwm/KeypathDescription.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A321CF05428002D5962 /* KeypathObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeypathObserver.swift; path = Quantwm/KeypathObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A331CF05428002D5962 /* KeySetObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeySetObserver.swift; path = Quantwm/KeySetObserver.swift; sourceTree = SOURCE_ROOT; };
-		25EA3A341CF05428002D5962 /* MonitoredNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredNode.swift; path = Quantwm/MonitoredNode.swift; sourceTree = SOURCE_ROOT; };
+		25EA3A341CF05428002D5962 /* QWMonitoredNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QWMonitoredNode.swift; path = Quantwm/QWMonitoredNode.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A351CF05428002D5962 /* NodeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeObserver.swift; path = Quantwm/NodeObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A361CF05428002D5962 /* PropertyDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertyDescription.swift; path = Quantwm/PropertyDescription.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A381CF05428002D5962 /* RegisterDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterDescription.swift; path = Quantwm/RegisterDescription.swift; sourceTree = SOURCE_ROOT; };
@@ -293,7 +285,7 @@
 				25EA3A321CF05428002D5962 /* KeypathObserver.swift */,
 				25EA3A331CF05428002D5962 /* KeySetObserver.swift */,
 				25EA3A351CF05428002D5962 /* NodeObserver.swift */,
-				25EA3A341CF05428002D5962 /* MonitoredNode.swift */,
+				25EA3A341CF05428002D5962 /* QWMonitoredNode.swift */,
 				25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
@@ -406,7 +398,6 @@
 			);
 			dependencies = (
 				25E2A40D1CFDA55800F42FD3 /* PBXTargetDependency */,
-				25E2A40F1CFDA55800F42FD3 /* PBXTargetDependency */,
 			);
 			name = QuantwmOSXTests;
 			productName = QuantwmOSXTests;
@@ -538,11 +529,10 @@
 				25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */,
 				25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */,
 				25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */,
-				25D380BA1F27400800AF5747 /* idea_chris_eidof.swift in Sources */,
 				25E2A41F1CFDA5FE00F42FD3 /* QWChangeCounter.swift in Sources */,
 				25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */,
 				25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */,
-				25E2A4271CFDA5FE00F42FD3 /* MonitoredNode.swift in Sources */,
+				25E2A4271CFDA5FE00F42FD3 /* QWMonitoredNode.swift in Sources */,
 				25E2A4261CFDA5FE00F42FD3 /* KeySetObserver.swift in Sources */,
 				25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */,
 				25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */,
@@ -572,11 +562,6 @@
 			isa = PBXTargetDependency;
 			target = 25E2A4001CFDA55800F42FD3 /* QuantwmOSX */;
 			targetProxy = 25E2A40C1CFDA55800F42FD3 /* PBXContainerItemProxy */;
-		};
-		25E2A40F1CFDA55800F42FD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2534824A1CB7C9A900F61BB4 /* MVVM */;
-			targetProxy = 25E2A40E1CFDA55800F42FD3 /* PBXContainerItemProxy */;
 		};
 		25E2A4151CFDA55800F42FD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

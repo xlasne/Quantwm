@@ -14,10 +14,10 @@ class RootNode {
     weak var rootObject: MonitoredClass?
     let keypath : String
     
-    init(rootObject: MonitoredClass, changeCounter: QWChangeCounter, keypath : String)
+    init(rootObject: MonitoredClass, keypath : String)
     {
         self.rootObject = rootObject
-        self.changeCounter = changeCounter
+        self.changeCounter = rootObject.getNodeChangeCounter()
         self.keypath = keypath
     }
 }
@@ -56,10 +56,9 @@ open class RepositoryObserver: NSObject {
     // This node does not have to remember this monitoring
     // On node deletion, this registration will end
     // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-    open func registerRoot(associatedObject: MonitoredClass, changeCounter: QWChangeCounter, rootDescription: RootDescriptor)
+    open func registerRoot(associatedObject: MonitoredClass, rootDescription: RootDescriptor)
     {
         let rootNode = RootNode(rootObject: associatedObject,
-                                changeCounter: changeCounter,
                                 keypath: rootDescription.propDescription)
         
         let keypath = rootNode.keypath

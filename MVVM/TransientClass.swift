@@ -9,7 +9,7 @@
 import Cocoa
 import QuantwmOSX
 
-class TransientClass: MonitoredNode {
+class TransientClass: QWMonitoredNode {
     func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
     }
@@ -22,12 +22,12 @@ class TransientClass: MonitoredNode {
     var _transientVal = "Toto"
     var transientVal: String {
         get {
-            self.changeCounter.performedReadOnMainThread(TransientClass.transientValK)
+            self.qwRead(property: TransientClass.transientValK)
             return _transientVal
         }
         set {
             if (newValue != _transientVal) {
-                self.changeCounter.performedWriteOnMainThread(TransientClass.transientValK)
+                self.qwWrite(property: TransientClass.transientValK)
                 _transientVal = newValue
             }
         }
@@ -38,12 +38,12 @@ class TransientClass: MonitoredNode {
     var _intValue: Int = 0
     var intValue: Int {
         get {
-            self.changeCounter.performedReadOnMainThread(TransientClass.intValueK)
+            self.qwRead(property: TransientClass.intValueK)
             return _intValue
         }
         set {
             if (newValue != _intValue) {
-                self.changeCounter.performedWriteOnMainThread(TransientClass.intValueK)
+                self.qwWrite(property: TransientClass.intValueK)
                 _intValue = newValue
             }
         }
@@ -55,11 +55,11 @@ class TransientClass: MonitoredNode {
     fileprivate var _arrayVal: [NodeSwift] = [NodeSwift(val: 1), NodeSwift(val: 3)]
     var arrayVal: [NodeSwift] {
         get {
-            self.changeCounter.performedReadOnMainThread(TransientClass.arrayValueK)
+            self.qwRead(property: TransientClass.arrayValueK)
             return _arrayVal
         }
         set {
-            self.changeCounter.performedWriteOnMainThread(TransientClass.arrayValueK)
+            self.qwWrite(property: TransientClass.arrayValueK)
             _arrayVal = newValue
         }
     }
