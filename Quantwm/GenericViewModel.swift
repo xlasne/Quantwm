@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol RepositoryHolder: class
+public protocol RepositoryObserverOwner: class
 {
     func getRepositoryObserver() -> RepositoryObserver
 }
 
-open class GenericViewModel<Model: RepositoryHolder> : NSObject {
+open class GenericViewModel<Model: RepositoryObserverOwner> : NSObject {
 
     open unowned var dataModel: Model
     open unowned var repositoryObserver : RepositoryObserver

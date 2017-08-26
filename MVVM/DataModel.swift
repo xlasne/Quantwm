@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class DataModel : NSObject, MonitoredClass, RepositoryHolder, QWMonitoredNode
+class DataModel : NSObject, MonitoredClass, RepositoryObserverOwner, QWMonitoredNode
 {
 
 
@@ -25,7 +25,7 @@ class DataModel : NSObject, MonitoredClass, RepositoryHolder, QWMonitoredNode
 
   let contextMgr: ContextMgr = ContextMgr()
 
-  // RepositoryHolder Protocol
+  // RepositoryObserverOwner Protocol
   let repositoryObserver: RepositoryObserver
   func getRepositoryObserver() -> RepositoryObserver
   {

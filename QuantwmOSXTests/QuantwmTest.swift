@@ -130,7 +130,7 @@ class TestClass: MonitoredClass
 
 }
 
-class TestBase: MonitoredClass, RepositoryHolder
+class TestBase: MonitoredClass, RepositoryObserverOwner
 {
     let changeCounter = QWChangeCounter()
     func getNodeChangeCounter() -> QWChangeCounter {
