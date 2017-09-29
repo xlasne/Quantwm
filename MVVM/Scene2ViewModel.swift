@@ -18,7 +18,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
     let composedOwner = "\(owner)+Scene2ViewModel"
     super.init(dataModel: dataModel, owner: composedOwner)
   }
-
+  
   // MARK: - Input Processing
   func setValue2(_ numberStr: String, focus: NSObject?)
   {
@@ -36,7 +36,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
       NSSound.beep()
     }
   }
-
+  
   func toggleImageColor() {
     updateActionAndRefresh() {
       let color = dataModel.contextMgr.imageColor
@@ -49,44 +49,44 @@ class Scene2ViewModel: GenericViewModel<DataModel>
       }
     }
   }
-
+  
   // MARK: - Get Data Model
-
+  
   //MARK: getFocus
   static let getFocusKeypathSet =
     KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
-
-
+  
+  
   func getFocus() -> NSObject? {
     return dataModel.contextMgr.currentFocus
   }
-
+  
   //MARK: getValue2
   static let getValue2KeypathSet =
     KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
-
+  
   func getValue2() -> String {
     let formatter = NumberFormatter()
     let val = self.dataModel.number2
     return  formatter.string(from: NSNumber(value: val)) ?? "Error"
   }
-
-
+  
+  
   //MARK: getSum
   static let getSumKeypathSet =
     KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
-
-
+  
+  
   func getSum() -> Int?
   {
     let sum = self.dataModel.getSum()
     return sum
   }
-
+  
   //MARK: getColor
   static let getColorKeypathSet =
     KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.imageColorK])
-
+  
   func getColor() -> NSColor
   {
     return dataModel.contextMgr.imageColor

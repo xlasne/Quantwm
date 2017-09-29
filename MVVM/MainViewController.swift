@@ -11,38 +11,38 @@ import Cocoa
 import QuantwmOSX
 
 class MainViewController: NSViewController {
-
+  
   // MARK: Interfaces
   weak var document: DemoDocument?
   var viewModel: MainViewModel?
-
+  
   @IBOutlet weak var viewTop : NSView!
   @IBOutlet weak var viewBottomLeft : NSView!
   @IBOutlet weak var viewBottomRight : NSView!
-
+  
   var vc1 : Scene1ViewController?
   var vc2 : Scene2ViewController?
   var vc3 : Scene2ViewController?
-
+  
   override func viewWillAppear() {
     super.viewWillAppear()
-
+    
     guard let document = Helper.documentForViewController(self) else { return }
     self.document = document
     self.viewModel = MainViewModel(dataModel: document.dataModel, owner: self.description)
-
+    
     self.viewModel?.updateActionAndRefresh() {
-        self.viewModel?.registerObserver(target: self,
-                                         registrationDesc: MainViewController.refreshUIREG)
+      self.viewModel?.registerObserver(target: self,
+                                       registrationDesc: MainViewController.refreshUIREG)
     }
   }
-
+  
   override func viewWillDisappear() {
     self.viewModel?.unregisterDataSet(target: self)
     self.viewModel = nil
     super.viewWillDisappear()
   }
-
+  
   //MARK: refreshSum
   static let refreshUIREG = RegisterDescription(
     selector: #selector(MainViewController.refreshUI),
@@ -50,19 +50,19 @@ class MainViewController: NSViewController {
       MainViewModel.rightViewPresentKeypathSet,
     name: "MainViewController",
     configurationPriority: 1)
-
+  
   @objc func refreshUI()
   {
     // Enclosed in a Update transaction when called by refreshUIREG
-
+    
     // Parent View Controller shall create and initialize their child view controller
     // with their matching view models, then let them handle their live via their own view model
-
+    
     self.displayTopView()
     self.displayLeftView()
     self.displayRightView()
   }
-
+  
   func displayTopView()
   {
     if self.vc1 == nil {
@@ -73,7 +73,7 @@ class MainViewController: NSViewController {
       Helper.addToContainerView(self.viewTop, subView: vc1.view)
     }
   }
-
+  
   func displayLeftView()
   {
     guard let isPresent = self.viewModel?.leftViewPresent else { return }
@@ -95,7 +95,7 @@ class MainViewController: NSViewController {
       }
     }
   }
-
+  
   func displayRightView()
   {
     guard let isPresent = self.viewModel?.rightViewPresent else { return }

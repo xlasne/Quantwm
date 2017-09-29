@@ -16,7 +16,7 @@ open class RegisterDescription
   let writtenPropertySet: Set<PropertyDescriptor>
   let maximumAllowedRegistrationWithSameTypeSelector: Int?
   let configurationPriority: Int?
-
+  
   public init(selector: Selector,
               keypathSet: KeypathSet,
               name: String?,
@@ -30,7 +30,7 @@ open class RegisterDescription
     self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
     self.configurationPriority = configurationPriority
   }
-
+  
   public init(selector: Selector,
               keypathDescriptionSet: Set<KeypathDescription>,
               name: String?,
@@ -45,5 +45,5 @@ open class RegisterDescription
     self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
     self.configurationPriority = configurationPriority
   }
-
+  
 }

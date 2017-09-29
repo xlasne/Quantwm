@@ -17,19 +17,19 @@ import QuantwmOSX
 
 class DelayedSumProcessor: NSObject
 {
-
+  
   weak var dataModel : DataModel?
-
+  
   override init()
   {
     super.init()
   }
-
+  
   deinit
   {
     self.dataModel?.repositoryObserver.displayUsage(owner:self)
   }
-
+  
   func register()
   {
     let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
@@ -40,7 +40,7 @@ class DelayedSumProcessor: NSObject
       keypathDescriptionSet: Set([obs1,obs2]),
       name: "DelayedSumProcessor")
   }
-
+  
   @objc func startProcessing()
   {
     let completionHandler = { (numVal:Int)->() in
@@ -51,11 +51,11 @@ class DelayedSumProcessor: NSObject
         self?.dataModel?.repositoryObserver.refreshUI()
       }
     }
-
+    
     if let number1 = self.dataModel?.number1,
       let number2 = self.dataModel?.number2
     {
-        DispatchQueue.global().async {
+      DispatchQueue.global().async {
         // DO SOMETHING ON THE BACKGROUND THREAD
         // Avoid threading conflict with Data Model
         sleep(2)
@@ -63,6 +63,6 @@ class DelayedSumProcessor: NSObject
         completionHandler(sumVal)
       }
     }
-
+    
   }
 }

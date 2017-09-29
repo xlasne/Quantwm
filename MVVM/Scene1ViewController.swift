@@ -20,32 +20,32 @@ import Cocoa
 import QuantwmOSX
 
 class Scene1ViewController: NSViewController, NSTextFieldDelegate {
-
+  
   override var nibName: NSNib.Name? {
     return NSNib.Name("Scene1ViewController")
   }
-
+  
   //View Model
   var viewModel : Scene1ViewModel?
-
+  
   @IBOutlet weak var textField: NSTextField!
   @IBOutlet weak var label: NSTextField!
-
+  
   @IBOutlet weak var showHideLeft: NSButton!
   @IBOutlet weak var showHideRight: NSButton!
-
+  
   @IBOutlet weak var addTransient: NSButton!
   @IBOutlet weak var addArray: NSButton!
   @IBOutlet weak var transientLabel: NSTextField!
   @IBOutlet weak var transientArrayLabel: NSTextField!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
     self.textField.target = self
     self.textField.delegate = self
     self.textField.action = #selector(Scene1ViewController.numberFieldUpdated(_:))
-
+    
     self.addTransient.target = self
     self.addTransient.action = #selector(Scene1ViewController.transientButtonAction(_:))
     self.addArray.target = self
@@ -54,57 +54,57 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
     self.showHideLeft.action = #selector(Scene1ViewController.showHideView(_:))
     self.showHideRight.target = self
     self.showHideRight.action = #selector(Scene1ViewController.showHideView(_:))
-
+    
   }
-
+  
   override func viewWillAppear() {
     super.viewWillAppear()
-
+    
     guard let document = self.representedObject as? DemoDocument else { return }
     self.viewModel = Scene1ViewModel(dataModel: document.dataModel, owner: self.description)
-
+    
     // Registration
     self.viewModel?.updateActionAndRefresh() {
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshTextFieldREG)
-
+                                       registrationDesc: Scene1ViewController.refreshTextFieldREG)
+      
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshArraySumREG)
-
+                                       registrationDesc: Scene1ViewController.refreshArraySumREG)
+      
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshTransientREG)
-
+                                       registrationDesc: Scene1ViewController.refreshTransientREG)
+      
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene1ViewController.refreshInvSumREG)
+                                       registrationDesc: Scene1ViewController.refreshInvSumREG)
     }
   }
-
+  
   override func viewDidAppear() {
     super.viewDidAppear()
   }
-
+  
   override func viewWillDisappear() {
     self.viewModel?.unregisterDataSet(target: self)
     self.viewModel = nil
     super.viewWillDisappear()
   }
-
-
+  
+  
   //MARK: - Input Section
-
+  
   override func controlTextDidChange(_ obj: Notification) {
     if let sender = obj.object as? NSTextField ,  sender == self.textField
     {
       self.numberFieldUpdated(sender)
     }
   }
-
+  
   @objc func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.updateValue(numberStr, focus: sender)
   }
-
+  
   @objc func showHideView(_ sender: NSButton)
   {
     if sender == self.showHideLeft
@@ -116,25 +116,25 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.viewModel?.toggleRightView()
     }
   }
-
+  
   @objc func transientButtonAction(_ sender: NSButton)
   {
     self.viewModel?.toggleTransientAndRefresh()
   }
-
+  
   @objc func transientAddtoArrayButtonAction(_ sender: NSButton)
   {
     self.viewModel?.transientAddtoArray()
   }
-
-
+  
+  
   //MARK: - Refresh View
-
+  
   static let refreshTextFieldREG = RegisterDescription(
     selector: #selector(Scene1ViewController.refreshTextField),
     keypathSet: Scene1ViewModel.getFocusKeypathSet + Scene1ViewModel.getValue1KeypathSet,
     name: "Scene1ViewControllerTextField")
-
+  
   @objc func refreshTextField()
   {
     guard let vm = self.viewModel else { return }
@@ -145,14 +145,14 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       print("Scene1 VC: Focus ignored")
     }
   }
-
+  
   //MARK: refreshSum
-
+  
   static let refreshInvSumREG = RegisterDescription(
     selector: #selector(Scene1ViewController.refreshInvSum),
     keypathSet: Scene1ViewModel.getInvSumKeypathSet,
     name: "Scene1ViewControllerSum")
-
+  
   @objc func refreshInvSum()
   {
     guard let vm = self.viewModel else { return }
@@ -162,14 +162,14 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.label.stringValue = "InvSum 1 + 2: _"
     }
   }
-
+  
   //MARK: refreshTransient
-
+  
   static let refreshTransientREG = RegisterDescription(
     selector: #selector(Scene1ViewController.refreshTransient),
     keypathSet: Scene1ViewModel.getTransientKeypathSet,
     name: "Scene1ViewControllerTransient")
-
+  
   @objc func refreshTransient()
   {
     guard let vm = self.viewModel else { return }
@@ -179,13 +179,13 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.transientLabel.stringValue = "no value defined"
     }
   }
-
+  
   //MARK: refreshSum
   static let refreshArraySumREG = RegisterDescription(
     selector: #selector(Scene1ViewController.refreshArraySum),
     keypathSet: Scene1ViewModel.getArraySumKeypathSet,
     name: "Scene1ViewControllerArraySum")
-
+  
   @objc func refreshArraySum()
   {
     guard let vm = self.viewModel else { return }
@@ -195,7 +195,7 @@ class Scene1ViewController: NSViewController, NSTextFieldDelegate {
       self.transientArrayLabel.stringValue = "Sum: _"
     }
   }
-
+  
 }
 
 

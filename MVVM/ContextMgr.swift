@@ -19,18 +19,18 @@ import QuantwmOSX
 class ContextMgr: NSObject, MonitoredClass
 {
   // MARK: InterfacesMonitoredNode
-    static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,
-                                            description:"ContextMgr")
-
-
-    func getNodeChangeCounter() -> QWChangeCounter
-    {
-        return changeCounter
-    }
+  static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,
+                                          description:"ContextMgr")
+  
+  
+  func getNodeChangeCounter() -> QWChangeCounter
+  {
+    return changeCounter
+  }
   let changeCounter = QWChangeCounter()
-
-    static let currentFocusK = PropertyDescriptor(keypath: \ContextMgr.currentFocus,
-                                                  description: "_currentFocus")
+  
+  static let currentFocusK = PropertyDescriptor(keypath: \ContextMgr.currentFocus,
+                                                description: "_currentFocus")
   fileprivate var _currentFocus: NSObject? = nil
   var currentFocus: NSObject? {
     get {
@@ -43,10 +43,10 @@ class ContextMgr: NSObject, MonitoredClass
       print("Focus has been changed")
     }
   }
-
-    static let leftViewPresentK = PropertyDescriptor(keypath: \ContextMgr.leftViewPresent,
-                                                     description: "leftViewPresent")
-
+  
+  static let leftViewPresentK = PropertyDescriptor(keypath: \ContextMgr.leftViewPresent,
+                                                   description: "leftViewPresent")
+  
   fileprivate var _leftViewPresent = true
   var leftViewPresent: Bool {
     get {
@@ -58,9 +58,9 @@ class ContextMgr: NSObject, MonitoredClass
       _leftViewPresent = newValue
     }
   }
-
-    static let rightViewPresentK = PropertyDescriptor(keypath: \ContextMgr.rightViewPresent,
-                                                      description: "rightViewPresent")
+  
+  static let rightViewPresentK = PropertyDescriptor(keypath: \ContextMgr.rightViewPresent,
+                                                    description: "rightViewPresent")
   fileprivate var _rightViewPresent = true
   var rightViewPresent: Bool {
     get {
@@ -72,9 +72,9 @@ class ContextMgr: NSObject, MonitoredClass
       _rightViewPresent = newValue
     }
   }
-
-    static let imageColorK = PropertyDescriptor(keypath: \ContextMgr.imageColor,
-                                                description: "imageColor")
+  
+  static let imageColorK = PropertyDescriptor(keypath: \ContextMgr.imageColor,
+                                              description: "imageColor")
   fileprivate var _imageColor: NSColor = NSColor.white
   var imageColor: NSColor {
     get {
@@ -86,32 +86,32 @@ class ContextMgr: NSObject, MonitoredClass
       _imageColor = newValue
     }
   }
-
+  
   override init()
   {
     super.init()
   }
-
+  
   func registerRoot(_ dataModel: DataModel)
   {
     dataModel.repositoryObserver.registerRoot(
       associatedObject: self,
       rootDescription: ContextMgr.contextMgrK)
   }
-
+  
   func toggleLeftView()
   {
     leftViewPresent = !leftViewPresent
   }
-
+  
   func toggleRightView()
   {
     rightViewPresent = !rightViewPresent
   }
-
+  
   // For Monitoring<> example
   func getFocus()-> NSObject? { return currentFocus }
   func setFocus(_ focus: NSObject?) { currentFocus = focus }
-
+  
 }
 

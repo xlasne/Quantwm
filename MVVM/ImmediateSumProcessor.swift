@@ -17,19 +17,19 @@ import QuantwmOSX
 
 class ImmediateSumProcessor: NSObject
 {
-
+  
   weak var dataModel : DataModel?
-
+  
   override init()
   {
     super.init()
   }
-
+  
   deinit
   {
     self.dataModel?.repositoryObserver.displayUsage(owner: self)
   }
-
+  
   func register()
   {
     let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
@@ -41,7 +41,7 @@ class ImmediateSumProcessor: NSObject
       name: "ImmediateSumProcessor",
       writtenPropertySet: Set([DataModel.invSumOfNumberK]))
   }
-
+  
   @objc func startProcessing()
   {
     if let number1 = self.dataModel?.number1,

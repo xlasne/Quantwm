@@ -12,32 +12,32 @@ import QuantwmOSX
 
 class NodeSwift: QWMonitoredNode
 {
-
-    let changeCounter = QWChangeCounter()
-
-    func getNodeChangeCounter() -> QWChangeCounter {
-        return changeCounter
+  
+  let changeCounter = QWChangeCounter()
+  
+  func getNodeChangeCounter() -> QWChangeCounter {
+    return changeCounter
+  }
+  
+  static let intValueK = PropertyDescriptor(keypath: \NodeSwift.intValue, description: "intValue")
+  
+  var _intValue: Int = 0
+  var intValue: Int {
+    get {
+      self.qwRead(property: NodeSwift.intValueK)
+      return _intValue
     }
-
-    static let intValueK = PropertyDescriptor(keypath: \NodeSwift.intValue, description: "intValue")
-
-    var _intValue: Int = 0
-    var intValue: Int {
-        get {
-            self.qwRead(property: NodeSwift.intValueK)
-            return _intValue
-        }
-        set {
-            self.qwWrite(property: NodeSwift.intValueK)
-            _intValue = newValue
-        }
+    set {
+      self.qwWrite(property: NodeSwift.intValueK)
+      _intValue = newValue
     }
-
-    init(val: Int)
-    {
-        _intValue = val
-    }
-
+  }
+  
+  init(val: Int)
+  {
+    _intValue = val
+  }
+  
 }
 
 

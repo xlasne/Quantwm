@@ -10,16 +10,16 @@ import Foundation
 import QuantwmOSX
 
 struct NodeStruct: QWMonitoredNode {
-    
-    func getNodeChangeCounter() -> QWChangeCounter {
-        return changeCounter
-    }
-
+  
+  func getNodeChangeCounter() -> QWChangeCounter {
+    return changeCounter
+  }
+  
   let changeCounter = QWChangeCounter()
-
+  
   static let intValueK = PropertyDescriptor(keypath: \NodeStruct.intValue, description: "intValue")
-
-    fileprivate var _intValue: Int = 0
+  
+  fileprivate var _intValue: Int = 0
   var intValue: Int {
     get {
       self.qwRead(property: NodeStruct.intValueK)
@@ -32,7 +32,7 @@ struct NodeStruct: QWMonitoredNode {
       }
     }
   }
-
+  
   init(val: Int)
   {
     _intValue = val

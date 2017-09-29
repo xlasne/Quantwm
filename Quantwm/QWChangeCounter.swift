@@ -20,24 +20,24 @@ import Foundation
 typealias NodeId = Int32
 
 open class QWChangeCounter: NSObject {
-
+  
   //MARK: Properties
-
+  
   // Unique NodeId Generator
   static var nodeIdGenerator: NodeId = 0
   static func generateUniqueNodeId() -> NodeId {
     return OSAtomicIncrement32(&QWChangeCounter.nodeIdGenerator)
   }
-
+  
   // NodeId uniquely identify this node. Used by DataUsage
   let nodeId: NodeId  = QWChangeCounter.generateUniqueNodeId()
-
+  
   // Maintain a change counter for each value or reference property of its parent object/struct
   // Counter is created at 0 when requested
   var changeCountDict: [AnyKeyPath:Int] = [:]
-
+  
   //MARK: - Read / Write monitoring
-
+  
   func performedReadOnMainThread(_ property: PropertyDescriptor)
   {
     let childKey = property
@@ -48,7 +48,7 @@ open class QWChangeCounter: NSObject {
       dataUsage.addRead(self, property: property)
     }
   }
-
+  
   func performedWriteOnMainThread(_ property: PropertyDescriptor)
   {
     let childKey = property.propKey
@@ -56,14 +56,14 @@ open class QWChangeCounter: NSObject {
       assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
     }
     self.setDirty(property)
-
+    
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property)
     }
   }
-
+  
   //MARK: - Update Property Management
-
+  
   // Increment changeCount for a property
   func setDirty(_ property: PropertyDescriptor)
   {
@@ -85,6 +85,6 @@ open class QWChangeCounter: NSObject {
       return 0
     }
   }
-
+  
 }
 

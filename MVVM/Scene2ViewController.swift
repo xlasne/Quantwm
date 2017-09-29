@@ -20,65 +20,65 @@ import Cocoa
 import QuantwmOSX
 
 class Scene2ViewController: NSViewController, NSTextFieldDelegate {
-
-    override var nibName: NSNib.Name? {
-        return NSNib.Name("Scene2ViewController")
-    }
-
-//  override var nibName: NSNib.Name? {
-//    return "Scene2ViewController"
-//  }
-
+  
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("Scene2ViewController")
+  }
+  
+  //  override var nibName: NSNib.Name? {
+  //    return "Scene2ViewController"
+  //  }
+  
   //View Model
   var sceneName : String = "Scene2ViewController"
   var viewModel : Scene2ViewModel?
   var keySetObserverId: UUID?
-
+  
   @IBOutlet weak var textField: NSTextField!
   @IBOutlet weak var label: NSTextField!
   @IBOutlet weak var imageView: NSImageView!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do view setup here.
-
+    
     self.textField.target = self
     self.textField.delegate = self
     self.textField.action = #selector(Scene2ViewController.numberFieldUpdated(_:))
   }
-
+  
   override func viewWillAppear() {
     super.viewWillAppear()
     guard let document = self.representedObject as? DemoDocument else { return }
-
+    
     self.viewModel = Scene2ViewModel(dataModel: document.dataModel, owner: self.description)
-
+    
     self.viewModel?.updateActionAndRefresh() {
-
+      
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc: Scene2ViewController.refreshViewREG,
-                               name:sceneName)
-
+                                       registrationDesc: Scene2ViewController.refreshViewREG,
+                                       name:sceneName)
+      
       self.viewModel?.registerObserver(target: self,
-                               registrationDesc:Scene2ViewController.refreshColorREG,
-                               name: sceneName+"Color")
+                                       registrationDesc:Scene2ViewController.refreshColorREG,
+                                       name: sceneName+"Color")
       self.toogleColor()
     }
   }
-
+  
   override func viewDidAppear() {
     super.viewDidAppear()
     print("View Did Appear: Scene2ViewController")
   }
-
-
+  
+  
   override func viewWillDisappear() {
     self.viewModel?.unregisterDataSet(target: self)
     self.viewModel = nil
     super.viewWillDisappear()
   }
-
-
+  
+  
   //MARK: - Input Section
   override func controlTextDidChange(_ obj: Notification) {
     if let sender = obj.object as? NSTextField ,  sender == self.textField
@@ -86,20 +86,20 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
       self.numberFieldUpdated(sender)
     }
   }
-
+  
   @objc func numberFieldUpdated(_ sender: NSTextField)
   {
     let numberStr = self.textField.stringValue
     self.viewModel?.setValue2(numberStr, focus: sender)
   }
-
+  
   func toogleColor()
   {
     self.viewModel?.toggleImageColor()
   }
-
+  
   //MARK: - Refresh Section
-
+  
   static let refreshViewREG = RegisterDescription(
     selector: #selector(Scene2ViewController.refreshView),
     keypathSet:
@@ -108,7 +108,7 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
       Scene2ViewModel.getSumKeypathSet,
     name: nil,
     maximumAllowedRegistrationWithSameTypeSelector: 2)
-
+  
   @objc func refreshView()
   {
     if let vm = self.viewModel
@@ -128,15 +128,15 @@ class Scene2ViewController: NSViewController, NSTextFieldDelegate {
       }
     }
   }
-
-
+  
+  
   //MARK: - Refresh Section
   static let refreshColorREG = RegisterDescription(
     selector: #selector(Scene2ViewController.refreshColor),
     keypathSet: Scene2ViewModel.getColorKeypathSet,
     name: nil,
     maximumAllowedRegistrationWithSameTypeSelector: 2)
-
+  
   @objc func refreshColor()
   {
     if let color = viewModel?.getColor()

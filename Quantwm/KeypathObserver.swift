@@ -14,25 +14,25 @@ class KeypathObserver
   var nodeChain: NodeObserver?
   var updatedNodeChain: NodeObserver?
   var updateCounter: Int = 0
-
+  
   var keypathBase: String {
     return keypathDesc.rootPath
   }
   var keypathExtension: String? {
     return keypathDesc.extensionPath
   }
-
+  
   init(root: RootDescriptor, chain: [PropertyDescriptor])
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain)
     self.keypathDesc = keypathDesc
   }
-
+  
   init(keypathDesc: KeypathDescription)
   {
     self.keypathDesc = keypathDesc
   }
-
+  
   func readAndCompareChain(rootNode: RootNode)
   {
     guard let _ = rootNode.changeCounter,
@@ -48,11 +48,11 @@ class KeypathObserver
         }
         return
     }
-
+    
     // The root node is not nil.
     // Let's read  and compare the chains
     let updatedNodeChain = self.readChain(keypathDesc, fromRoot: keypathDesc.root, rootObject: rootObject)
-
+    
     // If self.updatedNodeChain is not nil, we are resuming from a suspendRefresh, and must check additional changes, else this is a start refresh
     let previousChain = self.updatedNodeChain ?? self.nodeChain
     let comparison = updatedNodeChain.compareWithPreviousChain(previousChain)
@@ -63,28 +63,28 @@ class KeypathObserver
     } else {
       print("KeypathObserver: \(keypath) : \(comparison.description)")
     }
-
+    
   }
-
-    func readChain(_ keypathDesc: KeypathDescription, fromRoot rootDescriptor: RootDescriptor, rootObject: MonitoredClass) -> NodeObserver
-    {
-        let firstNodeCounter = rootObject.getNodeChangeCounter()
-        let firstProp = keypathDesc.chain.first!
-        let nodeObserver = NodeObserver(node: firstNodeCounter, propertyDesc: firstProp)
-        nodeObserver.readChain(keypathDesc.chain, fromParent: rootObject)
-        return nodeObserver
-    }
-
+  
+  func readChain(_ keypathDesc: KeypathDescription, fromRoot rootDescriptor: RootDescriptor, rootObject: MonitoredClass) -> NodeObserver
+  {
+    let firstNodeCounter = rootObject.getNodeChangeCounter()
+    let firstProp = keypathDesc.chain.first!
+    let nodeObserver = NodeObserver(node: firstNodeCounter, propertyDesc: firstProp)
+    nodeObserver.readChain(keypathDesc.chain, fromParent: rootObject)
+    return nodeObserver
+  }
+  
   func commitUpdate() {
     self.nodeChain = self.updatedNodeChain
     self.updatedNodeChain = nil
   }
-
-
+  
+  
   var keypath: String {
     return keypathDesc.keypath
   }
-
+  
   var composedKeypath: String {
     if let ext = keypathExtension {
       return "\(keypathBase):\(ext)"
@@ -92,13 +92,13 @@ class KeypathObserver
       return keypathBase
     }
   }
-
+  
   var propertyDescriptionSet: Set<String> {
     var result = Set(arrayLiteral: keypathDesc.root.propDescription)
     result.formUnion(keypathDesc.chain.map({$0.propDescription}))
     return result
   }
-
+  
   // This function is only providing correct result just after a readChain method
   func collectNodeSet() -> Set<RW_Action>
   {

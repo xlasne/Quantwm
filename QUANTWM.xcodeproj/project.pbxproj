@@ -45,7 +45,6 @@
 		25E2A4281CFDA5FE00F42FD3 /* NodeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A351CF05428002D5962 /* NodeObserver.swift */; };
 		25E2A4291CFDA5FE00F42FD3 /* PropertyDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A361CF05428002D5962 /* PropertyDescription.swift */; };
 		25E2A42B1CFDA5FE00F42FD3 /* RegisterDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A381CF05428002D5962 /* RegisterDescription.swift */; };
-		25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EA3A391CF05428002D5962 /* CodingConverter.swift */; };
 		25E2A4301CFDBE7900F42FD3 /* QuantwmTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2A42F1CFDBE7900F42FD3 /* QuantwmTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +134,6 @@
 		25EA3A351CF05428002D5962 /* NodeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NodeObserver.swift; path = Quantwm/NodeObserver.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A361CF05428002D5962 /* PropertyDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertyDescription.swift; path = Quantwm/PropertyDescription.swift; sourceTree = SOURCE_ROOT; };
 		25EA3A381CF05428002D5962 /* RegisterDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegisterDescription.swift; path = Quantwm/RegisterDescription.swift; sourceTree = SOURCE_ROOT; };
-		25EA3A391CF05428002D5962 /* CodingConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodingConverter.swift; path = Quantwm/CodingConverter.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,7 +287,6 @@
 				25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
-				25EA3A391CF05428002D5962 /* CodingConverter.swift */,
 				25D380B91F27400800AF5747 /* idea_chris_eidof.swift */,
 			);
 			name = Quantwm;
@@ -531,7 +528,6 @@
 				25E2A4241CFDA5FE00F42FD3 /* KeypathDescription.swift in Sources */,
 				25E2A41F1CFDA5FE00F42FD3 /* QWChangeCounter.swift in Sources */,
 				25E2A4251CFDA5FE00F42FD3 /* KeypathObserver.swift in Sources */,
-				25E2A42C1CFDA5FE00F42FD3 /* CodingConverter.swift in Sources */,
 				25E2A4271CFDA5FE00F42FD3 /* QWMonitoredNode.swift in Sources */,
 				25E2A4261CFDA5FE00F42FD3 /* KeySetObserver.swift in Sources */,
 				25E2A4221CFDA5FE00F42FD3 /* DataUsage.swift in Sources */,

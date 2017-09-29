@@ -12,22 +12,22 @@ open class KeypathSet
 {
   open var readKeypathSet : Set<KeypathDescription> = []
   open var writtenPropertySet: Set<PropertyDescriptor> = []
-
+  
   public init()
   { }
-
+  
   public init(readWithRoot root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
     readKeypathSet = [keypathDesc]
   }
-
+  
   open func addRead(root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
   {
     let keypathDesc = KeypathDescription(root: root, chain: chain, disableValidation: disableValidation)
     readKeypathSet.insert(keypathDesc)
   }
-
+  
   open func addWrittenProperty(_ property: PropertyDescriptor)
   {
     writtenPropertySet.insert(property)
@@ -49,7 +49,7 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
   let root: RootDescriptor
   let chain: [PropertyDescriptor]
-
+  
   // Set disableValidation to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
   // match the source and destination types between Objective-C and Swift
   public init(root: RootDescriptor, chain: [PropertyDescriptor], disableValidation: Bool = false)
@@ -60,7 +60,7 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
       let _ = self.validate()
     }
   }
-
+  
   var keypath: String {
     if let extensionPath = self.extensionPath {
       return root.propDescription + "." + extensionPath
@@ -68,7 +68,7 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
       return root.propDescription
     }
   }
-
+  
   func key(_ index: Int)-> String? {
     if index == 0 {
       return root.propDescription
@@ -80,11 +80,11 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
     assert(true,"Error: Invalid index \(index) for \(keypath)")
     return nil
   }
-
+  
   var rootPath: String {
     return root.propDescription
   }
-
+  
   var extensionPath: String? {
     if !chain.isEmpty {
       return chain.map({$0.propDescription}).joined(separator: ".")
@@ -92,43 +92,43 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
       return nil
     }
   }
-
+  
   func validate() -> Bool
   {
-//    if !root.isRoot {
-//      assert(false,"Error: \(root.propDescription) is not a root element. Declare it with isRoot == true")
-//      return false
-//    }
-//    var previousProperty = root.sourceType
-//
-//    for property in chain {
-////      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
-////        " and is not the last element of the keypath")
-//      if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
-//        assert(false,"Error: \(previousProperty) is declared of " +
-//          "type \(previousProperty) instead of type \(property.source)")
-//        return false
-//      }
-//        previousProperty = property.destType
-//    }
+    //    if !root.isRoot {
+    //      assert(false,"Error: \(root.propDescription) is not a root element. Declare it with isRoot == true")
+    //      return false
+    //    }
+    //    var previousProperty = root.sourceType
+    //
+    //    for property in chain {
+    ////      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
+    ////        " and is not the last element of the keypath")
+    //      if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
+    //        assert(false,"Error: \(previousProperty) is declared of " +
+    //          "type \(previousProperty) instead of type \(property.source)")
+    //        return false
+    //      }
+    //        previousProperty = property.destType
+    //    }
     return true
   }
-
+  
   open var debugDescription: String {
     return "\(keypath)"
   }
-
+  
   open var hashValue: Int {
     return  root.hashValue &+ chain.reduce(0) {
       (cumulated: Int, prop: PropertyDescriptor) -> Int in
       return cumulated &+ prop.hashValue
     }
   }
-
+  
   var level: Int {
     return chain.reduce(1, PropertyDescriptor.maxLevelFunc)
   }
-
+  
   var levelDescription: String {
     return chain.reduce("") {
       (current: String, prop: PropertyDescriptor) -> String in
