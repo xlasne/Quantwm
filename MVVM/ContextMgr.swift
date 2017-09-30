@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class ContextMgr: NSObject, MonitoredClass
+class ContextMgr: NSObject, QWMonitoredRoot
 {
   // MARK: InterfacesMonitoredNode
   static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,

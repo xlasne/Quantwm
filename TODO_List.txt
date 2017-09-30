@@ -1,0 +1,12 @@
+Objective: Update Quantwm into more usable framework.
+
+Priority 1: Introduce decoupling between Quantwm and Data Model, with a Property protocol.
+- The role of property protocol is to provide a property signature of value type, which is Equatable.
+- Quantwm will store and compare the property signatures.
+
+Priority 2: Reduce boiler plate code when using it.
+  - With sourcerer in data model for property creation
+  - With sourcerer in data model for keypath generation
+
+Priority 3: Make Quantwm a Swift Module
+

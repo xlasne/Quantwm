@@ -13,7 +13,7 @@ let QUANTUM_MVVM_DEBUG = true
 
 import Foundation
 
-class RW_Action: Equatable, CustomStringConvertible, Hashable {
+public class RW_Action: Equatable, CustomStringConvertible, Hashable {
   weak var node: QWChangeCounter?
   let propertyDesc: String
   let nodeId: NodeId?
@@ -39,11 +39,11 @@ class RW_Action: Equatable, CustomStringConvertible, Hashable {
     self.nodeId = nil
   }
   
-  var description: String {
+  public var description: String {
     return propertyDesc
   }
   
-  var hashValue: Int {
+  public var hashValue: Int {
     return propertyDesc.hashValue ^ Int(nodeId ?? 0)
   }
   
@@ -60,7 +60,7 @@ class RW_Action: Equatable, CustomStringConvertible, Hashable {
   }
 }
 
-func ==(lhs: RW_Action, rhs: RW_Action) -> Bool
+public func ==(lhs: RW_Action, rhs: RW_Action) -> Bool
 {
   return lhs.nodeId == rhs.nodeId && lhs.propertyDesc == rhs.propertyDesc
 }
@@ -201,17 +201,7 @@ class DataUsage: NSObject
     }
   }
   
-  // Return nil if and only if there is write performed
-  // Else return read [KeypathObserver]
-  func getMonitoredNodeReadArray(_ owner: NSObject) -> [RW_Action]?
-  {
-    guard let readWriteSet = contextDict[owner] else { return [] }
-    if readWriteSet.writeSet.count > 0 {
-      return nil
-    }
-    return Array(readWriteSet.readSet)
-  }
-  
+
   func getReadKeypathObserverSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
       guard let readWriteSet = contextDict[owner] else { return [] }

@@ -50,7 +50,7 @@ enum TestEnum
 }
 
 
-class TestClass: MonitoredClass
+class TestClass: QWMonitoredRoot
 {
     func getNodeChangeCounter() -> QWChangeCounter {
         return changeCounter
@@ -130,7 +130,7 @@ class TestClass: MonitoredClass
 
 }
 
-class TestBase: MonitoredClass, RepositoryObserverOwner
+class TestBase: QWMonitoredRoot, RepositoryObserverOwner
 {
     let changeCounter = QWChangeCounter()
     func getNodeChangeCounter() -> QWChangeCounter {

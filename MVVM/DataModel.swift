@@ -16,7 +16,7 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class DataModel : NSObject, MonitoredClass, RepositoryObserverOwner, QWMonitoredNode
+class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitoredNode
 {
 
 

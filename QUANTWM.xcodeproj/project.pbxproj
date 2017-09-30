@@ -112,6 +112,7 @@
 		253EB06C1CEC893900253BBB /* DelayedSumProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayedSumProcessor.swift; sourceTree = "<group>"; };
 		25597FFA1CBE9E000004699B /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		256A84631CC39F9D00C8C072 /* TransientClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientClass.swift; sourceTree = "<group>"; };
+		25B33A3E1F7E7F3000F99162 /* TODO_List.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO_List.txt; sourceTree = "<group>"; };
 		25D27DA41F0F7E9F00097E8D /* NodeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSwift.swift; sourceTree = "<group>"; };
 		25D380B91F27400800AF5747 /* idea_chris_eidof.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = idea_chris_eidof.swift; sourceTree = "<group>"; };
 		25E2A4011CFDA55800F42FD3 /* QuantwmOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuantwmOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +174,7 @@
 		253482421CB7C9A900F61BB4 = {
 			isa = PBXGroup;
 			children = (
+				25B33A3E1F7E7F3000F99162 /* TODO_List.txt */,
 				256A84651CC4130F00C8C072 /* Quantwm */,
 				25E2A4101CFDA55800F42FD3 /* QuantwmOSXTests */,
 				2534824D1CB7C9A900F61BB4 /* MVVM Demo App */,

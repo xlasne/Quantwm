@@ -9,8 +9,40 @@
 import Foundation
 
 
+class ChainNodeObserver: KeypathSignature {
+
+  let node: NodeObserver
+  let rootDesc: RootDescriptor
+
+  required init(rootObject: QWMonitoredRoot, keypathDesc: KeypathDescription) {
+    self.node = NodeObserver(rootObject: rootObject, keypathDesc: keypathDesc)
+    self.rootDesc = keypathDesc.root
+  }
+
+  func compareWithPreviousChain(_ previousChain: KeypathSignature?) -> (isDirty: Bool, description: String) {
+    guard let previousChain = previousChain else {
+      return (isDirty:true, description: "Node created")
+    }
+    if let chain = previousChain as? ChainNodeObserver {
+      return node.compareWithPreviousChain(chain.node)
+    }
+    return (isDirty:true, description: "Different KeypathSignature type")
+  }
+
+  func collectNodeSet() -> Set<RW_Action>
+  {
+    var nodeSet: Set<RW_Action> = []
+    if let rootChangeCounter = node.changeCounter {
+      let rootAction = RW_Action(node: rootChangeCounter, property: rootDesc)
+      nodeSet.insert(rootAction)
+    }
+    node.collectNodeSet(&nodeSet)
+    return nodeSet
+  }
+}
 
 class NodeObserver {
+
   // Capture an observable value of a monitored node or a child node
   
   // Weak pointer to the node watcher, in order to monitor if the node was released
@@ -38,7 +70,15 @@ class NodeObserver {
   var childKey: String  {
     return propertyDesc.propDescription
   }
-  
+
+  convenience init(rootObject: QWMonitoredRoot, keypathDesc: KeypathDescription)
+  {
+    let firstNodeCounter = rootObject.getNodeChangeCounter()
+    let firstProp = keypathDesc.chain.first!
+    self.init(node: firstNodeCounter, propertyDesc: firstProp)
+    self.readChain(keypathDesc.chain, fromParent: rootObject)
+  }
+
   init(node: QWChangeCounter, propertyDesc: PropertyDescriptor)
   {
     self.changeCounter = node
@@ -178,8 +218,7 @@ class NodeObserver {
     }
     return (isDirty: false, description: "No change")
   }
-  
-  
+
   func collectNodeSet(_ nodeSet:inout Set<RW_Action>)
   {
     var action: RW_Action

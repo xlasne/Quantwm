@@ -5,38 +5,21 @@
 //  Created by Xavier Lasne on 10/05/16.
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
-
-// Problem:
-
-// Get Swift QWMonitoredNode from ObjectiveC NSObject parent
-// Get Swift QWMonitoredNode from Swift QWMonitoredNode parent
-// Get Swift Object Watcher from ObjectiveC parent
-// Get Swift Object Watcher from Swift QWMonitoredNode parent
-
-// Manage Swift child with protocol compliance
-// ObjectiveC child with keyValue introspection
-
-// Perform all the job from swift side
-
-// On return:
-// If Swift child, return QWMonitoredNode
-// If Objective-C child, return NSObject
-
-// Build NodeObserver hierarchy
-// NodeObserver points toward QWChangeCounter objects (common to Swift and ObjectiveC)
-
-
 import Foundation
 
-
-public protocol MonitoredClass: class, QWMonitoredNode  // class is required only to have weak pointers to object
+public protocol QWMonitoredRoot: class, QWMonitoredNode  // The root node shall be an object, in order to keep a weak pointer on it.
 {
+  func generateKeypathSignature(keypathDesc: KeypathDescription) -> KeypathSignature
 }
 
-//
-//public typealias MonitoredStruct = QWMonitoredNode
+public extension QWMonitoredRoot {
+  func generateKeypathSignature(keypathDesc: KeypathDescription) -> KeypathSignature
+  {
+    return ChainNodeObserver(rootObject: self, keypathDesc: keypathDesc)
+  }
+}
 
-public protocol QWMonitoredNode //: SwiftKVC
+public protocol QWMonitoredNode
 {
   func getNodeChangeCounter() -> QWChangeCounter
 }

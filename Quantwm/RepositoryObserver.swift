@@ -11,10 +11,10 @@ import Foundation
 
 class RootNode {
   weak var changeCounter: QWChangeCounter?
-  weak var rootObject: MonitoredClass?
+  weak var rootObject: QWMonitoredRoot?
   let keypath : String
   
-  init(rootObject: MonitoredClass, keypath : String)
+  init(rootObject: QWMonitoredRoot, keypath : String)
   {
     self.rootObject = rootObject
     self.changeCounter = rootObject.getNodeChangeCounter()
@@ -56,7 +56,7 @@ open class RepositoryObserver: NSObject {
   // This node does not have to remember this monitoring
   // On node deletion, this registration will end
   // To unregister root, call, repositoryObserver.unregisterRootNode(property: PropertyDescription)
-  open func registerRoot(associatedObject: MonitoredClass, rootDescription: RootDescriptor)
+  open func registerRoot(associatedObject: QWMonitoredRoot, rootDescription: RootDescriptor)
   {
     let rootNode = RootNode(rootObject: associatedObject,
                             keypath: rootDescription.propDescription)
@@ -86,7 +86,7 @@ open class RepositoryObserver: NSObject {
     self.rootDataDict.removeValue(forKey: keypath)
   }
   
-  open func rootForKey(_ property: RootDescriptor) -> MonitoredClass?
+  open func rootForKey(_ property: RootDescriptor) -> QWMonitoredRoot?
   {
     let keypath = property.propDescription
     if let root = self.rootDataDict[keypath]?.rootObject {

@@ -8,11 +8,17 @@
 
 import Foundation
 
+ public protocol KeypathSignature {
+  init(rootObject: QWMonitoredRoot, keypathDesc: KeypathDescription)
+  func compareWithPreviousChain(_ previousChain: KeypathSignature?) -> (isDirty:Bool, description: String)
+  func collectNodeSet() -> Set<RW_Action>
+}
+
 class KeypathObserver
 {
   let keypathDesc: KeypathDescription
-  var nodeChain: NodeObserver?
-  var updatedNodeChain: NodeObserver?
+  private var nodeChain: KeypathSignature?
+  private var updatedNodeChain: KeypathSignature?
   var updateCounter: Int = 0
   
   var keypathBase: String {
@@ -51,8 +57,8 @@ class KeypathObserver
     
     // The root node is not nil.
     // Let's read  and compare the chains
-    let updatedNodeChain = self.readChain(keypathDesc, fromRoot: keypathDesc.root, rootObject: rootObject)
-    
+    let updatedNodeChain: KeypathSignature = rootObject.generateKeypathSignature(keypathDesc: keypathDesc)
+
     // If self.updatedNodeChain is not nil, we are resuming from a suspendRefresh, and must check additional changes, else this is a start refresh
     let previousChain = self.updatedNodeChain ?? self.nodeChain
     let comparison = updatedNodeChain.compareWithPreviousChain(previousChain)
@@ -65,22 +71,12 @@ class KeypathObserver
     }
     
   }
-  
-  func readChain(_ keypathDesc: KeypathDescription, fromRoot rootDescriptor: RootDescriptor, rootObject: MonitoredClass) -> NodeObserver
-  {
-    let firstNodeCounter = rootObject.getNodeChangeCounter()
-    let firstProp = keypathDesc.chain.first!
-    let nodeObserver = NodeObserver(node: firstNodeCounter, propertyDesc: firstProp)
-    nodeObserver.readChain(keypathDesc.chain, fromParent: rootObject)
-    return nodeObserver
-  }
-  
+
   func commitUpdate() {
     self.nodeChain = self.updatedNodeChain
     self.updatedNodeChain = nil
   }
-  
-  
+
   var keypath: String {
     return keypathDesc.keypath
   }
@@ -102,12 +98,11 @@ class KeypathObserver
   // This function is only providing correct result just after a readChain method
   func collectNodeSet() -> Set<RW_Action>
   {
-    var nodeSet: Set<RW_Action> = []
-    if let rootChangeCounter = self.updatedNodeChain?.changeCounter {
-      let rootAction = RW_Action(node: rootChangeCounter, property: keypathDesc.root)
-      nodeSet.insert(rootAction)
+    if let nodeSet = self.updatedNodeChain?.collectNodeSet() {
+      return nodeSet
+    } else {
+      return Set<RW_Action>()
     }
-    self.updatedNodeChain?.collectNodeSet(&nodeSet)
-    return nodeSet
   }
+
 }
