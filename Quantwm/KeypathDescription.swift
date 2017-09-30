@@ -95,22 +95,18 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
   
   func validate() -> Bool
   {
-    //    if !root.isRoot {
-    //      assert(false,"Error: \(root.propDescription) is not a root element. Declare it with isRoot == true")
-    //      return false
-    //    }
-    //    var previousProperty = root.sourceType
-    //
-    //    for property in chain {
-    ////      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
-    ////        " and is not the last element of the keypath")
-    //      if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
-    //        assert(false,"Error: \(previousProperty) is declared of " +
-    //          "type \(previousProperty) instead of type \(property.source)")
-    //        return false
-    //      }
-    //        previousProperty = property.destType
-    //    }
+        var previousProperty = root.sourceType
+
+        for property in chain {
+    //      assert(previousProperty.containsNode,"Error: \(previousProperty.description) does not contains node" +
+    //        " and is not the last element of the keypath")
+          if !property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty) {
+            assert(false,"Error: \(previousProperty) is declared of " +
+              "type \(previousProperty) instead of type \(property.source)")
+            return false
+          }
+            previousProperty = property.destType
+        }
     return true
   }
   

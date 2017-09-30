@@ -155,7 +155,7 @@ where Root: QWMonitoredNode, Value: QWMonitoredNode {
     }
     super.init(keypath: keypath,
                description: description,
-               sourceType: Root.Type.self, destType: Value.Type.self,
+               sourceType: Root.self, destType: Value.self,
                getChildArray: getChildArray,
                dependFromPropertySet: dependFromPropertySet)
   }
@@ -175,7 +175,7 @@ where Root: QWMonitoredNode, Value: QWMonitoredNode {
     }
     super.init(keypath: keypath,
                description: description,
-               sourceType: Root.Type.self, destType: Value.Type.self,
+               sourceType: Root.self, destType: Value.self,
                getChildArray: getChildArray,
                dependFromPropertySet: dependFromPropertySet)
   }
@@ -196,7 +196,7 @@ where Root: QWMonitoredNode, Value: QWMonitoredNode {
     }
     super.init(keypath: keypath,
                description: description,
-               sourceType: Root.Type.self, destType: Value.Type.self,
+               sourceType: Root.self, destType: Value.self,
                getChildArray: getChildArray,
                dependFromPropertySet: dependFromPropertySet)
   }
@@ -218,7 +218,7 @@ where Root: QWMonitoredNode, Value: QWMonitoredNode {
     }
     super.init(keypath: keypath,
                description: description,
-               sourceType: Root.Type.self, destType: Value.Type.self,
+               sourceType: Root.self, destType: Value.self,
                getChildArray: getChildArray,
                dependFromPropertySet: dependFromPropertySet)
   }

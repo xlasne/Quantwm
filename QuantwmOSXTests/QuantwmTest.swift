@@ -104,7 +104,7 @@ class TestClass: QWMonitoredRoot
     static let testEnumK = PropertyDescriptor(
         keypath: \TestClass.testEnum,
         sourceType: TestClass.self,
-        destType: QWMonitoredNode.self,
+        destType: TestStruct.self,
         description: "testEnum",
         getChildArray: { (testClass:QWMonitoredNode) -> [QWMonitoredNode] in
             guard let testClass = testClass as? TestClass else { return []}
