@@ -16,17 +16,24 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitoredNode
+class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitoredNode, Codable
 {
+
+  enum CodingKeys: String, CodingKey {
+    case contextMgr
+    case number1
+    case _number2
+    case _transientClass
+  }
 
 
   // MARK: Interfaces
-  weak var document: DemoDocument!
+  weak var document: DemoDocument! = nil
 
   let contextMgr: ContextMgr = ContextMgr()
 
   // RepositoryObserverOwner Protocol
-  let repositoryObserver: RepositoryObserver
+  let repositoryObserver: RepositoryObserver = RepositoryObserver()
   func getRepositoryObserver() -> RepositoryObserver
   {
     return repositoryObserver
@@ -47,15 +54,11 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
   var changeCounter = QWChangeCounter()
 
 
-
-
   // Standard declaration, without paranoïd read monitoring
 
   static let number1P = PropertyDescriptor(keypath: \DataModel.number1,
                                            description: "number1")
   static let Number1K = DataModel.rootK.appending(DataModel.number1P)
-
-  static let number1 : Int  = 1
 
   var number1 : Int  = 1 {
     didSet {
@@ -152,8 +155,6 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
 
   override init()
   {
-    self.repositoryObserver = RepositoryObserver()
-
     self.number1 = 3
     self._number2 = 4
 

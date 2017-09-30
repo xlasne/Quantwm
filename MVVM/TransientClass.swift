@@ -9,7 +9,15 @@
 import Cocoa
 import QuantwmOSX
 
-class TransientClass: QWMonitoredNode {
+class TransientClass: QWMonitoredNode, Codable
+{
+
+  enum CodingKeys: String, CodingKey {
+    case _transientVal
+    case _intValue
+    case _arrayVal
+  }
+
   func getNodeChangeCounter() -> QWChangeCounter {
     return changeCounter
   }

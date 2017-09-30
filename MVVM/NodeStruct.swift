@@ -11,8 +11,12 @@
 import Foundation
 import QuantwmOSX
 
-struct NodeStruct: QWMonitoredNode {
-  
+struct NodeStruct: QWMonitoredNode, Codable {
+
+  enum CodingKeys: String, CodingKey {
+    case _intValue
+  }
+
   func getNodeChangeCounter() -> QWChangeCounter {
     return changeCounter
   }

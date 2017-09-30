@@ -37,18 +37,18 @@ class DemoDocument: NSDocument {
   }
   
   override func data(ofType typeName: String) throws -> Data {
-    return NSKeyedArchiver.archivedData(withRootObject: dataModel)
+    // TODO: Migrate to 10.12 and implement Codable
+    let data = NSData()
+    return NSKeyedArchiver.archivedData(withRootObject: data)
   }
   
   override func read(from data: Data, ofType typeName: String) throws {
-    if let model = NSKeyedUnarchiver.unarchiveObject(with: data) as? DataModel {
-      self.dataModel = model
-    } else {
-      self.dataModel = DataModel()
-    }
+    // TODO: Migrate to 10.12 and implement Codable
+    self.dataModel = DataModel()
     self.dataModel.postInit(document: self)
   }
-  
+
+
   func windowDidDeminiaturize(_ notification: Notification)
   {
     self.dataModel.postInit(document: self)

@@ -16,8 +16,15 @@ import Foundation
 import AppKit
 import QuantwmOSX
 
-class ContextMgr: NSObject, QWMonitoredRoot
+class ContextMgr: NSObject, QWMonitoredRoot, Codable
 {
+
+  enum CodingKeys: String, CodingKey {
+    case _leftViewPresent
+    case _rightViewPresent
+//    case _imageColor
+  }
+
   // MARK: InterfacesMonitoredNode
   static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,
                                           description:"ContextMgr")
@@ -121,4 +128,5 @@ class ContextMgr: NSObject, QWMonitoredRoot
   func setFocus(_ focus: NSObject?) { currentFocus = focus }
   
 }
+
 

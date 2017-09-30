@@ -10,9 +10,13 @@ import Foundation
 import QuantwmOSX
 
 
-class NodeSwift: QWMonitoredNode
+class NodeSwift: QWMonitoredNode, Codable
 {
-  
+
+  enum CodingKeys: String, CodingKey {
+    case _intValue
+  }
+
   let changeCounter = QWChangeCounter()
   static let rootK = TransientClass.ArrayValueK
 
