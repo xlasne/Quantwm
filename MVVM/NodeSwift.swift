@@ -14,13 +14,15 @@ class NodeSwift: QWMonitoredNode
 {
   
   let changeCounter = QWChangeCounter()
-  
+  static let rootK = TransientClass.ArrayValueK
+
   func getNodeChangeCounter() -> QWChangeCounter {
     return changeCounter
   }
   
   static let intValueK = PropertyDescriptor(keypath: \NodeSwift.intValue, description: "intValue")
-  
+  static let IntValueK = NodeSwift.rootK.appending(NodeSwift.intValueK)
+
   var _intValue: Int = 0
   var intValue: Int {
     get {

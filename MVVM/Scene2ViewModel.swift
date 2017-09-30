@@ -53,18 +53,14 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   // MARK: - Get Data Model
   
   //MARK: getFocus
-  static let getFocusKeypathSet =
-    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
-  
-  
+  static let getFocusKeypathSet = ContextMgr.CurrentFocusK.kS
   func getFocus() -> NSObject? {
     return dataModel.contextMgr.currentFocus
   }
   
   //MARK: getValue2
-  static let getValue2KeypathSet =
-    KeypathSet(readWithRoot: DataModel.dataModelK, chain:[DataModel.number2K])
-  
+  static let getValue2KeypathSet = DataModel.Number2K.kS
+
   func getValue2() -> String {
     let formatter = NumberFormatter()
     let val = self.dataModel.number2
@@ -73,10 +69,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   
   
   //MARK: getSum
-  static let getSumKeypathSet =
-    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
-  
-  
+  static let getSumKeypathSet = DataModel.SumOfNumberK.kS
   func getSum() -> Int?
   {
     let sum = self.dataModel.getSum()
@@ -84,9 +77,7 @@ class Scene2ViewModel: GenericViewModel<DataModel>
   }
   
   //MARK: getColor
-  static let getColorKeypathSet =
-    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.imageColorK])
-  
+  static let getColorKeypathSet = ContextMgr.ImageColorK.kS
   func getColor() -> NSColor
   {
     return dataModel.contextMgr.imageColor

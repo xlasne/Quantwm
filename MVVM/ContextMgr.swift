@@ -21,8 +21,8 @@ class ContextMgr: NSObject, QWMonitoredRoot
   // MARK: InterfacesMonitoredNode
   static let contextMgrK = RootDescriptor(sourceType: ContextMgr.self,
                                           description:"ContextMgr")
-  
-  
+  static let rootK = KeypathDescription(root: ContextMgr.contextMgrK, chain: [])
+
   func getNodeChangeCounter() -> QWChangeCounter
   {
     return changeCounter
@@ -31,6 +31,8 @@ class ContextMgr: NSObject, QWMonitoredRoot
   
   static let currentFocusK = PropertyDescriptor(keypath: \ContextMgr.currentFocus,
                                                 description: "_currentFocus")
+  static let CurrentFocusK = ContextMgr.rootK.appending(ContextMgr.currentFocusK)
+
   fileprivate var _currentFocus: NSObject? = nil
   var currentFocus: NSObject? {
     get {
@@ -46,7 +48,8 @@ class ContextMgr: NSObject, QWMonitoredRoot
   
   static let leftViewPresentK = PropertyDescriptor(keypath: \ContextMgr.leftViewPresent,
                                                    description: "leftViewPresent")
-  
+  static let LeftViewPresentK = ContextMgr.rootK.appending(ContextMgr.leftViewPresentK)
+
   fileprivate var _leftViewPresent = true
   var leftViewPresent: Bool {
     get {
@@ -61,6 +64,8 @@ class ContextMgr: NSObject, QWMonitoredRoot
   
   static let rightViewPresentK = PropertyDescriptor(keypath: \ContextMgr.rightViewPresent,
                                                     description: "rightViewPresent")
+  static let RightViewPresentK = ContextMgr.rootK.appending(ContextMgr.rightViewPresentK)
+
   fileprivate var _rightViewPresent = true
   var rightViewPresent: Bool {
     get {
@@ -75,6 +80,8 @@ class ContextMgr: NSObject, QWMonitoredRoot
   
   static let imageColorK = PropertyDescriptor(keypath: \ContextMgr.imageColor,
                                               description: "imageColor")
+  static let ImageColorK = ContextMgr.rootK.appending(ContextMgr.imageColorK)
+
   fileprivate var _imageColor: NSColor = NSColor.white
   var imageColor: NSColor {
     get {

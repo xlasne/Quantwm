@@ -44,7 +44,6 @@ public func +(lhs: KeypathSet, rhs: KeypathSet) -> KeypathSet
   return keypathSet
 }
 
-
 open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
 {
   let root: RootDescriptor
@@ -59,6 +58,10 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
     if !disableValidation {
       let _ = self.validate()
     }
+  }
+
+  public var kS: KeypathSet {
+    return KeypathSet(readWithRoot: self.root, chain: self.chain)
   }
   
   var keypath: String {
@@ -130,6 +133,13 @@ open class KeypathDescription: CustomDebugStringConvertible, Hashable, Equatable
       (current: String, prop: PropertyDescriptor) -> String in
       return current + ":\(prop.propDescription)[\(prop.level)]"
     }
+  }
+
+  public func appending(_ chainElement: PropertyDescriptor, disableValidation: Bool = false) -> KeypathDescription {
+    let extendedChain = self.chain + [chainElement]
+    return KeypathDescription(root: self.root,
+                              chain: extendedChain,
+                              disableValidation: disableValidation)
   }
 }
 

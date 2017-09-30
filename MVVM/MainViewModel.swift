@@ -24,17 +24,13 @@ class MainViewModel: GenericViewModel<DataModel>
     super.init(dataModel: dataModel, owner: composedOwner)
   }
   
-  static let leftViewPresentKeypathSet =
-    KeypathSet(readWithRoot:ContextMgr.contextMgrK, chain: [ContextMgr.leftViewPresentK])
-  
+  static let leftViewPresentKeypathSet = ContextMgr.LeftViewPresentK.kS
   var leftViewPresent: Bool {
     let contextMgr = repositoryObserver.rootForKey(ContextMgr.contextMgrK) as? ContextMgr
     return contextMgr?.leftViewPresent ?? false
   }
   
-  static let rightViewPresentKeypathSet =
-    KeypathSet(readWithRoot:ContextMgr.contextMgrK, chain: [ContextMgr.rightViewPresentK])
-  
+  static let rightViewPresentKeypathSet = ContextMgr.RightViewPresentK.kS
   var rightViewPresent: Bool {
     return contextMgr.rightViewPresent
   }

@@ -6,6 +6,8 @@
 //  Copyright © 2016 XL Software Solutions. All rights reserved.
 //
 
+//TODO: Not used yet
+
 import Foundation
 import QuantwmOSX
 
@@ -16,7 +18,7 @@ struct NodeStruct: QWMonitoredNode {
   }
   
   let changeCounter = QWChangeCounter()
-  
+
   static let intValueK = PropertyDescriptor(keypath: \NodeStruct.intValue, description: "intValue")
   
   fileprivate var _intValue: Int = 0

@@ -37,6 +37,9 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
                                          description: "DataModel")
 
 
+  static let rootK = KeypathDescription(root: DataModel.dataModelK, chain: [])
+
+
   // QWMonitoredNode protocol
   func getNodeChangeCounter() -> QWChangeCounter {
     return changeCounter
@@ -48,60 +51,68 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
 
   // Standard declaration, without paranoïd read monitoring
 
-  static let number1K = PropertyDescriptor(keypath: \DataModel.number1,
+  static let number1P = PropertyDescriptor(keypath: \DataModel.number1,
                                            description: "number1")
+  static let Number1K = DataModel.rootK.appending(DataModel.number1P)
+
+  static let number1 : Int  = 1
+
   var number1 : Int  = 1 {
     didSet {
-      self.qwWrite(property: DataModel.number1K)
+      self.qwWrite(property: DataModel.number1P)
       self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
     }
   }
 
 
-  static let number2K = PropertyDescriptor(keypath: \DataModel.number2,
+  static let number2P = PropertyDescriptor(keypath: \DataModel.number2,
                                            description: "number2")
+  static let Number2K = DataModel.rootK.appending(DataModel.number2P)
+
   fileprivate var _number2: Int = 2
   var number2 : Int {
     get {
-      self.qwRead(property: DataModel.number2K)
+      self.qwRead(property: DataModel.number2P)
       return _number2
     }
     set {
-      self.qwWrite(property: DataModel.number2K)
+      self.qwWrite(property: DataModel.number2P)
       _number2 = newValue
       self.document.updateChangeCount(NSDocument.ChangeType.changeDone)
     }
   }
 
   // MARK: Computed Content
-  static let sumOfNumberK = PropertyDescriptor(keypath: \DataModel.sumOfNumber,
+  static let sumOfNumberP = PropertyDescriptor(keypath: \DataModel.sumOfNumber,
                                                description: "sumOfNumber",
-                                               dependFromPropertySet: [DataModel.number1K, DataModel.number2K])
+                                               dependFromPropertySet: [DataModel.number1P, DataModel.number2P])
+  static let SumOfNumberK = DataModel.rootK.appending(DataModel.sumOfNumberP)
 
   fileprivate var _sumOfNumber: Int = 0
   var sumOfNumber : Int {
     get {
-      self.qwRead(property: DataModel.sumOfNumberK)
+      self.qwRead(property: DataModel.sumOfNumberP)
       return _sumOfNumber
     }
     set {
-      self.qwWrite(property: DataModel.sumOfNumberK)
+      self.qwWrite(property: DataModel.sumOfNumberP)
       _sumOfNumber = newValue
     }
   }
 
-  static let invSumOfNumberK = PropertyDescriptor(keypath: \DataModel.invSumOfNumber,
+  static let invSumOfNumberP = PropertyDescriptor(keypath: \DataModel.invSumOfNumber,
                                                   description: "invSumOfNumber",
-                                                  dependFromPropertySet: [DataModel.number1K, DataModel.number2K])
+                                                  dependFromPropertySet: [DataModel.number1P, DataModel.number2P])
+  static let InvSumOfNumberK = DataModel.rootK.appending(DataModel.invSumOfNumberP)
 
   fileprivate var _invSumOfNumber: Int = 0
   var invSumOfNumber : Int {
     get {
-      self.qwRead(property: DataModel.invSumOfNumberK)
+      self.qwRead(property: DataModel.invSumOfNumberP)
       return _invSumOfNumber
     }
     set {
-      self.qwWrite(property: DataModel.invSumOfNumberK)
+      self.qwWrite(property: DataModel.invSumOfNumberP)
       _invSumOfNumber = newValue
     }
   }
@@ -109,7 +120,7 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
   let immediateSumProcessor: ImmediateSumProcessor = ImmediateSumProcessor()
   let delayedSumProcessor: DelayedSumProcessor = DelayedSumProcessor()
 
-  static let transientClassK = PropertyDescriptor(
+  static let transientClassP = PropertyDescriptor(
     keypath: \DataModel.transientClass,
     sourceType: DataModel.self,
     destType: TransientClass.self,
@@ -123,15 +134,16 @@ class DataModel : NSObject, QWMonitoredRoot, RepositoryObserverOwner, QWMonitore
       }
   },
     dependFromPropertySet: [])
+  static let TransientClassK = DataModel.rootK.appending(DataModel.transientClassP)
 
   var _transientClass: TransientClass?
   var transientClass: TransientClass? {
     get {
-      self.qwRead(property: DataModel.transientClassK)
+      self.qwRead(property: DataModel.transientClassP)
       return _transientClass
     }
     set {
-      self.qwWrite(property: DataModel.transientClassK)
+      self.qwWrite(property: DataModel.transientClassP)
       _transientClass = newValue
     }
   }
@@ -192,8 +204,7 @@ extension DataModel
 
   //MARK: getSum
   static func getSumKeypaths() -> Set<KeypathDescription> {
-    let keypathDescription = KeypathDescription(root: DataModel.dataModelK, chain: [DataModel.sumOfNumberK])
-    return [keypathDescription]
+    return [DataModel.SumOfNumberK]
   }
 
   func getSum() -> Int?

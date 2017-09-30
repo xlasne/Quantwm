@@ -97,18 +97,14 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   // MARK: - Get Data Model - Read Only request
   
   //MARK: getFocus
-  static let getFocusKeypathSet =
-    KeypathSet(readWithRoot: ContextMgr.contextMgrK, chain: [ContextMgr.currentFocusK])
-  
+  static let getFocusKeypathSet = ContextMgr.CurrentFocusK.kS
   func getFocus() -> NSObject? {
     let value = dataModel.contextMgr.currentFocus
     return value
   }
   
   //MARK: getValue1
-  static let getValue1KeypathSet =
-    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.number1K])
-  
+  static let getValue1KeypathSet = DataModel.Number1K.kS
   var value1: String {
     get {
       let formatter = NumberFormatter()
@@ -118,19 +114,14 @@ class Scene1ViewModel: GenericViewModel<DataModel>
   }
   
   //MARK: getSum
-  static let getInvSumKeypathSet =
-    KeypathSet(readWithRoot: DataModel.dataModelK, chain: [DataModel.invSumOfNumberK])
-  
-  
+  static let getInvSumKeypathSet = DataModel.InvSumOfNumberK.kS
   func getInvSum() -> Int?
   {
     return dataModel.invSumOfNumber
   }
   
   //MARK: getArraySum
-  static let getArraySumKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                                                chain: [DataModel.transientClassK, TransientClass.arrayValueK, NodeSwift.intValueK])
-  
+  static let getArraySumKeypathSet = NodeSwift.IntValueK.kS
   func getArraySum() -> Int?
   {
     return dataModel
@@ -139,13 +130,9 @@ class Scene1ViewModel: GenericViewModel<DataModel>
       .map({$0.intValue})
       .reduce(0, +)
   }
-  
-  
+
   //MARK: getTransient
-  static let getTransientKeypathSet = KeypathSet(readWithRoot: DataModel.dataModelK,
-                                                 chain: [DataModel.transientClassK, TransientClass.transientValK])
-  
-  
+  static let getTransientKeypathSet = TransientClass.TransientValK.kS
   func getTransient() -> String?
   {
     return dataModel

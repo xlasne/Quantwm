@@ -32,8 +32,8 @@ class DelayedSumProcessor: NSObject
   
   func register()
   {
-    let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1K])
-    let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2K])
+    let obs1 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number1P])
+    let obs2 = KeypathDescription(root:DataModel.dataModelK, chain: [DataModel.number2P])
     self.dataModel?.repositoryObserver.registerObserver(
       target: self,
       selector: #selector(DelayedSumProcessor.startProcessing),
