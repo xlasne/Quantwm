@@ -8,18 +8,15 @@
 
 import Foundation
 
-// Quantwm 2
 // A Root node is just a MonitoredNode
-// A ChildNodeProperty is a keypath Keypath<Root,Value>
-// or a Keypath<Root,Value?>
-// or a Keypath<Root,[Value]?>
-// or a Keypath<Root,[Value]>
-// where Root and Value are MonitoredNode
 
 open class RootDescriptor: NSObject
 {
-  
+  // The propDescription shall uniquely identify the RootDescriptor
+  // during root registration.
+  // Registering a new RootDescriptor with the same propDescription replace the previous registration.
   let propDescription: String
+
   let sourceType: Any.Type
   let source: String
   let destType: Any.Type
@@ -120,6 +117,12 @@ open class RootDescriptor: NSObject
   
 }
 
+// A ChildNodeProperty is a keypath Keypath<Root,Value>
+// or a Keypath<Root,Value?>
+// or a Keypath<Root,[Value]?>
+// or a Keypath<Root,[Value]>
+// where Root and Value are MonitoredNode
+// This class is used to initialize a
 open class ChildPropertyDescriptor: PropertyDescriptor
 {
   init(keypath: AnyKeyPath,

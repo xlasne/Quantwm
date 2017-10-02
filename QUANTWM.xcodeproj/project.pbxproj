@@ -280,7 +280,6 @@
 				25EA3A2D1CF05428002D5962 /* DataContext.swift */,
 				25EA3A2E1CF05428002D5962 /* RepositoryObserver.swift */,
 				25EA3A2F1CF05428002D5962 /* DataUsage.swift */,
-				25EA3A301CF05428002D5962 /* GenericViewModel.swift */,
 				25EA3A311CF05428002D5962 /* KeypathDescription.swift */,
 				25EA3A321CF05428002D5962 /* KeypathObserver.swift */,
 				25EA3A331CF05428002D5962 /* KeySetObserver.swift */,
@@ -289,6 +288,7 @@
 				25EA3A2C1CF05428002D5962 /* QWChangeCounter.swift */,
 				25EA3A361CF05428002D5962 /* PropertyDescription.swift */,
 				25EA3A381CF05428002D5962 /* RegisterDescription.swift */,
+				25EA3A301CF05428002D5962 /* GenericViewModel.swift */,
 				25D380B91F27400800AF5747 /* idea_chris_eidof.swift */,
 			);
 			name = Quantwm;

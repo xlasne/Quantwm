@@ -30,11 +30,14 @@ open class RepositoryObserver: NSObject {
   
   // Dictionary of KeypathObserver
   // KeypathObserver are monitoring a keypath, comparing old and new state from refresh to refresh
+  // KeypathObserver is initialized with { root: RootDescriptor, chain: [PropertyDescriptor]}
+  // KeypathObserver compute, store and compare difference of KeypathSignature
+  // from RootNode objects.
   var keypathObserverDict: [String:KeypathObserver] = [:]
   
   // Set of KeySetObserver
-  // KeySetObserver is set of KeypathObserver + Target/Action
-  // If a keypath is changed, refreshUI() will trigger the target/action
+  // KeySetObserver is a Target/Action + a set of KeypathObserver
+  // If a KeypathObserver detects a change, refreshUI() will trigger the registered target/action
   var keySetObserverSet: Set<KeySetObserver> = []
   
   // Monitor data read and write during a transaction
@@ -77,7 +80,6 @@ open class RepositoryObserver: NSObject {
   open func unregisterRootNode(_ property: RootDescriptor)
   {
     let keypath = property.propDescription
-    //    assert(property.isRoot,"RepositoryObserver: Calling unregisterRootNode with non root \(keypath)")
     if let _ = self.rootDataDict[keypath] {
       print("Data Observer: unregister Root \(keypath)")
     } else {
@@ -89,14 +91,12 @@ open class RepositoryObserver: NSObject {
   open func rootForKey(_ property: RootDescriptor) -> QWMonitoredRoot?
   {
     let keypath = property.propDescription
-    if let root = self.rootDataDict[keypath]?.rootObject {
-      return root
-    }
-    return nil
+    return self.rootDataDict[keypath]?.rootObject
   }
   
   // MARK: ObserverSet Registration - Public
-  
+
+  // registerForEachCycle register a selector for each call of RefreshUI()
   open func registerForEachCycle(target: NSObject, selector: Selector, name: String,
                                  maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)  {
     self.registerObserver(target: target, selector: selector, keypathDescriptionSet: [], name: name)
@@ -326,7 +326,7 @@ extension RepositoryObserver
     
     var evaluatedObservable: Set<String> = []
     
-    // push Refresh context
+    // then push Refresh context
     let refreshContext = RWContext(refreshOwner: self)
     dataContext.pushContext(refreshContext)
     

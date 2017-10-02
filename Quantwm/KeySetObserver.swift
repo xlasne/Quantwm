@@ -171,19 +171,18 @@ class KeySetObserver: NSObject {
     return (isDirty:false, description: "Not Dirty")
   }
   
-  fileprivate func readNodeSet(_ dataDict: [String:KeypathObserver]) ->  Set<RW_Action> {
+  fileprivate func readActionSet(_ dataDict: [String:KeypathObserver]) ->  Set<RW_Action> {
     var result: Set<RW_Action> = []
     for keypath in keypathSet
     {
       if let keypathObserver = dataDict[keypath]
       {
-        let nodes = keypathObserver.collectNodeSet()
-        result.formUnion(nodes)
+        let actionSet = keypathObserver.collectNodeSet()
+        result.formUnion(actionSet)
       }
     }
     return result
   }
-  
   
   func triggerIfDirty(_ dataUsage: DataUsage?, dataDict: [String:KeypathObserver])
   {
@@ -202,16 +201,18 @@ class KeySetObserver: NSObject {
     
     // Normally performAction() should only read from the current dataset.
     
-    // clearContext() clears the read and write actions, not the dirty flag
-    // which is needed by other keySetObservers
-    dataUsage?.clearContext(target)
-    let nodeSet = self.readNodeSet(dataDict)
-    
-    
-    target.perform(self.targetAction, with: nil)
-    
-    // Check consistency
     if let dataUsage = dataUsage {
+      // clearContext() clears the read and write actions, not the dirty flag
+      // which is needed by other keySetObservers
+      dataUsage.clearContext(target)
+
+      // Read the reference set of actions associated to the keypathObservers
+      let nodeSet = self.readActionSet(dataDict)
+
+      // Call the registered selector on the target
+      target.perform(self.targetAction)
+
+      // Check consistency
       let readKeypathSet  = dataUsage.getReadKeypathObserverSet(target)
       
       for item in readKeypathSet {
@@ -233,6 +234,9 @@ class KeySetObserver: NSObject {
       default:
         break
       }
+    } else {
+      // Call the registered selector on the target
+      target.perform(self.targetAction)
     }
   }
   

@@ -204,9 +204,11 @@ class DataUsage: NSObject
 
   func getReadKeypathObserverSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
+      // if owner defined, returns the corresponding set
       guard let readWriteSet = contextDict[owner] else { return [] }
       return readWriteSet.readSet
     } else {
+      // else returns all reads
       let readWriteSet = contextDict
         .values
         .map({$0.readSet})

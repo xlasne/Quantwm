@@ -29,14 +29,14 @@ class ChainNodeObserver: KeypathSignature {
     return (isDirty:true, description: "Different KeypathSignature type")
   }
 
-  func collectNodeSet() -> Set<RW_Action>
+  func collectChainActionSet() -> Set<RW_Action>
   {
     var nodeSet: Set<RW_Action> = []
     if let rootChangeCounter = node.changeCounter {
       let rootAction = RW_Action(node: rootChangeCounter, property: rootDesc)
       nodeSet.insert(rootAction)
     }
-    node.collectNodeSet(&nodeSet)
+    node.collectActionSet(&nodeSet)
     return nodeSet
   }
 }
@@ -219,13 +219,13 @@ class NodeObserver {
     return (isDirty: false, description: "No change")
   }
 
-  func collectNodeSet(_ nodeSet:inout Set<RW_Action>)
+  func collectActionSet(_ nodeSet:inout Set<RW_Action>)
   {
     var action: RW_Action
     if let node = self.changeCounter {
       action = RW_Action(node: node, property: self.propertyDesc)
       nodeSet.insert(action)
-      self.nextNodes.forEach({ $0.collectNodeSet(&nodeSet) })
+      self.nextNodes.forEach({ $0.collectActionSet(&nodeSet) })
     }
     else
     {

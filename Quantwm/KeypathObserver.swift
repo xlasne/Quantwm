@@ -11,7 +11,7 @@ import Foundation
  public protocol KeypathSignature {
   init(rootObject: QWMonitoredRoot, keypathDesc: KeypathDescription)
   func compareWithPreviousChain(_ previousChain: KeypathSignature?) -> (isDirty:Bool, description: String)
-  func collectNodeSet() -> Set<RW_Action>
+  func collectChainActionSet() -> Set<RW_Action>
 }
 
 class KeypathObserver
@@ -98,7 +98,7 @@ class KeypathObserver
   // This function is only providing correct result just after a readChain method
   func collectNodeSet() -> Set<RW_Action>
   {
-    if let nodeSet = self.updatedNodeChain?.collectNodeSet() {
+    if let nodeSet = self.updatedNodeChain?.collectChainActionSet() {
       return nodeSet
     } else {
       return Set<RW_Action>()

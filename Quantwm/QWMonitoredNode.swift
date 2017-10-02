@@ -23,6 +23,7 @@ public protocol QWMonitoredNode
 {
   func getNodeChangeCounter() -> QWChangeCounter
 }
+
 public extension QWMonitoredNode {
   func qwWrite(property: PropertyDescriptor) {
     self.getNodeChangeCounter().performedWriteOnMainThread(property)

@@ -8,6 +8,19 @@
 
 import Foundation
 
+// Define the current context of Quantwm framework
+// - loading: allows reading from the model
+// - update: allows read and write from the model
+// - refresh: indicates that a refreshUI() is under processing.
+//
+// These contexts are stacked on a context stack. The first item is the rootContext.
+// Based on the rootContext, the stack becomes a loading, update or refresh stack.
+//
+// - Refresh shall always be pushed on an empty stack.
+// - Update can only be pushed on an update stack, and thus forbidden on refresh or loading stack.
+//   Calls to refreshUI() while processing an update stack are delayed until the pop of the update.
+//
+
 //MARK: - RWContext
 struct RWContext: Equatable, CustomDebugStringConvertible
 {
