@@ -1,0 +1,16 @@
+PODS:
+  - Quantwm (0.2.0)
+
+DEPENDENCIES:
+  - Quantwm (from `../`)
+
+EXTERNAL SOURCES:
+  Quantwm:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Quantwm: 37348cd2095dc8b172faf8f79c07b068a9767aa1
+
+PODFILE CHECKSUM: 53b418d6b59e8b8dede0feb8c1d43adaf2d7f616
+
+COCOAPODS: 1.3.1

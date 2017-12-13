@@ -1,0 +1,6 @@
+framework module Quantwm {
+  umbrella header "Quantwm-umbrella.h"
+
+  export *
+  module * { export * }
+}

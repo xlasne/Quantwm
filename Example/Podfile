@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Quantwm_Example' do
+  pod 'Quantwm', :path => '../'
+
+  target 'Quantwm_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
