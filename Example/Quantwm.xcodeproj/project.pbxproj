@@ -113,7 +113,6 @@
 		255C5D951FE13E1B00F30682 /* PlaylistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTest.swift; sourceTree = "<group>"; };
 		255C5D971FE13E1B00F30682 /* deezerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deezerTests.swift; sourceTree = "<group>"; };
 		255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModelTest.swift; sourceTree = "<group>"; };
-		25D11C5F569033FE4C54B807 /* Pods-Quantwm_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quantwm_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quantwm_Tests/Pods-Quantwm_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD591FE14BEF000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +137,6 @@
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6C702CEC584B0A528F624C10 /* Quantwm.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Quantwm.podspec; path = ../Quantwm.podspec; sourceTree = "<group>"; };
-		93C8A5E1036795584F8DA897 /* Pods-Quantwm_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quantwm_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quantwm_Tests/Pods-Quantwm_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A132A1B0E58B3F1444E70247 /* Pods-Tests_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests_Example/Pods-Tests_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B18D591CE54595C64DFDCF23 /* Pods-Quantwm_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quantwm_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quantwm_Example/Pods-Quantwm_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D536DF64B1037C3A0FC10E4F /* Pods_Quantwm_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quantwm_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -458,8 +456,6 @@
 			children = (
 				B18D591CE54595C64DFDCF23 /* Pods-Quantwm_Example.debug.xcconfig */,
 				4A59146345C19E96D2E729FC /* Pods-Quantwm_Example.release.xcconfig */,
-				25D11C5F569033FE4C54B807 /* Pods-Quantwm_Tests.debug.xcconfig */,
-				93C8A5E1036795584F8DA897 /* Pods-Quantwm_Tests.release.xcconfig */,
 				A132A1B0E58B3F1444E70247 /* Pods-Tests_Example.debug.xcconfig */,
 				D93ECB59C9C8F3EE0C8E55FE /* Pods-Tests_Example.release.xcconfig */,
 			);

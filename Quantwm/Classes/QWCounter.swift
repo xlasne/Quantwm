@@ -3,7 +3,7 @@
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 15/04/16.
-//  Copyright © 2016 XL Software Solutions. All rights reserved.
+//  Copyright © 2016 XL Software Solutions. => MIT License
 //
 
 import Foundation

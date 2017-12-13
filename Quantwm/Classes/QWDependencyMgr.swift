@@ -3,7 +3,7 @@
 //  Spiky
 //
 //  Created by Xavier on 01/12/2017.
-//  Copyright © 2017 XL Software Solutions. All rights reserved.
+//  Copyright © 2017 XL Software Solutions. => MIT License
 //
 
 import Foundation
