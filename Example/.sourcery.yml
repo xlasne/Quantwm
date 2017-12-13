@@ -1,0 +1,6 @@
+sources:
+- Quantwm
+templates:
+- Quantwm/CodeGen/Templates
+output:
+  Quantwm/CodeGen/Generated

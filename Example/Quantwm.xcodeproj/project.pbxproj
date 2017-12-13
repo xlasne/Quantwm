@@ -8,39 +8,111 @@
 
 /* Begin PBXBuildFile section */
 		0D1CB73E3C8716686DFE7818 /* Pods_Quantwm_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C9399B7F2F6677B1D9AAAF /* Pods_Quantwm_Example.framework */; };
+		255C5D3B1FE12D7500F30682 /* NetworkMgr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D341FE12D7500F30682 /* NetworkMgr.swift */; };
+		255C5D3C1FE12D7500F30682 /* DeezerPlaylistCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D361FE12D7500F30682 /* DeezerPlaylistCollection.swift */; };
+		255C5D3D1FE12D7500F30682 /* PlaylistJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D371FE12D7500F30682 /* PlaylistJSON.swift */; };
+		255C5D3E1FE12D7500F30682 /* DeezerTrackCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D391FE12D7500F30682 /* DeezerTrackCollection.swift */; };
+		255C5D3F1FE12D7500F30682 /* TrackJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D3A1FE12D7500F30682 /* TrackJSON.swift */; };
+		255C5D451FE12DBA00F30682 /* DurationFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D411FE12DB900F30682 /* DurationFormater.swift */; };
+		255C5D461FE12DBA00F30682 /* SourceryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D421FE12DB900F30682 /* SourceryProtocols.swift */; };
+		255C5D471FE12DBA00F30682 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D431FE12DB900F30682 /* Utils.swift */; };
+		255C5D481FE12DBA00F30682 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D441FE12DB900F30682 /* XibView.swift */; };
+		255C5D6F1FE1370300F30682 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D601FE1370300F30682 /* PlaylistCell.swift */; };
+		255C5D701FE1370300F30682 /* PlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D611FE1370300F30682 /* PlaylistCell.xib */; };
+		255C5D711FE1370300F30682 /* PlaylistCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D621FE1370300F30682 /* PlaylistCollectionViewModel.swift */; };
+		255C5D721FE1370300F30682 /* PlaylistsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D631FE1370300F30682 /* PlaylistsCollectionViewController.swift */; };
+		255C5D731FE1370300F30682 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D651FE1370300F30682 /* TrackCell.swift */; };
+		255C5D741FE1370300F30682 /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D661FE1370300F30682 /* TrackCell.xib */; };
+		255C5D751FE1370300F30682 /* TracklistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D671FE1370300F30682 /* TracklistTableViewController.swift */; };
+		255C5D761FE1370300F30682 /* TrackListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D681FE1370300F30682 /* TrackListViewModel.swift */; };
+		255C5D771FE1370300F30682 /* PlaylistHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D6B1FE1370300F30682 /* PlaylistHeaderView.swift */; };
+		255C5D781FE1370300F30682 /* PlaylistHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D6C1FE1370300F30682 /* PlaylistHeaderView.xib */; };
+		255C5D791FE1370300F30682 /* PlaylistHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D6D1FE1370300F30682 /* PlaylistHeaderViewController.swift */; };
+		255C5D7A1FE1370300F30682 /* PlaylistHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D6E1FE1370300F30682 /* PlaylistHeaderViewModel.swift */; };
+		255C5D831FE13AC600F30682 /* TrackCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D7C1FE13AC600F30682 /* TrackCollection.swift */; };
+		255C5D841FE13AC600F30682 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D7E1FE13AC600F30682 /* Track.swift */; };
+		255C5D851FE13AC600F30682 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D811FE13AC600F30682 /* Playlist.swift */; };
+		255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */; };
+		255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D881FE13C5B00F30682 /* placeholder.png */; };
+		255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */; };
+		25FDDAE11FE12B5800E16C74 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDDADF1FE12B5800E16C74 /* Coordinator.swift */; };
+		25FDDAE21FE12B5800E16C74 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDDAE01FE12B5800E16C74 /* DataModel.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		AACAA1B814B047EBECF9B010 /* Pods_Quantwm_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D536DF64B1037C3A0FC10E4F /* Pods_Quantwm_Tests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = Quantwm;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00C9399B7F2F6677B1D9AAAF /* Pods_Quantwm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quantwm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		160C12F395906ED26D38C797 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		255C5D341FE12D7500F30682 /* NetworkMgr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMgr.swift; sourceTree = "<group>"; };
+		255C5D361FE12D7500F30682 /* DeezerPlaylistCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerPlaylistCollection.swift; sourceTree = "<group>"; };
+		255C5D371FE12D7500F30682 /* PlaylistJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistJSON.swift; sourceTree = "<group>"; };
+		255C5D391FE12D7500F30682 /* DeezerTrackCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerTrackCollection.swift; sourceTree = "<group>"; };
+		255C5D3A1FE12D7500F30682 /* TrackJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackJSON.swift; sourceTree = "<group>"; };
+		255C5D411FE12DB900F30682 /* DurationFormater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationFormater.swift; sourceTree = "<group>"; };
+		255C5D421FE12DB900F30682 /* SourceryProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceryProtocols.swift; sourceTree = "<group>"; };
+		255C5D431FE12DB900F30682 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		255C5D441FE12DB900F30682 /* XibView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
+		255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sourcery_PropDict.generated.swift; sourceTree = "<group>"; };
+		255C5D581FE134DA00F30682 /* stat.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stat.generated.swift; sourceTree = "<group>"; };
+		255C5D5A1FE134DA00F30682 /* Sourcery_PropDict.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_PropDict.stencil; sourceTree = "<group>"; };
+		255C5D5B1FE134DA00F30682 /* Sourcery_Quantwm.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_Quantwm.stencil; sourceTree = "<group>"; };
+		255C5D5C1FE134DA00F30682 /* stat.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = stat.stencil; sourceTree = "<group>"; };
+		255C5D601FE1370300F30682 /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
+		255C5D611FE1370300F30682 /* PlaylistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistCell.xib; sourceTree = "<group>"; };
+		255C5D621FE1370300F30682 /* PlaylistCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModel.swift; sourceTree = "<group>"; };
+		255C5D631FE1370300F30682 /* PlaylistsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsCollectionViewController.swift; sourceTree = "<group>"; };
+		255C5D651FE1370300F30682 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		255C5D661FE1370300F30682 /* TrackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
+		255C5D671FE1370300F30682 /* TracklistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracklistTableViewController.swift; sourceTree = "<group>"; };
+		255C5D681FE1370300F30682 /* TrackListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListViewModel.swift; sourceTree = "<group>"; };
+		255C5D6B1FE1370300F30682 /* PlaylistHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderView.swift; sourceTree = "<group>"; };
+		255C5D6C1FE1370300F30682 /* PlaylistHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistHeaderView.xib; sourceTree = "<group>"; };
+		255C5D6D1FE1370300F30682 /* PlaylistHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderViewController.swift; sourceTree = "<group>"; };
+		255C5D6E1FE1370300F30682 /* PlaylistHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderViewModel.swift; sourceTree = "<group>"; };
+		255C5D7C1FE13AC600F30682 /* TrackCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCollection.swift; sourceTree = "<group>"; };
+		255C5D7E1FE13AC600F30682 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		255C5D811FE13AC600F30682 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsCollection.swift; sourceTree = "<group>"; };
+		255C5D881FE13C5B00F30682 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DZ_Logo_CMYK_W.png; sourceTree = "<group>"; };
+		255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerCollectionTest.swift; sourceTree = "<group>"; };
+		255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerNetworkStub.swift; sourceTree = "<group>"; };
+		255C5D8F1FE13E1B00F30682 /* DeezerPlaylist1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist1.json; sourceTree = "<group>"; };
+		255C5D901FE13E1B00F30682 /* DeezerPlaylist2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist2.json; sourceTree = "<group>"; };
+		255C5D911FE13E1B00F30682 /* DeezerPlaylist3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist3.json; sourceTree = "<group>"; };
+		255C5D921FE13E1B00F30682 /* DeezerPlaylist4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist4.json; sourceTree = "<group>"; };
+		255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist5.json; sourceTree = "<group>"; };
+		255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerPlaylistStub.swift; sourceTree = "<group>"; };
+		255C5D951FE13E1B00F30682 /* PlaylistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTest.swift; sourceTree = "<group>"; };
+		255C5D961FE13E1B00F30682 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../../../POC Deezer Rx/deezer/deezerTests/Info.plist"; sourceTree = "<group>"; };
+		255C5D971FE13E1B00F30682 /* deezerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deezerTests.swift; sourceTree = "<group>"; };
+		255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModelTest.swift; sourceTree = "<group>"; };
 		25D11C5F569033FE4C54B807 /* Pods-Quantwm_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quantwm_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quantwm_Tests/Pods-Quantwm_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD431FE14B07000EA8E3 /* Quantwm_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quantwm_ExampleTests.swift; sourceTree = "<group>"; };
+		25D4CD451FE14B07000EA8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD591FE14BEF000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD611FE14D88000EA8E3 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD621FE14D88000EA8E3 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD631FE14D88000EA8E3 /* Pods_Quantwm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Quantwm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD641FE14D88000EA8E3 /* Pods_Quantwm_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Quantwm_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD651FE14D88000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD661FE14D88000EA8E3 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D4CD671FE14D88000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25FDDADF1FE12B5800E16C74 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		25FDDAE01FE12B5800E16C74 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		491C7EB8E9A4DAEC4D2F2655 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		4A59146345C19E96D2E729FC /* Pods-Quantwm_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quantwm_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quantwm_Example/Pods-Quantwm_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Quantwm_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quantwm_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* Quantwm_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Quantwm_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6C702CEC584B0A528F624C10 /* Quantwm.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Quantwm.podspec; path = ../Quantwm.podspec; sourceTree = "<group>"; };
@@ -58,23 +130,231 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AACAA1B814B047EBECF9B010 /* Pods_Quantwm_Tests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		255C5D331FE12D7500F30682 /* DeezerAPI */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D341FE12D7500F30682 /* NetworkMgr.swift */,
+				255C5D351FE12D7500F30682 /* Playlists */,
+				255C5D381FE12D7500F30682 /* Tracks */,
+			);
+			path = DeezerAPI;
+			sourceTree = "<group>";
+		};
+		255C5D351FE12D7500F30682 /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D361FE12D7500F30682 /* DeezerPlaylistCollection.swift */,
+				255C5D371FE12D7500F30682 /* PlaylistJSON.swift */,
+			);
+			path = Playlists;
+			sourceTree = "<group>";
+		};
+		255C5D381FE12D7500F30682 /* Tracks */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D391FE12D7500F30682 /* DeezerTrackCollection.swift */,
+				255C5D3A1FE12D7500F30682 /* TrackJSON.swift */,
+			);
+			path = Tracks;
+			sourceTree = "<group>";
+		};
+		255C5D401FE12DB900F30682 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D411FE12DB900F30682 /* DurationFormater.swift */,
+				255C5D421FE12DB900F30682 /* SourceryProtocols.swift */,
+				255C5D431FE12DB900F30682 /* Utils.swift */,
+				255C5D441FE12DB900F30682 /* XibView.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		255C5D551FE134DA00F30682 /* CodeGen */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D561FE134DA00F30682 /* Generated */,
+				255C5D591FE134DA00F30682 /* Templates */,
+			);
+			path = CodeGen;
+			sourceTree = "<group>";
+		};
+		255C5D561FE134DA00F30682 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */,
+				255C5D581FE134DA00F30682 /* stat.generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		255C5D591FE134DA00F30682 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D5A1FE134DA00F30682 /* Sourcery_PropDict.stencil */,
+				255C5D5B1FE134DA00F30682 /* Sourcery_Quantwm.stencil */,
+				255C5D5C1FE134DA00F30682 /* stat.stencil */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		255C5D5D1FE136E100F30682 /* ViewHierarchy */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D691FE1370300F30682 /* Playlist - HeaderView */,
+				255C5D641FE1370300F30682 /* Playlist - TracksTableView */,
+				255C5D5E1FE1370300F30682 /* PlaylistCollection */,
+			);
+			path = ViewHierarchy;
+			sourceTree = "<group>";
+		};
+		255C5D5E1FE1370300F30682 /* PlaylistCollection */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D5F1FE1370300F30682 /* PlaylistCell */,
+				255C5D621FE1370300F30682 /* PlaylistCollectionViewModel.swift */,
+				255C5D631FE1370300F30682 /* PlaylistsCollectionViewController.swift */,
+			);
+			path = PlaylistCollection;
+			sourceTree = "<group>";
+		};
+		255C5D5F1FE1370300F30682 /* PlaylistCell */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D601FE1370300F30682 /* PlaylistCell.swift */,
+				255C5D611FE1370300F30682 /* PlaylistCell.xib */,
+			);
+			path = PlaylistCell;
+			sourceTree = "<group>";
+		};
+		255C5D641FE1370300F30682 /* Playlist - TracksTableView */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D651FE1370300F30682 /* TrackCell.swift */,
+				255C5D661FE1370300F30682 /* TrackCell.xib */,
+				255C5D671FE1370300F30682 /* TracklistTableViewController.swift */,
+				255C5D681FE1370300F30682 /* TrackListViewModel.swift */,
+			);
+			path = "Playlist - TracksTableView";
+			sourceTree = "<group>";
+		};
+		255C5D691FE1370300F30682 /* Playlist - HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D6A1FE1370300F30682 /* PlaylistHeaderVIew */,
+				255C5D6D1FE1370300F30682 /* PlaylistHeaderViewController.swift */,
+				255C5D6E1FE1370300F30682 /* PlaylistHeaderViewModel.swift */,
+			);
+			path = "Playlist - HeaderView";
+			sourceTree = "<group>";
+		};
+		255C5D6A1FE1370300F30682 /* PlaylistHeaderVIew */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D6B1FE1370300F30682 /* PlaylistHeaderView.swift */,
+				255C5D6C1FE1370300F30682 /* PlaylistHeaderView.xib */,
+			);
+			path = PlaylistHeaderVIew;
+			sourceTree = "<group>";
+		};
+		255C5D7B1FE13AC600F30682 /* TrackCollection */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D7C1FE13AC600F30682 /* TrackCollection.swift */,
+				255C5D7D1FE13AC600F30682 /* Tracks */,
+			);
+			path = TrackCollection;
+			sourceTree = "<group>";
+		};
+		255C5D7D1FE13AC600F30682 /* Tracks */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D7E1FE13AC600F30682 /* Track.swift */,
+			);
+			path = Tracks;
+			sourceTree = "<group>";
+		};
+		255C5D7F1FE13AC600F30682 /* PlaylistsCollection */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D801FE13AC600F30682 /* Playlists */,
+				255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */,
+			);
+			path = PlaylistsCollection;
+			sourceTree = "<group>";
+		};
+		255C5D801FE13AC600F30682 /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D811FE13AC600F30682 /* Playlist.swift */,
+			);
+			path = Playlists;
+			sourceTree = "<group>";
+		};
+		255C5D871FE13C4500F30682 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */,
+				255C5D881FE13C5B00F30682 /* placeholder.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		255C5D8C1FE13E1B00F30682 /* DeezerPlaylist */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */,
+				255C5D971FE13E1B00F30682 /* deezerTests.swift */,
+				255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */,
+				255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */,
+				255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */,
+				255C5D951FE13E1B00F30682 /* PlaylistTest.swift */,
+			);
+			path = DeezerPlaylist;
+			sourceTree = "<group>";
+		};
+		255C5D981FE13E1B00F30682 /* PlaylistCollectionVIewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PlaylistCollectionVIewModel;
+			sourceTree = "<group>";
+		};
+		25D4CD421FE14B07000EA8E3 /* Quantwm_ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D8C1FE13E1B00F30682 /* DeezerPlaylist */,
+				25D4CD431FE14B07000EA8E3 /* Quantwm_ExampleTests.swift */,
+				255C5D8F1FE13E1B00F30682 /* DeezerPlaylist1.json */,
+				255C5D901FE13E1B00F30682 /* DeezerPlaylist2.json */,
+				255C5D911FE13E1B00F30682 /* DeezerPlaylist3.json */,
+				255C5D921FE13E1B00F30682 /* DeezerPlaylist4.json */,
+				255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */,
+				25D4CD451FE14B07000EA8E3 /* Info.plist */,
+			);
+			path = Quantwm_ExampleTests;
+			sourceTree = "<group>";
+		};
+		25FDDADE1FE12B1A00E16C74 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				255C5D7F1FE13AC600F30682 /* PlaylistsCollection */,
+				255C5D7B1FE13AC600F30682 /* TrackCollection */,
+				25FDDAE01FE12B5800E16C74 /* DataModel.swift */,
+				25FDDADF1FE12B5800E16C74 /* Coordinator.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Quantwm */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				25D4CD421FE14B07000EA8E3 /* Quantwm_ExampleTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				E79AE33430A53F6D6DD64139 /* Pods */,
 				767206A7D5C598C83D41348A /* Frameworks */,
@@ -85,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* Quantwm_Example.app */,
-				607FACE51AFB9204008FA782 /* Quantwm_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,8 +372,13 @@
 		607FACD21AFB9204008FA782 /* Example for Quantwm */ = {
 			isa = PBXGroup;
 			children = (
+				255C5D871FE13C4500F30682 /* Resources */,
+				255C5D5D1FE136E100F30682 /* ViewHierarchy */,
+				255C5D551FE134DA00F30682 /* CodeGen */,
+				255C5D401FE12DB900F30682 /* Helpers */,
+				255C5D331FE12D7500F30682 /* DeezerAPI */,
+				25FDDADE1FE12B1A00E16C74 /* Model */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -115,6 +399,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				255C5D961FE13E1B00F30682 /* Info.plist */,
+				255C5D981FE13E1B00F30682 /* PlaylistCollectionVIewModel */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -142,6 +428,16 @@
 		767206A7D5C598C83D41348A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25D4CD611FE14D88000EA8E3 /* Alamofire.framework */,
+				25D4CD621FE14D88000EA8E3 /* AlamofireImage.framework */,
+				25D4CD631FE14D88000EA8E3 /* Pods_Quantwm_Example.framework */,
+				25D4CD641FE14D88000EA8E3 /* Pods_Quantwm_Tests.framework */,
+				25D4CD651FE14D88000EA8E3 /* Quantwm.framework */,
+				25D4CD661FE14D88000EA8E3 /* RxAlamofire.framework */,
+				25D4CD671FE14D88000EA8E3 /* RxSwift.framework */,
+				25D4CD591FE14BEF000EA8E3 /* Quantwm.framework */,
+				25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */,
+				25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */,
 				00C9399B7F2F6677B1D9AAAF /* Pods_Quantwm_Example.framework */,
 				D536DF64B1037C3A0FC10E4F /* Pods_Quantwm_Tests.framework */,
 			);
@@ -167,6 +463,7 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Quantwm_Example" */;
 			buildPhases = (
 				357C584669CEA09816A7DBEF /* [CP] Check Pods Manifest.lock */,
+				255C5D4F1FE130B900F30682 /* 🛠 Sourcery */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -182,34 +479,13 @@
 			productReference = 607FACD01AFB9204008FA782 /* Quantwm_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* Quantwm_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Quantwm_Tests" */;
-			buildPhases = (
-				8E1A161E5D5048D531B0ABF7 /* [CP] Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-				B66A97B0298D57EA7FC3B00D /* [CP] Embed Pods Frameworks */,
-				A151BCB62FFEBBE8416C4080 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = Quantwm_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* Quantwm_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -217,11 +493,6 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = XAALU9JZHH;
 						LastSwiftMigration = 0900;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -239,7 +510,6 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* Quantwm_Example */,
-				607FACE41AFB9204008FA782 /* Quantwm_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -250,21 +520,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				255C5D781FE1370300F30682 /* PlaylistHeaderView.xib in Resources */,
+				255C5D741FE1370300F30682 /* TrackCell.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */,
+				255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				255C5D701FE1370300F30682 /* PlaylistCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		255C5D4F1FE130B900F30682 /* 🛠 Sourcery */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "🛠 Sourcery";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Pods/Sourcery/bin/sourcery --sources Quantwm --templates Quantwm/CodeGen/Templates --output Quantwm/CodeGen/Generated\n";
+		};
 		357C584669CEA09816A7DBEF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,54 +563,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8E1A161E5D5048D531B0ABF7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Quantwm_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A151BCB62FFEBBE8416C4080 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Quantwm_Tests/Pods-Quantwm_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B66A97B0298D57EA7FC3B00D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Quantwm_Tests/Pods-Quantwm_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DF2C191CC4D22C0ADE2C8644 /* [CP] Copy Pods Resources */ = {
@@ -353,11 +587,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Quantwm_Example/Pods-Quantwm_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Quantwm/Quantwm.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quantwm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -371,28 +613,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				25FDDAE21FE12B5800E16C74 /* DataModel.swift in Sources */,
+				255C5D721FE1370300F30682 /* PlaylistsCollectionViewController.swift in Sources */,
+				255C5D3F1FE12D7500F30682 /* TrackJSON.swift in Sources */,
+				255C5D3E1FE12D7500F30682 /* DeezerTrackCollection.swift in Sources */,
+				255C5D3D1FE12D7500F30682 /* PlaylistJSON.swift in Sources */,
+				255C5D841FE13AC600F30682 /* Track.swift in Sources */,
+				255C5D831FE13AC600F30682 /* TrackCollection.swift in Sources */,
+				255C5D481FE12DBA00F30682 /* XibView.swift in Sources */,
+				255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */,
+				255C5D3B1FE12D7500F30682 /* NetworkMgr.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				255C5D471FE12DBA00F30682 /* Utils.swift in Sources */,
+				255C5D851FE13AC600F30682 /* Playlist.swift in Sources */,
+				255C5D451FE12DBA00F30682 /* DurationFormater.swift in Sources */,
+				255C5D6F1FE1370300F30682 /* PlaylistCell.swift in Sources */,
+				25FDDAE11FE12B5800E16C74 /* Coordinator.swift in Sources */,
+				255C5D761FE1370300F30682 /* TrackListViewModel.swift in Sources */,
+				255C5D731FE1370300F30682 /* TrackCell.swift in Sources */,
+				255C5D461FE12DBA00F30682 /* SourceryProtocols.swift in Sources */,
+				255C5D7A1FE1370300F30682 /* PlaylistHeaderViewModel.swift in Sources */,
+				255C5D771FE1370300F30682 /* PlaylistHeaderView.swift in Sources */,
+				255C5D751FE1370300F30682 /* TracklistTableViewController.swift in Sources */,
+				255C5D791FE1370300F30682 /* PlaylistHeaderViewController.swift in Sources */,
+				255C5D711FE1370300F30682 /* PlaylistCollectionViewModel.swift in Sources */,
+				255C5D3C1FE12D7500F30682 /* DeezerPlaylistCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* Quantwm_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -444,6 +693,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -459,7 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -497,6 +747,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -505,7 +756,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -520,6 +771,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XAALU9JZHH;
 				INFOPLIST_FILE = Quantwm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -536,47 +788,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XAALU9JZHH;
 				INFOPLIST_FILE = Quantwm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25D11C5F569033FE4C54B807 /* Pods-Quantwm_Tests.debug.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93C8A5E1036795584F8DA897 /* Pods-Quantwm_Tests.release.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -600,15 +815,6 @@
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Quantwm_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

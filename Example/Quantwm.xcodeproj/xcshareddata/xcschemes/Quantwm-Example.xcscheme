@@ -20,20 +20,6 @@
                ReferencedContainer = "container:Quantwm.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Quantwm_Tests.xctest"
-               BlueprintName = "Quantwm_Tests"
-               ReferencedContainer = "container:Quantwm.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -47,9 +33,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Quantwm_Tests.xctest"
-               BlueprintName = "Quantwm_Tests"
+               BlueprintIdentifier = "25D4CD401FE14B07000EA8E3"
+               BuildableName = "Quantwm_ExampleTests.xctest"
+               BlueprintName = "Quantwm_ExampleTests"
                ReferencedContainer = "container:Quantwm.xcodeproj">
             </BuildableReference>
          </TestableReference>

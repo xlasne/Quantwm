@@ -1,0 +1,92 @@
+{% for type in types.all %}
+// sourcery:inline:{{ type.name }}.QuantwmDeclarationInline
+
+    // MARK: - Sourcery
+
+{% if type.implements.QWMediatorOwner_S %}
+    // QWMediatorOwner Protocol
+    let qwMediator = QWMediator()
+    func getQWMediator() -> QWMediator
+    {
+      return qwMediator
+    }
+
+{% endif %}
+{% if type.implements.QWNode_S %}
+    // QWNode protocol
+    func getQWCounter() -> QWCounter {
+      return qwCounter
+    }
+    let qwCounter = QWCounter(name:"{{ type.name }}")
+
+    // Quantwm Property Array generation
+    func getQWPropertyArray() -> [QWProperty] {
+        return {{ type.name }}.qwPropertyArrayK
+    }
+    static let qwPropertyArrayK:[QWProperty] = [
+  {% for prop in type.storedVariables %}
+    {% if prop|annotated:"node" %}
+      {{ prop.name|replace:"_","" }}K,   // node
+    {% endif %}
+    {% if prop|annotated:"property" %}
+      {{ prop.name|replace:"_","" }}K,  // property
+    {% endif %}
+  {% endfor %}
+    ]
+{% endif %}
+{% if type.implements.QWNode_S %}
+{% for rootProp in type.staticVariables %}
+{% if rootProp|annotated:"rootpath" %}
+    // Quantwm Path and Map generation
+{% for prop in type.storedVariables %}
+{% if prop|annotated:"property" or prop|annotated:"node" %}
+    static let {{ prop.name|replace:"_","" }}Path: QWPath = {{ rootProp.name }}.appending({{type.name}}.{{ prop.name|replace:"_","" }}K)
+    static let {{ prop.name|replace:"_","" }}Map: QWMap = {{ prop.name|replace:"_","" }}Path.map
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for prop in type.storedVariables %}
+{% if prop|annotated:"property" %}
+    // Quantwm Property: {{ prop.name|replace:"_","" }}
+    static let {{ prop.name|replace:"_","" }}K = QWProperty(
+        propertyKeypath: \{{type.name}}.{{prop.name|replace:"_",""}},
+        description: "{{ prop.name }}")
+{% endif %}
+{% if prop|annotated:"node" %}
+    // Quantwm Node:  {{ prop.name|replace:"_","" }}
+    static let {{ prop.name|replace:"_","" }}K = QWNodeProperty(
+        keypath: \{{type.name}}.{{prop.name|replace:"_",""}},
+        description: "{{ prop.name }}")
+{% endif %}
+{% if prop|annotated:"property" or prop|annotated:"node" %}
+    var {{ prop.name|replace:"_","" }} : {{ prop.typeName }} {
+      get {
+{% if prop|annotated:"allowBackgroundRead" %}
+        self.qwCounter.performedRead({{type.name}}.{{ prop.name|replace:"_","" }}K)
+{% else %}
+        self.qwCounter.performedReadOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
+{% endif %}
+        return {{ prop.name }}
+      }
+      set {
+{% if prop|annotated:"allowBackgroundWrite" %}
+        self.qwCounter.performedWrite({{type.name}}.{{ prop.name|replace:"_","" }}K)
+{% else %}
+{% if prop|annotated:"contextual" %}
+        self.qwCounter.performedContextualWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
+{% else %}
+        self.qwCounter.performedWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
+{% endif %}
+{% endif %}
+        {{ prop.name }} = newValue
+      {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
+      }
+    }
+{% endif %}
+{% endfor %}
+{% endif %}
+// sourcery:end
+{% endfor %}
+

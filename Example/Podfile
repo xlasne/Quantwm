@@ -2,10 +2,19 @@ use_frameworks!
 
 target 'Quantwm_Example' do
   pod 'Quantwm', :path => '../'
+  pod 'Alamofire', '~> 4.5'
+  pod 'AlamofireImage', '~> 3.3'
+  pod 'RxSwift', '~> 4.0'
+  pod 'Sourcery', '~> 0.8.0'
+  pod 'RxAlamofire', '~> 4.0'
 
   target 'Quantwm_Tests' do
     inherit! :search_paths
-
+    pod 'Quantwm', :path => '../'
+    pod 'Alamofire', '~> 4.5'
+    pod 'AlamofireImage', '~> 3.3'
+    pod 'RxSwift', '~> 4.0'
+    pod 'RxAlamofire', '~> 4.0'
     
   end
 end

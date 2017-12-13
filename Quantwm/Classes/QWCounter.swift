@@ -47,7 +47,7 @@ open class QWCounter: NSObject, Codable {
 
   public var nodeName: String = "No name"
 
-  init(name: String) {
+  public init(name: String) {
     self.nodeName = name
     super.init()
   }
@@ -61,7 +61,7 @@ open class QWCounter: NSObject, Codable {
   
   //MARK: - Read / Write monitoring
   
-  func performedReadOnMainThread(_ property: QWProperty)
+  public func performedReadOnMainThread(_ property: QWProperty)
   {
     let childKey = property
     if !Thread.isMainThread {
@@ -72,7 +72,7 @@ open class QWCounter: NSObject, Codable {
     }
   }
 
-  func performedRead(_ property: QWProperty)
+  public func performedRead(_ property: QWProperty)
   {
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addRead(self, property: property.descriptor)
@@ -80,7 +80,7 @@ open class QWCounter: NSObject, Codable {
   }
 
   
-  func performedWriteOnMainThread(_ property: QWProperty)
+  public func performedWriteOnMainThread(_ property: QWProperty)
   {
     let childKey = property.propKey
     if !Thread.isMainThread {
@@ -95,7 +95,7 @@ open class QWCounter: NSObject, Codable {
   }
 
   // Contextual: Does not clear of the commit tag / stageChange -> does not trigger a save
-  func performedContextualWriteOnMainThread(_ property: QWProperty)
+  public func performedContextualWriteOnMainThread(_ property: QWProperty)
   {
     let childKey = property.propKey
     if !Thread.isMainThread {
@@ -109,7 +109,7 @@ open class QWCounter: NSObject, Codable {
   }
 
 
-  func performedWrite(_ property: QWProperty)
+  public func performedWrite(_ property: QWProperty)
   {
     self.setDirty(property)
     stageChange()

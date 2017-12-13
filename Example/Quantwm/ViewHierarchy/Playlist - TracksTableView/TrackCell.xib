@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ArialBold.ttf">
+            <string>Arial-BoldMT</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackCell" rowHeight="45" id="KGk-i7-Jjw" customClass="TrackCell" customModule="deezer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="685" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="685" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAS-bK-sus">
+                        <rect key="frame" x="20" y="14" width="56.5" height="16"/>
+                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UfT-l1-pxo">
+                        <rect key="frame" x="86.5" y="0.0" width="392" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3va-FC-mUC">
+                                <rect key="frame" x="0.0" y="14" width="29" height="16"/>
+                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3va-FC-mUC" secondAttribute="trailing" id="Uub-a3-llY"/>
+                            <constraint firstItem="3va-FC-mUC" firstAttribute="leading" secondItem="UfT-l1-pxo" secondAttribute="leading" id="ikL-Y0-4o5"/>
+                            <constraint firstItem="3va-FC-mUC" firstAttribute="centerY" secondItem="UfT-l1-pxo" secondAttribute="centerY" id="sCN-vN-Y15"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EjY-1w-sPr">
+                        <rect key="frame" x="488.5" y="0.0" width="196.5" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IfL-g1-FJJ">
+                                <rect key="frame" x="0.0" y="14" width="46" height="16"/>
+                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IfL-g1-FJJ" firstAttribute="leading" secondItem="EjY-1w-sPr" secondAttribute="leading" id="eVW-JK-sK7"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IfL-g1-FJJ" secondAttribute="trailing" id="j5x-3E-OAh"/>
+                            <constraint firstItem="IfL-g1-FJJ" firstAttribute="centerY" secondItem="EjY-1w-sPr" secondAttribute="centerY" id="lig-Yg-xF0"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="EjY-1w-sPr" secondAttribute="bottom" id="871-tE-U41"/>
+                    <constraint firstItem="UfT-l1-pxo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8NX-DX-s1r"/>
+                    <constraint firstItem="EjY-1w-sPr" firstAttribute="leading" secondItem="UfT-l1-pxo" secondAttribute="trailing" constant="10" id="9C5-6R-cfG"/>
+                    <constraint firstAttribute="trailing" secondItem="EjY-1w-sPr" secondAttribute="trailing" id="Egp-JA-5Hn"/>
+                    <constraint firstItem="EjY-1w-sPr" firstAttribute="width" secondItem="UfT-l1-pxo" secondAttribute="width" multiplier="0.5" id="LZr-9u-Jyr"/>
+                    <constraint firstItem="AAS-bK-sus" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="OaX-kp-RHR"/>
+                    <constraint firstAttribute="bottom" secondItem="UfT-l1-pxo" secondAttribute="bottom" id="Sub-rR-q6i"/>
+                    <constraint firstItem="UfT-l1-pxo" firstAttribute="leading" secondItem="AAS-bK-sus" secondAttribute="trailing" constant="10" id="YmH-cq-HCg"/>
+                    <constraint firstItem="AAS-bK-sus" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fcF-kT-iaD"/>
+                    <constraint firstItem="EjY-1w-sPr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="icr-Oz-4IZ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="artistLabel" destination="IfL-g1-FJJ" id="f57-cD-gTE"/>
+                <outlet property="duration" destination="AAS-bK-sus" id="OHI-61-DaU"/>
+                <outlet property="trackLabel" destination="3va-FC-mUC" id="26R-4J-spP"/>
+            </connections>
+            <point key="canvasLocation" x="215.5" y="-133"/>
+        </tableViewCell>
+    </objects>
+</document>

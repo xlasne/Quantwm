@@ -29,12 +29,6 @@ public protocol QWNode
 }
 
 public extension QWNode {
-  func qwWrite(property: QWProperty) {
-    self.getQWCounter().performedWriteOnMainThread(property)
-  }
-  func qwRead(property: QWProperty) {
-    self.getQWCounter().performedReadOnMainThread(property)
-  }
   func getQWPropertyArray() -> [QWProperty] { return [] }
 }
 
