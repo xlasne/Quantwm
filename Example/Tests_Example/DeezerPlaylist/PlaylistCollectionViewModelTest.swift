@@ -9,6 +9,7 @@
 import XCTest
 import Quantwm
 
+//import Pods_Quantwm_Tests
 @testable import Quantwm_Example
 
 class PlaylistCollectionViewModelTest: XCTestCase {
@@ -20,7 +21,7 @@ class PlaylistCollectionViewModelTest: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        dataModel = DataModel(networkMgr: networkStub)
+        dataModel = DataModel(networkMgr: networkStub as DeezerAPI)
         viewModel = PlaylistsCollectionViewModel(dataModel: dataModel!, owner: "TestVM")
     }
 

@@ -39,6 +39,16 @@
                ReferencedContainer = "container:Quantwm.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "25D4CD6C1FE1537E000EA8E3"
+               BuildableName = "Tests_Example.xctest"
+               BlueprintName = "Tests_Example"
+               ReferencedContainer = "container:Quantwm.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

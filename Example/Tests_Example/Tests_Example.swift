@@ -1,6 +1,6 @@
 //
-//  Quantwm_ExampleTests.swift
-//  Quantwm_ExampleTests
+//  Tests_Example.swift
+//  Tests_Example
 //
 //  Created by Xavier on 13/12/2017.
 //  Copyright © 2017 CocoaPods. All rights reserved.
@@ -8,7 +8,9 @@
 
 import XCTest
 
-class Quantwm_ExampleTests: XCTestCase {
+@testable import Pods_Quantwm_Tests
+
+class Tests_Example: XCTestCase {
     
     override func setUp() {
         super.setUp()

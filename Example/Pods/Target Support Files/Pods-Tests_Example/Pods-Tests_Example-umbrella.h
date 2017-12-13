@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Quantwm_TestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Quantwm_TestsVersionString[];
+FOUNDATION_EXPORT double Pods_Tests_ExampleVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Tests_ExampleVersionString[];
 

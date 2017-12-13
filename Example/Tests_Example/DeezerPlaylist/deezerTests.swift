@@ -1,8 +1,17 @@
-import UIKit
-import XCTest
-import Quantwm
+//
+//  deezerTests.swift
+//  deezerTests
+//
+//  Created by Xavier on 02/12/2017.
+//  Copyright © 2017 XL Software Solutions. All rights reserved.
+//
 
-class Tests: XCTestCase {
+import XCTest
+
+//import Pods_Quantwm_Tests
+@testable import Quantwm_Example
+
+class deezerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -16,12 +25,12 @@ class Tests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measure() {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
