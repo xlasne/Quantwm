@@ -9,7 +9,6 @@
 
 import XCTest
 
-// import Pods_Quantwm_Tests
 @testable import Quantwm_Example
 
 class CheckPlaylist

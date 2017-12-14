@@ -9,7 +9,6 @@
 import XCTest
 import Quantwm
 
-//import Pods_Quantwm_Tests
 @testable import Quantwm_Example
 
 class PlaylistCollectionViewModelTest: XCTestCase {

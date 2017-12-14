@@ -35,9 +35,8 @@
 		255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */; };
 		255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D881FE13C5B00F30682 /* placeholder.png */; };
 		255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */; };
-		25D4CD701FE1537E000EA8E3 /* Tests_Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4CD6F1FE1537E000EA8E3 /* Tests_Example.swift */; };
+		25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */; };
 		25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */; };
-		25D4CD781FE153E5000EA8E3 /* deezerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D971FE13E1B00F30682 /* deezerTests.swift */; };
 		25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */; };
 		25D4CD7A1FE153E5000EA8E3 /* DeezerNetworkStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */; };
 		25D4CD7B1FE153E5000EA8E3 /* DeezerPlaylistStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */; };
@@ -111,7 +110,6 @@
 		255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist5.json; sourceTree = "<group>"; };
 		255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerPlaylistStub.swift; sourceTree = "<group>"; };
 		255C5D951FE13E1B00F30682 /* PlaylistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTest.swift; sourceTree = "<group>"; };
-		255C5D971FE13E1B00F30682 /* deezerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = deezerTests.swift; sourceTree = "<group>"; };
 		255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModelTest.swift; sourceTree = "<group>"; };
 		25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,7 +122,7 @@
 		25D4CD661FE14D88000EA8E3 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD671FE14D88000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD6D1FE1537E000EA8E3 /* Tests_Example.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests_Example.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		25D4CD6F1FE1537E000EA8E3 /* Tests_Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_Example.swift; sourceTree = "<group>"; };
+		25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_Quantwm.swift; sourceTree = "<group>"; };
 		25D4CD711FE1537E000EA8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25FDDADF1FE12B5800E16C74 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		25FDDAE01FE12B5800E16C74 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
@@ -343,7 +341,6 @@
 				255C5D921FE13E1B00F30682 /* DeezerPlaylist4.json */,
 				255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */,
 				255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */,
-				255C5D971FE13E1B00F30682 /* deezerTests.swift */,
 				255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */,
 				255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */,
 				255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */,
@@ -356,7 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				255C5D8C1FE13E1B00F30682 /* DeezerPlaylist */,
-				25D4CD6F1FE1537E000EA8E3 /* Tests_Example.swift */,
+				25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */,
 				25D4CD711FE1537E000EA8E3 /* Info.plist */,
 			);
 			path = Tests_Example;
@@ -365,10 +362,10 @@
 		25FDDADE1FE12B1A00E16C74 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				255C5D7F1FE13AC600F30682 /* PlaylistsCollection */,
-				255C5D7B1FE13AC600F30682 /* TrackCollection */,
 				25FDDAE01FE12B5800E16C74 /* DataModel.swift */,
 				25FDDADF1FE12B5800E16C74 /* Coordinator.swift */,
+				255C5D7F1FE13AC600F30682 /* PlaylistsCollection */,
+				255C5D7B1FE13AC600F30682 /* TrackCollection */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -724,8 +721,7 @@
 				25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */,
 				25D4CD7A1FE153E5000EA8E3 /* DeezerNetworkStub.swift in Sources */,
 				25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */,
-				25D4CD781FE153E5000EA8E3 /* deezerTests.swift in Sources */,
-				25D4CD701FE1537E000EA8E3 /* Tests_Example.swift in Sources */,
+				25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
