@@ -64,18 +64,28 @@ Solution 3: Adopt an other convention and change this stencil.
 
     // MARK: Getter Array
 
-    // node: Getter Self
-    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
-
     {% for prop in type.storedVariables %}
-    {% if prop|annotated:"property" %}
+    {% if prop|annotated:"property" or prop|annotated:"node" %}
     {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
     {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
+    {% if prop|annotated:"node" %}
+    {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
+
+    // node: Getter {{monitoredName}}
+func {{monitoredName}}Getter(root:QWRoot) -> [{{prop.typeName}}] {
+        let nodePropertyK = QWPropProperty(propertyKeypath: \{{type.name}}.{{monitoredName}},
+                    description: "{{ prop.name }}")
+        return  path.generatePropertyGetter(property: nodePropertyK)(root)
+    }
+
+{% else %}
 
     // property: {{monitoredName}}
-    func {{monitoredName}}Getter() -> (QWRoot) -> [{{prop.typeName}}] { return path.generatePropertyGetter(property: {{ propertyKName }}) }
+func {{monitoredName}}Getter(root:QWRoot) -> [{{prop.typeName}}] { return path.generatePropertyGetter(property: {{ propertyKName }})(root) }
+    {% endif %}
     {% endif %}
     {% endfor %}
+
 
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }

@@ -142,6 +142,32 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     }
   }
 
+  func validate(newElement: QWProperty) -> Bool
+  {
+    let previousProperty: Any.Type = chain.last?.destType ?? root.sourceType
+    return newElement.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty)
+  }
+
+  public func all() -> QWPath {
+    switch self.type
+    {
+    case .tree:
+      print("Warning QWPath: Adding all() on a subtree QWPath \(keypath)")
+    case .property:
+      preconditionFailure("Error QWPath: Adding all() on a property QWPath \(keypath)")
+    case .node:
+      break
+    }
+    return QWPath(root: self.root,
+                  chain: self.chain,
+                  andAllChilds: true) as QWPath
+  }
+
+}
+
+extension QWPath // Property and Node Getter
+{
+
   public func generatePropertyGetter<Root,Value>(property: QWPropProperty<Root,Value>) -> (QWRoot) -> [Value]{
     switch self.type
     {
@@ -177,27 +203,6 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     return getter
   }
 
-  func validate(newElement: QWProperty) -> Bool
-  {
-    let previousProperty: Any.Type = chain.last?.destType ?? root.sourceType
-    return newElement.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty)
-  }
-
-  public func all() -> QWPath {
-    switch self.type
-    {
-    case .tree:
-      print("Warning QWPath: Adding all() on a subtree QWPath \(keypath)")
-    case .property:
-      preconditionFailure("Error QWPath: Adding all() on a property QWPath \(keypath)")
-    case .node:
-      break
-    }
-    return QWPath(root: self.root,
-                  chain: self.chain,
-                  andAllChilds: true) as QWPath
-  }
-
   public func generateNodeGetter() -> (QWRoot) -> [QWNode]{
     let myChain = chain
     let getter:(QWRoot) -> [QWNode] = { (root:QWRoot) -> [QWNode] in
@@ -218,6 +223,8 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
   }
 
 }
+
+
 
 public func ==(lhs: QWPath, rhs: QWPath) -> Bool {
   let areEqual =
