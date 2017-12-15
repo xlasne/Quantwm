@@ -20,14 +20,10 @@ class Tracklist: QWNode_S, Codable {
       return qwCounter
     }
     let qwCounter = QWCounter(name:"Tracklist")
-
-    // Quantwm Property Array generation
-    func getQWPropertyArray() -> [QWProperty] {
-        return Tracklist.qwPropertyArrayK
+    func getPropertyArray() -> [QWProperty] {
+        return TracklistQWModel.getPropertyArray()
     }
-    static let qwPropertyArrayK:[QWProperty] = [
-      finalTracksArrayK,  // property
-    ]
+
 
     // Quantwm Property: finalTracksArray
     static let finalTracksArrayK = QWProperty(
@@ -134,14 +130,10 @@ class TrackCollection: QWNode_S, Codable {
       return qwCounter
     }
     let qwCounter = QWCounter(name:"TrackCollection")
-
-    // Quantwm Property Array generation
-    func getQWPropertyArray() -> [QWProperty] {
-        return TrackCollection.qwPropertyArrayK
+    func getPropertyArray() -> [QWProperty] {
+        return TrackCollectionQWModel.getPropertyArray()
     }
-    static let qwPropertyArrayK:[QWProperty] = [
-      trackDictK,   // node
-    ]
+
 
     // Quantwm Node:  trackDict
     static let trackDictK = QWNodeProperty(

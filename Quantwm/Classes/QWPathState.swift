@@ -109,7 +109,7 @@ class QWNodeState {
     if let property = chain.first {
       properties = [property]
     } else if andAllChilds {
-      properties = myNode.getQWPropertyArray()
+      properties = myNode.getPropertyArray()
     }
 
     for property in properties {

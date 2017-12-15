@@ -1,0 +1,12 @@
+- Move Property List to Model
+- Move Property wrapper into the Model
+- Provide Property Getter/Setter via Model
+- Define Write as a Map
+- Add Write path.dropLast in the Reading List
+- PrettyPrint Model
+- PrettyPrint Registration
+- Assert directly on Read/Write actions
+- Split Quantwm into Model and Mediator
+- Write a good ReadMe
+- Add DebugLevel
+- sourcery: .customPropertyDefinition

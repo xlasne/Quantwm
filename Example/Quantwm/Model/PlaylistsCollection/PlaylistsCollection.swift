@@ -105,16 +105,10 @@ class PlaylistsCollection: QWNode_S, Codable {
       return qwCounter
     }
     let qwCounter = QWCounter(name:"PlaylistsCollection")
-
-    // Quantwm Property Array generation
-    func getQWPropertyArray() -> [QWProperty] {
-        return PlaylistsCollection.qwPropertyArrayK
+    func getPropertyArray() -> [QWProperty] {
+        return PlaylistsCollectionQWModel.getPropertyArray()
     }
-    static let qwPropertyArrayK:[QWProperty] = [
-      playlistArrayK,  // property
-      playlistDictK,  // property
-      totalK,  // property
-    ]
+
 
     // Quantwm Property: playlistArray
     static let playlistArrayK = QWProperty(

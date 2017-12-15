@@ -1055,9 +1055,11 @@
 				831BC531C09AF70DD391717B3FED6322 /* QWTreeWalker.swift */,
 				B0E60142D00FA9F9429F7609A6399B9E /* Support Files */,
 			);
+			indentWidth = 2;
 			name = Quantwm;
 			path = ../..;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 /* End PBXGroup section */
 

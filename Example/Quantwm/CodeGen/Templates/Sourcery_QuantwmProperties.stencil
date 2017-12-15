@@ -18,21 +18,10 @@
       return qwCounter
     }
     let qwCounter = QWCounter(name:"{{ type.name }}")
-
-    // Quantwm Property Array generation
-    func getQWPropertyArray() -> [QWProperty] {
-        return {{ type.name }}.qwPropertyArrayK
+    func getPropertyArray() -> [QWProperty] {
+        return {{ type.name }}QWModel.getPropertyArray()
     }
-    static let qwPropertyArrayK:[QWProperty] = [
-  {% for prop in type.storedVariables %}
-    {% if prop|annotated:"node" %}
-      {{ prop.name|replace:"_","" }}K,   // node
-    {% endif %}
-    {% if prop|annotated:"property" %}
-      {{ prop.name|replace:"_","" }}K,  // property
-    {% endif %}
-  {% endfor %}
-    ]
+
 {% endif %}
 
 {% if type.implements.QWNode_S %}

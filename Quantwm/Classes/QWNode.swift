@@ -25,11 +25,11 @@ public extension QWRoot {
 public protocol QWNode
 {
   func getQWCounter() -> QWCounter
-  func getQWPropertyArray() -> [QWProperty]
+  func getPropertyArray() -> [QWProperty]
 }
 
-public extension QWNode {
-  func getQWPropertyArray() -> [QWProperty] { return [] }
+public protocol QWModelProperty {
+    static func getPropertyArray() -> [QWProperty]
 }
 
 

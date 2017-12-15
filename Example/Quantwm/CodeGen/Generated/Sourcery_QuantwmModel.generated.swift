@@ -7,7 +7,7 @@ struct QWModel {
     static let root = DataModelQWModel(path: QWPath(root: rootProperty, chain: []))
 }
 
-struct DataModelQWModel
+struct DataModelQWModel: QWModelProperty
 {
     let path:QWPath
     let node:QWMap
@@ -34,9 +34,18 @@ struct DataModelQWModel
         // node: trackCollection
         self.trackCollection = TrackCollectionQWModel(path: path.appending(DataModel.trackCollectionK))
     }
+
+    // MARK: Property Array
+    static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
+    static let qwPropertyArrayK:[QWProperty] = [
+        DataModel.userIdK,  // property
+        DataModel.selectedPlaylistIdK,  // property
+        DataModel.playlistsCollectionK,   // node
+        DataModel.trackCollectionK,   // node
+    ]
 }
 
-struct PlaylistQWModel
+struct PlaylistQWModel: QWModelProperty
 {
     let path:QWPath
     let node:QWMap
@@ -47,9 +56,14 @@ struct PlaylistQWModel
         self.node = path.map
         self.all = path.all().map
     }
+
+    // MARK: Property Array
+    static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
+    static let qwPropertyArrayK:[QWProperty] = [
+    ]
 }
 
-struct PlaylistsCollectionQWModel
+struct PlaylistsCollectionQWModel: QWModelProperty
 {
     let path:QWPath
     let node:QWMap
@@ -72,9 +86,17 @@ struct PlaylistsCollectionQWModel
         // property: total
         self.total = path.appending(PlaylistsCollection.totalK).map
     }
+
+    // MARK: Property Array
+    static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
+    static let qwPropertyArrayK:[QWProperty] = [
+        PlaylistsCollection.playlistArrayK,  // property
+        PlaylistsCollection.playlistDictK,  // property
+        PlaylistsCollection.totalK,  // property
+    ]
 }
 
-struct TrackCollectionQWModel
+struct TrackCollectionQWModel: QWModelProperty
 {
     let path:QWPath
     let node:QWMap
@@ -89,9 +111,15 @@ struct TrackCollectionQWModel
         // node: trackDict
         self.trackDict = TracklistQWModel(path: path.appending(TrackCollection.trackDictK))
     }
+
+    // MARK: Property Array
+    static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
+    static let qwPropertyArrayK:[QWProperty] = [
+        TrackCollection.trackDictK,   // node
+    ]
 }
 
-struct TracklistQWModel
+struct TracklistQWModel: QWModelProperty
 {
     let path:QWPath
     let node:QWMap
@@ -106,5 +134,11 @@ struct TracklistQWModel
         // property: finalTracksArray
         self.finalTracksArray = path.appending(Tracklist.finalTracksArrayK).map
     }
+
+    // MARK: Property Array
+    static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
+    static let qwPropertyArrayK:[QWProperty] = [
+        Tracklist.finalTracksArrayK,  // property
+    ]
 }
 

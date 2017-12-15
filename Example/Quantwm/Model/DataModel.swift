@@ -41,33 +41,33 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         qwMediator.registerRoot(
             associatedObject: self,
             rootDescription: DataModel.dataModelK)
-        
-        networkMgr.postInitialization(dataModel: self)
     }
     
     var disposeBag = DisposeBag()
 
     func applicationBecomeActive() {
-
-        networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
-            print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
-            if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: me) {
-                    me.playlistsCollection.importChunck(chunk: indexedPlaylist)
-                }
-            }
-        }
-
-        networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
-            print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
-            if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: me) {
-                    me.trackCollection.importChunck(chunk: indexedTrack)
-                }
-            }
-        }
-
         qwMediator.updateActionAndRefresh(owner: self) {
+
+            networkMgr.postInitialization(dataModel: self)
+
+            networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
+                print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
+                if let me = self {
+                    me.qwMediator.updateActionAndRefresh(owner: me) {
+                        me.playlistsCollection.importChunck(chunk: indexedPlaylist)
+                    }
+                }
+            }
+
+            networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
+                print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
+                if let me = self {
+                    me.qwMediator.updateActionAndRefresh(owner: me) {
+                        me.trackCollection.importChunck(chunk: indexedTrack)
+                    }
+                }
+            }
+
             coordinator.postInit(dataModel: self)
         }
     }
@@ -156,17 +156,10 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
       return qwCounter
     }
     let qwCounter = QWCounter(name:"DataModel")
-
-    // Quantwm Property Array generation
-    func getQWPropertyArray() -> [QWProperty] {
-        return DataModel.qwPropertyArrayK
+    func getPropertyArray() -> [QWProperty] {
+        return DataModelQWModel.getPropertyArray()
     }
-    static let qwPropertyArrayK:[QWProperty] = [
-      userIdK,  // property
-      selectedPlaylistIdK,  // property
-      playlistsCollectionK,   // node
-      trackCollectionK,   // node
-    ]
+
 
     // Quantwm Property: userId
     static let userIdK = QWProperty(

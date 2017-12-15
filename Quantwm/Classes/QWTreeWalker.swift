@@ -19,7 +19,7 @@ public class QWTreeWalker {
       assert(false,"Error scanNodeTreeMap: Probable Recursive failure. Reached limit of 100 levels")
     }
     closure(parent)
-    let propArray = parent.getQWPropertyArray()
+    let propArray = parent.getPropertyArray()
     for property in propArray {
       let foundNodes: [QWNode] = property.getChildArray(node: parent)
       for node in foundNodes {
@@ -33,7 +33,7 @@ public class QWTreeWalker {
       assert(false,"Error scanNodeTreeReduce: Probable Recursive failure. Reached limit of 100 levels")
     }
     var finalResult: Result = nextPartialResult(initialResult,parent)
-    let propArray = parent.getQWPropertyArray()
+    let propArray = parent.getPropertyArray()
     for property in propArray {
       let foundNodes: [QWNode] = property.getChildArray(node: parent)
       for node in foundNodes {

@@ -47,10 +47,8 @@ class PlaylistCollectionViewModelTest: XCTestCase {
             selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration),
             qwMap: viewModel!.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
-
-        self.viewModel!.registerObserver(target: self, registrationDesc: playlistUpdatedREG)
-        
         dataModel!.qwMediator.updateActionAndRefresh(owner: self) {
+            self.viewModel!.registerObserver(target: self, registrationDesc: playlistUpdatedREG)
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 1)
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 2)
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 3)

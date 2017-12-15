@@ -26,8 +26,6 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
             viewModel.registerObserver(
                 target: self,
                 registrationDesc: playlistUpdatedREG(viewModel: viewModel))
-        }
-        viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
                 target: self,
                 registrationDesc: userIdREG(viewModel: viewModel))
