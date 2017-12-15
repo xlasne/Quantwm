@@ -34,19 +34,8 @@
   {% endfor %}
     ]
 {% endif %}
-{% if type.implements.QWNode_S %}
-{% for rootProp in type.staticVariables %}
-{% if rootProp|annotated:"rootpath" %}
-    // Quantwm Path and Map generation
-{% for prop in type.storedVariables %}
-{% if prop|annotated:"property" or prop|annotated:"node" %}
-    static let {{ prop.name|replace:"_","" }}Path: QWPath = {{ rootProp.name }}.appending({{type.name}}.{{ prop.name|replace:"_","" }}K)
-    static let {{ prop.name|replace:"_","" }}Map: QWMap = {{ prop.name|replace:"_","" }}Path.map
 
-{% endif %}
-{% endfor %}
-{% endif %}
-{% endfor %}
+{% if type.implements.QWNode_S %}
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" %}
     // Quantwm Property: {{ prop.name|replace:"_","" }}

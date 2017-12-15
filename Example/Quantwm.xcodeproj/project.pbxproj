@@ -35,6 +35,8 @@
 		255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */; };
 		255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D881FE13C5B00F30682 /* placeholder.png */; };
 		255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */; };
+		2571597E1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 2571597D1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil */; };
+		257159801FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */; };
 		25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */; };
 		25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */; };
 		25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */; };
@@ -81,7 +83,7 @@
 		255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sourcery_PropDict.generated.swift; sourceTree = "<group>"; };
 		255C5D581FE134DA00F30682 /* stat.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stat.generated.swift; sourceTree = "<group>"; };
 		255C5D5A1FE134DA00F30682 /* Sourcery_PropDict.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_PropDict.stencil; sourceTree = "<group>"; };
-		255C5D5B1FE134DA00F30682 /* Sourcery_Quantwm.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_Quantwm.stencil; sourceTree = "<group>"; };
+		255C5D5B1FE134DA00F30682 /* Sourcery_QuantwmProperties.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_QuantwmProperties.stencil; sourceTree = "<group>"; };
 		255C5D5C1FE134DA00F30682 /* stat.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = stat.stencil; sourceTree = "<group>"; };
 		255C5D601FE1370300F30682 /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
 		255C5D611FE1370300F30682 /* PlaylistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistCell.xib; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 		255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerPlaylistStub.swift; sourceTree = "<group>"; };
 		255C5D951FE13E1B00F30682 /* PlaylistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTest.swift; sourceTree = "<group>"; };
 		255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModelTest.swift; sourceTree = "<group>"; };
+		2571597D1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sourcery_QuantwmModel.stencil; sourceTree = "<group>"; };
+		2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sourcery_Quantwm2.generated.swift; sourceTree = "<group>"; };
 		25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD591FE14BEF000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +220,7 @@
 			children = (
 				255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */,
 				255C5D581FE134DA00F30682 /* stat.generated.swift */,
+				2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -224,7 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				255C5D5A1FE134DA00F30682 /* Sourcery_PropDict.stencil */,
-				255C5D5B1FE134DA00F30682 /* Sourcery_Quantwm.stencil */,
+				255C5D5B1FE134DA00F30682 /* Sourcery_QuantwmProperties.stencil */,
+				2571597D1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil */,
 				255C5D5C1FE134DA00F30682 /* stat.stencil */,
 			);
 			path = Templates;
@@ -309,8 +315,8 @@
 		255C5D7F1FE13AC600F30682 /* PlaylistsCollection */ = {
 			isa = PBXGroup;
 			children = (
-				255C5D801FE13AC600F30682 /* Playlists */,
 				255C5D821FE13AC600F30682 /* PlaylistsCollection.swift */,
+				255C5D801FE13AC600F30682 /* Playlists */,
 			);
 			path = PlaylistsCollection;
 			sourceTree = "<group>";
@@ -563,6 +569,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2571597E1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				255C5D781FE1370300F30682 /* PlaylistHeaderView.xib in Resources */,
 				255C5D741FE1370300F30682 /* TrackCell.xib in Resources */,
@@ -754,6 +761,7 @@
 				255C5D791FE1370300F30682 /* PlaylistHeaderViewController.swift in Sources */,
 				255C5D711FE1370300F30682 /* PlaylistCollectionViewModel.swift in Sources */,
 				255C5D3C1FE12D7500F30682 /* DeezerPlaylistCollection.swift in Sources */,
+				257159801FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,8 +37,6 @@ class PlaylistsCollection: QWNode_S, Codable {
     // sourcery: property
     var _total: Int = -1
 
-    // sourcery: rootpath
-    static let rootPath = QWPath(root: DataModel.dataModelK, chain:[DataModel.playlistsCollectionK])
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -98,6 +96,17 @@ class PlaylistsCollection: QWNode_S, Codable {
         }
     }
 
+    // Quantwm Path and Map generation
+
+    static let playlistArrayPath: QWPath = QWModel.root.playlistsCollection.playlistArray
+    static let playlistArrayMap: QWMap = playlistArrayPath.map
+
+    static let playlistDictPath: QWPath = QWModel.root.playlistsCollection.playlistDict
+    static let playlistDictMap: QWMap = playlistDictPath.map
+
+    static let totalPath: QWPath = QWModel.root.playlistsCollection.total
+    static let totalMap: QWMap = totalPath.map
+
 
     // sourcery:inline:PlaylistsCollection.QuantwmDeclarationInline
 
@@ -118,15 +127,6 @@ class PlaylistsCollection: QWNode_S, Codable {
       playlistDictK,  // property
       totalK,  // property
     ]
-    // Quantwm Path and Map generation
-    static let playlistArrayPath: QWPath = rootPath.appending(PlaylistsCollection.playlistArrayK)
-    static let playlistArrayMap: QWMap = playlistArrayPath.map
-
-    static let playlistDictPath: QWPath = rootPath.appending(PlaylistsCollection.playlistDictK)
-    static let playlistDictMap: QWMap = playlistDictPath.map
-
-    static let totalPath: QWPath = rootPath.appending(PlaylistsCollection.totalK)
-    static let totalMap: QWMap = totalPath.map
 
     // Quantwm Property: playlistArray
     static let playlistArrayK = QWProperty(

@@ -8,6 +8,7 @@
 import Quantwm
 
 protocol QWNode_S: QWNode {}
+protocol QWRoot_S: QWRoot {}
 protocol QWMediatorOwner_S: QWMediatorOwner {}
 
 protocol SourceryEncoding {}

@@ -28,6 +28,7 @@ class Tracklist: QWNode_S, Codable {
     static let qwPropertyArrayK:[QWProperty] = [
       finalTracksArrayK,  // property
     ]
+
     // Quantwm Property: finalTracksArray
     static let finalTracksArrayK = QWProperty(
         propertyKeypath: \Tracklist.finalTracksArray,
@@ -87,14 +88,10 @@ class TrackCollection: QWNode_S, Codable {
         case _trackDict = "trackDict"
     }
 
-    static let trackDictAllPath: QWPath = trackDictPath.all()
-    static let trackDictAllMap: QWMap = trackDictAllPath.map
 
     // sourcery: node
+    // sourcery: type = "Tracklist"
     var _trackDict: [PlaylistID:Tracklist] = [:]
-
-    // sourcery: rootpath
-    static let rootPath = QWPath(root: DataModel.dataModelK, chain:[DataModel.trackCollectionK])
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -122,6 +119,12 @@ class TrackCollection: QWNode_S, Codable {
         }
     }
 
+    // Quantwm Path and Map generation
+    static let trackDictAllPath: QWPath = QWModel.root.trackCollection.trackDict.all
+    static let trackDictAllMap: QWMap = trackDictAllPath.map
+
+
+    
     // sourcery:inline:TrackCollection.QuantwmDeclarationInline
 
     // MARK: - Sourcery
@@ -139,9 +142,6 @@ class TrackCollection: QWNode_S, Codable {
     static let qwPropertyArrayK:[QWProperty] = [
       trackDictK,   // node
     ]
-    // Quantwm Path and Map generation
-    static let trackDictPath: QWPath = rootPath.appending(TrackCollection.trackDictK)
-    static let trackDictMap: QWMap = trackDictPath.map
 
     // Quantwm Node:  trackDict
     static let trackDictK = QWNodeProperty(

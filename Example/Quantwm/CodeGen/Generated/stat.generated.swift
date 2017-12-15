@@ -7,5 +7,5 @@ This project contains:
 - 3 enums
 - 7 structs
 - 29 classes
-- 7 protocols
+- 8 protocols
 */

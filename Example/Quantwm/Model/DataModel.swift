@@ -23,7 +23,7 @@ extension MyModel {
     }
 }
 
-class DataModel : NSObject, QWRoot, QWMediatorOwner_S, QWNode_S  {
+class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     
     static let debug_userID = 10
     
@@ -96,11 +96,12 @@ class DataModel : NSObject, QWRoot, QWMediatorOwner_S, QWNode_S  {
     //                                                            -> TracklistTableViewController.tracklistREG
     
     
+    // sourcery: root
     static let dataModelK = QWRootProperty(sourceType: DataModel.self,
                                            description: "dataModel")
     
     // MARK: - Quantwm Properties and Nodes
-
+    
     // sourcery: property
     var _userId : UserID
 
@@ -112,9 +113,6 @@ class DataModel : NSObject, QWRoot, QWMediatorOwner_S, QWNode_S  {
 
     // sourcery: node
     var _trackCollection : TrackCollection = TrackCollection()
-
-    // sourcery: rootpath
-    static let rootPath = QWPath(root: DataModel.dataModelK, chain:[])
 
     // MARK: - GETTER
     static let getSelectedPlaylistMap = DataModel.selectedPlaylistIdMap +
@@ -146,6 +144,20 @@ class DataModel : NSObject, QWRoot, QWMediatorOwner_S, QWNode_S  {
         trackCollection.updateTracks(playlistIdArray: playlistIdArray)
     }
 
+    // Quantwm Path and Map generation
+    static let userIdPath: QWPath = QWModel.root.userId
+    static let userIdMap: QWMap = userIdPath.map
+
+    static let selectedPlaylistIdPath: QWPath = QWModel.root.selectedPlaylistId
+    static let selectedPlaylistIdMap: QWMap = selectedPlaylistIdPath.map
+
+    static let playlistsCollectionPath: QWPath = QWModel.root.playlistsCollection.node
+    static let playlistsCollectionMap: QWMap = playlistsCollectionPath.map
+
+    static let trackCollectionPath: QWPath = QWModel.root.trackCollection.node
+    static let trackCollectionMap: QWMap = trackCollectionPath.map
+
+
     // sourcery:inline:DataModel.QuantwmDeclarationInline
 
     // MARK: - Sourcery
@@ -173,18 +185,6 @@ class DataModel : NSObject, QWRoot, QWMediatorOwner_S, QWNode_S  {
       playlistsCollectionK,   // node
       trackCollectionK,   // node
     ]
-    // Quantwm Path and Map generation
-    static let userIdPath: QWPath = rootPath.appending(DataModel.userIdK)
-    static let userIdMap: QWMap = userIdPath.map
-
-    static let selectedPlaylistIdPath: QWPath = rootPath.appending(DataModel.selectedPlaylistIdK)
-    static let selectedPlaylistIdMap: QWMap = selectedPlaylistIdPath.map
-
-    static let playlistsCollectionPath: QWPath = rootPath.appending(DataModel.playlistsCollectionK)
-    static let playlistsCollectionMap: QWMap = playlistsCollectionPath.map
-
-    static let trackCollectionPath: QWPath = rootPath.appending(DataModel.trackCollectionK)
-    static let trackCollectionMap: QWMap = trackCollectionPath.map
 
     // Quantwm Property: userId
     static let userIdK = QWProperty(

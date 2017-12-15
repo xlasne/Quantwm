@@ -112,7 +112,7 @@ public class QWProperty: Hashable, Encodable
   fileprivate(set) var dest: String
   fileprivate(set) var isNode: Bool = false
 
-  func getChildArray(node:QWNode) -> [QWNode] {
+  public func getChildArray(node:QWNode) -> [QWNode] {
     return []
   }
 
@@ -172,9 +172,9 @@ public class QWNodeProperty: QWProperty
 
   // If getChildArray is nil, this is a value descriptor (last keypath element)
   // else this is a ChildQWProperty
-  private let getChildArrayClosure: ((QWNode) -> [QWNode])
+  public let getChildArrayClosure: ((QWNode) -> [QWNode])
 
-  override func getChildArray(node: QWNode) -> [QWNode] {
+  public override func getChildArray(node: QWNode) -> [QWNode] {
     return getChildArrayClosure(node)
   }
 
