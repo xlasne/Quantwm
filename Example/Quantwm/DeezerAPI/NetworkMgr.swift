@@ -57,7 +57,7 @@ class NetworkMgr: NSObject, DeezerAPI {
 
     static let playlistSelectedREG: QWRegistration = QWRegistration(
         selector: #selector(NetworkMgr.loadSelectedPlaylistTracks),
-        qwMap: QWModel.root.selectedPlaylistId.map,
+        qwMap: QWModel.root.selectedPlaylistId,
         name: "NetworkMgr.loadSelectedPlaylistTracks")
 
     @objc func loadSelectedPlaylistTracks() {

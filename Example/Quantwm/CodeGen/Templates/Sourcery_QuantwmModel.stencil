@@ -16,8 +16,9 @@ struct QWModel {
 {% if type.implements.QWNode_S %}
 struct {{ type.name }}QWModel
 {
-    let node:QWPath
-    let all: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
 {% if prop.name|!hasPrefix:"_" %}}
@@ -34,14 +35,15 @@ Solution 3: Adopt an other convention and change this stencil.
 {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
     let {{monitoredName}}: {{nodeTypeName}}QWModel
 {% else %}
-    let {{monitoredName}}: QWPath
+    let {{monitoredName}}: QWMap
 {% endif %}
 {% endif %}
 {% endfor %}
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
   {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
@@ -50,17 +52,15 @@ Solution 3: Adopt an other convention and change this stencil.
     {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
 
         // node: {{monitoredName}}
-        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: node.appending({{ propertyKName }}))
+        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }}))
   {% else %}
 
         // property: {{monitoredName}}
-        self.{{monitoredName}} = node.appending({{ propertyKName }})
+        self.{{monitoredName}} = path.appending({{ propertyKName }}).map
   {% endif %}
 {% endif %}
 {% endfor %}
     }
-
-
 }
 
 {% endif %}

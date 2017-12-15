@@ -169,7 +169,7 @@ extension PlaylistsCollection // Data Source
 
     // RefreshUI Access: register to playlistArrayMap
     static func playlistsCountMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistArray.map
+        return root.playlistArray
     }
     var playlistsCount: Int {
         return playlistArray.count
@@ -177,7 +177,7 @@ extension PlaylistsCollection // Data Source
 
     // RefreshUI Access: register to playlistDictMap / playlistArrayMap
     static func playlistForIndexMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistArray.map + root.playlistDict.map
+        return root.playlistArray + root.playlistDict
     }
     func playlistForIndex(rowIndex: Int) -> Playlist? {
         if (0 <= rowIndex) && (rowIndex < playlistArray.count) {
@@ -189,7 +189,7 @@ extension PlaylistsCollection // Data Source
 
     // RefreshUI Access: register to playlistDictMap
     static func playlistMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistDict.map
+        return root.playlistDict
     }
     func playlist(playlistId: PlaylistID) -> Playlist? {
         return playlistDict[playlistId]

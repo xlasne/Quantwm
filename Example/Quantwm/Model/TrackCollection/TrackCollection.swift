@@ -121,7 +121,7 @@ class TrackCollection: QWNode_S, Codable {
 
     // Quantwm Path and Map generation
 //    static let trackDictAllPath: QWPath = QWModel.root.trackCollection.trackDict.all
-//    static let trackDictAllMap: QWMap = trackDictAllPath.map
+//    static let trackDictAllMap: QWMap = trackDictAllPath
 
 
     

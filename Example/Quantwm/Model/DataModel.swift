@@ -112,9 +112,9 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     var _trackCollection : TrackCollection = TrackCollection()
 
     // MARK: - GETTER
-    static let selectedPlaylistMap = QWModel.root.selectedPlaylistId.map +
-        QWModel.root.playlistsCollection.playlistDict.map +
-        QWModel.root.playlistsCollection.playlistArray.map
+    static let selectedPlaylistMap = QWModel.root.selectedPlaylistId +
+        QWModel.root.playlistsCollection.playlistDict +
+        QWModel.root.playlistsCollection.playlistArray
 
     var selectedPlaylist: Playlist? {
         if let playlistId = selectedPlaylistId {
@@ -123,8 +123,8 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         return nil
     }
 
-    static let selectedTracklistMap = QWModel.root.selectedPlaylistId.map
-        + QWModel.root.trackCollection.trackDict.all.map
+    static let selectedTracklistMap = QWModel.root.selectedPlaylistId
+        + QWModel.root.trackCollection.trackDict.all
 
     var selectedTracklist: Tracklist? {
         if let playlistId = selectedPlaylistId {

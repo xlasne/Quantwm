@@ -9,102 +9,102 @@ struct QWModel {
 
 struct DataModelQWModel
 {
-    let node:QWPath
-    let all: QWPath
-    let userId: QWPath
-    let selectedPlaylistId: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
+    let userId: QWMap
+    let selectedPlaylistId: QWMap
     let playlistsCollection: PlaylistsCollectionQWModel
     let trackCollection: TrackCollectionQWModel
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
 
         // property: userId
-        self.userId = node.appending(DataModel.userIdK)
+        self.userId = path.appending(DataModel.userIdK).map
 
         // property: selectedPlaylistId
-        self.selectedPlaylistId = node.appending(DataModel.selectedPlaylistIdK)
+        self.selectedPlaylistId = path.appending(DataModel.selectedPlaylistIdK).map
 
         // node: playlistsCollection
-        self.playlistsCollection = PlaylistsCollectionQWModel(path: node.appending(DataModel.playlistsCollectionK))
+        self.playlistsCollection = PlaylistsCollectionQWModel(path: path.appending(DataModel.playlistsCollectionK))
 
         // node: trackCollection
-        self.trackCollection = TrackCollectionQWModel(path: node.appending(DataModel.trackCollectionK))
+        self.trackCollection = TrackCollectionQWModel(path: path.appending(DataModel.trackCollectionK))
     }
-
-
 }
 
 struct PlaylistQWModel
 {
-    let node:QWPath
-    let all: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
     }
-
-
 }
 
 struct PlaylistsCollectionQWModel
 {
-    let node:QWPath
-    let all: QWPath
-    let playlistArray: QWPath
-    let playlistDict: QWPath
-    let total: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
+    let playlistArray: QWMap
+    let playlistDict: QWMap
+    let total: QWMap
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
 
         // property: playlistArray
-        self.playlistArray = node.appending(PlaylistsCollection.playlistArrayK)
+        self.playlistArray = path.appending(PlaylistsCollection.playlistArrayK).map
 
         // property: playlistDict
-        self.playlistDict = node.appending(PlaylistsCollection.playlistDictK)
+        self.playlistDict = path.appending(PlaylistsCollection.playlistDictK).map
 
         // property: total
-        self.total = node.appending(PlaylistsCollection.totalK)
+        self.total = path.appending(PlaylistsCollection.totalK).map
     }
-
-
 }
 
 struct TrackCollectionQWModel
 {
-    let node:QWPath
-    let all: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
     let trackDict: TracklistQWModel
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
 
         // node: trackDict
-        self.trackDict = TracklistQWModel(path: node.appending(TrackCollection.trackDictK))
+        self.trackDict = TracklistQWModel(path: path.appending(TrackCollection.trackDictK))
     }
-
-
 }
 
 struct TracklistQWModel
 {
-    let node:QWPath
-    let all: QWPath
-    let finalTracksArray: QWPath
+    let path:QWPath
+    let node:QWMap
+    let all: QWMap
+    let finalTracksArray: QWMap
 
     init(path: QWPath) {
-        self.node = path
-        self.all = path.all()
+        self.path = path
+        self.node = path.map
+        self.all = path.all().map
 
         // property: finalTracksArray
-        self.finalTracksArray = node.appending(Tracklist.finalTracksArrayK)
+        self.finalTracksArray = path.appending(Tracklist.finalTracksArrayK).map
     }
-
-
 }
 

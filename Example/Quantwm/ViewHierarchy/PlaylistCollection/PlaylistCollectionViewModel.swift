@@ -49,8 +49,8 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
 
     // MARK: - Get Title
     var mapForTitle: QWMap {
-        return QWModel.root.userId.map +
-            playlistCollectionModel.total.map +
+        return QWModel.root.userId +
+            playlistCollectionModel.total +
             PlaylistsCollection.playlistsCountMap(root: playlistCollectionModel)
     }
 
