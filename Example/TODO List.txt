@@ -1,5 +1,5 @@
-- Move Property List to Model
-- Move Property wrapper into the Model
+//DONE: Move Property List to Model
+//Aborted: Move Property wrapper into the Model- cancelled, because of fileprivate level
 - Provide Property Getter/Setter via Model
 - Define Write as a Map
 - Add Write path.dropLast in the Reading List

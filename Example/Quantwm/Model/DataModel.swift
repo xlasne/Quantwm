@@ -100,16 +100,16 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     static let dataModelK = QWRootProperty(sourceType: DataModel.self, description: "dataModel")
 
     // sourcery: property
-    var _userId : UserID
+    fileprivate var _userId : UserID
 
     // sourcery: property
-    var _selectedPlaylistId : PlaylistID?
-    
-    // sourcery: node
-    var _playlistsCollection : PlaylistsCollection = PlaylistsCollection()
+    fileprivate var _selectedPlaylistId : PlaylistID?
 
     // sourcery: node
-    var _trackCollection : TrackCollection = TrackCollection()
+    fileprivate var _playlistsCollection : PlaylistsCollection = PlaylistsCollection()
+
+    // sourcery: node
+    fileprivate var _trackCollection : TrackCollection = TrackCollection()
 
     // MARK: - GETTER
     static let selectedPlaylistMap = QWModel.root.selectedPlaylistId +

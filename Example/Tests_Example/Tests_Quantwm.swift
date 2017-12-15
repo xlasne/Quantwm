@@ -17,6 +17,10 @@ class QuantwmTest: XCTestCase {
 
     class TestStruct: QWNode
     {
+        func getPropertyArray() -> [QWProperty] {
+            return []
+        }
+
         func getNodeChangeCounter() -> QWCounter {
             return changeCounter
         }
@@ -63,6 +67,10 @@ class QuantwmTest: XCTestCase {
 
     class MyClass: QWRoot
     {
+        func getPropertyArray() -> [QWProperty] {
+            return []
+        }
+
         func getQWCounter() -> QWCounter {
             return changeCounter
         }
@@ -127,6 +135,9 @@ class QuantwmTest: XCTestCase {
         let changeCounter = QWCounter(name: "TestBase")
         func getQWCounter() -> QWCounter {
             return changeCounter
+        }
+        func getPropertyArray() -> [QWProperty] {
+            return []
         }
 
         // QWMediatorOwner Protocol

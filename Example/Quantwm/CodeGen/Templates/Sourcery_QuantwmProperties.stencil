@@ -39,6 +39,9 @@
         description: "{{ prop.name }}")
 {% endif %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
+{% if prop.readAccess == "public" or prop.readAccess == "open" or prop.readAccess == "internal" %}
+//FIXME: Variable {{ prop.name }} shall be fileprivate
+{% endif %}
     var {{ prop.name|replace:"_","" }} : {{ prop.typeName }} {
       get {
 {% if prop|annotated:"allowBackgroundRead" %}

@@ -87,7 +87,7 @@ class TrackCollection: QWNode_S, Codable {
 
     // sourcery: node
     // sourcery: type = "Tracklist"
-    var _trackDict: [PlaylistID:Tracklist] = [:]
+    fileprivate var _trackDict: [PlaylistID:Tracklist] = [:]
 
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

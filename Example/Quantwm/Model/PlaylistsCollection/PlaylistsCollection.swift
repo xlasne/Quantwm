@@ -26,16 +26,16 @@ class PlaylistsCollection: QWNode_S, Codable {
     // Best practice: Storing playlist order and playlist content separately
     // Change of order, insertion, deletion does not trigger refresh of Playlist ID based content.
 
-    var _userId: UserID?
+    fileprivate var _userId: UserID?
 
     // sourcery: property
-    var _playlistArray: [PlaylistID] = []
+    fileprivate var _playlistArray: [PlaylistID] = []
 
     // sourcery: property
-    var _playlistDict: [PlaylistID:Playlist] = [:]
+    fileprivate var _playlistDict: [PlaylistID:Playlist] = [:]
 
     // sourcery: property
-    var _total: Int = -1
+    fileprivate var _total: Int = -1
 
 
     required init(from decoder: Decoder) throws {
