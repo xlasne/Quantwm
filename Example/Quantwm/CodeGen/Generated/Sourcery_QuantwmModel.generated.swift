@@ -4,7 +4,7 @@
 import Quantwm
 struct QWModel {
     static let rootProperty:QWRootProperty = DataModel.dataModelK
-    static let root = DataModelQWModel(path: QWPath(root: rootProperty, chain: []))
+    static let root = DataModelQWModel(path: QWPath(root: rootProperty))
 }
 
 struct DataModelQWModel: QWModelProperty
@@ -35,6 +35,18 @@ struct DataModelQWModel: QWModelProperty
         self.trackCollection = TrackCollectionQWModel(path: path.appending(DataModel.trackCollectionK))
     }
 
+    // MARK: Getter Array
+
+    // node: Getter Self
+    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
+
+
+    // property: userId
+    func userIdGetter() -> (QWRoot) -> [UserID] { return path.generatePropertyGetter(property: DataModel.userIdK) }
+
+    // property: selectedPlaylistId
+    func selectedPlaylistIdGetter() -> (QWRoot) -> [PlaylistID?] { return path.generatePropertyGetter(property: DataModel.selectedPlaylistIdK) }
+
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
@@ -56,6 +68,12 @@ struct PlaylistQWModel: QWModelProperty
         self.node = path.map
         self.all = path.all().map
     }
+
+    // MARK: Getter Array
+
+    // node: Getter Self
+    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
+
 
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
@@ -87,6 +105,21 @@ struct PlaylistsCollectionQWModel: QWModelProperty
         self.total = path.appending(PlaylistsCollection.totalK).map
     }
 
+    // MARK: Getter Array
+
+    // node: Getter Self
+    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
+
+
+    // property: playlistArray
+    func playlistArrayGetter() -> (QWRoot) -> [[PlaylistID]] { return path.generatePropertyGetter(property: PlaylistsCollection.playlistArrayK) }
+
+    // property: playlistDict
+    func playlistDictGetter() -> (QWRoot) -> [[PlaylistID:Playlist]] { return path.generatePropertyGetter(property: PlaylistsCollection.playlistDictK) }
+
+    // property: total
+    func totalGetter() -> (QWRoot) -> [Int] { return path.generatePropertyGetter(property: PlaylistsCollection.totalK) }
+
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
@@ -112,6 +145,12 @@ struct TrackCollectionQWModel: QWModelProperty
         self.trackDict = TracklistQWModel(path: path.appending(TrackCollection.trackDictK))
     }
 
+    // MARK: Getter Array
+
+    // node: Getter Self
+    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
+
+
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
@@ -134,6 +173,15 @@ struct TracklistQWModel: QWModelProperty
         // property: finalTracksArray
         self.finalTracksArray = path.appending(Tracklist.finalTracksArrayK).map
     }
+
+    // MARK: Getter Array
+
+    // node: Getter Self
+    func nodeGetter() -> (QWRoot) -> [QWNode] { return  path.generateNodeGetter() }
+
+
+    // property: finalTracksArray
+    func finalTracksArrayGetter() -> (QWRoot) -> [[Track]] { return path.generatePropertyGetter(property: Tracklist.finalTracksArrayK) }
 
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }

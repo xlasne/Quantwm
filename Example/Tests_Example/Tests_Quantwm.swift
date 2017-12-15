@@ -241,7 +241,10 @@ class QuantwmTest: XCTestCase {
     }
 
     func testBasicUpdate() {
-        let qwPath = QWPath(root: TestBase.testRootK, chain: [TestBase.testClassK, MyClass.testStructK, TestStruct.numberK]).map
+        let qwPath = QWPath(root: TestBase.testRootK)
+            .appending(TestBase.testClassK)
+            .appending(MyClass.testStructK)
+            .appending(TestStruct.numberK).map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
                                           qwMap: qwPath,
@@ -262,7 +265,10 @@ class QuantwmTest: XCTestCase {
     }
 
     func testOptionalUpdate() {
-        let keypath = QWPath(root:TestBase.testRootK, chain: [TestBase.optNumberK]).map
+
+        let keypath = QWPath(root: TestBase.testRootK)
+            .appending(TestBase.optNumberK).map
+
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
                                           qwMap: keypath,
                                           name: "testOptionalCall")
@@ -296,7 +302,9 @@ class QuantwmTest: XCTestCase {
     }
 
     func testLazyUpdate() {
-        let keypath = QWPath(root:TestBase.testRootK, chain: [TestBase.lazyNumberK]).map
+        let keypath = QWPath(root: TestBase.testRootK)
+            .appending(TestBase.lazyNumberK).map
+
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
                                           qwMap: keypath,
                                           name: "testLazyCall")
@@ -322,7 +330,10 @@ class QuantwmTest: XCTestCase {
 
 
     func testDictUpdate() {
-        let keypath = QWPath(root:TestBase.testRootK, chain: [TestBase.testClassK, MyClass.testDictK]).map
+        let keypath = QWPath(root: TestBase.testRootK)
+            .appending(TestBase.testClassK)
+            .appending(MyClass.testDictK).map
+
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
                                           qwMap: keypath,
                                           name: "TestDict")
@@ -342,7 +353,12 @@ class QuantwmTest: XCTestCase {
     }
 
     func testDictUpdate2() {
-        let keypath = QWPath(root:TestBase.testRootK, chain: [TestBase.testClassK, MyClass.testDictK,TestStruct.numberK]).map
+        let keypath = QWPath(root: TestBase.testRootK)
+            .appending(TestBase.testClassK)
+            .appending(MyClass.testDictK)
+            .appending(TestStruct.numberK)
+            .map
+
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
                                           qwMap: keypath,
                                           name: "testDict2")

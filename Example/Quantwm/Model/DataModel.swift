@@ -162,7 +162,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
 
 
     // Quantwm Property: userId
-    static let userIdK = QWProperty(
+    static let userIdK = QWPropProperty(
         propertyKeypath: \DataModel.userId,
         description: "_userId")
     var userId : UserID {
@@ -176,7 +176,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
       }
     }
     // Quantwm Property: selectedPlaylistId
-    static let selectedPlaylistIdK = QWProperty(
+    static let selectedPlaylistIdK = QWPropProperty(
         propertyKeypath: \DataModel.selectedPlaylistId,
         description: "_selectedPlaylistId")
     var selectedPlaylistId : PlaylistID? {

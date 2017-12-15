@@ -21,13 +21,7 @@ class QWPathTraceReader
   var keypathExtension: String? {
     return qwPath.extensionPath
   }
-  
-  init(root: QWRootProperty, chain: [QWProperty])
-  {
-    let qwPath = QWPath(root: root, chain: chain)
-    self.qwPath = qwPath
-  }
-  
+    
   init(qwPath: QWPath)
   {
     self.qwPath = qwPath

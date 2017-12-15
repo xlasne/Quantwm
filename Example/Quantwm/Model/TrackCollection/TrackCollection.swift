@@ -26,7 +26,7 @@ class Tracklist: QWNode_S, Codable {
 
 
     // Quantwm Property: finalTracksArray
-    static let finalTracksArrayK = QWProperty(
+    static let finalTracksArrayK = QWPropProperty(
         propertyKeypath: \Tracklist.finalTracksArray,
         description: "_finalTracksArray")
     var finalTracksArray : [Track] {
@@ -114,12 +114,6 @@ class TrackCollection: QWNode_S, Codable {
             }
         }
     }
-
-    // Quantwm Path and Map generation
-//    static let trackDictAllPath: QWPath = QWModel.root.trackCollection.trackDict.all
-//    static let trackDictAllMap: QWMap = trackDictAllPath
-
-
     
     // sourcery:inline:TrackCollection.QuantwmDeclarationInline
 

@@ -28,7 +28,7 @@
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" %}
     // Quantwm Property: {{ prop.name|replace:"_","" }}
-    static let {{ prop.name|replace:"_","" }}K = QWProperty(
+    static let {{ prop.name|replace:"_","" }}K = QWPropProperty(
         propertyKeypath: \{{type.name}}.{{prop.name|replace:"_",""}},
         description: "{{ prop.name }}")
 {% endif %}

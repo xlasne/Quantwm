@@ -111,7 +111,7 @@ class PlaylistsCollection: QWNode_S, Codable {
 
 
     // Quantwm Property: playlistArray
-    static let playlistArrayK = QWProperty(
+    static let playlistArrayK = QWPropProperty(
         propertyKeypath: \PlaylistsCollection.playlistArray,
         description: "_playlistArray")
     var playlistArray : [PlaylistID] {
@@ -125,7 +125,7 @@ class PlaylistsCollection: QWNode_S, Codable {
       }
     }
     // Quantwm Property: playlistDict
-    static let playlistDictK = QWProperty(
+    static let playlistDictK = QWPropProperty(
         propertyKeypath: \PlaylistsCollection.playlistDict,
         description: "_playlistDict")
     var playlistDict : [PlaylistID:Playlist] {
@@ -139,7 +139,7 @@ class PlaylistsCollection: QWNode_S, Codable {
       }
     }
     // Quantwm Property: total
-    static let totalK = QWProperty(
+    static let totalK = QWPropProperty(
         propertyKeypath: \PlaylistsCollection.total,
         description: "_total")
     var total : Int {

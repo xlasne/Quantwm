@@ -16,23 +16,44 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     case root
     case chain
     case andAllChilds
+    case type
   }
 
+  enum QWPathType: Int, Codable {
+    case node
+    case property
+    case tree
+  }
 
   let root: QWRootProperty
   let chain: [QWProperty]
-  var andAllChilds: Bool
-  
+  let andAllChilds: Bool
+  let type: QWPathType
+
+  public init(root: QWRootProperty)
+  {
+    self.root = root
+    self.chain = []
+    self.andAllChilds = false
+    self.type = .node
+  }
+
   // Set andAllChilds to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
   // match the source and destination types between Objective-C and Swift
-  public init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false)
+  fileprivate init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false)
   {
     self.root = root
     self.chain = chain
     self.andAllChilds = andAllChilds
 
-    if QUANTUM_MVVM_DEBUG == true {
-      self.validate()
+    if andAllChilds {
+      self.type = .tree
+    } else {
+      if let isProp = chain.last?.isProperty {
+        self.type = isProp ? .property : .node
+      } else {
+        self.type = .node
+      }
     }
   }
 
@@ -79,23 +100,7 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     }
   }
   
-  func validate()
-  {
-    var previousProperty = root.sourceType
-    for property in chain {
-      property.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty)
-      previousProperty = property.destType
-    }
 
-    // All properties shall be Node is andAllChild is true
-    // All properties but the last shall be Node is andAllChild is false
-    for (index,prop) in chain.enumerated() {
-      if (index < chain.count-1) || andAllChilds {
-        assert(prop.isNode,"Error: \(prop) in \(self.levelDescription) shall be a QWNodeProperty")
-      }
-    }
-  }
-  
   public var debugDescription: String {
     return "\(keypath)"
   }
@@ -114,17 +119,102 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     }
   }
 
-  public func appending(_ chainElement: QWProperty, andAllChilds: Bool = false) -> QWPath {
-    let extendedChain = self.chain + [chainElement]
-    return QWPath(root: self.root,
-                              chain: extendedChain,
-                              andAllChilds: andAllChilds)
+  public func appending(_ chainElement: QWProperty) -> QWPath {
+    // Shall I disable this test in release mode ?
+    switch self.type
+    {
+    case .tree:
+      preconditionFailure("Error QWPath: Adding \(chainElement.propDescription) on a subtree QWPath \(keypath)")
+    case .property:
+      preconditionFailure("Error QWPath: Adding \(chainElement.propDescription) on a property QWPath \(keypath)")
+    case .node:
+      break
+    }
+    let _ = validate(newElement: chainElement)
+    if chainElement.isNode {
+      return QWPath(root: self.root,
+                    chain: self.chain + [chainElement],
+                    andAllChilds: false) as QWPath
+    } else {
+      return QWPath(root: self.root,
+                        chain: self.chain + [chainElement],
+                        andAllChilds: false) as QWPath
+    }
+  }
+
+  public func generatePropertyGetter<Root,Value>(property: QWPropProperty<Root,Value>) -> (QWRoot) -> [Value]{
+    switch self.type
+    {
+    case .property:
+      preconditionFailure("Error QWPath: Calling generatePropertyGetter on a property QWPath \(keypath)")
+    case .tree:
+      break
+    case .node:
+      break
+    }
+
+    let myChain = self.chain
+    let getter:(QWRoot) -> [Value] = { (root:QWRoot) -> [Value] in
+      var currentNodeArray:[QWNode] = [root]
+      for prop in myChain {
+        if !prop.isProperty {
+          var nextNodeArray:[QWNode] = []
+          for myNode in currentNodeArray {
+            let foundNodes: [QWNode] = prop.getChildArray(node: myNode)
+            nextNodeArray += foundNodes
+          }
+          currentNodeArray = nextNodeArray
+        }
+      }
+      var finalPropArray:[Value] = []
+      for item in currentNodeArray {
+        let item = item as! Root
+        let value = property.getter(item)
+        finalPropArray.append(value)
+      }
+      return finalPropArray
+    }
+    return getter
+  }
+
+  func validate(newElement: QWProperty) -> Bool
+  {
+    let previousProperty: Any.Type = chain.last?.destType ?? root.sourceType
+    return newElement.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty)
   }
 
   public func all() -> QWPath {
+    switch self.type
+    {
+    case .tree:
+      print("Warning QWPath: Adding all() on a subtree QWPath \(keypath)")
+    case .property:
+      preconditionFailure("Error QWPath: Adding all() on a property QWPath \(keypath)")
+    case .node:
+      break
+    }
     return QWPath(root: self.root,
                   chain: self.chain,
-                  andAllChilds: true)
+                  andAllChilds: true) as QWPath
+  }
+
+  public func generateNodeGetter() -> (QWRoot) -> [QWNode]{
+    let myChain = chain
+    let getter:(QWRoot) -> [QWNode] = { (root:QWRoot) -> [QWNode] in
+      var currentNodeArray:[QWNode] = [root]
+      for property in myChain {
+        if !property.isProperty {
+          var nextNodeArray:[QWNode] = []
+          for myNode in currentNodeArray {
+            let foundNodes: [QWNode] = property.getChildArray(node: myNode)
+            nextNodeArray += foundNodes
+          }
+          currentNodeArray = nextNodeArray
+        }
+      }
+      return currentNodeArray
+    }
+    return getter
   }
 
 }

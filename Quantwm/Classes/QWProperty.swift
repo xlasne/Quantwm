@@ -76,13 +76,20 @@ public struct QWRootProperty: Equatable, Encodable
 
 }
 
-infix operator |>: AdditionPrecedence
+public class QWPropProperty<Root, Value>: QWProperty
+  where Root: QWNode
+{
 
-public func |>(lhs: QWRootProperty, rhs: QWProperty) -> QWPath {
-  return QWPath(root: lhs, chain: [rhs])
-}
-public func |>(lhs: QWPath, rhs: QWProperty) -> QWPath {
-  return lhs.appending(rhs)
+  let getter: (Root) -> Value
+  public init(
+    propertyKeypath: KeyPath<Root,Value>,
+    description: String)
+  {
+    self.getter = { (root: Root)->Value in
+      return root[keyPath: propertyKeypath]
+      }
+    super.init(propertyKeypath: propertyKeypath, description: description)
+  }
 }
 
 public class QWProperty: Hashable, Encodable
@@ -151,10 +158,10 @@ public class QWProperty: Hashable, Encodable
     self.dest = String(describing: destType)
   }
 
-  func checkSourceTypeMatchesDestinationTypeOf(previousProperty: Any.Type)
+  func checkSourceTypeMatchesDestinationTypeOf(previousProperty: Any.Type) -> Bool
   {
-    if source == String(describing: previousProperty) { return }
-    assert(false, "Error: \(previousProperty) is declared of " +
+    if source == String(describing: previousProperty) { return true}
+    preconditionFailure("Error: \(previousProperty) is declared of " +
       "type \(previousProperty) instead of type \(source)")
   }
 }

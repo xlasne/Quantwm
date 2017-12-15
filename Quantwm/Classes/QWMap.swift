@@ -12,12 +12,6 @@ public struct QWMap
 {
   let qwPathSet : Set<QWPath>
 
-  public init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false)
-  {
-    let qwPath = QWPath(root: root, chain: chain, andAllChilds: andAllChilds)
-    qwPathSet = [qwPath]
-  }
-
   public init(path : QWPath) {
     qwPathSet = [path]
   }
