@@ -29,18 +29,22 @@ class TracklistTableViewController: UITableViewController, MyModel {
         tableView.register(TrackCell.self, forCellReuseIdentifier: cellIdentifier)
         let cellNib = UINib(nibName: "TrackCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: cellIdentifier)
-
         tableView.backgroundColor = UIColor.black
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        viewModel = TrackListViewModel(dataModel: dataModel, owner: "TracklistTableViewController")
-        viewModel?.updateActionAndRefresh {
-            viewModel?.registerObserver(
+        let viewModel = TrackListViewModel(
+            dataModel: dataModel,
+            owner: "TracklistTableViewController",
+            trackCollectionModel: QWModel.root.trackCollection)
+
+        self.viewModel = viewModel
+        viewModel.updateActionAndRefresh {
+            viewModel.registerObserver(
                 target: self,
-                registrationDesc: TracklistTableViewController.tracklistREG)
+                registrationDesc: tracklistREG(viewModel: viewModel))
         }
     }
 
@@ -52,10 +56,12 @@ class TracklistTableViewController: UITableViewController, MyModel {
 
     // MARK: - Update at creation, and on completion of track list network request
     // This request has been triggerred by NetworkMgr, who is monitoring the playlist selection
-    static let tracklistREG: QWRegistration = QWRegistration(
+    func tracklistREG(viewModel: TrackListViewModel) -> QWRegistration {
+        return QWRegistration(
         selector: #selector(TracklistTableViewController.updateTable),
-        qwMap: TrackListViewModel.tracksTableDataSourcedMap,
+        qwMap: viewModel.mapForTracksTableDataSource,
         name: "TracklistTableViewController.updateTable")
+    }
 
     @objc func updateTable() {
         tableView.reloadData()

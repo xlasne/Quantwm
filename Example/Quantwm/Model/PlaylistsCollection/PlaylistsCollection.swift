@@ -96,18 +96,6 @@ class PlaylistsCollection: QWNode_S, Codable {
         }
     }
 
-    // Quantwm Path and Map generation
-
-    static let playlistArrayPath: QWPath = QWModel.root.playlistsCollection.playlistArray
-    static let playlistArrayMap: QWMap = playlistArrayPath.map
-
-    static let playlistDictPath: QWPath = QWModel.root.playlistsCollection.playlistDict
-    static let playlistDictMap: QWMap = playlistDictPath.map
-
-    static let totalPath: QWPath = QWModel.root.playlistsCollection.total
-    static let totalMap: QWMap = totalPath.map
-
-
     // sourcery:inline:PlaylistsCollection.QuantwmDeclarationInline
 
     // MARK: - Sourcery
@@ -180,12 +168,18 @@ extension PlaylistsCollection // Data Source
     // MARK: - GETTERS
 
     // RefreshUI Access: register to playlistArrayMap
+    static func playlistsCountMap(root: PlaylistsCollectionQWModel) -> QWMap {
+        return root.playlistArray.map
+    }
     var playlistsCount: Int {
         return playlistArray.count
     }
 
     // RefreshUI Access: register to playlistDictMap / playlistArrayMap
-    func playlist(rowIndex: Int) -> Playlist? {
+    static func playlistForIndexMap(root: PlaylistsCollectionQWModel) -> QWMap {
+        return root.playlistArray.map + root.playlistDict.map
+    }
+    func playlistForIndex(rowIndex: Int) -> Playlist? {
         if (0 <= rowIndex) && (rowIndex < playlistArray.count) {
             let playlistID = playlistArray[rowIndex]
             return playlistDict[playlistID]
@@ -194,6 +188,9 @@ extension PlaylistsCollection // Data Source
     }
 
     // RefreshUI Access: register to playlistDictMap
+    static func playlistMap(root: PlaylistsCollectionQWModel) -> QWMap {
+        return root.playlistDict.map
+    }
     func playlist(playlistId: PlaylistID) -> Playlist? {
         return playlistDict[playlistId]
     }

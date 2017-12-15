@@ -21,7 +21,8 @@ class PlaylistCollectionViewModelTest: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         dataModel = DataModel(networkMgr: networkStub as DeezerAPI)
-        viewModel = PlaylistsCollectionViewModel(dataModel: dataModel!, owner: "TestVM")
+        viewModel = PlaylistsCollectionViewModel(dataModel: dataModel!, owner: "TestVM",
+            playlistCollectionModel:QWModel.root.playlistsCollection)
     }
 
     func testPartialImport() {
@@ -44,7 +45,7 @@ class PlaylistCollectionViewModelTest: XCTestCase {
 
         let playlistUpdatedREG: QWRegistration = QWRegistration(
             selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration),
-            qwMap: PlaylistsCollectionViewModel.playlistCollectionDataSourceMap,
+            qwMap: viewModel!.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
 
         self.viewModel!.registerObserver(target: self, registrationDesc: playlistUpdatedREG)

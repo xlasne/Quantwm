@@ -12,11 +12,11 @@ import Quantwm
 class PlaylistHeaderViewModel: GenericViewModel<DataModel>
 {
 
-    // This view model only needs the DataModel.selectedPlaylist in input
-    static let currentPlaylistHeaderMap = DataModel.getSelectedPlaylistMap + DataModel.getSelectedTracklistMap
+    static let currentPlaylistHeaderMap = DataModel.selectedTracklistMap
+        + DataModel.selectedPlaylistMap
 
     func playlistHeaderInfoSelectedPlaylist() -> PlaylistHeaderInfo? {
-        if let playlist = dataModel.getSelectedPlaylist() {
+        if let playlist = dataModel.selectedPlaylist {
             var imageUrl:URL? = nil
             var largeImageUrl:URL? = nil
             if let urlStr = playlist.picture_medium {
@@ -26,7 +26,7 @@ class PlaylistHeaderViewModel: GenericViewModel<DataModel>
                 largeImageUrl = URL(string: urlStr)
             }
             var totalStr: String? = nil
-            if let tracklist = dataModel.getSelectedTracklist() {
+            if let tracklist = dataModel.selectedTracklist {
                 totalStr = "\(tracklist.tracksArray.count)"
             }
 

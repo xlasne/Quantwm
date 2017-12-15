@@ -11,10 +11,19 @@ import Quantwm
 
 class TrackListViewModel: GenericViewModel<DataModel>
 {
+    let trackCollectionModel: TrackCollectionQWModel
+
+    init(dataModel: DataModel, owner: String,
+         trackCollectionModel: TrackCollectionQWModel) {
+        self.trackCollectionModel = trackCollectionModel
+        super.init(dataModel: dataModel, owner: owner)
+    }
 
     // Datasource for tracks table view
-    static let tracksTableDataSourcedMap = TrackCollection.trackDictAllMap
-        + DataModel.selectedPlaylistIdMap
+    var mapForTracksTableDataSource: QWMap {
+        return trackCollectionModel.trackDict.all.map
+        + QWModel.root.selectedPlaylistId.map
+    }
 
     var trackArray: [Track] {
         if let selectedPlaylistId = dataModel.selectedPlaylistId {

@@ -48,8 +48,6 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     var disposeBag = DisposeBag()
 
     func applicationBecomeActive() {
-        // Launch a network request to load the playlist loading
-        //        networkMgr.getPlaylist(userId: DataModel.debug_userID)
 
         networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
             print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
@@ -71,7 +69,6 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
 
         qwMediator.updateActionAndRefresh(owner: self) {
             coordinator.postInit(dataModel: self)
-            //        networkMgr.getRxPlaylist(userId: DataModel.debug_userID)
         }
     }
 
@@ -96,12 +93,12 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     //                                                            -> TracklistTableViewController.tracklistREG
     
     
-    // sourcery: root
-    static let dataModelK = QWRootProperty(sourceType: DataModel.self,
-                                           description: "dataModel")
-    
+
     // MARK: - Quantwm Properties and Nodes
     
+    // sourcery: root
+    static let dataModelK = QWRootProperty(sourceType: DataModel.self, description: "dataModel")
+
     // sourcery: property
     var _userId : UserID
 
@@ -115,47 +112,32 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     var _trackCollection : TrackCollection = TrackCollection()
 
     // MARK: - GETTER
-    static let getSelectedPlaylistMap = DataModel.selectedPlaylistIdMap +
-        PlaylistsCollection.playlistDictMap +
-        PlaylistsCollection.playlistArrayMap
+    static let selectedPlaylistMap = QWModel.root.selectedPlaylistId.map +
+        QWModel.root.playlistsCollection.playlistDict.map +
+        QWModel.root.playlistsCollection.playlistArray.map
 
-    func getSelectedPlaylist() -> Playlist? {
+    var selectedPlaylist: Playlist? {
         if let playlistId = selectedPlaylistId {
             return playlistsCollection.playlist(playlistId: playlistId)
         }
         return nil
     }
 
-    static let getSelectedTracklistMap = DataModel.selectedPlaylistIdMap +
-        TrackCollection.trackDictAllMap
+    static let selectedTracklistMap = QWModel.root.selectedPlaylistId.map
+        + QWModel.root.trackCollection.trackDict.all.map
 
-    func getSelectedTracklist() -> Tracklist? {
+    var selectedTracklist: Tracklist? {
         if let playlistId = selectedPlaylistId {
             return trackCollection.trackDict[playlistId]
         }
         return nil
     }
 
-
-
     // MARK: - UPDATE
     func synchronizeTracksFromPlaylistCollection() {
         let playlistIdArray = playlistsCollection.playlistArray
         trackCollection.updateTracks(playlistIdArray: playlistIdArray)
     }
-
-    // Quantwm Path and Map generation
-    static let userIdPath: QWPath = QWModel.root.userId
-    static let userIdMap: QWMap = userIdPath.map
-
-    static let selectedPlaylistIdPath: QWPath = QWModel.root.selectedPlaylistId
-    static let selectedPlaylistIdMap: QWMap = selectedPlaylistIdPath.map
-
-    static let playlistsCollectionPath: QWPath = QWModel.root.playlistsCollection.node
-    static let playlistsCollectionMap: QWMap = playlistsCollectionPath.map
-
-    static let trackCollectionPath: QWPath = QWModel.root.trackCollection.node
-    static let trackCollectionMap: QWMap = trackCollectionPath.map
 
 
     // sourcery:inline:DataModel.QuantwmDeclarationInline

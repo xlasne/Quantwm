@@ -36,7 +36,7 @@
 		255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D881FE13C5B00F30682 /* placeholder.png */; };
 		255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */; };
 		2571597E1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 2571597D1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil */; };
-		257159801FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */; };
+		257159821FE3E04300776530 /* Sourcery_QuantwmModel.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257159811FE3E04300776530 /* Sourcery_QuantwmModel.generated.swift */; };
 		25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */; };
 		25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */; };
 		25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */; };
@@ -114,7 +114,7 @@
 		255C5D951FE13E1B00F30682 /* PlaylistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTest.swift; sourceTree = "<group>"; };
 		255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModelTest.swift; sourceTree = "<group>"; };
 		2571597D1FE2E8EA00776530 /* Sourcery_QuantwmModel.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sourcery_QuantwmModel.stencil; sourceTree = "<group>"; };
-		2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sourcery_Quantwm2.generated.swift; sourceTree = "<group>"; };
+		257159811FE3E04300776530 /* Sourcery_QuantwmModel.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sourcery_QuantwmModel.generated.swift; sourceTree = "<group>"; };
 		25D4CD3C1FE149CC000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD571FE14BC7000EA8E3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD591FE14BEF000EA8E3 /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,7 +220,7 @@
 			children = (
 				255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */,
 				255C5D581FE134DA00F30682 /* stat.generated.swift */,
-				2571597F1FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift */,
+				257159811FE3E04300776530 /* Sourcery_QuantwmModel.generated.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -239,9 +239,9 @@
 		255C5D5D1FE136E100F30682 /* ViewHierarchy */ = {
 			isa = PBXGroup;
 			children = (
+				255C5D5E1FE1370300F30682 /* PlaylistCollection */,
 				255C5D691FE1370300F30682 /* Playlist - HeaderView */,
 				255C5D641FE1370300F30682 /* Playlist - TracksTableView */,
-				255C5D5E1FE1370300F30682 /* PlaylistCollection */,
 			);
 			path = ViewHierarchy;
 			sourceTree = "<group>";
@@ -270,8 +270,8 @@
 			children = (
 				255C5D651FE1370300F30682 /* TrackCell.swift */,
 				255C5D661FE1370300F30682 /* TrackCell.xib */,
-				255C5D671FE1370300F30682 /* TracklistTableViewController.swift */,
 				255C5D681FE1370300F30682 /* TrackListViewModel.swift */,
+				255C5D671FE1370300F30682 /* TracklistTableViewController.swift */,
 			);
 			path = "Playlist - TracksTableView";
 			sourceTree = "<group>";
@@ -280,8 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				255C5D6A1FE1370300F30682 /* PlaylistHeaderVIew */,
-				255C5D6D1FE1370300F30682 /* PlaylistHeaderViewController.swift */,
 				255C5D6E1FE1370300F30682 /* PlaylistHeaderViewModel.swift */,
+				255C5D6D1FE1370300F30682 /* PlaylistHeaderViewController.swift */,
 			);
 			path = "Playlist - HeaderView";
 			sourceTree = "<group>";
@@ -401,11 +401,11 @@
 			isa = PBXGroup;
 			children = (
 				255C5D871FE13C4500F30682 /* Resources */,
-				255C5D5D1FE136E100F30682 /* ViewHierarchy */,
 				255C5D551FE134DA00F30682 /* CodeGen */,
 				255C5D401FE12DB900F30682 /* Helpers */,
 				255C5D331FE12D7500F30682 /* DeezerAPI */,
 				25FDDADE1FE12B1A00E16C74 /* Model */,
+				255C5D5D1FE136E100F30682 /* ViewHierarchy */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -742,6 +742,7 @@
 				255C5D3E1FE12D7500F30682 /* DeezerTrackCollection.swift in Sources */,
 				255C5D3D1FE12D7500F30682 /* PlaylistJSON.swift in Sources */,
 				255C5D841FE13AC600F30682 /* Track.swift in Sources */,
+				257159821FE3E04300776530 /* Sourcery_QuantwmModel.generated.swift in Sources */,
 				255C5D831FE13AC600F30682 /* TrackCollection.swift in Sources */,
 				255C5D481FE12DBA00F30682 /* XibView.swift in Sources */,
 				255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */,
@@ -761,7 +762,6 @@
 				255C5D791FE1370300F30682 /* PlaylistHeaderViewController.swift in Sources */,
 				255C5D711FE1370300F30682 /* PlaylistCollectionViewModel.swift in Sources */,
 				255C5D3C1FE12D7500F30682 /* DeezerPlaylistCollection.swift in Sources */,
-				257159801FE2EA3700776530 /* Sourcery_Quantwm2.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

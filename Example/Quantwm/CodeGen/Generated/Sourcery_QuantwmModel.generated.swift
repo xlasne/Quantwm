@@ -2,100 +2,109 @@
 // DO NOT EDIT
 
 import Quantwm
-class QWModel {
+struct QWModel {
     static let rootProperty:QWRootProperty = DataModel.dataModelK
     static let root = DataModelQWModel(path: QWPath(root: rootProperty, chain: []))
 }
 
-class DataModelQWModel
+struct DataModelQWModel
 {
+    let node:QWPath
+    let all: QWPath
+    let userId: QWPath
+    let selectedPlaylistId: QWPath
+    let playlistsCollection: PlaylistsCollectionQWModel
+    let trackCollection: TrackCollectionQWModel
+
     init(path: QWPath) {
         self.node = path
-    }
-    let node:QWPath
-    var all: QWPath {
-        return node.all()
-    }
+        self.all = path.all()
 
+        // property: userId
+        self.userId = node.appending(DataModel.userIdK)
 
-    var userId: QWPath {
-        return node.appending(DataModel.userIdK)
-    }
-    var selectedPlaylistId: QWPath {
-        return node.appending(DataModel.selectedPlaylistIdK)
-    }
-    var playlistsCollection: PlaylistsCollectionQWModel {
-        return PlaylistsCollectionQWModel(path: node.appending(DataModel.playlistsCollectionK))
-    }
-    var trackCollection: TrackCollectionQWModel {
-        return TrackCollectionQWModel(path: node.appending(DataModel.trackCollectionK))
-    }
-}
+        // property: selectedPlaylistId
+        self.selectedPlaylistId = node.appending(DataModel.selectedPlaylistIdK)
 
-class PlaylistQWModel
-{
-    init(path: QWPath) {
-        self.node = path
-    }
-    let node:QWPath
-    var all: QWPath {
-        return node.all()
+        // node: playlistsCollection
+        self.playlistsCollection = PlaylistsCollectionQWModel(path: node.appending(DataModel.playlistsCollectionK))
+
+        // node: trackCollection
+        self.trackCollection = TrackCollectionQWModel(path: node.appending(DataModel.trackCollectionK))
     }
 
 
 }
 
-class PlaylistsCollectionQWModel
+struct PlaylistQWModel
 {
+    let node:QWPath
+    let all: QWPath
+
     init(path: QWPath) {
         self.node = path
-    }
-    let node:QWPath
-    var all: QWPath {
-        return node.all()
+        self.all = path.all()
     }
 
 
-    var playlistArray: QWPath {
-        return node.appending(PlaylistsCollection.playlistArrayK)
-    }
-    var playlistDict: QWPath {
-        return node.appending(PlaylistsCollection.playlistDictK)
-    }
-    var total: QWPath {
-        return node.appending(PlaylistsCollection.totalK)
-    }
 }
 
-class TrackCollectionQWModel
+struct PlaylistsCollectionQWModel
 {
+    let node:QWPath
+    let all: QWPath
+    let playlistArray: QWPath
+    let playlistDict: QWPath
+    let total: QWPath
+
     init(path: QWPath) {
         self.node = path
-    }
-    let node:QWPath
-    var all: QWPath {
-        return node.all()
+        self.all = path.all()
+
+        // property: playlistArray
+        self.playlistArray = node.appending(PlaylistsCollection.playlistArrayK)
+
+        // property: playlistDict
+        self.playlistDict = node.appending(PlaylistsCollection.playlistDictK)
+
+        // property: total
+        self.total = node.appending(PlaylistsCollection.totalK)
     }
 
 
-    var trackDict: TracklistQWModel {
-        return TracklistQWModel(path: node.appending(TrackCollection.trackDictK))
-    }
 }
 
-class TracklistQWModel
+struct TrackCollectionQWModel
 {
+    let node:QWPath
+    let all: QWPath
+    let trackDict: TracklistQWModel
+
     init(path: QWPath) {
         self.node = path
+        self.all = path.all()
+
+        // node: trackDict
+        self.trackDict = TracklistQWModel(path: node.appending(TrackCollection.trackDictK))
     }
+
+
+}
+
+struct TracklistQWModel
+{
     let node:QWPath
-    var all: QWPath {
-        return node.all()
+    let all: QWPath
+    let finalTracksArray: QWPath
+
+    init(path: QWPath) {
+        self.node = path
+        self.all = path.all()
+
+        // property: finalTracksArray
+        self.finalTracksArray = node.appending(Tracklist.finalTracksArrayK)
     }
 
 
-    var finalTracksArray: QWPath {
-        return node.appending(Tracklist.finalTracksArrayK)
-    }
 }
 

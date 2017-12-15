@@ -12,7 +12,13 @@ import Quantwm
 
 class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
 {
+    let playlistCollectionModel: PlaylistsCollectionQWModel
 
+    init(dataModel: DataModel, owner: String,
+                  playlistCollectionModel: PlaylistsCollectionQWModel) {
+        self.playlistCollectionModel = playlistCollectionModel
+        super.init(dataModel: dataModel, owner: owner)
+    }
 
     // User Actions
 
@@ -41,10 +47,13 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
         }
     }
 
-    // UserID
-    static let titleMap = DataModel.userIdMap +
-        PlaylistsCollection.totalMap +
-        PlaylistsCollection.playlistArrayMap
+    // MARK: - Get Title
+    var mapForTitle: QWMap {
+        return QWModel.root.userId.map +
+            playlistCollectionModel.total.map +
+            PlaylistsCollection.playlistsCountMap(root: playlistCollectionModel)
+    }
+
 
     func getTitle() -> String {
         var title = "\(dataModel.userId)"
@@ -55,14 +64,16 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
         return title
     }
 
-    // Data Source for Playlist Collection
+    // MARK: - Data Source for Playlist Collection
 
-    // We are monitoring the playlist informations, not the tracks
-    // Playlist informations are not editable
-    // Hence, this map detects all the changes
-    static let playlistCollectionDataSourceMap =
-        PlaylistsCollection.playlistArrayMap
-        + PlaylistsCollection.playlistDictMap
+    // Normally, I would write this:
+    // static let playlistCollectionDataSourceMap = QWModel.root.playlistsCollection.all
+    // But to show example for more complex situation, let's do as if there was
+    // multiple playlistsCollection in the model
+    var mapForPlaylistCollectionDataSource: QWMap {
+        return PlaylistsCollection.playlistsCountMap(root: playlistCollectionModel) +
+            PlaylistsCollection.playlistForIndexMap(root: playlistCollectionModel)
+    }
 
     // This map gives access to the 3 functions below for reading the model only
 
@@ -75,17 +86,17 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
             return false
         }
         let row = indexPath.row
-        return (dataModel.playlistsCollection.playlist(rowIndex: row) != nil)
+        return (dataModel.playlistsCollection.playlistForIndex(rowIndex: row) != nil)
     }
 
     func playlistIDForIndexPath(indexPath: IndexPath) -> PlaylistID? {
         let row = indexPath.row
-        return dataModel.playlistsCollection.playlist(rowIndex: row)?.id
+        return dataModel.playlistsCollection.playlistForIndex(rowIndex: row)?.id
     }
 
     func playlistCoverInfoForIndexPath(indexPath: IndexPath) -> PlaylistCoverInfo? {
         let row = indexPath.row
-        if let playlist = dataModel.playlistsCollection.playlist(rowIndex: row) {
+        if let playlist = dataModel.playlistsCollection.playlistForIndex(rowIndex: row) {
             var imageUrl:URL? = nil
             if let urlStr = playlist.picture_medium {
                 imageUrl = URL(string: urlStr)

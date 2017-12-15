@@ -18,17 +18,19 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
 
     override  func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel = PlaylistsCollectionViewModel(dataModel: dataModel, owner: "PlaylistsCollectionViewController")
+        let model = QWModel.root.playlistsCollection
+        let viewModel = PlaylistsCollectionViewModel(dataModel: dataModel, owner: "PlaylistsCollectionViewController", playlistCollectionModel: model)
         navigationController?.setToolbarHidden(true, animated: true)
-        viewModel?.updateActionAndRefresh {
-            viewModel?.registerObserver(
+        self.viewModel = viewModel
+        viewModel.updateActionAndRefresh {
+            viewModel.registerObserver(
                 target: self,
-                registrationDesc: PlaylistsCollectionViewController.playlistUpdatedREG)
+                registrationDesc: playlistUpdatedREG(viewModel: viewModel))
         }
-        viewModel?.updateActionAndRefresh {
-            viewModel?.registerObserver(
+        viewModel.updateActionAndRefresh {
+            viewModel.registerObserver(
                 target: self,
-                registrationDesc: PlaylistsCollectionViewController.userIdREG)
+                registrationDesc: userIdREG(viewModel: viewModel))
         }
     }
 
@@ -43,19 +45,23 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
 
     //MARK: - REGISTRATION
 
-    static let playlistUpdatedREG: QWRegistration = QWRegistration(
-        selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated),
-        qwMap: PlaylistsCollectionViewModel.playlistCollectionDataSourceMap,
-        name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
+    func playlistUpdatedREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
+        return QWRegistration(
+            selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated),
+            qwMap: viewModel.mapForPlaylistCollectionDataSource,
+            name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
+    }
 
     @objc func playlistsCollectionUpdated() {
         collectionView?.reloadData()
     }
 
-    static let userIdREG: QWRegistration = QWRegistration(
+    func userIdREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
+        return QWRegistration(
         selector: #selector(PlaylistsCollectionViewController.titleUpdated),
-        qwMap: PlaylistsCollectionViewModel.titleMap,
+        qwMap: viewModel.mapForTitle,
         name: "PlaylistsCollectionViewController.titleUpdated")
+    }
 
     @objc func titleUpdated() {
         if let title = viewModel?.getTitle() {
@@ -175,8 +181,4 @@ extension PlaylistsCollectionViewController : UICollectionViewDelegateFlowLayout
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
-
 }
-
-
-
