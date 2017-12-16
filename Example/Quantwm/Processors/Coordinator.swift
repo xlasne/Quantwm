@@ -29,17 +29,16 @@ class Coordinator: NSObject {
 
     static let userIdUpdatedREG: QWRegistration = QWRegistration(
         selector: #selector(Coordinator.userIdUpdated),
-        qwMap: QWModel.root.userId +
+        readMap: QWModel.root.userId +
             QWModel.root.playlistsCollection.all +
             QWModel.root.selectedPlaylistId +
             QWModel.root.trackCollection.trackDict.all,
         name: "Coordinator.userIdUpdated",
-        writtenPropertyArray : [
-            PlaylistsCollection.playlistDictK,
-            PlaylistsCollection.playlistArrayK,
-            PlaylistsCollection.totalK,
-            DataModel.selectedPlaylistIdK,
-            TrackCollection.trackDictK ],
+        writtenMap: QWModel.root.playlistsCollection.playlistDict +
+            QWModel.root.playlistsCollection.playlistArray +
+            QWModel.root.playlistsCollection.total +
+            QWModel.root.selectedPlaylistId +
+            QWModel.root.trackCollection.trackDict.node,
         configurationPriority: -1)
 
     var previousUserId: UserID? = nil

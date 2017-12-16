@@ -46,7 +46,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
     func playlistUpdatedREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
         return QWRegistration(
             selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated),
-            qwMap: viewModel.mapForPlaylistCollectionDataSource,
+            readMap: viewModel.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
     }
 
@@ -57,7 +57,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
     func userIdREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
         return QWRegistration(
         selector: #selector(PlaylistsCollectionViewController.titleUpdated),
-        qwMap: viewModel.mapForTitle,
+        readMap: viewModel.mapForTitle,
         name: "PlaylistsCollectionViewController.titleUpdated")
     }
 

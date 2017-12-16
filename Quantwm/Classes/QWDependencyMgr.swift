@@ -60,7 +60,7 @@ public class QWDependencyMgr: Encodable {
   // - For each written property, add them in the dependency set of the corresponding reading properties.
   func computeDependsFromPropertySet() {
     for reg in registrationSet {
-      for qwPath in reg.qwPathSet {
+      for qwPath in reg.readPathSet {
         for readProperty in qwPath.chain { // QWRoot is not monitored
           propertySet.insert(readProperty)
           for writtenProperty in reg.writtenPropertySet {
@@ -109,7 +109,7 @@ public class QWDependencyMgr: Encodable {
   func computeRegistrationLevel() {
     for reg in registrationSet {
       var level = 0
-      for qwPath in reg.qwPathSet {
+      for qwPath in reg.readPathSet {
         for readProperty in qwPath.chain { // QWRoot is not monitored
           guard let propLevel = propertyLevel[readProperty] else {
             assert(false,"Missing propertyLevel: should have been computed before")

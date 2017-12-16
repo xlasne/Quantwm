@@ -16,33 +16,36 @@ public class QWRegistration: NSObject, Encodable
   enum CodingKeys: String, CodingKey {
     case name
     case configurationPriority
-    case qwPathSet
-    case writtenPropertySet
+    case readPathSet
+    case writtenPathSet
   }
 
-
   let selector: Selector
-  let qwPathSet: Set<QWPath>
+  let readPathSet: Set<QWPath>
   let name: String
-  let writtenPropertySet: Set<QWProperty>
-  let maximumAllowedRegistrationWithSameTypeSelector: Int?
+  let writtenPathSet: Set<QWPath>
   let configurationPriority: Int?
-  
+  let maximumAllowedRegistrationWithSameTypeSelector: Int?
+
   public init(selector: Selector,
-              qwMap: QWMap,
+              readMap: QWMap,
               name: String,
-              writtenPropertyArray: [QWProperty] = [],
+              writtenMap: QWMap = QWMap(pathArray : []),
               configurationPriority: Int? = nil,
               maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
   {
     self.selector = selector
-    self.qwPathSet = qwMap.qwPathSet
+    self.readPathSet = readMap.qwPathSet
     self.name = name
-    self.writtenPropertySet = Set(writtenPropertyArray)
+    self.writtenPathSet = writtenMap.qwPathSet
     self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
     self.configurationPriority = configurationPriority
 
     super.init()
+  }
+
+  var writtenPropertySet: Set<QWProperty> {
+    return Set(self.writtenPathSet.flatMap{ $0.chain.last })
   }
 
 }

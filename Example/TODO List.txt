@@ -50,11 +50,20 @@ Solution 3: Generate accessor via Model, using Model keypath.
         return { return $0[keyPath: keyPath] }
     }
 
+Contract based registration returns for each path:
+- The array of nodes matching the path
+- The property getters from the model
+For writter:
+- The array of nodes matching the path minus last written node / property
 
+//POSTPONNED: Provide property Setter via Model
 
-
-- Provide property Setter via Model
 - Define Write as a Map
+    WriteMap are a set of QWWritePath
+    QWWritePath are either PropertyPath, or SubtreePath
+    Genéré par le QWModel
+
+
 - Add Write path.dropLast in the Reading List
 - PrettyPrint Model
 - PrettyPrint Registration

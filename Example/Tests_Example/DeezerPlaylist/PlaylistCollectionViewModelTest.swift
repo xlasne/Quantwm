@@ -45,7 +45,7 @@ class PlaylistCollectionViewModelTest: XCTestCase {
 
         let playlistUpdatedREG: QWRegistration = QWRegistration(
             selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration),
-            qwMap: viewModel!.mapForPlaylistCollectionDataSource,
+            readMap: viewModel!.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
         dataModel!.qwMediator.updateActionAndRefresh(owner: self) {
             self.viewModel!.registerObserver(target: self, registrationDesc: playlistUpdatedREG)

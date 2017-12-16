@@ -59,7 +59,7 @@ class TracklistTableViewController: UITableViewController, MyModel {
     func tracklistREG(viewModel: TrackListViewModel) -> QWRegistration {
         return QWRegistration(
         selector: #selector(TracklistTableViewController.updateTable),
-        qwMap: viewModel.mapForTracksTableDataSource,
+        readMap: viewModel.mapForTracksTableDataSource,
         name: "TracklistTableViewController.updateTable")
     }
 

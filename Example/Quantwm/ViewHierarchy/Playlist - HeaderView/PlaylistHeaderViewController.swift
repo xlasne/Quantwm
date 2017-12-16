@@ -39,7 +39,7 @@ class PlaylistHeaderViewController: UIViewController, MyModel {
 
     static let playlistREG: QWRegistration = QWRegistration(
         selector: #selector(PlaylistHeaderViewController.playlistUpdated),
-        qwMap: PlaylistHeaderViewModel.currentPlaylistHeaderMap,
+        readMap: PlaylistHeaderViewModel.currentPlaylistHeaderMap,
         name: "PlaylistHeaderViewController.playlistUpdated")
     
     @objc func playlistUpdated() {

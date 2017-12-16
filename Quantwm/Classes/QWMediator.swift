@@ -123,7 +123,7 @@ public class QWMediator: NSObject {
   {
 
     let selector = reg.selector
-    let qwPathSet = reg.qwPathSet
+    let qwPathSet = reg.readPathSet
     let maximumAllowedRegistrationWithSameTypeSelector = reg.maximumAllowedRegistrationWithSameTypeSelector
 
     if qwTransactionStack.isRootRefresh {

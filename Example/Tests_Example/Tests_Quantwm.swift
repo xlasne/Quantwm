@@ -247,7 +247,7 @@ class QuantwmTest: XCTestCase {
             .appending(TestStruct.numberK).map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          qwMap: qwPath,
+                                          readMap: qwPath,
                                           name: "testBasic")
         self.base.getQWMediator().registerObserver(target: testCall,
                                                    registrationDesc: registration)
@@ -270,7 +270,7 @@ class QuantwmTest: XCTestCase {
             .appending(TestBase.optNumberK).map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          qwMap: keypath,
+                                          readMap: keypath,
                                           name: "testOptionalCall")
 
         self.base.getQWMediator().registerObserver(target: testCall, registrationDesc: registration)
@@ -306,7 +306,7 @@ class QuantwmTest: XCTestCase {
             .appending(TestBase.lazyNumberK).map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          qwMap: keypath,
+                                          readMap: keypath,
                                           name: "testLazyCall")
         self.base.getQWMediator().registerObserver(target: testCall, registrationDesc: registration)
         self.base.getQWMediator().refreshUI()
@@ -335,7 +335,7 @@ class QuantwmTest: XCTestCase {
             .appending(MyClass.testDictK).map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          qwMap: keypath,
+                                          readMap: keypath,
                                           name: "TestDict")
         self.base.getQWMediator().registerObserver(target: testCall, registrationDesc: registration)
         self.base.getQWMediator().refreshUI()
@@ -360,7 +360,7 @@ class QuantwmTest: XCTestCase {
             .map
 
         let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          qwMap: keypath,
+                                          readMap: keypath,
                                           name: "testDict2")
         self.base.getQWMediator().registerObserver(target: testCall, registrationDesc: registration)
         self.base.getQWMediator().refreshUI()

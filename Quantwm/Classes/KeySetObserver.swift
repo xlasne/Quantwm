@@ -37,7 +37,7 @@ class KeySetObserver: NSObject {
   let writtenPropertySet: Set<QWProperty>
 
   var targetAction: Selector { return registration.selector }
-  var observedQWMapDescriptionSet: Set<QWPath> { return registration.qwPathSet }
+  var observedQWMapDescriptionSet: Set<QWPath> { return registration.readPathSet }
   var name: String { return registration.name }
   var configurationSchedulingLevel: Int? { return registration.configurationPriority }
 
