@@ -21,7 +21,7 @@ struct PlaylistKey: Hashable, Equatable {
     }
 }
 
-final class Playlist: QWNode_S, Codable {
+final class Playlist: Codable {
 
     let importIndex: Int
 
@@ -76,21 +76,6 @@ final class Playlist: QWNode_S, Codable {
         self.tracklist = json.tracklist
         self.author = json.creator?.name
     }
-
-    // sourcery:inline:Playlist.QuantwmDeclarationInline
-
-    // MARK: - Sourcery
-
-    // QWNode protocol
-    func getQWCounter() -> QWCounter {
-      return qwCounter
-    }
-    let qwCounter = QWCounter(name:"Playlist")
-    func getPropertyArray() -> [QWProperty] {
-        return PlaylistQWModel.getPropertyArray()
-    }
-    // sourcery:end
-
 }
 
 

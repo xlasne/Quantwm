@@ -34,9 +34,7 @@ class Coordinator: NSObject {
             QWModel.root.selectedPlaylistId +
             QWModel.root.trackCollection.trackDict.all,
         name: "Coordinator.userIdUpdated",
-        writtenMap: QWModel.root.playlistsCollection.playlistDict +
-            QWModel.root.playlistsCollection.playlistArray +
-            QWModel.root.playlistsCollection.total +
+        writtenMap: QWModel.root.playlistsCollection.allPaths() +
             QWModel.root.selectedPlaylistId +
             QWModel.root.trackCollection.trackDict.node,
         configurationPriority: -1)

@@ -14,7 +14,7 @@ struct QWModel {
 
 {% for type in types.all %}
 {% if type.implements.QWNode_S %}
-struct {{ type.name }}QWModel: QWModelProperty
+struct {{ type.name }}QWModel
 {
     let path:QWPath
     let node:QWMap
@@ -86,6 +86,24 @@ Solution 3: Adopt an other convention and change this stencil.
     {% endif %}
     {% endfor %}
 
+    func allPaths() -> QWMap{
+        return QWMap(pathArray: allPathGetter(path: path))
+    }
+
+    func allPathGetter(path: QWPath) -> [QWPath]{
+        var pathArray: [QWPath] = []
+        {% for prop in type.storedVariables %}
+        {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
+        {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
+        {% if prop|annotated:"property" %}
+        pathArray.append(path.appending({{propertyKName}}))
+        {% endif %}
+        {% if prop|annotated:"node" %}
+        pathArray += {{monitoredName}}.allPathGetter(path: path.appending({{propertyKName}}))
+        {% endif %}
+        {% endfor %}
+        return pathArray
+    }
 
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }

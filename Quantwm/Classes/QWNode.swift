@@ -29,7 +29,7 @@ public protocol QWNode
 }
 
 public protocol QWModelProperty {
-    static func getPropertyArray() -> [QWProperty]
+  static func getPropertyArray() -> [QWProperty]
 }
 
 
