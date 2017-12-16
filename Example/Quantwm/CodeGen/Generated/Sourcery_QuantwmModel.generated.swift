@@ -73,15 +73,16 @@ struct DataModelQWModel
 
 
     var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter(path: path))
+        return QWMap(pathArray: allPathGetter())
     }
 
-    func allPathGetter(path: QWPath) -> [QWPath]{
+    func allPathGetter() -> [QWPath]{
         var pathArray: [QWPath] = []
+        pathArray.append(path.write())
         pathArray.append(path.appending(DataModel.userIdK).write())
         pathArray.append(path.appending(DataModel.selectedPlaylistIdK).write())
-        pathArray += playlistsCollection.allPathGetter(path: path.appending(DataModel.playlistsCollectionK))
-        pathArray += trackCollection.allPathGetter(path: path.appending(DataModel.trackCollectionK))
+        pathArray += playlistsCollection.allPathGetter()
+        pathArray += trackCollection.allPathGetter()
         return pathArray
     }
 
@@ -156,11 +157,12 @@ struct PlaylistsCollectionQWModel
     }
 
     var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter(path: path))
+        return QWMap(pathArray: allPathGetter())
     }
 
-    func allPathGetter(path: QWPath) -> [QWPath]{
+    func allPathGetter() -> [QWPath]{
         var pathArray: [QWPath] = []
+        pathArray.append(path.write())
         pathArray.append(path.appending(PlaylistsCollection.playlistArrayK).write())
         pathArray.append(path.appending(PlaylistsCollection.playlistDictK).write())
         pathArray.append(path.appending(PlaylistsCollection.totalK).write())
@@ -202,12 +204,13 @@ struct TrackCollectionQWModel
 
 
     var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter(path: path))
+        return QWMap(pathArray: allPathGetter())
     }
 
-    func allPathGetter(path: QWPath) -> [QWPath]{
+    func allPathGetter() -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray += trackDict.allPathGetter(path: path.appending(TrackCollection.trackDictK))
+        pathArray.append(path.write())
+        pathArray += trackDict.allPathGetter()
         return pathArray
     }
 
@@ -249,11 +252,12 @@ struct TracklistQWModel
     }
 
     var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter(path: path))
+        return QWMap(pathArray: allPathGetter())
     }
 
-    func allPathGetter(path: QWPath) -> [QWPath]{
+    func allPathGetter() -> [QWPath]{
         var pathArray: [QWPath] = []
+        pathArray.append(path.write())
         pathArray.append(path.appending(Tracklist.finalTracksArrayK).write())
         return pathArray
     }

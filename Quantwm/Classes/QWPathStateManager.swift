@@ -1,5 +1,5 @@
 //
-//  QWPathTraceReader.swift
+//  QWPathTraceManager.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 29/04/16.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-class QWPathTraceReader
+class QWPathTraceManager
 {
   let qwPath: QWPath
-  private var nodeChain: QWPathTraceProtocol?
-  private var updatedNodeChain: QWPathTraceProtocol?
+  private var nodeChain: QWPathTraceReader?
+  private var updatedNodeChain: QWPathTraceReader?
   var updateCounter: Int = 0
   
   var keypathBase: String {
@@ -35,16 +35,16 @@ class QWPathTraceReader
         if let _ = self.nodeChain {
           self.nodeChain = nil
           self.updateCounter += 1
-          print("QWPathTraceReader: \(keypath) dirty. Rootnode has changed to nil")
+          print("QWPathTraceManager: \(keypath) dirty. Rootnode has changed to nil")
         } else {
-          print("QWPathTraceReader: \(keypath) clean. No Rootnode")
+          print("QWPathTraceManager: \(keypath) clean. No Rootnode")
         }
         return
     }
     
     // The root node is not nil.
     // Let's read  and compare the chains
-    let updatedNodeChain: QWPathTraceProtocol = rootObject.generateQWPathTrace(qwPath: qwPath)
+    let updatedNodeChain: QWPathTraceReader = rootObject.generateQWPathTrace(qwPath: qwPath)
 
     // If self.updatedNodeChain is not nil, we are resuming from a suspendRefresh, and must check additional changes, else this is a start refresh
     let previousPathState = self.updatedNodeChain ?? self.nodeChain
@@ -52,9 +52,9 @@ class QWPathTraceReader
     self.updatedNodeChain = updatedNodeChain
     if comparison.isDirty {
       self.updateCounter += (comparison.isDirty ? 1 : 0)
-      print("QWPathTraceReader: \(keypath) : \(comparison.description) counter updated to \(updateCounter)")
+      print("QWPathTraceManager: \(keypath) : \(comparison.description) counter updated to \(updateCounter)")
     } else {
-      print("QWPathTraceReader: \(keypath) : \(comparison.description)")
+      print("QWPathTraceManager: \(keypath) : \(comparison.description)")
     }
     
   }

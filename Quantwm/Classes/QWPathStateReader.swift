@@ -1,5 +1,5 @@
 //
-//  QWPathTrace.swift
+//  QWPathTraceReader.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 07/05/16.
@@ -8,30 +8,30 @@
 
 import Foundation
 
-public protocol QWPathTraceProtocol {
+public protocol QWPathTraceReader {
   init(rootObject: QWRoot, qwPath: QWPath)
-  func compareWithPreviousState(_ previousPathState: QWPathTraceProtocol?) -> (isDirty:Bool, description: String)
+  func compareWithPreviousState(_ previousPathState: QWPathTraceReader?) -> (isDirty:Bool, description: String)
   func collectChainActionSet() -> Set<RW_Action>
 }
 
-class QWPathTrace: QWPathTraceProtocol {
+class QWPathTrace: QWPathTraceReader {
 
   let node: QWNodeState
 
-  //Root object shall only be used during the initialisation of the chain, and not kee
+  //Root object shall only be used during the initialisation of the chain, and not kept after
   required init(rootObject: QWRoot, qwPath: QWPath) {
     let prop = qwPath.root.descriptor
     self.node = QWNodeState(rootObject: rootObject, parentProp: prop, qwPath: qwPath)
   }
 
-  func compareWithPreviousState(_ previousPathState: QWPathTraceProtocol?) -> (isDirty: Bool, description: String) {
+  func compareWithPreviousState(_ previousPathState: QWPathTraceReader?) -> (isDirty: Bool, description: String) {
     guard let previousPathState = previousPathState else {
       return (isDirty:true, description: "Node created")
     }
     if let chain = previousPathState as? QWPathTrace {
       return node.compareWithPreviousState(chain.node)
     }
-    return (isDirty:true, description: "Different QWPathTraceProtocol type")
+    return (isDirty:true, description: "Different QWPathTraceReader type")
   }
 
   func collectChainActionSet() -> Set<RW_Action>

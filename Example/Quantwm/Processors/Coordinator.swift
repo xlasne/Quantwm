@@ -36,8 +36,8 @@ class Coordinator: NSObject {
         name: "Coordinator.userIdUpdated",
         writtenMap: QWModel.root.playlistsCollection.writeAll +
             QWModel.root.selectedPlaylistId_Write +
-            QWModel.root.trackCollection.writeAll,
-        configurationPriority: -1)
+            QWModel.root.trackCollection.trackDict.writeAll,
+        schedulingPriority: -1)
 
     var previousUserId: UserID? = nil
 

@@ -48,16 +48,16 @@ public class QWMediator: NSObject {
     self.modelUpdatedClosure = modelUpdatedClosure
   }
 
-  // Dictionary of QWPathTraceReader
-  // QWPathTraceReader are monitoring a keypath, comparing old and new state from refresh to refresh
-  // QWPathTraceReader is initialized with { root: QWRootProperty, chain: [QWProperty]}
-  // QWPathTraceReader compute, store and compare difference of QWPathTraceProtocol
+  // Dictionary of QWPathTraceManager
+  // QWPathTraceManager are monitoring a keypath, comparing old and new state from refresh to refresh
+  // QWPathTraceManager is initialized with { root: QWRootProperty, chain: [QWProperty]}
+  // QWPathTraceManager compute, store and compare difference of QWPathTraceReader
   // from QWRootHandle objects.
-  var pathStateManagerDict: [QWPath:QWPathTraceReader] = [:]
+  var pathStateManagerDict: [QWPath:QWPathTraceManager] = [:]
   
   // Set of KeySetObserver
-  // KeySetObserver is a Target/Action + a set of QWPathTraceReader
-  // If a QWPathTraceReader detects a change, refreshUI() will trigger the registered target/action
+  // KeySetObserver is a Target/Action + a set of QWPathTraceManager
+  // If a QWPathTraceManager detects a change, refreshUI() will trigger the registered target/action
   var keySetObserverSet: Set<KeySetObserver> = []
   
   // Monitor data read and write during a transaction
@@ -148,7 +148,7 @@ public class QWMediator: NSObject {
     }
 
     for qwPath in qwPathSet {
-      self.registerQWPathTraceReader(QWPathTraceReader(qwPath: qwPath))
+      self.registerPathTraceManager(QWPathTraceManager(qwPath: qwPath))
     }
 
     let keySetObserver = KeySetObserver(target: target,
@@ -169,10 +169,8 @@ public class QWMediator: NSObject {
   //MARK: Helper functions
   fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> Set<KeySetObserver>
   {
-    let dataSet = self.keySetObserverSet.filter({
-      let mirror = Mirror(reflecting: target)
-      return ($0.type == mirror.subjectType) && ($0.targetAction == selector)
-    })
+    let mirrorType = Mirror(reflecting: target).subjectType
+    let dataSet = self.keySetObserverSet.filter({$0.matchesType(mirrorType, selector: selector)})
     return Set(dataSet)
   }
   
@@ -201,7 +199,7 @@ public class QWMediator: NSObject {
   
   // MARK: Observer Registration - Private
   
-  fileprivate func registerQWPathTraceReader(_ pathStateManager: QWPathTraceReader)
+  fileprivate func registerPathTraceManager(_ pathStateManager: QWPathTraceManager)
   {
     let keypath = pathStateManager.qwPath
     if let _ = self.pathStateManagerDict[keypath] {
@@ -212,7 +210,7 @@ public class QWMediator: NSObject {
     self.pathStateManagerDict[keypath] = pathStateManager
   }
   
-  fileprivate func unregisterQWPathTraceReader(_ pathStateManager: QWPathTraceReader)
+  fileprivate func unregisterPathTraceManager(_ pathStateManager: QWPathTraceManager)
   {
     let keypath = pathStateManager.qwPath
     if let _ = self.pathStateManagerDict[keypath]
@@ -259,16 +257,16 @@ extension QWMediator
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
 
     if QUANTUM_MVVM_DEBUG {
-      self.dataUsage = DataUsage.registerContext(self.qwTransactionStack, uuid: dataUsageId)
+      self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, uuid: dataUsageId)
     }
 
     // First perform scheduling of configuration type registration
     var modifiedDataSetNeedingRefreshArray : [KeySetObserver] = []
-    modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isConfigurationType})
+    modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isPrioritySchedulingType})
     
     modifiedDataSetNeedingRefreshArray.sort {
       (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
-      return k1.configurationSchedulingLevel! < k2.configurationSchedulingLevel!
+      return k1.schedulingPriority! < k2.schedulingPriority!
     }
 
     // First, perform Update transaction on configuration Register
@@ -289,7 +287,7 @@ extension QWMediator
           // Evaluate the pathStateManager associated to it
           // As any write are possible, readAndCompareTrace must be redone for each QWPath
           //
-          for readKey in keySetObserver.observedQWMapDescriptionSet
+          for readKey in keySetObserver.observedPathSet
           {
             if let pathStateManager = self.pathStateManagerDict[readKey] {
               let rootKey = pathStateManager.keypathBase
@@ -314,10 +312,12 @@ extension QWMediator
     // then push Refresh context on the empty root stack
     let refreshContext = RWContext(refreshOwner: self)
     qwTransactionStack.pushContext(refreshContext)
+    let currentRefreshTag = UUID().uuidString
+    qwTransactionStack.stackReadLevel = QWStackReadLevel(currentTag: currentRefreshTag, readLevel: 0)
 
     // Then perform scheduling of normal type registration  ( configurationSchedulingLevel == nil )
     keySetObserverSet = keySetObserverSet.filter({$0.isValid()})
-    modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({!$0.isConfigurationType})
+    modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({!$0.isPrioritySchedulingType})
     
     modifiedDataSetNeedingRefreshArray.sort {
       (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
@@ -333,7 +333,7 @@ extension QWMediator
         qwTransactionStack.pushContext(roContext)
         
         // Evaluate the pathStateManager associated to it
-        for readKey in keySetObserver.observedQWMapDescriptionSet
+        for readKey in keySetObserver.observedPathSet
         {
           // An evaluatedObservable shall not be modified by design until the next update phase.
           // By consequence, its evaluation can be skipped
@@ -349,6 +349,7 @@ extension QWMediator
             evaluatedObservable.insert(readKey)
           }
         }
+
         // triggerIfDirty is called once per RefreshUI
         // The registered action is performed if QWMap has changed
         // since last RefreshUI for this keySetObserver
@@ -366,7 +367,7 @@ extension QWMediator
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
     
     if QUANTUM_MVVM_DEBUG {
-      DataUsage.unregisterContext(uuid: dataUsageId)
+      QuantwmDataUsage.unregisterContext(uuid: dataUsageId)
       dataUsage = nil
     }
 
@@ -374,7 +375,7 @@ extension QWMediator
     var usedObservervable: Set<QWPath> = []
     for observer in keySetObserverSet
     {
-      for readKey in observer.observedQWMapDescriptionSet
+      for readKey in observer.observedPathSet
       {
         usedObservervable.insert(readKey)
       }
@@ -384,7 +385,7 @@ extension QWMediator
       if usedObservervable.contains(key) {
         observable.commitUpdate()
       } else {
-        self.unregisterQWPathTraceReader(observable)
+        self.unregisterPathTraceManager(observable)
       }
     }
     

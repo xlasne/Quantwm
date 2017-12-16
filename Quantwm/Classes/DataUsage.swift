@@ -69,22 +69,24 @@ public func ==(lhs: RW_Action, rhs: RW_Action) -> Bool
   return lhs.nodeId == rhs.nodeId && lhs.propertyDesc == rhs.propertyDesc
 }
 
-class DataUsage: NSObject
-{
-  
-  class QuantwmDataUsage: NSObject {
-    weak var dataUsage: DataUsage?
-    let id: String
-    init(dataUsage: DataUsage, id: String)
-    {
-      self.dataUsage = dataUsage
-      self.id = id
-      super.init()
-    }
+
+class QuantwmDataUsage: NSObject {
+
+  // QuantwmDataUsage is owned by the thread Dictionary
+  // and pointing to dataUsage.
+  // dataUsage is owned by the QWMediator
+  // QuantwmDataUsage is registered and unregistered by QWMediator
+  weak var dataUsage: DataUsage?
+  let id: String
+  init(dataUsage: DataUsage, id: String)
+  {
+    self.dataUsage = dataUsage
+    self.id = id
+    super.init()
   }
-  
+
   static let quantumKey = "QuantwmDataUsage"
-  
+
   static func registerContext(_ qwTransactionStack: QWTransactionStack, uuid: String) -> DataUsage
   {
     // Under the hypothesis that monitoring will occurs only inside the current thread
@@ -104,7 +106,7 @@ class DataUsage: NSObject
     threadDictionary[quantumKey] = quantumUsage
     return dataUsage
   }
-  
+
   static func unregisterContext(uuid: String)
   {
     let currentThread = Thread.current
@@ -114,12 +116,16 @@ class DataUsage: NSObject
       threadDictionary[quantumKey] = nil
     }
   }
-  
+}
+
+
+class DataUsage: NSObject
+{
   static func currentInstance() -> DataUsage?
   {
     let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
-    let currentUsage = threadDictionary[quantumKey] as? QuantwmDataUsage
+    let currentUsage = threadDictionary[QuantwmDataUsage.quantumKey] as? QuantwmDataUsage
     return currentUsage?.dataUsage
   }
   
@@ -166,7 +172,8 @@ class DataUsage: NSObject
       return readWriteSet
     }
   }
-  
+
+
   func addRead(_ node: QWCounter, property: QWPropertyID) {
     let readAction = RW_Action(nodeId: node.nodeId, property: property)
     if checkStack {
@@ -205,7 +212,7 @@ class DataUsage: NSObject
     }
   }
   
-  func getReadQWPathTraceReaderSet(_ owner: NSObject?) -> Set<RW_Action> {
+  func getReadQWPathTraceManagerSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
       // if owner defined, returns the corresponding set
       guard let readWriteSet = contextDict[owner] else { return [] }
@@ -220,7 +227,7 @@ class DataUsage: NSObject
     }
   }
   
-  func getWriteQWPathTraceReaderSet(_ owner: NSObject?) -> Set<RW_Action> {
+  func getWriteQWPathTraceManagerSet(_ owner: NSObject?) -> Set<RW_Action> {
     if let owner = owner {
       guard let readWriteSet = contextDict[owner] else { return [] }
       return readWriteSet.writeSet

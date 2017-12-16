@@ -175,6 +175,15 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
   }
 }
 
+// Access is only for debug on registration, and is not usefull for equality
+public func ==(lhs: QWPath, rhs: QWPath) -> Bool {
+  let areEqual =
+    lhs.root == rhs.root &&
+      lhs.chain == rhs.chain &&
+      lhs.andAllChilds == rhs.andAllChilds
+  return areEqual
+}
+
 extension QWPath // Property and Node Getter
 {
 
@@ -292,12 +301,5 @@ extension QWPath // Property and Node Getter
 
 }
 
-public func ==(lhs: QWPath, rhs: QWPath) -> Bool {
-  let areEqual =
-    lhs.root == rhs.root &&
-      lhs.chain == rhs.chain &&
-    lhs.andAllChilds == rhs.andAllChilds
-  return areEqual
-}
 
 

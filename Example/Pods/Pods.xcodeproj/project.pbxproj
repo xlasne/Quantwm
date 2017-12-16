@@ -36,7 +36,7 @@
 		1ACAA7B5E0E05DD5E7653B3AF28CAD5B /* Completable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C360728A821AF8151A0A5C693A61A22E /* Completable.swift */; };
 		1B9EDEDC964E6B08F78920B4F4B9DB84 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E40D0A07F04D4B9C3D9A917A7769EC0F /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DAFED2392A0BC06F24F724BB0246D3A /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919A41515E9CBA25D86422CBAE2EA8F0 /* DispatchQueueConfiguration.swift */; };
-		20076026D2CB2D1CE4C253E53FDEB824 /* QWPathState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathState.swift */; };
+		20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */; };
 		202822E4668C16D115A8F68F3ADF0E0F /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
@@ -359,7 +359,7 @@
 		2A57F60132D1BD5808513FFC2B530E48 /* Disposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = RxSwift/Disposable.swift; sourceTree = "<group>"; };
 		2C17C841D494BE735C972314E9214AE7 /* Delay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Delay.swift; path = RxSwift/Observables/Delay.swift; sourceTree = "<group>"; };
 		2C467677818DFEE4B5D80C055F3EDDF7 /* DisposeBag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBag.swift; path = RxSwift/Disposables/DisposeBag.swift; sourceTree = "<group>"; };
-		2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathState.swift; path = Quantwm/Classes/QWPathState.swift; sourceTree = "<group>"; };
+		2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathStateReader.swift; path = Quantwm/Classes/QWPathStateReader.swift; sourceTree = "<group>"; };
 		2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		2D44154CE3FE12E30C76FFA6C54DE9FA /* Pods-Quantwm_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Quantwm_Example-resources.sh"; sourceTree = "<group>"; };
 		2F63F5E7C2B91A36012004DD88ECF40C /* Pods-Quantwm_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Quantwm_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -1047,7 +1047,7 @@
 				441F3F26E0F96CE2503BAB5EFB65224B /* QWMediator.swift */,
 				35497F3E9E9ABF05F1603D978D166B53 /* QWNode.swift */,
 				DD0974D2DAD3F72210E100A6A8861798 /* QWPath.swift */,
-				2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathState.swift */,
+				2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */,
 				D9E3F44472836A0D7C46900FED168538 /* QWPathStateManager.swift */,
 				642C99228CA312852301C829A46BA8A7 /* QWProperty.swift */,
 				56439B5C5DD7745072DCF3B60ABCAEFE /* QWRegistration.swift */,
@@ -1327,7 +1327,7 @@
 				FF43C930B919A1C2C3CB4760C0E16621 /* QWMediator.swift in Sources */,
 				B38843D4855E29BFBF157F595ED0AAD1 /* QWNode.swift in Sources */,
 				F5511960F330E4431B568BF7057CDA7E /* QWPath.swift in Sources */,
-				20076026D2CB2D1CE4C253E53FDEB824 /* QWPathState.swift in Sources */,
+				20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */,
 				A45AB1D73D85EDD35DA8E85238CD82F7 /* QWPathStateManager.swift in Sources */,
 				02617A9CEB2192BBD675DCD1706420E7 /* QWProperty.swift in Sources */,
 				EC194E7341BBCDC5EE56E1A49BAC9F86 /* QWRegistration.swift in Sources */,

@@ -15,7 +15,7 @@ public class QWRegistration: NSObject, Encodable
   // Codable for logging purpose only
   enum CodingKeys: String, CodingKey {
     case name
-    case configurationPriority
+    case schedulingPriority
     case readPathSet
     case writtenPathSet
   }
@@ -24,22 +24,35 @@ public class QWRegistration: NSObject, Encodable
   let readPathSet: Set<QWPath>
   let name: String
   let writtenPathSet: Set<QWPath>
-  let configurationPriority: Int?
+  let schedulingPriority: Int?
   let maximumAllowedRegistrationWithSameTypeSelector: Int?
 
   public init(selector: Selector,
               readMap: QWMap,
               name: String,
               writtenMap: QWMap = QWMap(pathArray : []),
-              configurationPriority: Int? = nil,
+              schedulingPriority: Int? = nil,
               maximumAllowedRegistrationWithSameTypeSelector: Int? = nil)
   {
+    for path in readMap.qwPathSet {
+      if path.access == .writePath {
+        assert(false, "Error: Registration \(name) contains a write readPath : \(path)")
+      }
+    }
+
+    for path in writtenMap.qwPathSet {
+      if path.access == .readPath {
+        assert(false, "Error: Registration \(name) contains a read in writePath : \(path)")
+      }
+    }
+
     self.selector = selector
     self.readPathSet = readMap.qwPathSet
     self.name = name
     self.writtenPathSet = writtenMap.qwPathSet
     self.maximumAllowedRegistrationWithSameTypeSelector = maximumAllowedRegistrationWithSameTypeSelector
-    self.configurationPriority = configurationPriority
+    self.schedulingPriority = schedulingPriority
+
 
     super.init()
   }

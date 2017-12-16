@@ -10,11 +10,11 @@ import Foundation
 // The root node shall be an object, in order to keep a weak pointer on it.
 public protocol QWRoot: class, QWNode
 {
-  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceProtocol
+  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceReader
 }
 
 public extension QWRoot {
-  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceProtocol
+  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceReader
   {
     return QWPathTrace(rootObject: self, qwPath: qwPath)
   }

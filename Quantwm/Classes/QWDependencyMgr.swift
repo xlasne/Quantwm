@@ -34,7 +34,7 @@ public class QWDependencyMgr: Encodable {
   var registrationSet: Set<QWRegistration>
 
   init(registrationSet: Set<QWRegistration>) {
-    self.registrationSet = registrationSet.filter() {$0.configurationPriority == nil}
+    self.registrationSet = registrationSet.filter() {$0.schedulingPriority == nil}
     self.propertySet = []
     self.dependsFromPropertySet = [:]
     self.propertyLevel = [:]
