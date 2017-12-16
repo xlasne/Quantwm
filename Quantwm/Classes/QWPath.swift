@@ -25,10 +25,16 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     case tree
   }
 
+  enum QWAccess: Int, Codable {
+    case readPath
+    case writePath
+  }
+
   let root: QWRootProperty
   let chain: [QWProperty]
   let andAllChilds: Bool
   let type: QWPathType
+  let access: QWAccess
 
   public init(root: QWRootProperty)
   {
@@ -36,15 +42,17 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     self.chain = []
     self.andAllChilds = false
     self.type = .node
+    self.access = .readPath
   }
 
   // Set andAllChilds to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
   // match the source and destination types between Objective-C and Swift
-  fileprivate init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false)
+  fileprivate init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false, access: QWAccess)
   {
     self.root = root
     self.chain = chain
     self.andAllChilds = andAllChilds
+    self.access = access
 
     if andAllChilds {
       self.type = .tree
@@ -131,15 +139,10 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
       break
     }
     let _ = validate(newElement: chainElement)
-    if chainElement.isNode {
-      return QWPath(root: self.root,
-                    chain: self.chain + [chainElement],
-                    andAllChilds: false) as QWPath
-    } else {
-      return QWPath(root: self.root,
-                        chain: self.chain + [chainElement],
-                        andAllChilds: false) as QWPath
-    }
+    return QWPath(root: self.root,
+                  chain: self.chain + [chainElement],
+                  andAllChilds: false,
+                  access: access) as QWPath
   }
 
   func validate(newElement: QWProperty) -> Bool
@@ -160,9 +163,16 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     }
     return QWPath(root: self.root,
                   chain: self.chain,
-                  andAllChilds: true) as QWPath
+                  andAllChilds: true,
+                  access: access) as QWPath
   }
 
+  public func write() -> QWPath {
+    return QWPath(root: root,
+                  chain: chain,
+                  andAllChilds: andAllChilds,
+                  access: .writePath)
+  }
 }
 
 extension QWPath // Property and Node Getter
@@ -281,8 +291,6 @@ extension QWPath // Property and Node Getter
 //  }
 
 }
-
-
 
 public func ==(lhs: QWPath, rhs: QWPath) -> Bool {
   let areEqual =

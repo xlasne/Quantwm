@@ -22,7 +22,7 @@ class TrackListViewModel: GenericViewModel<DataModel>
     // Datasource for tracks table view
     var mapForTracksTableDataSource: QWMap {
         return trackCollectionModel.trackDict.all
-        + QWModel.root.selectedPlaylistId
+        + QWModel.root.selectedPlaylistId_Read
     }
 
     var trackArray: [Track] {

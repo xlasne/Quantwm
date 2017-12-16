@@ -35,7 +35,13 @@ Solution 3: Adopt an other convention and change this stencil.
 {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
     let {{monitoredName}}: {{nodeTypeName}}QWModel
 {% else %}
-    let {{monitoredName}}: QWMap
+    fileprivate let {{monitoredName}}: QWPath
+    var {{monitoredName}}_Read: QWMap {
+        return {{monitoredName}}.map
+    }
+    var {{monitoredName}}_Write: QWMap {
+        return {{monitoredName}}.write().map
+    }
 {% endif %}
 {% endif %}
 {% endfor %}
@@ -56,7 +62,7 @@ Solution 3: Adopt an other convention and change this stencil.
   {% else %}
 
         // property: {{monitoredName}}
-        self.{{monitoredName}} = path.appending({{ propertyKName }}).map
+        self.{{monitoredName}} = path.appending({{ propertyKName }})
   {% endif %}
 {% endif %}
 {% endfor %}
@@ -86,7 +92,7 @@ Solution 3: Adopt an other convention and change this stencil.
     {% endif %}
     {% endfor %}
 
-    func allPaths() -> QWMap{
+    var writeAll: QWMap {
         return QWMap(pathArray: allPathGetter(path: path))
     }
 
@@ -96,7 +102,7 @@ Solution 3: Adopt an other convention and change this stencil.
         {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
         {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
         {% if prop|annotated:"property" %}
-        pathArray.append(path.appending({{propertyKName}}))
+        pathArray.append(path.appending({{propertyKName}}).write())
         {% endif %}
         {% if prop|annotated:"node" %}
         pathArray += {{monitoredName}}.allPathGetter(path: path.appending({{propertyKName}}))

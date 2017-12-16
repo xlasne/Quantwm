@@ -129,6 +129,7 @@
 		25D4CD6D1FE1537E000EA8E3 /* Tests_Example.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests_Example.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_Quantwm.swift; sourceTree = "<group>"; };
 		25D4CD711FE1537E000EA8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25FD37441FE550B400631923 /* Discussions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Discussions.txt; sourceTree = "<group>"; };
 		25FDDADF1FE12B5800E16C74 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		25FDDAE01FE12B5800E16C74 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		491C7EB8E9A4DAEC4D2F2655 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -388,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				257159831FE3FA8400776530 /* TODO List.txt */,
+				25FD37441FE550B400631923 /* Discussions.txt */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Quantwm */,
 				25D4CD6E1FE1537E000EA8E3 /* Tests_Example */,
