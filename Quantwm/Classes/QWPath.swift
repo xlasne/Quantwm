@@ -168,59 +168,117 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
 extension QWPath // Property and Node Getter
 {
 
-  public func generatePropertyGetter<Root,Value>(property: QWPropProperty<Root,Value>) -> (QWRoot) -> [Value]{
-    switch self.type
-    {
-    case .property:
-      preconditionFailure("Error QWPath: Calling generatePropertyGetter on a property QWPath \(keypath)")
-    case .tree:
-      break
-    case .node:
-      break
-    }
+//  public func generateCollectionPropertyGetter<Root,Value>(property: QWPropProperty<Root,Value>) -> (QWRoot) -> [Value]{
+//    switch self.type
+//    {
+//    case .property:
+//      preconditionFailure("Error QWPath: Calling generatePropertyGetter on a property QWPath \(keypath)")
+//    case .tree:
+//      break
+//    case .node:
+//      break
+//    }
+//
+//    let myChain = self.chain
+//    let getter:(QWRoot) -> [Value] = { (root:QWRoot) -> [Value] in
+//      var currentNodeArray:[QWNode] = [root]
+//      for prop in myChain {
+//        if !prop.isProperty {
+//          var nextNodeArray:[QWNode] = []
+//          for myNode in currentNodeArray {
+//            let foundNodes: [QWNode] = prop.getChildArray(node: myNode)
+//            nextNodeArray += foundNodes
+//          }
+//          currentNodeArray = nextNodeArray
+//        }
+//      }
+//      var finalPropArray:[Value] = []
+//      for item in currentNodeArray {
+//        let item = item as! Root
+//        let value = property.getter(item)
+//        finalPropArray.append(value)
+//      }
+//      return finalPropArray
+//    }
+//    return getter
+//  }
+//
+//  public func generatePropertyGetter<Root,Value>(property: QWPropProperty<Root,Value>) -> (QWRoot) -> Value? {
+//    switch self.type
+//    {
+//    case .property:
+//      preconditionFailure("Error QWPath: Calling generatePropertyGetter on a property QWPath \(keypath)")
+//    case .tree:
+//      break
+//    case .node:
+//      break
+//    }
+//
+//    let myChain = self.chain
+//    let getter:(QWRoot) -> Value? = { (root:QWRoot) -> Value? in
+//      var currentNode:QWNode? = root
+//      for property in myChain {
+//        if let node = currentNode {
+//          if !property.isProperty {
+//            var nextNodeArray:[QWNode] = []
+//            let foundNodes: [QWNode] = property.getChildArray(node: node)
+//            nextNodeArray += foundNodes
+//            if nextNodeArray.count > 1 {
+//              preconditionFailure("Error: Using single getter on multipath. Add the sourcery: multi option on the collection property in the path: \(myChain)")
+//            }
+//            currentNode = nextNodeArray.first
+//          }
+//        }
+//      }
+//      if let node = currentNode as? Root {
+//        let value = property.getter(node)
+//        return value
+//      }
+//      return nil
+//    }
+//    return getter
+//  }
 
-    let myChain = self.chain
-    let getter:(QWRoot) -> [Value] = { (root:QWRoot) -> [Value] in
-      var currentNodeArray:[QWNode] = [root]
-      for prop in myChain {
-        if !prop.isProperty {
-          var nextNodeArray:[QWNode] = []
-          for myNode in currentNodeArray {
-            let foundNodes: [QWNode] = prop.getChildArray(node: myNode)
-            nextNodeArray += foundNodes
-          }
-          currentNodeArray = nextNodeArray
-        }
-      }
-      var finalPropArray:[Value] = []
-      for item in currentNodeArray {
-        let item = item as! Root
-        let value = property.getter(item)
-        finalPropArray.append(value)
-      }
-      return finalPropArray
-    }
-    return getter
-  }
-
-  public func generateNodeGetter() -> (QWRoot) -> [QWNode]{
-    let myChain = chain
-    let getter:(QWRoot) -> [QWNode] = { (root:QWRoot) -> [QWNode] in
-      var currentNodeArray:[QWNode] = [root]
-      for property in myChain {
-        if !property.isProperty {
-          var nextNodeArray:[QWNode] = []
-          for myNode in currentNodeArray {
-            let foundNodes: [QWNode] = property.getChildArray(node: myNode)
-            nextNodeArray += foundNodes
-          }
-          currentNodeArray = nextNodeArray
-        }
-      }
-      return currentNodeArray
-    }
-    return getter
-  }
+//  public func generateCollectionNodeGetter() -> (QWRoot) -> [QWNode]{
+//    let myChain = chain
+//    let getter:(QWRoot) -> [QWNode] = { (root:QWRoot) -> [QWNode] in
+//      var currentNodeArray:[QWNode] = [root]
+//      for property in myChain {
+//        if !property.isProperty {
+//          var nextNodeArray:[QWNode] = []
+//          for myNode in currentNodeArray {
+//            let foundNodes: [QWNode] = property.getChildArray(node: myNode)
+//            nextNodeArray += foundNodes
+//          }
+//          currentNodeArray = nextNodeArray
+//        }
+//      }
+//      return currentNodeArray
+//    }
+//    return getter
+//  }
+//
+//  public func generateNodeGetter() -> (QWRoot) -> QWNode?{
+//    let myChain = chain
+//    let getter:(QWRoot) -> QWNode? = { (root:QWRoot) -> QWNode? in
+//      var currentNode:QWNode? = root
+//      for property in myChain {
+//        if let node = currentNode {
+//          if !property.isProperty {
+//            var nextNodeArray:[QWNode] = []
+//            let foundNodes: [QWNode] = property.getChildArray(node: node)
+//            nextNodeArray += foundNodes
+//            if nextNodeArray.count > 1 {
+//              preconditionFailure("Error: Using single getter on multipath. Add the sourcery: multi option on the collection property in the path: \(myChain)")
+//            }
+//            currentNode = nextNodeArray.first
+//          }
+//        }
+//      }
+//      return currentNode
+//    }
+//    return getter
+//  }
 
 }
 

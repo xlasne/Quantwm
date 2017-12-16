@@ -1,6 +1,59 @@
 //DONE: Move Property List to Model
 //Aborted: Move Property wrapper into the Model- cancelled, because of fileprivate level
-- Provide Property Getter/Setter via Model
+//DONE: Provide Property Getter via Model
+
+Problem 1: Result is returned as an Array to handle Collection property in the path.
+Problem 2: Setter of a property containing a Collection in its path is not possible.
+Solution:
+-> Impose .all for collection properties
+-> and then remove Array from Getter
+-> and then show how to have a "Selected item" property which can traverse the collection
+
+Model describe the DataStore.
+Why do I want to access data via Model ?
+In order to generate Data Accessor, which are both Contract Description, Data Monitor and Accessor.
+
+Can a Keypath provide these 3 features ?
+- Data Accessor: Yes
+- Data Monitoring: Based on Counter in the DataStore
+- Dependency Management: Based on Property level in Keypath. Factored on all the possible path.
+- Contract description:
+
+In order to work:
+Path 1: A -> B -> C, writing B
+Path 2: A -> C, reading A,C
+
+Conclusion:
+A) ? Writing property accessor shall follow the ownership path.
+B) ? Computed property shall be read-only
+
+Model generates QWPath
+-> QWPathRead: include Computed Properties
+-> QWPathWrite: Writing a node includes writing all the subtree below the written node.
+
+Accessor:
+- Can be based on DataStore-keypath-Getter/Setter
+- Can be based on Root + Model-Node-Getter + Model-Operator + Model-Property&Node-Getter/Setter
+
+Accessor shall retain the type: Optional or not, Collection, etc ...
+-> Swift defined type at compilation
+-> All the path shall be defined at compilation
+-> Accessor is hard-coded.
+    -> Sourcery generates a type-compliant accessor
+Problem: What is the QWPath of a Keypath ?
+Solution 1: Wait for Swift 5 and decomposable keypath
+Solution 2: Extend keypath ?
+Solution 3: Generate accessor via Model, using Model keypath.
+-> Step 1: Generate a Path via Model using keypath
+-> Step 2: Generate a typed accessor from the Path, using
+    func function<R,V>(_ keyPath: KeyPath<R, V>) -> (R) -> V {
+        return { return $0[keyPath: keyPath] }
+    }
+
+
+
+
+- Provide property Setter via Model
 - Define Write as a Map
 - Add Write path.dropLast in the Reading List
 - PrettyPrint Model

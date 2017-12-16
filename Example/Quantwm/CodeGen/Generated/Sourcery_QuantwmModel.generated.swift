@@ -39,24 +39,24 @@ struct DataModelQWModel: QWModelProperty
 
 
     // property: userId
-func userIdGetter(root:QWRoot) -> [UserID] { return path.generatePropertyGetter(property: DataModel.userIdK)(root) }
+    func userIdGetter(_ root:DataModel) -> UserID {
+        return root[keyPath:\DataModel.userId]
+    }
 
     // property: selectedPlaylistId
-func selectedPlaylistIdGetter(root:QWRoot) -> [PlaylistID?] { return path.generatePropertyGetter(property: DataModel.selectedPlaylistIdK)(root) }
+    func selectedPlaylistIdGetter(_ root:DataModel) -> PlaylistID? {
+        return root[keyPath:\DataModel.selectedPlaylistId]
+    }
 
     // node: Getter playlistsCollection
-func playlistsCollectionGetter(root:QWRoot) -> [PlaylistsCollection] {
-        let nodePropertyK = QWPropProperty(propertyKeypath: \DataModel.playlistsCollection,
-                    description: "_playlistsCollection")
-        return  path.generatePropertyGetter(property: nodePropertyK)(root)
+    func playlistsCollectionGetter(_ root:DataModel) -> PlaylistsCollection {
+        return root[keyPath:\DataModel.playlistsCollection]
     }
 
 
     // node: Getter trackCollection
-func trackCollectionGetter(root:QWRoot) -> [TrackCollection] {
-        let nodePropertyK = QWPropProperty(propertyKeypath: \DataModel.trackCollection,
-                    description: "_trackCollection")
-        return  path.generatePropertyGetter(property: nodePropertyK)(root)
+    func trackCollectionGetter(_ root:DataModel) -> TrackCollection {
+        return root[keyPath:\DataModel.trackCollection]
     }
 
 
@@ -121,13 +121,19 @@ struct PlaylistsCollectionQWModel: QWModelProperty
 
 
     // property: playlistArray
-func playlistArrayGetter(root:QWRoot) -> [[PlaylistID]] { return path.generatePropertyGetter(property: PlaylistsCollection.playlistArrayK)(root) }
+    func playlistArrayGetter(_ root:PlaylistsCollection) -> [PlaylistID] {
+        return root[keyPath:\PlaylistsCollection.playlistArray]
+    }
 
     // property: playlistDict
-func playlistDictGetter(root:QWRoot) -> [[PlaylistID:Playlist]] { return path.generatePropertyGetter(property: PlaylistsCollection.playlistDictK)(root) }
+    func playlistDictGetter(_ root:PlaylistsCollection) -> [PlaylistID:Playlist] {
+        return root[keyPath:\PlaylistsCollection.playlistDict]
+    }
 
     // property: total
-func totalGetter(root:QWRoot) -> [Int] { return path.generatePropertyGetter(property: PlaylistsCollection.totalK)(root) }
+    func totalGetter(_ root:PlaylistsCollection) -> Int {
+        return root[keyPath:\PlaylistsCollection.total]
+    }
 
 
     // MARK: Property Array
@@ -159,10 +165,8 @@ struct TrackCollectionQWModel: QWModelProperty
 
 
     // node: Getter trackDict
-func trackDictGetter(root:QWRoot) -> [[PlaylistID:Tracklist]] {
-        let nodePropertyK = QWPropProperty(propertyKeypath: \TrackCollection.trackDict,
-                    description: "_trackDict")
-        return  path.generatePropertyGetter(property: nodePropertyK)(root)
+    func trackDictGetter(_ root:TrackCollection) -> [PlaylistID:Tracklist] {
+        return root[keyPath:\TrackCollection.trackDict]
     }
 
 
@@ -194,7 +198,9 @@ struct TracklistQWModel: QWModelProperty
 
 
     // property: finalTracksArray
-func finalTracksArrayGetter(root:QWRoot) -> [[Track]] { return path.generatePropertyGetter(property: Tracklist.finalTracksArrayK)(root) }
+    func finalTracksArrayGetter(_ root:Tracklist) -> [Track] {
+        return root[keyPath:\Tracklist.finalTracksArray]
+    }
 
 
     // MARK: Property Array

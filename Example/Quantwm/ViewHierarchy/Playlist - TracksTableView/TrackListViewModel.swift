@@ -26,9 +26,9 @@ class TrackListViewModel: GenericViewModel<DataModel>
     }
 
     var trackArray: [Track] {
-        let selectedPlaylistId = QWModel.root.selectedPlaylistIdGetter(root: dataModel).first!
+        let selectedPlaylistId = QWModel.root.selectedPlaylistIdGetter(dataModel)
         if let selectedPlaylistId = selectedPlaylistId {
-            let trackDict = trackCollectionModel.trackDictGetter(root: dataModel).first!
+            let trackDict = QWModel.root.trackCollectionGetter(dataModel).trackDict
             return trackDict[selectedPlaylistId]?.tracksArray ?? []
         } else {
             return []

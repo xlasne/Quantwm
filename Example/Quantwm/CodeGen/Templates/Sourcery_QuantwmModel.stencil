@@ -72,16 +72,16 @@ Solution 3: Adopt an other convention and change this stencil.
     {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
 
     // node: Getter {{monitoredName}}
-func {{monitoredName}}Getter(root:QWRoot) -> [{{prop.typeName}}] {
-        let nodePropertyK = QWPropProperty(propertyKeypath: \{{type.name}}.{{monitoredName}},
-                    description: "{{ prop.name }}")
-        return  path.generatePropertyGetter(property: nodePropertyK)(root)
+    func {{monitoredName}}Getter(_ root:{{type.name}}) -> {{prop.typeName}} {
+        return root[keyPath:\{{type.name}}.{{monitoredName}}]
     }
 
 {% else %}
 
     // property: {{monitoredName}}
-func {{monitoredName}}Getter(root:QWRoot) -> [{{prop.typeName}}] { return path.generatePropertyGetter(property: {{ propertyKName }})(root) }
+    func {{monitoredName}}Getter(_ root:{{type.name}}) -> {{prop.typeName}} {
+        return root[keyPath:\{{type.name}}.{{monitoredName}}]
+    }
     {% endif %}
     {% endif %}
     {% endfor %}
