@@ -32,7 +32,8 @@ struct RWContext: Equatable, CustomDebugStringConvertible
   }
   let rw : RW
   weak var owner: NSObject?
-  
+  weak var registrationUsage: QWRegistrationUsage? = nil
+
   var isUpdating: Bool {
     return self.rw == RW.update
   }
@@ -50,9 +51,10 @@ struct RWContext: Equatable, CustomDebugStringConvertible
     self.owner = owner
   }
 
-  init(NotificationWithOwner owner:NSObject?) {
+  init(NotificationWithOwner owner:NSObject?, registrationUsage: QWRegistrationUsage?) {
     self.rw = RW.notif
     self.owner = owner
+    self.registrationUsage = registrationUsage
   }
   
   init(UpdateWithOwner owner:NSObject?) {

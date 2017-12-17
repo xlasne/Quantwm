@@ -38,6 +38,7 @@
 		1DAFED2392A0BC06F24F724BB0246D3A /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919A41515E9CBA25D86422CBAE2EA8F0 /* DispatchQueueConfiguration.swift */; };
 		20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */; };
 		202822E4668C16D115A8F68F3ADF0E0F /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */; };
+		256960E21FE6FB5E00CF10A1 /* QWRegistrationUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
 		25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FD37451FE5CE8200631923 /* QWPathWalker.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
@@ -355,6 +356,7 @@
 		23A4E67C22314EBD4E31F2DAE17F95E6 /* AlamofireImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-umbrella.h"; sourceTree = "<group>"; };
 		241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-umbrella.h"; sourceTree = "<group>"; };
 		24547D3C83BC31586420960391920929 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
+		256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QWRegistrationUsage.swift; path = Quantwm/Classes/QWRegistrationUsage.swift; sourceTree = "<group>"; };
 		25FD37451FE5CE8200631923 /* QWPathWalker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QWPathWalker.swift; path = Quantwm/Classes/QWPathWalker.swift; sourceTree = "<group>"; };
 		2739CB7A8A23BE7D701F2F7DAE44CB20 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		28BC2C578BD1047F484956A70FD6D6F2 /* Concat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Concat.swift; path = RxSwift/Observables/Concat.swift; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 				7DFEF119C2DE5CD130EC9212543C9668 /* DataUsage.swift */,
 				A29FC19F48E0EA179D111130E16B6D21 /* GenericViewModel.swift */,
 				C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */,
+				256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */,
 				050554A8076072CF69430FE4B9E28958 /* QWCounter.swift */,
 				0786D14864B759C8D620B0C86DC15C08 /* QWDependencyMgr.swift */,
 				58C6838B45DF5B09AD386D1A07B90796 /* QWMap.swift */,
@@ -1328,6 +1331,7 @@
 				25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */,
 				44B11213CFC53E53135116A61A4F61AD /* QWDependencyMgr.swift in Sources */,
 				3DA96A7B37B8C2462E223B31EAF0EBF0 /* QWMap.swift in Sources */,
+				256960E21FE6FB5E00CF10A1 /* QWRegistrationUsage.swift in Sources */,
 				FF43C930B919A1C2C3CB4760C0E16621 /* QWMediator.swift in Sources */,
 				B38843D4855E29BFBF157F595ED0AAD1 /* QWNode.swift in Sources */,
 				F5511960F330E4431B568BF7057CDA7E /* QWPath.swift in Sources */,

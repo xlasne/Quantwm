@@ -8,7 +8,6 @@
 
 import Foundation
 
-//TODO: move to struct Equatable / Hashable
 public class QWRegistration: NSObject, Encodable
 {
 
@@ -60,5 +59,14 @@ public class QWRegistration: NSObject, Encodable
   var writtenPropertySet: Set<QWProperty> {
     return Set(self.writtenPathSet.flatMap{ $0.chain.last })
   }
+
+//  var readAccessPropertySet: Set<QWProperty> {
+//    let propertiesSetArray = writtenPathSet.map({Set($0.chain.dropLast())})
+//    let propertiesSet: Set<QWProperty> = propertiesSetArray.reduce(
+//      Set<QWProperty>(),
+//            { (result: Set<QWProperty>, propertySet: Set<QWProperty>) -> Set<QWProperty> in
+//              return result.union(propertySet) })
+//    return propertiesSet
+//  }
 
 }

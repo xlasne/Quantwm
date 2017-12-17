@@ -27,15 +27,6 @@ let QUANTUM_MVVM_DEBUG = true
 
 import Foundation
 
-enum DataSetComparisonResult<T: Hashable>
-{
-  case error_WriteDataSetNotEmpty(Set<T>)
-  case warning_ReadDataSetContainsMoreDataThanQWObserver(Set<T>)
-  case info_ReadDataSetIsContainedIntoQWObserver(Set<T>)
-  case info_TargetIsNil
-  case identical
-  case notDirty
-}
 
 public class RW_Action: Equatable, CustomStringConvertible, Hashable {
   let nodeId: NodeId?
@@ -118,7 +109,6 @@ class QuantwmDataUsage: NSObject {
   }
 }
 
-
 class DataUsage: NSObject
 {
   static func currentInstance() -> DataUsage?
@@ -129,11 +119,6 @@ class DataUsage: NSObject
     return currentUsage?.dataUsage
   }
   
-  class ReadWriteSet {
-    var writeSet: Set<RW_Action> = Set()
-    var  readSet: Set<RW_Action> = Set()
-  }
-  
   let checkStack = true
   let currentTag: String
 
@@ -141,7 +126,6 @@ class DataUsage: NSObject
   // not when QWMediator scan the paths
   var monitoringIsActive: Bool = false
 
-  fileprivate var contextDict: [NSObject:ReadWriteSet] = [:]
   fileprivate unowned var qwTransactionStack: QWTransactionStack
   
   required init(qwTransactionStack: QWTransactionStack, currentTag: String) {
@@ -149,130 +133,31 @@ class DataUsage: NSObject
     self.currentTag = currentTag
     super.init()
   }
-  
-  func clearAll() {
-    contextDict = [:]
-  }
-  
-  func clearContext(_ owner: NSObject) {
-    contextDict[owner] = nil
-  }
-  
-  func display() {
-    //print(self.debugDescription)
-  }
-  
-  override var debugDescription: String {
-    get {
-      return "ReadWrite \(contextDict)"
-    }
-  }
-  
-  func getReadWriteSetForOwner(_ owner: NSObject) -> ReadWriteSet
-  {
-    if let readWriteSet = contextDict[owner] {
-      return readWriteSet
-    } else {
-      let readWriteSet = ReadWriteSet()
-      contextDict[owner] = readWriteSet
-      return readWriteSet
-    }
-  }
-
 
   func addRead(_ node: QWCounter, property: QWPropertyID) {
-    let readAction = RW_Action(nodeId: node.nodeId, property: property)
     if checkStack {
       guard let lastContext = qwTransactionStack.rwContextStack.last else {
         assert(false,"Error: Trying to read while stack is empty")
         return
       }
-      guard let owner = lastContext.owner else {
-        assert(false,"Error: The context owner has been released")
-        return
+      if let registrationUsage = lastContext.registrationUsage {
+        let readAction = RW_Action(nodeId: node.nodeId, property: property)
+        registrationUsage.addReadAction(readAction: readAction)
       }
-      let readWriteSet = self.getReadWriteSetForOwner(owner)
-      readWriteSet.readSet.insert(readAction)
-    } else {
-      let readWriteSet = self.getReadWriteSetForOwner(self)
-      readWriteSet.readSet.insert(readAction)
     }
   }
   
   func addWrite(_ node: QWCounter, property: QWPropertyID) {
-    let writeAction = RW_Action(nodeId: node.nodeId, property: property)
     if checkStack {
       guard let lastContext = qwTransactionStack.rwContextStack.last else {
         assert(false,"Error: Trying to write while stack is empty")
         return
       }
-      guard let owner = lastContext.owner else {
-        assert(false,"Error: The context owner has been released")
-        return
+      if let registrationUsage = lastContext.registrationUsage {
+        let writeAction = RW_Action(nodeId: node.nodeId, property: property)
+        registrationUsage.addWriteAction(writeAction: writeAction)
       }
-      let readWriteSet = self.getReadWriteSetForOwner(owner)
-      readWriteSet.writeSet.insert(writeAction)
-    } else {
-      let readWriteSet = self.getReadWriteSetForOwner(self)
-      readWriteSet.writeSet.insert(writeAction)
     }
   }
-  
-  func getReadQWPathTraceManagerSet(_ owner: NSObject?) -> Set<RW_Action> {
-    if let owner = owner {
-      // if owner defined, returns the corresponding set
-      guard let readWriteSet = contextDict[owner] else { return [] }
-      return readWriteSet.readSet
-    } else {
-      // else returns all reads
-      let readWriteSet = contextDict
-        .values
-        .map({$0.readSet})
-        .joined()
-      return Set(readWriteSet)
-    }
-  }
-  
-  func getWriteQWPathTraceManagerSet(_ owner: NSObject?) -> Set<RW_Action> {
-    if let owner = owner {
-      guard let readWriteSet = contextDict[owner] else { return [] }
-      return readWriteSet.writeSet
-    } else {
-      let readWriteSet = contextDict
-        .values
-        .map({$0.writeSet})
-        .joined()
-      return Set(readWriteSet)
-    }
-  }
-
-  static func compareArrays(readAction:Set<RW_Action>, configuredReadAction:Set<RW_Action>,
-                            writeAction:Set<RW_Action>, configuredWriteProperties:Set<QWProperty>,
-                            name: String) -> DataSetComparisonResult<QWPropertyID>
-  {
-    // Only compare porperty desc
-    let readActionSet = Set(readAction.map({$0.propertyDesc}))
-    let configuredReadActionSet = Set(configuredReadAction.map({$0.propertyDesc}))
-    let writeActionSet = Set(writeAction.map({$0.propertyDesc}))
-
-    let configuredWritePropID = configuredWriteProperties.map { $0.descriptor }
-    let writeDelta = writeActionSet.filter { (action:QWPropertyID) -> Bool in
-      return !configuredWritePropID.contains(action)
-    }
-    if !writeDelta.isEmpty {
-      return DataSetComparisonResult.error_WriteDataSetNotEmpty(Set(writeDelta))
-    }
-    if readActionSet == configuredReadActionSet {
-      return DataSetComparisonResult.identical
-    }
-
-    if readActionSet.isSubset(of: configuredReadActionSet) {
-      let delta = configuredReadActionSet.subtracting(readActionSet)
-      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoQWObserver(delta)
-    }
-    let delta = readActionSet.subtracting(configuredReadActionSet)
-    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanQWObserver(delta)
-  }
-
 }
 

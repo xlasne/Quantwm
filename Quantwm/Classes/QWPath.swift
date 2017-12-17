@@ -107,7 +107,6 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
       return nil
     }
   }
-  
 
   public var debugDescription: String {
     return "\(keypath)"
@@ -173,6 +172,13 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
                   andAllChilds: andAllChilds,
                   access: .writePath)
   }
+
+  var propertyDescriptionSet: Set<QWPropertyID> {
+    var result = Set(arrayLiteral: root.descriptor)
+    result.formUnion(chain.map({$0.descriptor}))
+    return result
+  }
+
 }
 
 // Access is only for debug on registration, and is not usefull for equality

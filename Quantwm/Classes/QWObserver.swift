@@ -11,12 +11,18 @@ import Foundation
 class QWObserver: NSObject {
 
   //MARK: Init and update
-  init(target: NSObject, registration: QWRegistration)
+  init(target: NSObject, registration: QWRegistration, registrationUsageMonitoring: Bool)
   {
     self.target = target
     self.type = Swift.type(of: target)
-    self.unionReadDescription = []
     self.registration = registration
+
+    if registrationUsageMonitoring {
+      self.registrationUsage = QWRegistrationUsage(registration: registration)
+    } else {
+      self.registrationUsage = nil
+    }
+
     super.init()
     //print("QWObserver: target \(name) type \(self.type) created with \(keypathSet)")
 
@@ -30,6 +36,7 @@ class QWObserver: NSObject {
   let type: Any.Type  // used to detect multiple registration with the same type + selector
 
   let registration: QWRegistration
+  var registrationUsage: QWRegistrationUsage?
 
   // The set of PropertyDescription which can be written during the action
   // And enable exception to the write interdiction
@@ -60,12 +67,6 @@ class QWObserver: NSObject {
   // Dirty or not, the current counters are stored for the next refreshUI call.
   fileprivate var observedPathsCounter: [QWPath:Int] = [:]
   
-  // Maintain the union of all the RW_Action which are actually read
-  // in order to detect registration to unused actions
-  // unionReadDescription is composed only of PropertyDescription which are the result of the comparison between
-  // configured and actual RW_Action, based on their common node.
-  fileprivate var unionReadDescription: Set<QWPropertyID>
-
   // Return true if the delegate is nil, meaning that the target has been deallocated
   // and that we must discard this QWObserver
   func isValid() -> Bool
@@ -150,13 +151,17 @@ class QWObserver: NSObject {
 
     // dataUsage is only defined in debug
     if let dataUsage = dataUsage {
-      callPerformSelectorWith(target: target,
+      registrationUsage?.callPerformSelectorWith(target: target,
                               dataUsage: dataUsage ,
                               dataDict: dataDict)
     } else {
       // Call the registered selector on the target
       target.perform(self.actionSelector)
     }
+  }
+
+  func displayUsage() {
+    let _ = self.registrationUsage?.displayUsage()
   }
 
   //MARK: - DirtyState. Used by Undo
@@ -181,96 +186,4 @@ class QWObserver: NSObject {
       }
     }
   }
-
-  // MARK: - Data Usage functions
-
-  func callPerformSelectorWith(target: NSObject,
-                               dataUsage: DataUsage ,
-                               dataDict: [QWPath:QWPathTraceManager])
-  {
-    // clearContext() clears the read and write actions, not the dirty flag
-    // which is needed by other keySetObservers
-    dataUsage.clearContext(target)
-
-    // Read the reference set of actions associated to the pathStateManagers
-    let configuredReadSet = self.readActionSet(dataDict)
-
-    // Call the registered selector on the target
-    target.perform(self.actionSelector)
-
-    // Check consistency
-    let readActionSet  = dataUsage.getReadQWPathTraceManagerSet(target)
-
-    let commonPropertySet = commonProperties(actionSet1: readActionSet, actionSet2: configuredReadSet)
-    unionReadDescription.formUnion(commonPropertySet)
-    let writeActionSet = dataUsage.getWriteQWPathTraceManagerSet(target)
-    let result = DataUsage.compareArrays(
-      readAction: readActionSet, configuredReadAction: configuredReadSet,
-      writeAction: writeActionSet, configuredWriteProperties: registration.writtenPropertySet,
-      name: name)
-//    switch result {
-//    case .error_WriteDataSetNotEmpty(let delta):
-//      print("Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
-//      assert(false, "Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
-//    case .warning_ReadDataSetContainsMoreDataThanQWObserver(let delta):
-//      print("Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
-//      assert(false, "Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
-//    default:
-//      break
-//    }
-  }
-
-
-  fileprivate func readActionSet(_ dataDict: [QWPath:QWPathTraceManager]) ->  Set<RW_Action> {
-    var result: Set<RW_Action> = []
-    for keypath in observedPathSet
-    {
-      if let pathStateManager = dataDict[keypath]
-      {
-        let actionSet = pathStateManager.collectNodeSet()
-        result.formUnion(actionSet)
-      }
-    }
-    return result
-  }
-
-  func displayUsage(_ dataDict: [QWPath:QWPathTraceManager]) -> DataSetComparisonResult<QWPropertyID>
-  {
-    var configuredProperties: Set<QWPropertyID> = []
-    for keypath in observedPathSet
-    {
-      if let dataValue = dataDict[keypath] {
-        let dataDesc:Set<QWPropertyID> = dataValue.propertyDescriptionSet
-        configuredProperties.formUnion(dataDesc)
-      }
-    }
-
-    if unionReadDescription == configuredProperties {
-      print("Data Usage: Info: \(name) matches exactly its QWObserver")
-      return DataSetComparisonResult.identical
-    }
-
-    if unionReadDescription.isSubset(of: configuredProperties) {
-      let delta = configuredProperties.subtracting(unionReadDescription)
-      print("Data Usage: Info: Read of \(name) does not perform read of \(delta) which is part of the registered QWObserver. This is normal if these values are not read at each refresh cycle")
-      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoQWObserver(delta)
-    }
-
-    let delta = unionReadDescription.subtracting(configuredProperties)
-    print("Data Usage: Warning: Read of \(name) performs a read of \(delta) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
-    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanQWObserver(delta)
-  }
-
-  func commonProperties(actionSet1:Set<RW_Action>, actionSet2:Set<RW_Action>) -> Set<QWPropertyID>
-  {
-    var propertySet : [QWPropertyID] = []
-    for action in actionSet1 {
-      let commonActions = actionSet2
-        .filter({ action.isEquivalentTo($0) })
-        .map({$0.propertyDesc})
-      propertySet.append(contentsOf: commonActions)
-    }
-    return Set(propertySet)
-  }
-
 }

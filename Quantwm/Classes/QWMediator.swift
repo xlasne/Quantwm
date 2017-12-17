@@ -138,7 +138,8 @@ public class QWMediator: NSObject {
     }
 
     let keySetObserver = QWObserver(target: target,
-                                        registration: reg)
+                                    registration: reg,
+                                    registrationUsageMonitoring: true)
     
     self.observerSet.insert(keySetObserver)
 
@@ -175,7 +176,7 @@ public class QWMediator: NSObject {
         let observerArray = self.getObserverSetForTarget(owner)
         for observer in observerArray    // .filter({!$0.isValid()})
         {
-          let _ = observer.displayUsage(pathStateManagerDict)
+          observer.displayUsage()
         }
   }
   
@@ -341,7 +342,9 @@ extension QWMediator
       if let target = processedObserver.target {
 
         // Push Notification context on TransactionStack
-        let roContext = RWContext(NotificationWithOwner: target)
+        let roContext = RWContext(NotificationWithOwner: target,
+                                  registrationUsage: processedObserver.registrationUsage)
+        
         qwTransactionStack.pushContext(roContext)
         
         // Evaluate the pathStateManager associated to it
@@ -380,10 +383,6 @@ extension QWMediator
     qwTransactionStack.popContext(refreshContext)
 
     // Observer observers whose target is released
-    for observer in observerSet.filter({!$0.isValid()})
-    {
-      let _ = observer.displayUsage(pathStateManagerDict)
-    }
     observerSet = Set(observerSet.filter({$0.isValid()}))
 
     // Stop Data Usage Monitoring
@@ -415,7 +414,7 @@ extension QWMediator
 
     // This is the end of the write.
 
-    //MARK: End of Refresh Hooks
+    //MARK: Hooks - End of Refresh
 
     // Refresh Shield: endOfRefreshOnceClosureArray is used to disable a refreshShield
     // protecting an Action emitter from receiving the refresh corresponding to his update
@@ -452,6 +451,7 @@ extension QWMediator
   }
 
 
+  // Used by Undo Management
   public func isUpdated(parent: QWNode) -> Bool {
     let tag = currentCommit ?? ""
     let isUpdated = QWTreeWalker.scanNodeTreeReduce(

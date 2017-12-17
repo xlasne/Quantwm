@@ -88,13 +88,7 @@ class QWPathTraceManager
       return keypathBase
     }
   }
-  
-  var propertyDescriptionSet: Set<QWPropertyID> {
-    var result = Set(arrayLiteral: qwPath.root.descriptor)
-    result.formUnion(qwPath.chain.map({$0.descriptor}))
-    return result
-  }
-  
+    
   // This function is only providing correct result just after a readChain method
   func collectNodeSet() -> Set<RW_Action>
   {
