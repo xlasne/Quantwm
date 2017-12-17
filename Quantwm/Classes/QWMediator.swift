@@ -8,25 +8,11 @@
 
 import Foundation
 
-final class QWRootHandle {
-  weak var rootObject: QWRoot?
-  let keypath : String
-  
-  init(rootObject: QWRoot, keypath : String)
-  {
-    self.rootObject = rootObject
-    self.keypath = keypath
-  }
-}
-
 public class QWMediator: NSObject {
   
-  // Dictionary of the root nodes
-  // TODO: Simplify QWMediator to only manage one Root
-  // because ... QWMediator shall belong to this Root
-
-  // Root nodes are the first component of keypath, the path anchor
-  fileprivate var rootDataDict: [String:QWRootHandle] = [:]
+  var rootDescriptor: QWPropertyID? = nil  // Set at first root registration
+                      // A Mediator is associated to a unique root type
+  weak var rootObject: QWRoot? = nil
 
   var dependencyMgr: QWDependencyMgr = QWDependencyMgr(registrationSet:[])
 
@@ -84,41 +70,38 @@ public class QWMediator: NSObject {
   // To unregister root, call, qwMediator.unregisterRootNode(property: PropertyDescription)
   open func registerRoot(qwRoot: QWRoot, rootProperty: QWRootProperty)
   {
-    let rootNode = QWRootHandle(rootObject: qwRoot,
-                            keypath: rootProperty.rootId)
-    
-    let keypath = rootNode.keypath
-    if let existing = self.rootDataDict[keypath] {
-      if rootNode.rootObject === existing.rootObject {
-        print("Data Observer: register again Root \(keypath)")
-      } else {
-        print("Data Observer: register and update Root \(keypath) ")
+    if let rootDescriptor = self.rootDescriptor {
+      if rootProperty.descriptor != rootDescriptor {
+        assert(false,"Error QWMediator: Inconsistant rootProperty between on rootRegistration")
       }
     } else {
-      print("Data Observer: register and create Root \(keypath)")
+      self.rootDescriptor = rootProperty.descriptor
     }
-    self.rootDataDict[keypath] = rootNode
+    let rootDescription = rootProperty.descriptor.propDescription
+
+    if let rootObject = self.rootObject {
+      if rootObject === qwRoot {
+        print("Data Observer: register again Root \(rootDescription)")
+      } else {
+        print("Data Observer: register and update Root \(rootDescription) ")
+      }
+    } else {
+      print("Data Observer: register and create Root \(rootDescription)")
+    }
+    rootObject = qwRoot
     // No need to delete previous QWPathTrace.
     // The unicity of the QWCounter determines if the properties have changed.
   }
+
   
-  open func unregisterRootNode(_ property: QWRootProperty)
+  open func unregisterRootNode()
   {
-    let keypath = property.rootId
-    if let _ = self.rootDataDict[keypath] {
-      //print("Data Observer: unregister Root \(keypath)")
-    } else {
-      //print("Data Observer: Warning - unregister non-existing Root \(keypath)")
+    rootObject = nil
+    if let rootDesc = rootDescriptor {
+      print("Data Observer: unregister Root \(rootDesc.propDescription.description)")
     }
-    self.rootDataDict.removeValue(forKey: keypath)
   }
-  
-  open func rootForKey(_ property: QWRootProperty) -> QWRoot?
-  {
-    let keypath = property.rootId
-    return self.rootDataDict[keypath]?.rootObject
-  }
-  
+
   // MARK: ObserverSet Registration - Public
 
   open  func registerObserver(target: NSObject,
@@ -133,13 +116,13 @@ public class QWMediator: NSObject {
       assert(false,"Error: Register shall not be performed inside a refresh UI call")
     }
     
-    if let _ = self.getQWObserverForTarget(target, selector: selector)
+    if let _ = self.getObserverForTarget(target, selector: selector)
     {
       print("Warning: multiple dataset registration for the same (target:\(target.description),selector:\(selector.description)). Use addMonitorData / removeMonitorData to modify a dataset, or delete it before with unregisterDataSetWithTarget")
       self.unregisterDataSetWithTarget(target, selector: selector)
     }
     
-    let sameTypeArray = self.getDataSetArrayForTypeFromTarget(target, selector: selector)
+    let sameTypeArray = self.getObserverSetForType(Swift.type(of: target), selector: selector)
     if let count = maximumAllowedRegistrationWithSameTypeSelector {
       if (count > 0) && (sameTypeArray.count > count-1) { // count-1 because we are not registered yet
         assert(false,"Error: The number of registration for the same (type,selector) exceed the configured \(String(describing: maximumAllowedRegistrationWithSameTypeSelector)) value")
@@ -170,30 +153,26 @@ public class QWMediator: NSObject {
   }
   
   //MARK: Helper functions
-  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> Set<QWObserver>
+  fileprivate func getObserverSetForType(_ targetType: Any.Type, selector: Selector) -> Set<QWObserver>
   {
-    let mirrorType = Mirror(reflecting: target).subjectType
-    let dataSet = self.observerSet.filter({$0.matchesType(mirrorType, selector: selector)})
-    return Set(dataSet)
+    let filteredObserverSet = observerSet.filter({$0.matchesType(targetType, selector: selector)})
+    return filteredObserverSet
   }
   
-  fileprivate func getQWObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<QWObserver>
+  fileprivate func getObserverSetForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<QWObserver>
   {
-    let keySetObserverArray = Array(observerSet).filter({$0.matchesTarget(target, selector: selector)})
-    return Set(keySetObserverArray)
+    let filteredObserverSet = observerSet.filter({$0.matchesTarget(target, selector: selector)})
+    return filteredObserverSet
   }
   
-  fileprivate func getQWObserverForTarget(_ target: NSObject, selector: Selector) -> QWObserver?
+  fileprivate func getObserverForTarget(_ target: NSObject, selector: Selector) -> QWObserver?
   {
-    let dataSet = self.getQWObserverArrayForTarget(target, selector: selector)
-    if dataSet.count > 1 {
-      //print("Error: QWObserver contains twice the same target / selector")
-    }
+    let dataSet = self.getObserverSetForTarget(target, selector: selector)
     return dataSet.first
   }
   
   open func displayUsage(owner: NSObject) {
-        let observerArray = self.getQWObserverArrayForTarget(owner)
+        let observerArray = self.getObserverSetForTarget(owner)
         for observer in observerArray    // .filter({!$0.isValid()})
         {
           let _ = observer.displayUsage(pathStateManagerDict)
@@ -252,6 +231,11 @@ extension QWMediator
       //print("Info: Call of RefreshUI will be delayed until context stack is empty")
       return
     }
+
+    guard let rootNode = rootObject else {
+      print("Start RefreshUI cancelled: rootObject is nil")
+      return
+    }
     
     print("Start RefreshUI")
 
@@ -264,9 +248,11 @@ extension QWMediator
     observerSet = Set(observerSet.filter({$0.isValid()}))
 
     let currentRefreshTag = UUID().uuidString
+    var pathWalker:QWPathWalker? = nil
     if QUANTUM_MVVM_DEBUG {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: currentRefreshTag)
       dataUsage?.monitoringIsActive = false
+      pathWalker = QWPathWalker(root: rootNode, tag: currentRefreshTag)
     }
 
     // MARK: Hard-coded Priority Scheduling
@@ -305,16 +291,8 @@ extension QWMediator
           for readPath in processedObserver.observedPathSet
           {
             if let pathStateManager = self.pathStateManagerDict[readPath] {
-              let rootKey = pathStateManager.keypathBase
-              if let rootNode = rootDataDict[rootKey]?.rootObject
-              {
-                QWPathWalker.applyReadOnlyPathAccess(rootNode: rootNode,
-                                                     tag: currentRefreshTag,
-                                                     path: readPath)
-                pathStateManager.readAndCompareTrace(rootNode: rootNode)
-              } else {
-                pathStateManager.clearTraceOnNilRootNode()
-              }
+              pathWalker?.applyReadOnlyPathAccess(path: readPath)
+              pathStateManager.readAndCompareTrace(rootNode: rootNode)
             }
           }
           // triggerIfDirty is called once per RefreshUI
@@ -338,9 +316,7 @@ extension QWMediator
     qwTransactionStack.pushContext(refreshContext)
 
     // mark the whole tree with No Access level
-    for rootNode in rootDataDict.values.flatMap({$0.rootObject}) {
-      QWPathWalker.applyNoAccessOnWholeTree(rootNode: rootNode, tag: currentRefreshTag)
-    }
+    pathWalker?.applyNoAccessOnWholeTree()
 
     qwTransactionStack.stackReadLevel = QWStackReadLevel(currentTag: currentRefreshTag, readLevel: 0)
 
@@ -376,27 +352,14 @@ extension QWMediator
           // If a write is performed on it during the refresh, this assumption is wrong, hence the assert
           if !alreadyCheckedPathSet.contains(readPath) {
             if let pathStateManager = self.pathStateManagerDict[readPath] {
-              let rootKey = pathStateManager.keypathBase
-              if let rootNode = rootDataDict[rootKey]?.rootObject
-              {
-                QWPathWalker.applyReadOnlyPathAccess(rootNode: rootNode,
-                                                     tag: currentRefreshTag,
-                                                     path: readPath)
-                pathStateManager.readAndCompareTrace(rootNode: rootNode)
-              } else {
-                pathStateManager.clearTraceOnNilRootNode()
-              }
+              pathWalker?.applyReadOnlyPathAccess(path: readPath)
+              pathStateManager.readAndCompareTrace(rootNode: rootNode)
             }
             alreadyCheckedPathSet.insert(readPath)
           }
         }
         for writePath in processedObserver.writtenPathSet {
-          if let rootNode = rootDataDict[writePath.rootPath]?.rootObject
-          {
-            QWPathWalker.applyWritePathAccess(rootNode: rootNode,
-                                              tag: currentRefreshTag,
-                                              path: writePath)
-          }
+          pathWalker?.applyWritePathAccess(path: writePath)
         }
 
 

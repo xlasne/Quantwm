@@ -18,21 +18,45 @@ import Foundation
 
 class  QWPathWalker {
 
-  //TODO when Root is unique:
-  // make a full class initialized with currentTag and weak root Node
-  // Create it on debug only
+  init(root: QWRoot, tag: String) {
+    self.rootNode = root
+    self.tag = tag
+  }
+  weak var rootNode: QWRoot?
+  let tag: String
 
-  static func applyNoAccessOnWholeTree(rootNode: QWRoot, tag: String) {
+  func applyNoAccessOnWholeTree() {
+    guard let rootNode = rootNode else  { return }
     QWTreeWalker.scanNodeTreeMap(fromParent: rootNode, closure: {
       (node:QWNode) -> () in
       node.getQWCounter().applyNoAccess(tag: tag)
     })
   }
 
+  func applyWritePathAccess(path: QWPath) {
+    guard let rootNode = rootNode else  { return }
+    QWPathWalker.walkPath(rootNode: rootNode, path: path) {
+      (node:QWNode, property:QWProperty, level:Int) in
+      if level < 0 {
+        node.getQWCounter().applyReadAccess(keypath: property.propKey, tag: tag)
+      } else {
+        node.getQWCounter().applyWriteAccess(keypath: property.propKey, tag: tag)
+      }
+    }
+  }
+
+  func applyReadOnlyPathAccess(path: QWPath) {
+    guard let rootNode = rootNode else  { return }
+    QWPathWalker.walkPath(rootNode: rootNode, path: path) {
+      (node:QWNode, property:QWProperty, level:Int) in
+      node.getQWCounter().applyReadOnlyAccess(keypath: property.propKey, tag: tag)
+    }
+  }
+
   // levelVersusLastNode is negative before last chain node,
   // zero for last chain node, and positive after (andAllChilds = true)
-  static func walkPath( rootNode: QWRoot, path: QWPath,
-    closure:(_ node:QWNode,_ property: QWProperty, _ levelVersusLastNode:Int) -> ())
+  static func walkPath(rootNode: QWRoot, path: QWPath,
+                       closure:(_ node:QWNode,_ property: QWProperty, _ levelVersusLastNode:Int) -> ())
   {
     var chain = path.chain
     var currentNodes:[QWNode] = [rootNode]
@@ -67,23 +91,4 @@ class  QWPathWalker {
       }
     }
   }
-
-  static func applyWritePathAccess(rootNode: QWRoot, tag: String, path: QWPath) {
-    QWPathWalker.walkPath(rootNode: rootNode, path: path) {
-      (node:QWNode, property:QWProperty, level:Int) in
-      if level < 0 {
-        node.getQWCounter().applyReadAccess(keypath: property.propKey, tag: tag)
-      } else {
-        node.getQWCounter().applyWriteAccess(keypath: property.propKey, tag: tag)
-      }
-    }
-  }
-
-  static func applyReadOnlyPathAccess(rootNode: QWRoot, tag: String, path: QWPath) {
-    QWPathWalker.walkPath(rootNode: rootNode, path: path) {
-      (node:QWNode, property:QWProperty, level:Int) in
-      node.getQWCounter().applyReadOnlyAccess(keypath: property.propKey, tag: tag)
-    }
-  }
-
 }
