@@ -87,7 +87,7 @@ class QuantwmDataUsage: NSObject {
 
   static let quantumKey = "QuantwmDataUsage"
 
-  static func registerContext(_ qwTransactionStack: QWTransactionStack, uuid: String) -> DataUsage
+  static func registerContext(_ qwTransactionStack: QWTransactionStack, currentTag: String) -> DataUsage
   {
     // Under the hypothesis that monitoring will occurs only inside the current thread
     // and during the execution of a single method
@@ -101,18 +101,18 @@ class QuantwmDataUsage: NSObject {
     if let _ = threadDictionary[quantumKey] {
       assert(false,"Error in DataUsage: Context has not been unregistered")
     }
-    let dataUsage = DataUsage(qwTransactionStack: qwTransactionStack)
-    let quantumUsage = QuantwmDataUsage(dataUsage: dataUsage, id: uuid)
+    let dataUsage = DataUsage(qwTransactionStack: qwTransactionStack, currentTag: currentTag)
+    let quantumUsage = QuantwmDataUsage(dataUsage: dataUsage, id: currentTag)
     threadDictionary[quantumKey] = quantumUsage
     return dataUsage
   }
 
-  static func unregisterContext(uuid: String)
+  static func unregisterContext(currentTag: String)
   {
     let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     if let currentUsage = threadDictionary[quantumKey] as? QuantwmDataUsage {
-      assert(currentUsage.id == uuid,"Error: Mismatch in DataUsage register")
+      assert(currentUsage.id == currentTag,"Error: Mismatch in DataUsage register")
       threadDictionary[quantumKey] = nil
     }
   }
@@ -135,12 +135,18 @@ class DataUsage: NSObject
   }
   
   let checkStack = true
-  
+  let currentTag: String
+
+  // monitoringIsActive is activated during call of Notifications,
+  // not when QWMediator scan the paths
+  var monitoringIsActive: Bool = false
+
   fileprivate var contextDict: [NSObject:ReadWriteSet] = [:]
   fileprivate unowned var qwTransactionStack: QWTransactionStack
   
-  required init(qwTransactionStack: QWTransactionStack) {
+  required init(qwTransactionStack: QWTransactionStack, currentTag: String) {
     self.qwTransactionStack = qwTransactionStack
+    self.currentTag = currentTag
     super.init()
   }
   

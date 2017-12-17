@@ -38,24 +38,26 @@ class QWPathTraceManager
   }
 
   // Increment updateCounter is the path is dirty versus nodeChain
-  func readAndCompareTrace(rootNode: QWRootHandle)
+  func clearTraceOnNilRootNode()
   {
-    guard let rootObject = rootNode.rootObject else {
-        // No Root Node. Clear chain and return
-        // If root node was previous present, then there is a change
-        if let _ = self.nodeChain {
-          self.nodeChain = nil
-          self.updateCounter += 1
-          print("QWPathTraceManager: \(keypath) dirty. Rootnode has changed to nil")
-        } else {
-          print("QWPathTraceManager: \(keypath) clean. No Rootnode")
-        }
-        return
+    // No Root Node. Clear chain and return
+    // If root node was previous present, then there is a change
+    if let _ = self.nodeChain {
+      self.nodeChain = nil
+      self.updateCounter += 1
+      print("QWPathTraceManager: \(keypath) dirty. Rootnode has changed to nil")
+    } else {
+      print("QWPathTraceManager: \(keypath) clean. No Rootnode")
     }
-    
+    return
+  }
+
+  func readAndCompareTrace(rootNode: QWRoot)
+  {
+
     // The root node is not nil.
     // Let's read  and compare the chains
-    let updatedNodeChain: QWPathTraceReader = rootObject.generateQWPathTrace(qwPath: qwPath)
+    let updatedNodeChain: QWPathTraceReader = rootNode.generateQWPathTrace(qwPath: qwPath)
 
     // If self.updatedNodeChain is not nil, we are resuming from a suspendRefresh, and must check additional changes, else this is a start refresh
     let previousPathState = self.updatedNodeChain ?? self.nodeChain

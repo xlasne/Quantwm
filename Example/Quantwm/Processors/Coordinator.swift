@@ -29,10 +29,7 @@ class Coordinator: NSObject {
 
     static let userIdUpdatedREG: QWRegistration = QWRegistration(
         selector: #selector(Coordinator.userIdUpdated),
-        readMap: QWModel.root.userId_Read +
-            QWModel.root.playlistsCollection.all +
-            QWModel.root.selectedPlaylistId_Read +
-            QWModel.root.trackCollection.trackDict.all,
+        readMap: QWModel.root.userId_Read,
         name: "Coordinator.userIdUpdated",
         writtenMap: QWModel.root.playlistsCollection.writeAll +
             QWModel.root.selectedPlaylistId_Write +

@@ -36,6 +36,7 @@ class QWObserver: NSObject {
 
   fileprivate var actionSelector: Selector { return registration.selector }
   var observedPathSet: Set<QWPath> { return registration.readPathSet }
+  var writtenPathSet: Set<QWPath> { return registration.writtenPathSet }
   var name: String { return registration.name }
   var schedulingPriority: Int? { return registration.schedulingPriority }
 
@@ -192,7 +193,7 @@ class QWObserver: NSObject {
     dataUsage.clearContext(target)
 
     // Read the reference set of actions associated to the pathStateManagers
-    let nodeSet = self.readActionSet(dataDict)
+    let configuredReadSet = self.readActionSet(dataDict)
 
     // Call the registered selector on the target
     target.perform(self.actionSelector)
@@ -200,23 +201,23 @@ class QWObserver: NSObject {
     // Check consistency
     let readActionSet  = dataUsage.getReadQWPathTraceManagerSet(target)
 
-    let commonPropertySet = commonProperties(actionSet1: readActionSet, actionSet2: nodeSet)
+    let commonPropertySet = commonProperties(actionSet1: readActionSet, actionSet2: configuredReadSet)
     unionReadDescription.formUnion(commonPropertySet)
     let writeActionSet = dataUsage.getWriteQWPathTraceManagerSet(target)
     let result = DataUsage.compareArrays(
-      readAction: readActionSet, configuredReadAction: nodeSet,
+      readAction: readActionSet, configuredReadAction: configuredReadSet,
       writeAction: writeActionSet, configuredWriteProperties: registration.writtenPropertySet,
       name: name)
-    switch result {
-    case .error_WriteDataSetNotEmpty(let delta):
-      print("Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
-      assert(false, "Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
-    case .warning_ReadDataSetContainsMoreDataThanQWObserver(let delta):
-      print("Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
-      assert(false, "Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
-    default:
-      break
-    }
+//    switch result {
+//    case .error_WriteDataSetNotEmpty(let delta):
+//      print("Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
+//      assert(false, "Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
+//    case .warning_ReadDataSetContainsMoreDataThanQWObserver(let delta):
+//      print("Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
+//      assert(false, "Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
+//    default:
+//      break
+//    }
   }
 
 

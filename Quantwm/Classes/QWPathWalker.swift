@@ -18,6 +18,10 @@ import Foundation
 
 class  QWPathWalker {
 
+  //TODO when Root is unique:
+  // make a full class initialized with currentTag and weak root Node
+  // Create it on debug only
+
   static func applyNoAccessOnWholeTree(rootNode: QWRoot, tag: String) {
     QWTreeWalker.scanNodeTreeMap(fromParent: rootNode, closure: {
       (node:QWNode) -> () in
@@ -75,7 +79,7 @@ class  QWPathWalker {
     }
   }
 
-  static func applyObservedPathAccess(rootNode: QWRoot, tag: String, path: QWPath) {
+  static func applyReadOnlyPathAccess(rootNode: QWRoot, tag: String, path: QWPath) {
     QWPathWalker.walkPath(rootNode: rootNode, path: path) {
       (node:QWNode, property:QWProperty, level:Int) in
       node.getQWCounter().applyReadOnlyAccess(keypath: property.propKey, tag: tag)

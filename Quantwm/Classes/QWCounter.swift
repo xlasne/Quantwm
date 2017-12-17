@@ -19,8 +19,6 @@ import Foundation
 
 typealias NodeId = Int32
 
-
-
 open class QWCounter: NSObject, Codable {
 
   enum QWCounterAccess: Int {
@@ -40,19 +38,19 @@ open class QWCounter: NSObject, Codable {
 
   //MARK: Properties
 
-    private static var queue = DispatchQueue(label: "nodeIdGenerator.quantwm")
-    private (set) static var nodeIdGenerator: NodeId = 0
+  private static var queue = DispatchQueue(label: "nodeIdGenerator.quantwm")
+  private (set) static var nodeIdGenerator: NodeId = 0
 
-    // Unique NodeId Generator
-    static func generateUniqueNodeId() -> NodeId {
-        var nodeId: NodeId = -1
-        queue.sync {
-            QWCounter.nodeIdGenerator += 1
-            nodeId = QWCounter.nodeIdGenerator
-        }
-        assert(nodeId >= 0,"Error in nodeIdGenerator.quantwm")
-        return nodeId
+  // Unique NodeId Generator
+  static func generateUniqueNodeId() -> NodeId {
+    var nodeId: NodeId = -1
+    queue.sync {
+      QWCounter.nodeIdGenerator += 1
+      nodeId = QWCounter.nodeIdGenerator
     }
+    assert(nodeId >= 0,"Error in nodeIdGenerator.quantwm")
+    return nodeId
+  }
 
   public let nodeName: String
 
@@ -82,19 +80,20 @@ open class QWCounter: NSObject, Codable {
     if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
     }
-    if let dataUsage = DataUsage.currentInstance() {
+    if let dataUsage = DataUsage.currentInstance(), dataUsage.monitoringIsActive {
       dataUsage.addRead(self, property: property.descriptor)
+      checkReadAccess(dataUsage: dataUsage, property: property)
     }
   }
 
   public func performedRead(_ property: QWProperty)
   {
-    if let dataUsage = DataUsage.currentInstance() {
+    if let dataUsage = DataUsage.currentInstance(), dataUsage.monitoringIsActive {
       dataUsage.addRead(self, property: property.descriptor)
+      checkReadAccess(dataUsage: dataUsage, property: property)
     }
   }
 
-  
   public func performedWriteOnMainThread(_ property: QWProperty)
   {
     let childKey = property.propKey
@@ -106,6 +105,7 @@ open class QWCounter: NSObject, Codable {
 
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property.descriptor)
+      checkWriteAccess(dataUsage: dataUsage, property: property)
     }
   }
 
@@ -120,20 +120,60 @@ open class QWCounter: NSObject, Codable {
 
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property.descriptor)
+      checkWriteAccess(dataUsage: dataUsage, property: property)
     }
   }
-
 
   public func performedWrite(_ property: QWProperty)
   {
     self.setDirty(property)
     stageChange()
     if let dataUsage = DataUsage.currentInstance() {
+
       dataUsage.addWrite(self, property: property.descriptor)
+      checkWriteAccess(dataUsage: dataUsage, property: property)
     }
   }
 
   //MARK: - Access management
+  func checkReadAccess(dataUsage: DataUsage, property: QWProperty) {
+    if dataUsage.currentTag == accessTag,
+        dataUsage.monitoringIsActive {
+      // This counter is monitored .. Let's continue
+      if let access = accessDict[property.propKey] {
+        switch access {
+        case .NoAccess:
+          assert(false,"Error: Reading property \(property.propDescription) while this property is tagged NoAccess. This property needs to be added to current QWRegistration readSet")
+        case .ReadAccess:
+          break
+        case .ReadWriteAccess:
+          break
+        case .ReadOnlyAccess:
+          break
+        }
+      }
+    }
+  }
+
+  func checkWriteAccess(dataUsage: DataUsage, property: QWProperty) {
+    if dataUsage.currentTag == accessTag
+    {
+      // This counter is monitored .. Let's continue
+      if let access = accessDict[property.propKey] {
+        switch access {
+        case .NoAccess:
+          assert(false,"Error: Writing property \(property.propDescription) while this property is tagged NoAccess. This property needs to be added to current QWRegistration writeSet")
+        case .ReadAccess:
+          assert(false,"Error: Writing property \(property.propDescription) while this property is tagged ReadAccess. This property needs to be added to current QWRegistration writeSet")
+        case .ReadWriteAccess:
+          break
+        case .ReadOnlyAccess:
+          assert(false,"Error: Writing property \(property.propDescription) while this property is tagged ReadOnlyAccess. This property needs to be added to current QWRegistration writeSet")
+        }
+      }
+    }
+  }
+
   func applyNoAccess(tag: String) {
     defaultAccess = .NoAccess
     accessTag = tag

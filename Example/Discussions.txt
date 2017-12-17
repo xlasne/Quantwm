@@ -1,3 +1,27 @@
+ASSUMPTIONS:
+
+QWRoot is unique (in its document)
+
+QWCounter belongs to a Unique QWNode
+
+QWMediator belongs to its QWRoot
+
+QWNode can be the destination of multiple QWNodeProperty
+
+QWNodeProperty can be a collection, pointing to an Array / Set / Dictionary of QWNode
+
+QWNode can belong to multiple QWPath
+
+QWPath is either a Read Path, or a Write Path.
+
+QWPath can belong to multiple QWRegistration
+
+QWPath Write is either writing a node or a property
+-> If writing a node, it writes implicitely all the node subtree node/property .
+
+*********************************
+MODEL GETTER / SETTER discussion ...
+
 Problem 1: Using model path which include collection property,
 the getNodesForPath() function return a collection  of paths.
 If using the model as Getter of node, and then property for this node, then
@@ -14,11 +38,6 @@ because nodes are returned as an Array of nodes without path.
 Problem 3: If registering for write in Smart Scheduling, and if the written class is reused somewhere else
 in the model and can be reached via a different path which is itself monitored, then there is
 a risk that this other path may be scheduled before the write occurs.
-
-
-
-
-
 
 Problem 1: Result is returned as an Array to handle Collection property in the path.
 Problem 2: Setter of a property containing a Collection in its path is not possible.
@@ -73,4 +92,7 @@ Contract based registration returns for each path:
 - The property getters from the model
 For writter:
 - The array of nodes matching the path minus last written node / property
+
+
+
 
