@@ -22,6 +22,8 @@ final class QWRootHandle {
 public class QWMediator: NSObject {
   
   // Dictionary of the root nodes
+  // TODO: Simplify QWMediator to only manage on Root, because I have not clear idea
+  // on how to schedule
   // Root nodes are the first component of keypath, the path anchor
   fileprivate var rootDataDict: [String:QWRootHandle] = [:]
 
@@ -55,10 +57,10 @@ public class QWMediator: NSObject {
   // from QWRootHandle objects.
   var pathStateManagerDict: [QWPath:QWPathTraceManager] = [:]
   
-  // Set of KeySetObserver
-  // KeySetObserver is a Target/Action + a set of QWPathTraceManager
+  // Set of QWObserver
+  // QWObserver is a Target/Action + a set of QWPathTraceManager
   // If a QWPathTraceManager detects a change, refreshUI() will trigger the registered target/action
-  var keySetObserverSet: Set<KeySetObserver> = []
+  var keySetObserverSet: Set<QWObserver> = []
   
   // Monitor data read and write during a transaction
   var dataUsage: DataUsage?
@@ -67,9 +69,9 @@ public class QWMediator: NSObject {
   // Track the transaction context
   fileprivate var qwTransactionStack: QWTransactionStack = QWTransactionStack()
   
-  // If refreshUI() is called during a refresh transaction it is ignored
-  // If refreshUI() is called during a Loading or Update transaction it postponned to the end of the transaction
-  var callRefreshOnEmptyStack = false
+  // If refreshUI() is called during a Refresh transaction it is ignored
+  // If refreshUI() is called during an Update transaction it postponned to the end of the transaction
+  var refreshUICalledWhileContextStackWasNotEmpty = false
   
   // MARK: - Registration - Public
   
@@ -79,10 +81,10 @@ public class QWMediator: NSObject {
   // This node does not have to remember this monitoring
   // On node deletion, this registration will end
   // To unregister root, call, qwMediator.unregisterRootNode(property: PropertyDescription)
-  open func registerRoot(associatedObject: QWRoot, rootDescription: QWRootProperty)
+  open func registerRoot(qwRoot: QWRoot, rootProperty: QWRootProperty)
   {
-    let rootNode = QWRootHandle(rootObject: associatedObject,
-                            keypath: rootDescription.propDescription)
+    let rootNode = QWRootHandle(rootObject: qwRoot,
+                            keypath: rootProperty.rootId)
     
     let keypath = rootNode.keypath
     if let existing = self.rootDataDict[keypath] {
@@ -101,7 +103,7 @@ public class QWMediator: NSObject {
   
   open func unregisterRootNode(_ property: QWRootProperty)
   {
-    let keypath = property.propDescription
+    let keypath = property.rootId
     if let _ = self.rootDataDict[keypath] {
       //print("Data Observer: unregister Root \(keypath)")
     } else {
@@ -112,7 +114,7 @@ public class QWMediator: NSObject {
   
   open func rootForKey(_ property: QWRootProperty) -> QWRoot?
   {
-    let keypath = property.propDescription
+    let keypath = property.rootId
     return self.rootDataDict[keypath]?.rootObject
   }
   
@@ -130,7 +132,7 @@ public class QWMediator: NSObject {
       assert(false,"Error: Register shall not be performed inside a refresh UI call")
     }
     
-    if let _ = self.getKeySetObserverForTarget(target, selector: selector)
+    if let _ = self.getQWObserverForTarget(target, selector: selector)
     {
       print("Warning: multiple dataset registration for the same (target:\(target.description),selector:\(selector.description)). Use addMonitorData / removeMonitorData to modify a dataset, or delete it before with unregisterDataSetWithTarget")
       self.unregisterDataSetWithTarget(target, selector: selector)
@@ -151,7 +153,7 @@ public class QWMediator: NSObject {
       self.registerPathTraceManager(QWPathTraceManager(qwPath: qwPath))
     }
 
-    let keySetObserver = KeySetObserver(target: target,
+    let keySetObserver = QWObserver(target: target,
                                         registration: reg)
     
     self.keySetObserverSet.insert(keySetObserver)
@@ -167,30 +169,30 @@ public class QWMediator: NSObject {
   }
   
   //MARK: Helper functions
-  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> Set<KeySetObserver>
+  fileprivate func getDataSetArrayForTypeFromTarget(_ target: NSObject, selector: Selector) -> Set<QWObserver>
   {
     let mirrorType = Mirror(reflecting: target).subjectType
     let dataSet = self.keySetObserverSet.filter({$0.matchesType(mirrorType, selector: selector)})
     return Set(dataSet)
   }
   
-  fileprivate func getKeySetObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<KeySetObserver>
+  fileprivate func getQWObserverArrayForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<QWObserver>
   {
     let keySetObserverArray = Array(keySetObserverSet).filter({$0.matchesTarget(target, selector: selector)})
     return Set(keySetObserverArray)
   }
   
-  fileprivate func getKeySetObserverForTarget(_ target: NSObject, selector: Selector) -> KeySetObserver?
+  fileprivate func getQWObserverForTarget(_ target: NSObject, selector: Selector) -> QWObserver?
   {
-    let dataSet = self.getKeySetObserverArrayForTarget(target, selector: selector)
+    let dataSet = self.getQWObserverArrayForTarget(target, selector: selector)
     if dataSet.count > 1 {
-      //print("Error: KeySetObserver contains twice the same target / selector")
+      //print("Error: QWObserver contains twice the same target / selector")
     }
     return dataSet.first
   }
   
   open func displayUsage(owner: NSObject) {
-        let observerArray = self.getKeySetObserverArrayForTarget(owner)
+        let observerArray = self.getQWObserverArrayForTarget(owner)
         for observer in observerArray    // .filter({!$0.isValid()})
         {
           let _ = observer.displayUsage(pathStateManagerDict)
@@ -232,7 +234,9 @@ extension QWMediator
   }
 
   public func refreshUI() {
-    // Check Pre-conditions
+
+    // MARK: Pre-condition Check
+
     if !Thread.isMainThread {
       assert(false, "Error: RefreshUI - Calling refreshUI from background thread is a severe error")
     }
@@ -243,8 +247,8 @@ extension QWMediator
     }
     
     if !qwTransactionStack.isRefreshAllowed {
-      callRefreshOnEmptyStack = true
-      //print("Info: Call of RefreshUI will be delayed on empty stack")
+      refreshUICalledWhileContextStackWasNotEmpty = true
+      //print("Info: Call of RefreshUI will be delayed until context stack is empty")
       return
     }
     
@@ -253,6 +257,8 @@ extension QWMediator
 //    dependencyMgr.debugDescription()
 //    print("Starting RefreshUI")
 
+    // MARK: Cleanup
+
     // Remove keySetObserverSet whose target is deallocated
     keySetObserverSet = Set(keySetObserverSet.filter({$0.isValid()}))
 
@@ -260,16 +266,18 @@ extension QWMediator
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, uuid: dataUsageId)
     }
 
-    // First perform scheduling of configuration type registration
-    var modifiedDataSetNeedingRefreshArray : [KeySetObserver] = []
+    // MARK: Hard-coded Priority Scheduling
+
+    // First perform scheduling of hard-coded priority registration
+    var modifiedDataSetNeedingRefreshArray : [QWObserver] = []
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({$0.isPrioritySchedulingType})
     
     modifiedDataSetNeedingRefreshArray.sort {
-      (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
+      (k1:QWObserver, k2: QWObserver) -> Bool in
       return k1.schedulingPriority! < k2.schedulingPriority!
     }
 
-    // First, perform Update transaction on configuration Register
+    // First, perform Update transaction fpr priority Scheduling
     if !modifiedDataSetNeedingRefreshArray.isEmpty
     {
       // push Update context on root, avoiding refresh UI during configuration refresh
@@ -287,9 +295,9 @@ extension QWMediator
           // Evaluate the pathStateManager associated to it
           // As any write are possible, readAndCompareTrace must be redone for each QWPath
           //
-          for readKey in keySetObserver.observedPathSet
+          for readPath in keySetObserver.observedPathSet
           {
-            if let pathStateManager = self.pathStateManagerDict[readKey] {
+            if let pathStateManager = self.pathStateManagerDict[readPath] {
               let rootKey = pathStateManager.keypathBase
               if let rootNode = rootDataDict[rootKey]
               {
@@ -320,7 +328,7 @@ extension QWMediator
     modifiedDataSetNeedingRefreshArray = keySetObserverSet.filter({!$0.isPrioritySchedulingType})
     
     modifiedDataSetNeedingRefreshArray.sort {
-      (k1:KeySetObserver, k2: KeySetObserver) -> Bool in
+      (k1:QWObserver, k2: QWObserver) -> Bool in
       return dependencyMgr.level(reg: k1.registration) < dependencyMgr.level(reg: k2.registration)
     }
 
@@ -389,8 +397,8 @@ extension QWMediator
       }
     }
     
-    callRefreshOnEmptyStack = false
-    print("List of active KeySetObserver: \(keySetObserverSet.map({$0.name}))")
+    refreshUICalledWhileContextStackWasNotEmpty = false
+    print("List of active QWObserver: \(keySetObserverSet.map({$0.name}))")
     print("End of refreshUI")
 
     // This is the end of the write.
@@ -479,7 +487,7 @@ extension QWMediator
   fileprivate func popContext(_ rwContext: RWContext)
   {
     qwTransactionStack.popContext(rwContext)
-    if qwTransactionStack.isStackEmpty && callRefreshOnEmptyStack {
+    if qwTransactionStack.isStackEmpty && refreshUICalledWhileContextStackWasNotEmpty {
       self.refreshUI()
     }
   }
@@ -498,39 +506,33 @@ extension QWMediator
     return handler()
   }
   
-  public func updateAction(owner: NSObject?, handler: ()->())
-  {
-    let writeContext = self.pushUpdateContext(owner)
-    handler()
-    self.popContext(writeContext)
-  }
-  
+//  public func updateAction(owner: NSObject?, handler: ()->())
+//  {
+//    let writeContext = self.pushUpdateContext(owner)
+//    handler()
+//    self.popContext(writeContext)
+//  }
+//  
   public func updateActionAndRefresh(owner: NSObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
-    self.callRefreshOnEmptyStack = true
+    self.refreshUICalledWhileContextStackWasNotEmpty = true
     self.popContext(writeContext)
   }
   
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
-  public func updateActionIfPossibleElseDispatch(owner: NSObject?, escapingHandler: @escaping ()->())
+  public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: NSObject?, escapingHandler: @escaping ()->())
   {
     if !qwTransactionStack.isRootRefresh {
-      //print("updateActionIfPossibleElseDispatch scheduled immediately")
-      let writeContext = self.pushUpdateContext(owner)
-      escapingHandler()
-      self.popContext(writeContext)
+      //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync scheduled immediately")
+      updateActionAndRefresh(owner: owner, handler: escapingHandler)
     } else {
-      // Update is not allowed. Perform this update later on the main thread
+      // Update is not allowed. Perform this Action update asynchronously on the main thread
       DispatchQueue.main.async {[weak self]  in
         // Modifications are performed while on the main thread which serialize update
-        //print("updateActionIfPossibleElseDispatch dispatch begin")
-        if let writeContext = self?.pushUpdateContext(owner)
-        {
-          escapingHandler()
-          self?.popContext(writeContext)
-        }
+        //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync dispatch begin")
+        self?.updateActionAndRefresh(owner: owner, handler: escapingHandler)
       }
     }
   }

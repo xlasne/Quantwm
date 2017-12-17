@@ -71,15 +71,15 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
   
   var keypath: String {
     if let extensionPath = self.extensionPath {
-      return root.propDescription + "." + extensionPath
+      return root.rootId + "." + extensionPath
     } else {
-      return root.propDescription
+      return root.rootId
     }
   }
   
   func key(_ index: Int)-> String? {
     if index == 0 {
-      return root.propDescription
+      return root.rootId
     }
     let chainIndex = index - 1
     if (chainIndex >= 0) && (chainIndex < chain.count) {
@@ -90,7 +90,7 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
   }
   
   var rootPath: String {
-    return root.propDescription
+    return root.rootId
   }
   
   var extensionPath: String? {

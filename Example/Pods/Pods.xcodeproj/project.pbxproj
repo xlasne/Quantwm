@@ -39,6 +39,7 @@
 		20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */; };
 		202822E4668C16D115A8F68F3ADF0E0F /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
+		25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FD37451FE5CE8200631923 /* QWPathWalker.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		2761B22412F85C8FB230E0CBCB99EEE6 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF2DA4B989B1A1DAE7517F51E7A4BA /* ScheduledItem.swift */; };
 		278414176F789AB0268B7E5CA04E9BD1 /* InfiniteSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4BD4A9A9D22277C4E416A9170560 /* InfiniteSequence.swift */; };
@@ -144,7 +145,7 @@
 		A8D0DFF33538BE2B36D446B948D3965C /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44FB1CA297BCBE44A7DEE35B3C6EEB /* Amb.swift */; };
 		A9EEEA7477981DEEBC72432DE9990A4B /* Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 342633CD8ABF53233FC722F2DFB59CE0 /* Alamofire-dummy.m */; };
 		AA2CB16EC081BE694CFA7468D986B82A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C6A362B235500FCC0AB4CE9615A75 /* Timer.swift */; };
-		ABFAA45EC959B8F4FD60AA997CB4A5AF /* KeySetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8970D619F0CB748BF013F2FB62E25A5 /* KeySetObserver.swift */; };
+		ABFAA45EC959B8F4FD60AA997CB4A5AF /* QWObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */; };
 		AE0D092C8640DF0F245EBC7653FF6396 /* DistinctUntilChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C977073EB8C695A494311E66F8E7FC /* DistinctUntilChanged.swift */; };
 		AE0D435268C1426982AADF344466B117 /* Pods-Quantwm_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4220547E5882765EA5CB4781C12472 /* Pods-Quantwm_Example-dummy.m */; };
 		AE1EF48399533730D0066E04B22CA2D6 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C4DCF811E0A48F7F4104CBAC75A78 /* SessionManager.swift */; };
@@ -354,6 +355,7 @@
 		23A4E67C22314EBD4E31F2DAE17F95E6 /* AlamofireImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-umbrella.h"; sourceTree = "<group>"; };
 		241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-umbrella.h"; sourceTree = "<group>"; };
 		24547D3C83BC31586420960391920929 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
+		25FD37451FE5CE8200631923 /* QWPathWalker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QWPathWalker.swift; path = Quantwm/Classes/QWPathWalker.swift; sourceTree = "<group>"; };
 		2739CB7A8A23BE7D701F2F7DAE44CB20 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		28BC2C578BD1047F484956A70FD6D6F2 /* Concat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Concat.swift; path = RxSwift/Observables/Concat.swift; sourceTree = "<group>"; };
 		2A57F60132D1BD5808513FFC2B530E48 /* Disposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = RxSwift/Disposable.swift; sourceTree = "<group>"; };
@@ -515,7 +517,7 @@
 		C69459401CF410F1F681A87F02EFD97F /* Pods-Quantwm_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Quantwm_Example.modulemap"; sourceTree = "<group>"; };
 		C6BC1CC7D768F3EFC34A107DB21B0DD0 /* Pods-Tests_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C7E9BAF1AAD87BB878AFD3E6C3B93B0B /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
-		C8970D619F0CB748BF013F2FB62E25A5 /* KeySetObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeySetObserver.swift; path = Quantwm/Classes/KeySetObserver.swift; sourceTree = "<group>"; };
+		C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWObserver.swift; path = Quantwm/Classes/QWObserver.swift; sourceTree = "<group>"; };
 		C91C76785CE3EA6CA29636BFF2470585 /* Pods_Quantwm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quantwm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4220547E5882765EA5CB4781C12472 /* Pods-Quantwm_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Quantwm_Example-dummy.m"; sourceTree = "<group>"; };
 		CB4C6A362B235500FCC0AB4CE9615A75 /* Timer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = RxSwift/Observables/Timer.swift; sourceTree = "<group>"; };
@@ -1040,7 +1042,7 @@
 			children = (
 				7DFEF119C2DE5CD130EC9212543C9668 /* DataUsage.swift */,
 				A29FC19F48E0EA179D111130E16B6D21 /* GenericViewModel.swift */,
-				C8970D619F0CB748BF013F2FB62E25A5 /* KeySetObserver.swift */,
+				C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */,
 				050554A8076072CF69430FE4B9E28958 /* QWCounter.swift */,
 				0786D14864B759C8D620B0C86DC15C08 /* QWDependencyMgr.swift */,
 				58C6838B45DF5B09AD386D1A07B90796 /* QWMap.swift */,
@@ -1053,6 +1055,7 @@
 				56439B5C5DD7745072DCF3B60ABCAEFE /* QWRegistration.swift */,
 				6DCCF635D296A5C381FDD2CDC509DD69 /* QWTransactionStack.swift */,
 				831BC531C09AF70DD391717B3FED6322 /* QWTreeWalker.swift */,
+				25FD37451FE5CE8200631923 /* QWPathWalker.swift */,
 				B0E60142D00FA9F9429F7609A6399B9E /* Support Files */,
 			);
 			indentWidth = 2;
@@ -1319,9 +1322,10 @@
 			files = (
 				B24CBF977D8614BAAF74DDA64B2E4071 /* DataUsage.swift in Sources */,
 				ECCE94122A3F6CA2EA826E764292CA43 /* GenericViewModel.swift in Sources */,
-				ABFAA45EC959B8F4FD60AA997CB4A5AF /* KeySetObserver.swift in Sources */,
+				ABFAA45EC959B8F4FD60AA997CB4A5AF /* QWObserver.swift in Sources */,
 				3EE40DCD7149A96FD601B19B7C9E6A48 /* Quantwm-dummy.m in Sources */,
 				FF9BABD6FB3623B67C1FE9233895063D /* QWCounter.swift in Sources */,
+				25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */,
 				44B11213CFC53E53135116A61A4F61AD /* QWDependencyMgr.swift in Sources */,
 				3DA96A7B37B8C2462E223B31EAF0EBF0 /* QWMap.swift in Sources */,
 				FF43C930B919A1C2C3CB4760C0E16621 /* QWMediator.swift in Sources */,

@@ -35,7 +35,7 @@ public struct QWRootProperty: Equatable, Encodable
 
   // Codable for logging purpose only
   enum CodingKeys: String, CodingKey {
-    case propDescription
+    case rootId
     case source
     case dest
   }
@@ -45,29 +45,29 @@ public struct QWRootProperty: Equatable, Encodable
     return self.descriptor.hashValue
   }
 
-  // The propDescription shall uniquely identify the QWRootProperty
+  // The rootId shall uniquely identify the QWRootProperty
   // during root registration.
-  // Registering a new QWRootProperty with the same propDescription replace the previous registration.
-  let propDescription: String
+  // Registering a new QWRootProperty with the same rootId replace the previous registration.
+  let rootId: String
   let sourceType: Any.Type
   let source: String
   let destType: Any.Type
   let dest: String
   
   public init(
-    sourceType: Any.Type,
-    description: String
+    rootType: Any.Type,
+    rootId: String
     )
   {
-    self.propDescription = description
-    self.sourceType = sourceType
+    self.rootId = rootId
+    self.sourceType = rootType
     self.destType = sourceType
     self.source = String(describing: sourceType)
     self.dest = String(describing: destType)
   }
 
   var descriptor:QWPropertyID {
-    return QWPropertyID(propDescription: propDescription, propKey: nil, isNode: true)
+    return QWPropertyID(propDescription: rootId, propKey: nil, isNode: true)
   }
 
   public static func ==(lhs: QWRootProperty, rhs: QWRootProperty) -> Bool {

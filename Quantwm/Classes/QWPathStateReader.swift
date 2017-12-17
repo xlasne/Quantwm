@@ -55,7 +55,7 @@ class QWNodeState {
   
   // If not a collection, nextNode point to the next element
   // If a collection, nodeCollection
-  // The nextNodes[x].associatedObject shall be of type propertyDesc.sourceType
+  // The nextNodes[x].qwRoot shall be of type propertyDesc.sourceType
 
   // nextNodes contains the set of child nodes matching the signature
   var nextNodes: [QWNodeState] = []

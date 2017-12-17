@@ -30,8 +30,8 @@ import Foundation
 enum DataSetComparisonResult<T: Hashable>
 {
   case error_WriteDataSetNotEmpty(Set<T>)
-  case warning_ReadDataSetContainsMoreDataThanKeySetObserver(Set<T>)
-  case info_ReadDataSetIsContainedIntoKeySetObserver(Set<T>)
+  case warning_ReadDataSetContainsMoreDataThanQWObserver(Set<T>)
+  case info_ReadDataSetIsContainedIntoQWObserver(Set<T>)
   case info_TargetIsNil
   case identical
   case notDirty
@@ -262,10 +262,10 @@ class DataUsage: NSObject
 
     if readActionSet.isSubset(of: configuredReadActionSet) {
       let delta = configuredReadActionSet.subtracting(readActionSet)
-      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoKeySetObserver(delta)
+      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoQWObserver(delta)
     }
     let delta = readActionSet.subtracting(configuredReadActionSet)
-    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
+    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanQWObserver(delta)
   }
 
 }

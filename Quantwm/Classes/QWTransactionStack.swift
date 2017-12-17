@@ -83,12 +83,29 @@ func ==(lhs: RWContext, rhs: RWContext) -> Bool {
   return areEqual
 }
 
+struct QWStackReadLevel {
+  let currentTag: String
+  let readLevel: Int
+}
+
 //MARK: - QWTransactionStack
 class QWTransactionStack {
   
   var rwContextStack: [RWContext] = []
   var readLevel: Int = -1
-  
+  var currentTag: String = ""
+
+  var stackReadLevel: QWStackReadLevel {
+    get {
+      return QWStackReadLevel(currentTag: currentTag, readLevel: readLevel)
+    }
+    set  {
+      self.readLevel = newValue.readLevel
+      self.currentTag = newValue.currentTag
+    }
+  }
+
+
   var rootContext : RWContext? {
     return rwContextStack.first
   }

@@ -39,8 +39,8 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         _playlistsCollection.updateUserId(userId: userId)
 
         qwMediator.registerRoot(
-            associatedObject: self,
-            rootDescription: DataModel.dataModelK)
+            qwRoot: self,
+            rootProperty: DataModel.dataModelK)
     }
     
     var disposeBag = DisposeBag()
@@ -97,7 +97,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     // MARK: - Quantwm Properties and Nodes
     
     // sourcery: root
-    static let dataModelK = QWRootProperty(sourceType: DataModel.self, description: "dataModel")
+    static let dataModelK = QWRootProperty(rootType: DataModel.self, rootId: "dataModel")
 
     // sourcery: property
     fileprivate var _userId : UserID

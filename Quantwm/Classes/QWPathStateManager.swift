@@ -8,12 +8,22 @@
 
 import Foundation
 
+// QWPathTraceManager is in charge of a single QWPath
+// and increment his updateCounter each time this path is modified
 class QWPathTraceManager
 {
   let qwPath: QWPath
+
+  // At the end of RefreshUI(), on commitUpdate():
+  // nodeChain is reset with updatedNodeChain
+  // updatedNodeChain = nil
+
+  // At each readAndCompareTrace:
+  // updatedNodeChain is compared versus updatedNodeChain ?? nodeChain
+  // updateCounter is incremented if different
   private var nodeChain: QWPathTraceReader?
   private var updatedNodeChain: QWPathTraceReader?
-  var updateCounter: Int = 0
+  private(set) var updateCounter: Int = 0
   
   var keypathBase: String {
     return qwPath.rootPath
@@ -26,7 +36,8 @@ class QWPathTraceManager
   {
     self.qwPath = qwPath
   }
-  
+
+  // Increment updateCounter is the path is dirty versus nodeChain
   func readAndCompareTrace(rootNode: QWRootHandle)
   {
     guard let rootObject = rootNode.rootObject else {

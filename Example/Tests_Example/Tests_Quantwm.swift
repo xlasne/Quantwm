@@ -147,7 +147,7 @@ class QuantwmTest: XCTestCase {
             return qwMediator
         }
 
-        static let testRootK = QWRootProperty(sourceType: TestBase.self, description: "testBase")
+        static let testRootK = QWRootProperty(rootType: TestBase.self, rootId: "testBase")
 
 
         static let testClassK = QWNodeProperty(
@@ -204,8 +204,8 @@ class QuantwmTest: XCTestCase {
 
             // End of init
 
-            qwMediator.registerRoot(associatedObject: self,
-                                    rootDescription: TestBase.testRootK)
+            qwMediator.registerRoot(qwRoot: self,
+                                    rootProperty: TestBase.testRootK)
         }
     }
 

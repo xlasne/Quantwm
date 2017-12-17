@@ -1,5 +1,5 @@
 //
-//  KeySetObserver.swift
+//  QWObserver.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 15/04/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KeySetObserver: NSObject {
+class QWObserver: NSObject {
 
   //MARK: Init and update
   init(target: NSObject, registration: QWRegistration)
@@ -18,7 +18,7 @@ class KeySetObserver: NSObject {
     self.unionReadDescription = []
     self.registration = registration
     super.init()
-    //print("KeySetObserver: target \(name) type \(self.type) created with \(keypathSet)")
+    //print("QWObserver: target \(name) type \(self.type) created with \(keypathSet)")
 
     if !target.responds(to: actionSelector) {
       assert(false,"Error \(target) does not respond to selector \(actionSelector)")
@@ -39,7 +39,7 @@ class KeySetObserver: NSObject {
   var name: String { return registration.name }
   var schedulingPriority: Int? { return registration.schedulingPriority }
 
-  // configurationSchedulingLevel defines if the KeySetObserver is of configuration type
+  // configurationSchedulingLevel defines if the QWObserver is of configuration type
   // and if not nil, its priority
   var isPrioritySchedulingType: Bool {
     return schedulingPriority != nil
@@ -47,26 +47,26 @@ class KeySetObserver: NSObject {
 
   // The set of keypath triggering this action
   // QWMediator builds and updates the pathStateManagerDict:[QWPath : QWPathTraceManager] indexed by keypath
-  // This set define the scheduling level of the KeySetObserver
+  // This set define the scheduling level of the QWObserver
 
   // force dirty when TriggetDataSet is created or its keypathSet modified
-  var forcedDirty = DirtyState.created
+  fileprivate var forcedDirty = DirtyState.created
 
   // Each QWPathTraceManager has a counter, which is incremented on each call of readAndCompareTrace()
   // for this QWPath.
   // QWMediator will call triggerIfDirty() for our KeypathObserver a unique time during the refresh phase
   // During triggerIfDirty, updateDirtyStatus() will compare the current and previously stored values of the counter of each QWPath, and trigger a dirty -> perform action if any change.
   // Dirty or not, the current counters are stored for the next refreshUI call.
-  var observedPathsCounter: [QWPath:Int] = [:]
+  fileprivate var observedPathsCounter: [QWPath:Int] = [:]
   
   // Maintain the union of all the RW_Action which are actually read
   // in order to detect registration to unused actions
   // unionReadDescription is composed only of PropertyDescription which are the result of the comparison between
   // configured and actual RW_Action, based on their common node.
-  var unionReadDescription: Set<QWPropertyID>
+  fileprivate var unionReadDescription: Set<QWPropertyID>
 
   // Return true if the delegate is nil, meaning that the target has been deallocated
-  // and that we must discard this KeySetObserver
+  // and that we must discard this QWObserver
   func isValid() -> Bool
   {
     return self.target != nil
@@ -129,25 +129,12 @@ class KeySetObserver: NSObject {
     
     return (isDirty:false, description: "Not Dirty")
   }
-  
-  fileprivate func readActionSet(_ dataDict: [QWPath:QWPathTraceManager]) ->  Set<RW_Action> {
-    var result: Set<RW_Action> = []
-    for keypath in observedPathSet
-    {
-      if let pathStateManager = dataDict[keypath]
-      {
-        let actionSet = pathStateManager.collectNodeSet()
-        result.formUnion(actionSet)
-      }
-    }
-    return result
-  }
-  
+
   func triggerIfDirty(_ dataUsage: DataUsage?, dataDict: [QWPath:QWPathTraceManager])
   {
     // Let check this if target has been released since last removal.
     guard let target = target else {
-      print("Warning: KeySetObserver \(name). Attempt to perform refresh with nil target")
+      print("Warning: QWObserver \(name). Attempt to perform refresh with nil target")
       return
     }
     
@@ -162,36 +149,9 @@ class KeySetObserver: NSObject {
 
     // dataUsage is only defined in debug
     if let dataUsage = dataUsage {
-      // clearContext() clears the read and write actions, not the dirty flag
-      // which is needed by other keySetObservers
-      dataUsage.clearContext(target)
-
-      // Read the reference set of actions associated to the pathStateManagers
-      let nodeSet = self.readActionSet(dataDict)
-
-      // Call the registered selector on the target
-      target.perform(self.actionSelector)
-
-      // Check consistency
-      let readActionSet  = dataUsage.getReadQWPathTraceManagerSet(target)
-
-      let commonPropertySet = commonProperties(actionSet1: readActionSet, actionSet2: nodeSet)
-      unionReadDescription.formUnion(commonPropertySet)
-      let writeActionSet = dataUsage.getWriteQWPathTraceManagerSet(target)
-      let result = DataUsage.compareArrays(
-        readAction: readActionSet, configuredReadAction: nodeSet,
-        writeAction: writeActionSet, configuredWriteProperties: registration.writtenPropertySet,
-        name: name)
-      switch result {
-      case .error_WriteDataSetNotEmpty(let delta):
-        print("Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty KeySetObserver. Consider manually adding these writtenProperty to the registered \(name) KeySetObserver")
-        assert(false, "Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty KeySetObserver. Consider manually adding these writtenProperty to the registered \(name) KeySetObserver")
-      case .warning_ReadDataSetContainsMoreDataThanKeySetObserver(let delta):
-        print("Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered KeySetObserver. Consider manually adding this keypath to the registered \(name) KeySetObserver")
-        assert(false, "Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered KeySetObserver. Consider manually adding this keypath to the registered \(name) KeySetObserver")
-      default:
-        break
-      }
+      callPerformSelectorWith(target: target,
+                              dataUsage: dataUsage ,
+                              dataDict: dataDict)
     } else {
       // Call the registered selector on the target
       target.perform(self.actionSelector)
@@ -221,7 +181,58 @@ class KeySetObserver: NSObject {
     }
   }
 
-  // Data Usage functions
+  // MARK: - Data Usage functions
+
+  func callPerformSelectorWith(target: NSObject,
+                               dataUsage: DataUsage ,
+                               dataDict: [QWPath:QWPathTraceManager])
+  {
+    // clearContext() clears the read and write actions, not the dirty flag
+    // which is needed by other keySetObservers
+    dataUsage.clearContext(target)
+
+    // Read the reference set of actions associated to the pathStateManagers
+    let nodeSet = self.readActionSet(dataDict)
+
+    // Call the registered selector on the target
+    target.perform(self.actionSelector)
+
+    // Check consistency
+    let readActionSet  = dataUsage.getReadQWPathTraceManagerSet(target)
+
+    let commonPropertySet = commonProperties(actionSet1: readActionSet, actionSet2: nodeSet)
+    unionReadDescription.formUnion(commonPropertySet)
+    let writeActionSet = dataUsage.getWriteQWPathTraceManagerSet(target)
+    let result = DataUsage.compareArrays(
+      readAction: readActionSet, configuredReadAction: nodeSet,
+      writeAction: writeActionSet, configuredWriteProperties: registration.writtenPropertySet,
+      name: name)
+    switch result {
+    case .error_WriteDataSetNotEmpty(let delta):
+      print("Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
+      assert(false, "Error: \(name) performs a write of \(delta.map({$0.propDescription})) which is not part of the registered writtenProperty QWObserver. Consider manually adding these writtenProperty to the registered \(name) QWObserver")
+    case .warning_ReadDataSetContainsMoreDataThanQWObserver(let delta):
+      print("Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
+      assert(false, "Warning: \(name) performs a read of \(delta.map({$0.propDescription})) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
+    default:
+      break
+    }
+  }
+
+
+  fileprivate func readActionSet(_ dataDict: [QWPath:QWPathTraceManager]) ->  Set<RW_Action> {
+    var result: Set<RW_Action> = []
+    for keypath in observedPathSet
+    {
+      if let pathStateManager = dataDict[keypath]
+      {
+        let actionSet = pathStateManager.collectNodeSet()
+        result.formUnion(actionSet)
+      }
+    }
+    return result
+  }
+
   func displayUsage(_ dataDict: [QWPath:QWPathTraceManager]) -> DataSetComparisonResult<QWPropertyID>
   {
     var configuredProperties: Set<QWPropertyID> = []
@@ -234,19 +245,19 @@ class KeySetObserver: NSObject {
     }
 
     if unionReadDescription == configuredProperties {
-      print("Data Usage: Info: \(name) matches exactly its KeySetObserver")
+      print("Data Usage: Info: \(name) matches exactly its QWObserver")
       return DataSetComparisonResult.identical
     }
 
     if unionReadDescription.isSubset(of: configuredProperties) {
       let delta = configuredProperties.subtracting(unionReadDescription)
-      print("Data Usage: Info: Read of \(name) does not perform read of \(delta) which is part of the registered KeySetObserver. This is normal if these values are not read at each refresh cycle")
-      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoKeySetObserver(delta)
+      print("Data Usage: Info: Read of \(name) does not perform read of \(delta) which is part of the registered QWObserver. This is normal if these values are not read at each refresh cycle")
+      return DataSetComparisonResult.info_ReadDataSetIsContainedIntoQWObserver(delta)
     }
 
     let delta = unionReadDescription.subtracting(configuredProperties)
-    print("Data Usage: Warning: Read of \(name) performs a read of \(delta) which is not part of the registered KeySetObserver. Consider manually adding this keypath to the registered \(name) KeySetObserver")
-    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanKeySetObserver(delta)
+    print("Data Usage: Warning: Read of \(name) performs a read of \(delta) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver")
+    return DataSetComparisonResult.warning_ReadDataSetContainsMoreDataThanQWObserver(delta)
   }
 
   func commonProperties(actionSet1:Set<RW_Action>, actionSet2:Set<RW_Action>) -> Set<QWPropertyID>

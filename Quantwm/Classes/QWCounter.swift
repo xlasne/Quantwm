@@ -19,7 +19,16 @@ import Foundation
 
 typealias NodeId = Int32
 
+
+
 open class QWCounter: NSObject, Codable {
+
+  enum QWCounterAccess: Int {
+    case NoAccess         = 2
+    case ReadAccess       = 1
+    case ReadWriteAccess  = 0   // or no Tag
+    case ReadOnlyAccess   = -1
+  }
 
   static var ASSERT_ON_VIOLATION = true
 
@@ -45,7 +54,7 @@ open class QWCounter: NSObject, Codable {
         return nodeId
     }
 
-  public var nodeName: String = "No name"
+  public let nodeName: String
 
   public init(name: String) {
     self.nodeName = name
@@ -58,7 +67,13 @@ open class QWCounter: NSObject, Codable {
   // Maintain a change counter for each value or reference property of its parent object/struct
   // Counter is created at 0 when requested
   var changeCountDict: [AnyKeyPath:Int] = [:]
-  
+
+  // defaultAccess is for property which have not yet been accessed,
+  // and are thus not yet in the dictionary
+  var accessTag:String = ""  // To manage case of node which have been removed from the tree, then inserted during refresh phase, and whose access level are obsolete
+  var defaultAccess:QWCounterAccess = .NoAccess
+  var accessDict: [AnyKeyPath:QWCounterAccess] = [:]
+
   //MARK: - Read / Write monitoring
   
   public func performedReadOnMainThread(_ property: QWProperty)
@@ -118,6 +133,79 @@ open class QWCounter: NSObject, Codable {
     }
   }
 
+  //MARK: - Access management
+  func applyNoAccess(tag: String) {
+    defaultAccess = .NoAccess
+    accessTag = tag
+    for keypath in accessDict.keys {
+      accessDict[keypath] = QWCounterAccess.NoAccess
+    }
+  }
+
+  func applyReadAccess(keypath: AnyKeyPath, tag: String) {
+    if tag != accessTag {
+      // This is a node coming from out scope
+      accessTag = tag
+      for keypath in accessDict.keys {
+        accessDict[keypath] = QWCounterAccess.ReadWriteAccess // Default for new nodes
+      }
+      return
+    }
+    if let accessVal = accessDict[keypath] {
+      switch accessVal {
+      case .NoAccess:
+        accessDict[keypath] = QWCounterAccess.ReadAccess
+      case .ReadAccess:
+        break
+      case .ReadWriteAccess:
+        break
+      case .ReadOnlyAccess:
+        break
+      }
+    } else {
+      // This is a new property
+      accessDict[keypath] = QWCounterAccess.ReadAccess
+    }
+  }
+
+  func applyWriteAccess(keypath: AnyKeyPath, tag: String) {
+    if tag != accessTag {
+      // This is a node coming from out scope
+      accessTag = tag
+      for keypath in accessDict.keys {
+        accessDict[keypath] = QWCounterAccess.ReadWriteAccess // Default for new nodes
+      }
+      return
+    }
+    if let accessVal = accessDict[keypath] {
+      switch accessVal {
+      case .NoAccess:
+        accessDict[keypath] = QWCounterAccess.ReadWriteAccess
+      case .ReadAccess:
+        accessDict[keypath] = QWCounterAccess.ReadWriteAccess
+      case .ReadWriteAccess:
+        break
+      case .ReadOnlyAccess:
+        break
+      }
+    } else {
+      // This is a new property
+      accessDict[keypath] = QWCounterAccess.ReadWriteAccess
+    }
+  }
+
+  func applyReadOnlyAccess(keypath: AnyKeyPath, tag: String) {
+    if tag != accessTag {
+      // This is a node coming from out scope
+      accessTag = tag
+      for keypath in accessDict.keys {
+        accessDict[keypath] = QWCounterAccess.ReadWriteAccess // Default for new nodes
+      }
+      // No return this time
+    }
+    accessDict[keypath] = QWCounterAccess.ReadOnlyAccess
+  }
+
   //MARK: - Update Property Management
   
   // Increment changeCount for a property
@@ -143,12 +231,12 @@ open class QWCounter: NSObject, Codable {
     }
   }
 
-  //MARK: - Tree update detection
+  //MARK: - Tree update detection for Undo
   //
   // A commit tag is set on each node of the tree at the end of the model update
   // The committer knows how to scan the tree, QWCounter only manage his local node.
   // The tag is set on the node, not on each properties.
-  // On each *stored* property change, the current tag is cleared
+  // On each *stored* (versus *contextual*) property change, the current tag is cleared
   // When the tag is set recursively, it also recursively collect the information if the previous
   // tag was cleared or not, indicating if the node (and thus the tree) has been updated.
 
