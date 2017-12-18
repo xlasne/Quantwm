@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		01706BDCBFBAD47891A77A04932C15AD /* SubscribeOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0A0D45D3C9D1D510E43194336C3451 /* SubscribeOn.swift */; };
 		0190716FA96B8776BC6F3E2420BDAC8A /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D40396F36AE9395AD567F8BE8C3D478 /* Range.swift */; };
-		01FF72A82046F07EAAD1FEF4AED59061 /* Quantwm-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D17A3CB9E8868149F53B503FF7D0A6D /* Quantwm-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		02617A9CEB2192BBD675DCD1706420E7 /* QWProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642C99228CA312852301C829A46BA8A7 /* QWProperty.swift */; };
+		01FF72A82046F07EAAD1FEF4AED59061 /* Quantwm-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C0AADAEDE438105CDFBE172EC4FE617 /* Quantwm-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04632A8C4FF539FE79E93D2CDD84210F /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF5ECDDDC950748E48190F2D6E1A0BB /* Debug.swift */; };
 		05006BDD7301FCF2678618DEDCC69B94 /* UIImage+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB5D3144D9C4733EE6D55339131A5D7 /* UIImage+AlamofireImage.swift */; };
 		05691432D66D94AB4D1B40C3967C541F /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AEB16EFB478F1C0BA79B6BF11EA13F /* Sequence.swift */; };
@@ -28,6 +27,7 @@
 		13138796866347D8E8A77F341EFF74A3 /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8334CA98BAC1AA74078C356FE321593 /* CombineLatest.swift */; };
 		14F48E17B5858694768859D44F0EE718 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BC9B5306ECEA210016F832E7B9E81 /* SwiftSupport.swift */; };
 		15011CA885E0D4CB373576CBCAAB7491 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7271E5B3F06DD577465324919906C28 /* PriorityQueue.swift */; };
+		15D0B7A7DA7A73C8631F82DD36AC49F3 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */; };
 		1777B87FE059064BA67A3A758B1DB0AF /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FB341A772C105797F82AAC058EE4B /* RefCountDisposable.swift */; };
 		196047C8B8B3477939236FFF44787A9A /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0602F3C61E568599954D242737E9676E /* GroupedObservable.swift */; };
 		19FA7C187BADD888DA28F313A0929D15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
@@ -36,11 +36,9 @@
 		1ACAA7B5E0E05DD5E7653B3AF28CAD5B /* Completable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C360728A821AF8151A0A5C693A61A22E /* Completable.swift */; };
 		1B9EDEDC964E6B08F78920B4F4B9DB84 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E40D0A07F04D4B9C3D9A917A7769EC0F /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DAFED2392A0BC06F24F724BB0246D3A /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919A41515E9CBA25D86422CBAE2EA8F0 /* DispatchQueueConfiguration.swift */; };
-		20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */; };
 		202822E4668C16D115A8F68F3ADF0E0F /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */; };
-		256960E21FE6FB5E00CF10A1 /* QWRegistrationUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */; };
+		2147BBBFA4538C846DFEB9BCB55C686B /* QWProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6980FF3CB74DCDD98761F8138C57543 /* QWProperty.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
-		25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FD37451FE5CE8200631923 /* QWPathWalker.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		2761B22412F85C8FB230E0CBCB99EEE6 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF2DA4B989B1A1DAE7517F51E7A4BA /* ScheduledItem.swift */; };
 		278414176F789AB0268B7E5CA04E9BD1 /* InfiniteSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4BD4A9A9D22277C4E416A9170560 /* InfiniteSequence.swift */; };
@@ -58,20 +56,18 @@
 		35E891E1D62116C0186BBEEDE392B7B2 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FC243E7F622625FE7F4939FDC8DD35 /* SingleAsync.swift */; };
 		3626B94094672CB1C9DEA32B9F9502E1 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFAC1817438F2F56B6B5DAD20AAEC19 /* TaskDelegate.swift */; };
 		37F951F2BDB75BD682C2999EB7B51A35 /* AlamofireImage-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 72CBBC2C040DF536379AC2C561318431 /* AlamofireImage-dummy.m */; };
+		398A5DDF4859595A949D9C37D80BED9F /* QWPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C076BEDED0E8CDB715D14AC19E79566 /* QWPath.swift */; };
 		3992A170BC85E835D513CFA387EBF27E /* StartWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B5A5A6CC44F7BF272A5B57D09932B /* StartWith.swift */; };
 		3A2CE8D1A15D79B29E199B5A68CF2B48 /* RxSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C1E7229948890D30606A03784C02CED /* OperationQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AF25C63E97ED4E1CA62F8FC9BCB1CC /* OperationQueueScheduler.swift */; };
-		3D57AF2FDF5600F85090CEFCBA0158C5 /* QWTransactionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCF635D296A5C381FDD2CDC509DD69 /* QWTransactionStack.swift */; };
-		3DA96A7B37B8C2462E223B31EAF0EBF0 /* QWMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C6838B45DF5B09AD386D1A07B90796 /* QWMap.swift */; };
-		3EE40DCD7149A96FD601B19B7C9E6A48 /* Quantwm-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B442E25AEA2FADB1A3F4733DD947B33F /* Quantwm-dummy.m */; };
 		3F14FBD74853BF27E8CD2220712821FC /* VirtualTimeConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5ADB6D3288C4E6B5CAC93C76C419F1 /* VirtualTimeConverterType.swift */; };
 		446C0D01C938F507E53968FD8D681968 /* ObserverBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85F9E615971137360D50C3584B67F79 /* ObserverBase.swift */; };
 		448A433E67EC988745F719176740B395 /* Single.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390B9EF06903FAA34CE1745AD0BB43B /* Single.swift */; };
-		44B11213CFC53E53135116A61A4F61AD /* QWDependencyMgr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0786D14864B759C8D620B0C86DC15C08 /* QWDependencyMgr.swift */; };
 		44F2C1E47FA60DC9C9A9DE74D0675438 /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162664F759459AFACAA3676CF4B02585 /* ObserverType.swift */; };
 		450E1412D33DB7E86A4807FCE9010DCF /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0DC74DDC5994686AC04C784D821F40 /* RetryWhen.swift */; };
 		45520BDA63AC9019697EADDF79EF4A58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		49151328487F86F1AE0F2B8B2BD37A15 /* HistoricalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B409069F3ABBAA11C04F98190F373706 /* HistoricalScheduler.swift */; };
+		492BB553B631D9A6C68E34A7909838AC /* Quantwm-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2688E25DF26BA6A4D3FDC695D14F2909 /* Quantwm-dummy.m */; };
 		4962771DEE279BBA34AE5E76BF0D6556 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E8FF685249AC06D798ACF2D130183 /* Filter.swift */; };
 		4A39F2A9541E228D305FA056E4254516 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19296A8C5E948345E5744A748B1CC720 /* RxSwift.framework */; };
 		4A67C9F3581CCFB1A40D402D656687C6 /* ObserveOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26A6D167016DB80187ED7894EB700A /* ObserveOn.swift */; };
@@ -79,6 +75,7 @@
 		4E848DBE69C918298EA14A298513571E /* BinaryDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8DFD100338B5A5D13EFA80FDA27C70 /* BinaryDisposable.swift */; };
 		5387216E723A3C68E851CA15573CDD71 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB80B038F76BA10C918CA188130CDFD4 /* Request.swift */; };
 		555BF24A59822416C1032DE0D0B1623F /* RxSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 039D2CD01BA254A6A7A135950129266B /* RxSwift-dummy.m */; };
+		56D29B6FD3957F8D07B83541BEC3DE15 /* QWRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406F523819365EB5731E29C67BFBF95A /* QWRegistration.swift */; };
 		56FECE07C2CA76E1442266A15B001F6B /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0B8904BA6989020B9D8359604F818A /* Zip.swift */; };
 		570AE0164D16CF8B06BB4D5FF6CB9D29 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AD4E0A2C582BC0D7BBBE7F16F20704 /* Switch.swift */; };
 		59C9C477EB3D74AB587A36AB85C5837B /* TakeWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71068C20E1C92F033668AFF331C1C590 /* TakeWhile.swift */; };
@@ -117,18 +114,23 @@
 		7DEE0598D5297F91BD4D8CF36D8ADF0B /* SchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C119E4B97C57553F1E1075DCC64E66E /* SchedulerType.swift */; };
 		7E3AB5ADFCAC0B83247C4B0DD7E38B22 /* TailRecursiveSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF12EDF6951E512B2E2C0C183F44F20 /* TailRecursiveSink.swift */; };
 		7EF89D6549679265846316B4E3CA8AA2 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3FC2E6C09FB34156EA1D67DBECA58A /* Empty.swift */; };
+		7F51FD00D9CAB49AB28849E48EEDB88D /* QWMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9088849EAD52FE39A7818C5357962627 /* QWMediator.swift */; };
 		7FC8302CDEA9DA25DCB75CCB86AB25E9 /* Platform.Linux.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B83AD1521BB57BEBC2DE6D1640A25FB /* Platform.Linux.swift */; };
+		80BC8B23131D305EA0E956A92B35F9CD /* QWPathStateReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA081134933F21D3570B531917C33DC /* QWPathStateReader.swift */; };
 		81843D8A9D98546FA30E2C25821DBF9D /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710A986B01572404464B45103A0ED6F8 /* SkipWhile.swift */; };
+		81AA82ABD50E10DDCE3F95B8B044EDB8 /* QWTransactionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5F91A961A6E1F4B630EEB1B933FF0B /* QWTransactionStack.swift */; };
 		85164BDD33E8C7BE5671E43D1A4A284D /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A1FA96D698132DC7EBB90E3F4070B1 /* CombineLatest+arity.swift */; };
 		8552EF68233911856CC9AAAAB5C38EB2 /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC57048544AA234687493A841622D396 /* AnonymousObserver.swift */; };
 		871B55862A4AFF6A9B2ECB6E9507CCE7 /* DefaultIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02026EBC34ED8D73784E0A4B4C150F1 /* DefaultIfEmpty.swift */; };
 		877BAB7C647997DE166D03DDE32B64E1 /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A39E33294EF021C143D3B692BC6706 /* SingleAssignmentDisposable.swift */; };
+		87C844C8EA46F0F4482032D682F97A1B /* QWMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B36570CCE498B208B3E1E3647EAD3 /* QWMap.swift */; };
 		88101B259627386D8CE04A7EB9087325 /* First.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A837F134CAFC1D1C9DA1DC3EE01C2 /* First.swift */; };
 		885DAA8196D3EDDE57D0E708D23BF893 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40975315826248D8E70A0BDCB6A0C6D /* Optional.swift */; };
+		89D028B7DC4EFCDF12ADA9B86B12A4FA /* QWNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4E8743F60719F722E1AB7C2EC0B0E /* QWNode.swift */; };
 		8B2F43839C8411DF9C01AA27652AF291 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A93A88015B8AB80C9E4933D9C4B3 /* Map.swift */; };
 		954416964ACA8FC328C35F2B284C4576 /* ShareReplayScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659172822B40DE8645FD11A3B254F5C9 /* ShareReplayScope.swift */; };
 		95C08B1D13779A0147F92F909043B10B /* Pods-Tests_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A9FBE05FA9090AE27015915935133846 /* Pods-Tests_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		96AA4982DD2017EA4142128770D3ADB0 /* QWTreeWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831BC531C09AF70DD391717B3FED6322 /* QWTreeWalker.swift */; };
+		969D8EA2CE787C4532F89B7BBBB8CE74 /* QWPathWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78F62BFA19B3DE45C7FEB0385EAAF1 /* QWPathWalker.swift */; };
 		9711549A9142B56B1CF3957C52943508 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421C73DD275899766D4DE79F0D8E9243 /* DispatchQueue+Extensions.swift */; };
 		9A45D9DA8E566C7C3F6BDD2DD01971DF /* Sink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0A7014B21EF8C9DEA301CD84FDFCEE /* Sink.swift */; };
 		9A88DFF3262A8D42B5818A0CEAEC55D6 /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC82CBF3DB3230981E828592CE789C61 /* ConnectableObservableType.swift */; };
@@ -136,17 +138,18 @@
 		9D322483C80B0008C3C3881FF0FB98BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		9E362AD7B50174474601B105545B578A /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B365D2EF7884769DDD26012F5B03F3 /* Repeat.swift */; };
 		9ED2BB2981896E0A39EFA365503F58CE /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC874BE5B3E05ACBEEF871F072E592FD /* AFError.swift */; };
+		9FB5BBD5F3287559B28C48B8BCF6ADE9 /* QWCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714D6F786037406EF5D175A35B07491E /* QWCounter.swift */; };
 		A0D94AF79E4F249E2D8C9052C13AB995 /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3191BE844B359CE049001EE43F91B5 /* Catch.swift */; };
 		A25289FDB87C218E08174DDF38AF8646 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC9F6C11F832B6F975C6D0FC8845816 /* Window.swift */; };
 		A2A6F71B727312BD45CC7A4AAD7B0AB7 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB9E818E12F180CCE5C845A09C1B381 /* NetworkReachabilityManager.swift */; };
-		A45AB1D73D85EDD35DA8E85238CD82F7 /* QWPathStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E3F44472836A0D7C46900FED168538 /* QWPathStateManager.swift */; };
 		A7FE13968EAFDB029F9972C26D8ADD19 /* ImmediateSchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADBB4F14654FA9D511C111BEEC8739 /* ImmediateSchedulerType.swift */; };
 		A834BD4B9ED2148B80148FA82B8B8248 /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5601C52F53D649DD2FDC7A366A149DD8 /* Deprecated.swift */; };
 		A8C2EB93E30773380484300431748B92 /* AsMaybe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B42772005740910B4EB37FA120E17ED /* AsMaybe.swift */; };
 		A8D0DFF33538BE2B36D446B948D3965C /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44FB1CA297BCBE44A7DEE35B3C6EEB /* Amb.swift */; };
 		A9EEEA7477981DEEBC72432DE9990A4B /* Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 342633CD8ABF53233FC722F2DFB59CE0 /* Alamofire-dummy.m */; };
+		AA07BEBE9B0B62E25DCBED6595DC9F2B /* QWRegistrationUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D90C676F6B8274AF6E2A2D44CAB39FC /* QWRegistrationUsage.swift */; };
 		AA2CB16EC081BE694CFA7468D986B82A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C6A362B235500FCC0AB4CE9615A75 /* Timer.swift */; };
-		ABFAA45EC959B8F4FD60AA997CB4A5AF /* QWObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */; };
+		AB0FA84805E5F6396E6E356DF657B641 /* QWPathStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48455C5C7F160F925744A5B87422E1B9 /* QWPathStateManager.swift */; };
 		AE0D092C8640DF0F245EBC7653FF6396 /* DistinctUntilChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C977073EB8C695A494311E66F8E7FC /* DistinctUntilChanged.swift */; };
 		AE0D435268C1426982AADF344466B117 /* Pods-Quantwm_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4220547E5882765EA5CB4781C12472 /* Pods-Quantwm_Example-dummy.m */; };
 		AE1EF48399533730D0066E04B22CA2D6 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C4DCF811E0A48F7F4104CBAC75A78 /* SessionManager.swift */; };
@@ -155,8 +158,7 @@
 		AFDE7C23639F971BD802C066481F77D9 /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EBFCD6527B09FD9B2F4D5E945A037A /* ConcurrentDispatchQueueScheduler.swift */; };
 		B0D0E0533E11F33935A23E5E2462A787 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9C5856BEAE5090A7D1EB450A10C04F /* Alamofire.framework */; };
 		B1178D53DD76726472122C03B7E99861 /* Disposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCDDAB8D28E22CE49C7660275543716 /* Disposables.swift */; };
-		B24CBF977D8614BAAF74DDA64B2E4071 /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEF119C2DE5CD130EC9212543C9668 /* DataUsage.swift */; };
-		B38843D4855E29BFBF157F595ED0AAD1 /* QWNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35497F3E9E9ABF05F1603D978D166B53 /* QWNode.swift */; };
+		B3260E9C995A6C001E435A86DE9417BB /* DataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */; };
 		B3C7E3639593FCAAB455B816933AEADC /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61305D50D7C648F09924416D46A6FBC2 /* Buffer.swift */; };
 		B499E8100655412E3FB28902F4987E04 /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8264DF7C6906F5020B057135EBB584 /* TakeLast.swift */; };
 		B4CD1B94684C2CCA1654C1E04349FB74 /* InvocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887D72BA8B86F47F6F300A5A0DDAC771 /* InvocableType.swift */; };
@@ -170,6 +172,7 @@
 		BA418C9183FD8F0B7853EF5E0E9CF0B9 /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22ED5EB4131FD844BED2D714176A57 /* SkipUntil.swift */; };
 		BA79746C1875680B3AE14A75BDA4ED81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		BBEFE2F9CEB73DC7BD97FFA66A0D9D4F /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7F3655B9C568937C2B863C2D5F19DE /* Validation.swift */; };
+		BD69D31B7036C3B464CE1B5500B1060E /* QWTreeWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C712CF574CBDF7FD2CA3A7FA7FCAD /* QWTreeWalker.swift */; };
 		BE1B2633506D05B61BE2F6080FD3C5A6 /* Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FA2FD2CA558BE48DE03CFB6BE69E9A /* Generate.swift */; };
 		BE5C67A07E289FE1F9BE27335B159997 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC2AB1DA3C67696AF7EA4B73B9F82A0 /* ParameterEncoding.swift */; };
 		C11E2C902F97020E90B1D215A8269113 /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31547F923AC4B4CBCD901D8E473FC86E /* Bag.swift */; };
@@ -195,6 +198,7 @@
 		D7BA53C942F2C7140400A267596F945D /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424B353BF41AB6596B5B97547FF7D5A /* SubjectType.swift */; };
 		D9E544B8CB42DA8DD44838F83610D8E0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2134E197C8769D72542916AD2329866A /* ImageCache.swift */; };
 		DBA8DAF6F8D3501D57F78AA667E8B7A6 /* AnyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E426523D58E3E8EAB57B24B04CA65F /* AnyObserver.swift */; };
+		DC281F75AC7C79F4721A634B57DB4605 /* QWDependencyMgr.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC3C93F65E85B94750F07368F61448 /* QWDependencyMgr.swift */; };
 		E007B11042BA76B7EC0DA532ABB0B2A7 /* AddRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE2756D9BF89C4E1314400D105944C6 /* AddRef.swift */; };
 		E044C499852BBBE443224ED8DE6AEF66 /* DelaySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A21BF1067BAF5843EBCCBEB74BE8D34 /* DelaySubscription.swift */; };
 		E1971325D7F4CA3E57336F895BDBEC12 /* Zip+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E331BD9584B0366CE6E9FB589E96FBDE /* Zip+Collection.swift */; };
@@ -203,8 +207,6 @@
 		EB6484F704651E30B4938764EE0EA1BD /* BehaviorSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF796559483E382511C8695732828C0A /* BehaviorSubject.swift */; };
 		EB82EACA3EC395B567F7EDB35F9BF6CC /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B700E645D2F1C55B88DE47612208D1D8 /* ToArray.swift */; };
 		EB887528FE55FD9E5AA1F596EF1DD9E5 /* RxAlamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BC839471E51854EC3E5FAD390B99389 /* RxAlamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EC194E7341BBCDC5EE56E1A49BAC9F86 /* QWRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56439B5C5DD7745072DCF3B60ABCAEFE /* QWRegistration.swift */; };
-		ECCE94122A3F6CA2EA826E764292CA43 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29FC19F48E0EA179D111130E16B6D21 /* GenericViewModel.swift */; };
 		EDFBD5D5BC1839015420A714627F9CEA /* Throttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0F24DEB00E271AE6E8E92C96BA4852 /* Throttle.swift */; };
 		EE7755C68BBF8F7588279FC1863D034B /* PrimitiveSequence+Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B482F5FE9B0AF398E2A1C00126F6CC /* PrimitiveSequence+Zip+arity.swift */; };
 		EF41AC5059B9CC4ABA8C7FDB3229A4A7 /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED1DC788D7FC1C7A9C738025012DE95 /* Scan.swift */; };
@@ -214,15 +216,13 @@
 		F0D8691E19A0279FA8BD9B23B001F37B /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033855AF3952BAD30BC7409DD8C6F95 /* ObservableType.swift */; };
 		F3D61AFF688FF3A263060C7FD1F857EE /* Pods-Tests_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2797B941C372F8A31F682EB3DD913C /* Pods-Tests_Example-dummy.m */; };
 		F43083D2BC2132C7BC30810E8E1B2EDF /* SerialDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FF39E944C6D8CA2BD78E7D167D9AE9 /* SerialDisposable.swift */; };
-		F5511960F330E4431B568BF7057CDA7E /* QWPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0974D2DAD3F72210E100A6A8861798 /* QWPath.swift */; };
 		F6129EFCD3CCFE7B3AE2908DCA6ABACC /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC9840DCAA0CED3C299BFBCE027E5FC /* AsyncLock.swift */; };
 		F6916FCCA79B3DE2C77BDA93CCBDD704 /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A85A7EF121EAE1E774A6405FF2169F /* Deferred.swift */; };
 		F6BECD98B97CBFEBE2C96F0E9E72A6C0 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385D369C5E5E262CF5EB65B5FB2741D5 /* ResponseSerialization.swift */; };
 		F8B3D3092ED0417E8CDF32033F6122F5 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD5D0B76D1770AE380743F80418271 /* Alamofire.swift */; };
 		FD1CD44B7EEA67EA9B766D0AEDD6E79C /* Multicast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2CB7347C46C1F05A60911F9D05F36 /* Multicast.swift */; };
-		FF43C930B919A1C2C3CB4760C0E16621 /* QWMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441F3F26E0F96CE2503BAB5EFB65224B /* QWMediator.swift */; };
+		FD8A3F9CF1ED820D98A3813E15FD2293 /* QWObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC4798E72875E57C7CFF38971402349 /* QWObserver.swift */; };
 		FF6CCCF58C63976E21B407CBB63E0811 /* SynchronizedOnType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6757C93E1E389B1B5D630ACB142F5 /* SynchronizedOnType.swift */; };
-		FF9BABD6FB3623B67C1FE9233895063D /* QWCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050554A8076072CF69430FE4B9E28958 /* QWCounter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,18 +321,19 @@
 
 /* Begin PBXFileReference section */
 		0147AE4A7477AAD548650E88B37D0496 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		019807A8BAD749BD0A60CAD6A9996981 /* Quantwm.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quantwm.xcconfig; sourceTree = "<group>"; };
 		039D2CD01BA254A6A7A135950129266B /* RxSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RxSwift-dummy.m"; sourceTree = "<group>"; };
-		050554A8076072CF69430FE4B9E28958 /* QWCounter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWCounter.swift; path = Quantwm/Classes/QWCounter.swift; sourceTree = "<group>"; };
 		05AD4E0A2C582BC0D7BBBE7F16F20704 /* Switch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Switch.swift; path = RxSwift/Observables/Switch.swift; sourceTree = "<group>"; };
 		0602F3C61E568599954D242737E9676E /* GroupedObservable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GroupedObservable.swift; path = RxSwift/GroupedObservable.swift; sourceTree = "<group>"; };
 		06AAB3F8B5173A3C344DD37E2281596F /* Enumerated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Enumerated.swift; path = RxSwift/Observables/Enumerated.swift; sourceTree = "<group>"; };
-		0786D14864B759C8D620B0C86DC15C08 /* QWDependencyMgr.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWDependencyMgr.swift; path = Quantwm/Classes/QWDependencyMgr.swift; sourceTree = "<group>"; };
+		07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericViewModel.swift; path = Quantwm/Classes/GenericViewModel.swift; sourceTree = "<group>"; };
 		07E67F9B83B73ABE4E478A3F510AF192 /* AlamofireImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-prefix.pch"; sourceTree = "<group>"; };
 		0A10DB8A7E46BB3E81BA8B154A5DA2A1 /* RxSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-prefix.pch"; sourceTree = "<group>"; };
 		0AC9840DCAA0CED3C299BFBCE027E5FC /* AsyncLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncLock.swift; path = RxSwift/Concurrency/AsyncLock.swift; sourceTree = "<group>"; };
 		0B7F847B75E7E825420E9BCFE1849225 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		0C44FB1CA297BCBE44A7DEE35B3C6EEB /* Amb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Amb.swift; path = RxSwift/Observables/Amb.swift; sourceTree = "<group>"; };
 		0CD833D91F6B0AC1D1ED204A17C19081 /* RecursiveScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecursiveScheduler.swift; path = RxSwift/Schedulers/RecursiveScheduler.swift; sourceTree = "<group>"; };
+		0DC4798E72875E57C7CFF38971402349 /* QWObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWObserver.swift; path = Quantwm/Classes/QWObserver.swift; sourceTree = "<group>"; };
 		0FEC70C63F8A14FF0F6DF8BE1F4D6DC5 /* SerialDispatchQueueScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SerialDispatchQueueScheduler.swift; path = RxSwift/Schedulers/SerialDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		11A6563C95A7CC57E0836AE6D84373EA /* VirtualTimeScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VirtualTimeScheduler.swift; path = RxSwift/Schedulers/VirtualTimeScheduler.swift; sourceTree = "<group>"; };
 		1308E82E749D7337D8D0FFE282C4C2A5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -346,24 +347,21 @@
 		1A3DD0A8D2DACCB695D3A37443A83457 /* Using.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Using.swift; path = RxSwift/Observables/Using.swift; sourceTree = "<group>"; };
 		1BF12EDF6951E512B2E2C0C183F44F20 /* TailRecursiveSink.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TailRecursiveSink.swift; path = RxSwift/Observers/TailRecursiveSink.swift; sourceTree = "<group>"; };
 		1D0A0D45D3C9D1D510E43194336C3451 /* SubscribeOn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscribeOn.swift; path = RxSwift/Observables/SubscribeOn.swift; sourceTree = "<group>"; };
-		1DE6F9F67F833DCE86EAE5FA5C2A0AD0 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DE6F9F67F833DCE86EAE5FA5C2A0AD0 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5ECDDDC950748E48190F2D6E1A0BB /* Debug.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debug.swift; path = RxSwift/Observables/Debug.swift; sourceTree = "<group>"; };
 		1EFC37C6F27147E3483A6DC57D599A09 /* Just.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Just.swift; path = RxSwift/Observables/Just.swift; sourceTree = "<group>"; };
 		1EFFE140A96DFB1767C7DAC000AD451D /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Source/Image.swift; sourceTree = "<group>"; };
 		2134E197C8769D72542916AD2329866A /* ImageCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = Source/ImageCache.swift; sourceTree = "<group>"; };
 		22B365D2EF7884769DDD26012F5B03F3 /* Repeat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Repeat.swift; path = RxSwift/Observables/Repeat.swift; sourceTree = "<group>"; };
-		235BFA8313DC133C0038B48EF0326B9D /* Quantwm.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Quantwm.modulemap; sourceTree = "<group>"; };
 		23A4E67C22314EBD4E31F2DAE17F95E6 /* AlamofireImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-umbrella.h"; sourceTree = "<group>"; };
 		241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-umbrella.h"; sourceTree = "<group>"; };
 		24547D3C83BC31586420960391920929 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
-		256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QWRegistrationUsage.swift; path = Quantwm/Classes/QWRegistrationUsage.swift; sourceTree = "<group>"; };
-		25FD37451FE5CE8200631923 /* QWPathWalker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QWPathWalker.swift; path = Quantwm/Classes/QWPathWalker.swift; sourceTree = "<group>"; };
+		2688E25DF26BA6A4D3FDC695D14F2909 /* Quantwm-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quantwm-dummy.m"; sourceTree = "<group>"; };
 		2739CB7A8A23BE7D701F2F7DAE44CB20 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		28BC2C578BD1047F484956A70FD6D6F2 /* Concat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Concat.swift; path = RxSwift/Observables/Concat.swift; sourceTree = "<group>"; };
 		2A57F60132D1BD5808513FFC2B530E48 /* Disposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = RxSwift/Disposable.swift; sourceTree = "<group>"; };
 		2C17C841D494BE735C972314E9214AE7 /* Delay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Delay.swift; path = RxSwift/Observables/Delay.swift; sourceTree = "<group>"; };
 		2C467677818DFEE4B5D80C055F3EDDF7 /* DisposeBag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBag.swift; path = RxSwift/Disposables/DisposeBag.swift; sourceTree = "<group>"; };
-		2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathStateReader.swift; path = Quantwm/Classes/QWPathStateReader.swift; sourceTree = "<group>"; };
 		2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		2D44154CE3FE12E30C76FFA6C54DE9FA /* Pods-Quantwm_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Quantwm_Example-resources.sh"; sourceTree = "<group>"; };
 		2F63F5E7C2B91A36012004DD88ECF40C /* Pods-Quantwm_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Quantwm_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -371,7 +369,6 @@
 		31547F923AC4B4CBCD901D8E473FC86E /* Bag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Bag.swift; path = Platform/DataStructures/Bag.swift; sourceTree = "<group>"; };
 		342633CD8ABF53233FC722F2DFB59CE0 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
 		34FA2FD2CA558BE48DE03CFB6BE69E9A /* Generate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Generate.swift; path = RxSwift/Observables/Generate.swift; sourceTree = "<group>"; };
-		35497F3E9E9ABF05F1603D978D166B53 /* QWNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWNode.swift; path = Quantwm/Classes/QWNode.swift; sourceTree = "<group>"; };
 		37FF2F9B96BE7773433E342E9ED0C73F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		385D369C5E5E262CF5EB65B5FB2741D5 /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
 		39B482F5FE9B0AF398E2A1C00126F6CC /* PrimitiveSequence+Zip+arity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PrimitiveSequence+Zip+arity.swift"; path = "RxSwift/Traits/PrimitiveSequence+Zip+arity.swift"; sourceTree = "<group>"; };
@@ -380,57 +377,59 @@
 		3B83AD1521BB57BEBC2DE6D1640A25FB /* Platform.Linux.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Platform.Linux.swift; path = Platform/Platform.Linux.swift; sourceTree = "<group>"; };
 		3B9F0106B55A03FA4F78376F9772BA33 /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConcurrentMainScheduler.swift; path = RxSwift/Schedulers/ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		3BC839471E51854EC3E5FAD390B99389 /* RxAlamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxAlamofire-umbrella.h"; sourceTree = "<group>"; };
+		3C076BEDED0E8CDB715D14AC19E79566 /* QWPath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPath.swift; path = Quantwm/Classes/QWPath.swift; sourceTree = "<group>"; };
 		3C0F24DEB00E271AE6E8E92C96BA4852 /* Throttle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Throttle.swift; path = RxSwift/Observables/Throttle.swift; sourceTree = "<group>"; };
 		3D7FC9BD73BD378E0B24F57B8E20F98B /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		3FB2CB7347C46C1F05A60911F9D05F36 /* Multicast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Multicast.swift; path = RxSwift/Observables/Multicast.swift; sourceTree = "<group>"; };
+		406F523819365EB5731E29C67BFBF95A /* QWRegistration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWRegistration.swift; path = Quantwm/Classes/QWRegistration.swift; sourceTree = "<group>"; };
 		421C73DD275899766D4DE79F0D8E9243 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Extensions.swift"; path = "Platform/DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		4390B9EF06903FAA34CE1745AD0BB43B /* Single.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Single.swift; path = RxSwift/Traits/Single.swift; sourceTree = "<group>"; };
-		441F3F26E0F96CE2503BAB5EFB65224B /* QWMediator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWMediator.swift; path = Quantwm/Classes/QWMediator.swift; sourceTree = "<group>"; };
 		44C977073EB8C695A494311E66F8E7FC /* DistinctUntilChanged.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DistinctUntilChanged.swift; path = RxSwift/Observables/DistinctUntilChanged.swift; sourceTree = "<group>"; };
 		45336D3FB49930EDA6E11E89BEECBF75 /* Event.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Event.swift; path = RxSwift/Event.swift; sourceTree = "<group>"; };
 		46AEB16EFB478F1C0BA79B6BF11EA13F /* Sequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sequence.swift; path = RxSwift/Observables/Sequence.swift; sourceTree = "<group>"; };
 		4781645F135F01E526CB6D5E91DBD132 /* TakeUntil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TakeUntil.swift; path = RxSwift/Observables/TakeUntil.swift; sourceTree = "<group>"; };
+		48455C5C7F160F925744A5B87422E1B9 /* QWPathStateManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathStateManager.swift; path = Quantwm/Classes/QWPathStateManager.swift; sourceTree = "<group>"; };
 		48E6FD842B89F26173D3130608DA6D8D /* Observable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = RxSwift/Observable.swift; sourceTree = "<group>"; };
 		4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Source/ImageDownloader.swift; sourceTree = "<group>"; };
 		4CE6757C93E1E389B1B5D630ACB142F5 /* SynchronizedOnType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedOnType.swift; path = RxSwift/Concurrency/SynchronizedOnType.swift; sourceTree = "<group>"; };
+		4D90C676F6B8274AF6E2A2D44CAB39FC /* QWRegistrationUsage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWRegistrationUsage.swift; path = Quantwm/Classes/QWRegistrationUsage.swift; sourceTree = "<group>"; };
 		4E46F8B4924F1DF846CCB5E0744FCB8B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E9F3FB091785BC14506E368CF148C22 /* Sample.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sample.swift; path = RxSwift/Observables/Sample.swift; sourceTree = "<group>"; };
 		4EB8640B8FE6A0DE9C30C7E4DCCE7256 /* Pods-Quantwm_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quantwm_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		4EC4E8743F60719F722E1AB7C2EC0B0E /* QWNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWNode.swift; path = Quantwm/Classes/QWNode.swift; sourceTree = "<group>"; };
 		4F26A6D167016DB80187ED7894EB700A /* ObserveOn.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserveOn.swift; path = RxSwift/Observables/ObserveOn.swift; sourceTree = "<group>"; };
+		4FA081134933F21D3570B531917C33DC /* QWPathStateReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathStateReader.swift; path = Quantwm/Classes/QWPathStateReader.swift; sourceTree = "<group>"; };
 		5445509D4D2840D3069EACEF3E87090C /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDisposable.swift; path = RxSwift/Disposables/SubscriptionDisposable.swift; sourceTree = "<group>"; };
 		54A39E33294EF021C143D3B692BC6706 /* SingleAssignmentDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SingleAssignmentDisposable.swift; path = RxSwift/Disposables/SingleAssignmentDisposable.swift; sourceTree = "<group>"; };
 		54FFF89B4BD9BD32991DF172386D1F33 /* AlamofireImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AlamofireImage.xcconfig; sourceTree = "<group>"; };
 		5601C52F53D649DD2FDC7A366A149DD8 /* Deprecated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Deprecated.swift; path = RxSwift/Deprecated.swift; sourceTree = "<group>"; };
 		56122A1DB9D0B028A894D972DCE3A5B0 /* Cancelable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cancelable.swift; path = RxSwift/Cancelable.swift; sourceTree = "<group>"; };
 		563AC9F9986FBE838B0B392D662402FE /* LockOwnerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockOwnerType.swift; path = RxSwift/Concurrency/LockOwnerType.swift; sourceTree = "<group>"; };
-		56439B5C5DD7745072DCF3B60ABCAEFE /* QWRegistration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWRegistration.swift; path = Quantwm/Classes/QWRegistration.swift; sourceTree = "<group>"; };
 		57E78043A4EEBA56E95F941A953947D4 /* ReplaySubject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaySubject.swift; path = RxSwift/Subjects/ReplaySubject.swift; sourceTree = "<group>"; };
-		58C6838B45DF5B09AD386D1A07B90796 /* QWMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWMap.swift; path = Quantwm/Classes/QWMap.swift; sourceTree = "<group>"; };
 		5AB5D3144D9C4733EE6D55339131A5D7 /* UIImage+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+AlamofireImage.swift"; path = "Source/UIImage+AlamofireImage.swift"; sourceTree = "<group>"; };
 		5AC003586687C34AC41A81BB6CA188B8 /* PublishSubject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PublishSubject.swift; path = RxSwift/Subjects/PublishSubject.swift; sourceTree = "<group>"; };
+		5C0AADAEDE438105CDFBE172EC4FE617 /* Quantwm-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quantwm-umbrella.h"; sourceTree = "<group>"; };
 		5C6602BC07BF388E2475B57827A32DCE /* Pods-Tests_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tests_Example.release.xcconfig"; sourceTree = "<group>"; };
 		5CAFDEE8B8761DE8B4B991C57014F1CD /* Dematerialize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Dematerialize.swift; path = RxSwift/Observables/Dematerialize.swift; sourceTree = "<group>"; };
-		5DA9C87F85735EA09B2EBC6F705747A1 /* RxSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RxSwift.modulemap; sourceTree = "<group>"; };
+		5DA9C87F85735EA09B2EBC6F705747A1 /* RxSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = RxSwift.modulemap; sourceTree = "<group>"; };
 		5F6B5A5A6CC44F7BF272A5B57D09932B /* StartWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StartWith.swift; path = RxSwift/Observables/StartWith.swift; sourceTree = "<group>"; };
 		5FE3F3805B2F716621001A77BCEE7C95 /* MainScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MainScheduler.swift; path = RxSwift/Schedulers/MainScheduler.swift; sourceTree = "<group>"; };
 		608873BA1F4D0C7D40AAE5910AB310A5 /* Request+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Request+AlamofireImage.swift"; path = "Source/Request+AlamofireImage.swift"; sourceTree = "<group>"; };
 		61305D50D7C648F09924416D46A6FBC2 /* Buffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Buffer.swift; path = RxSwift/Observables/Buffer.swift; sourceTree = "<group>"; };
-		632E315CA4E30B609F244106FD506E2A /* Quantwm-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quantwm-prefix.pch"; sourceTree = "<group>"; };
-		642C99228CA312852301C829A46BA8A7 /* QWProperty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWProperty.swift; path = Quantwm/Classes/QWProperty.swift; sourceTree = "<group>"; };
 		659172822B40DE8645FD11A3B254F5C9 /* ShareReplayScope.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShareReplayScope.swift; path = RxSwift/Observables/ShareReplayScope.swift; sourceTree = "<group>"; };
-		65C1D6701F83DE4CCD30AC1E529555C0 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65C1D6701F83DE4CCD30AC1E529555C0 /* RxAlamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RxAlamofire.framework; path = RxAlamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68976ABAF9E17E6D98B5DBC277CA3CB6 /* Completable+AndThen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Completable+AndThen.swift"; path = "RxSwift/Traits/Completable+AndThen.swift"; sourceTree = "<group>"; };
 		6B177B8B82FF4706721DB551C9E699AC /* Queue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Queue.swift; path = Platform/DataStructures/Queue.swift; sourceTree = "<group>"; };
 		6C7F3655B9C568937C2B863C2D5F19DE /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = Source/Validation.swift; sourceTree = "<group>"; };
 		6D0A7014B21EF8C9DEA301CD84FDFCEE /* Sink.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sink.swift; path = RxSwift/Observables/Sink.swift; sourceTree = "<group>"; };
-		6DCCF635D296A5C381FDD2CDC509DD69 /* QWTransactionStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWTransactionStack.swift; path = Quantwm/Classes/QWTransactionStack.swift; sourceTree = "<group>"; };
 		6DDAB1140585B3643D679D9B2BE14DF9 /* RxAlamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RxAlamofire-dummy.m"; sourceTree = "<group>"; };
 		6EF215665415D100822656A68CEE5911 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
 		70C2A93A88015B8AB80C9E4933D9C4B3 /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = RxSwift/Observables/Map.swift; sourceTree = "<group>"; };
 		71068C20E1C92F033668AFF331C1C590 /* TakeWhile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TakeWhile.swift; path = RxSwift/Observables/TakeWhile.swift; sourceTree = "<group>"; };
 		710A986B01572404464B45103A0ED6F8 /* SkipWhile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkipWhile.swift; path = RxSwift/Observables/SkipWhile.swift; sourceTree = "<group>"; };
+		714D6F786037406EF5D175A35B07491E /* QWCounter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWCounter.swift; path = Quantwm/Classes/QWCounter.swift; sourceTree = "<group>"; };
 		72CBBC2C040DF536379AC2C561318431 /* AlamofireImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AlamofireImage-dummy.m"; sourceTree = "<group>"; };
-		7323B56E8ED78E2649DC3A4917DD09E8 /* RxAlamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = RxAlamofire.modulemap; sourceTree = "<group>"; };
+		7323B56E8ED78E2649DC3A4917DD09E8 /* RxAlamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = RxAlamofire.modulemap; sourceTree = "<group>"; };
 		74F2DA7DB87F1C104A960647291708C3 /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = RxSwift/Observables/Error.swift; sourceTree = "<group>"; };
 		7A21BF1067BAF5843EBCCBEB74BE8D34 /* DelaySubscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DelaySubscription.swift; path = RxSwift/Observables/DelaySubscription.swift; sourceTree = "<group>"; };
 		7B6F3457CAC6DB50DD7959B81E60842B /* Skip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Skip.swift; path = RxSwift/Observables/Skip.swift; sourceTree = "<group>"; };
@@ -440,9 +439,8 @@
 		7CD0DDA9EAA62B5DA0D9B379DD3448FE /* ImageFilter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageFilter.swift; path = Source/ImageFilter.swift; sourceTree = "<group>"; };
 		7D8E78C78E2AA02CA7D770ED6AF5184B /* AFIError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFIError.swift; path = Source/AFIError.swift; sourceTree = "<group>"; };
 		7DFAC1817438F2F56B6B5DAD20AAEC19 /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
-		7DFEF119C2DE5CD130EC9212543C9668 /* DataUsage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataUsage.swift; path = Quantwm/Classes/DataUsage.swift; sourceTree = "<group>"; };
-		7FAE4ABD2DCE9FD492E6ABAA926B25FC /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		831BC531C09AF70DD391717B3FED6322 /* QWTreeWalker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWTreeWalker.swift; path = Quantwm/Classes/QWTreeWalker.swift; sourceTree = "<group>"; };
+		7F8C936C8F7401D4FC5AE093B0B14696 /* Quantwm.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Quantwm.modulemap; sourceTree = "<group>"; };
+		7FAE4ABD2DCE9FD492E6ABAA926B25FC /* Quantwm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Quantwm.framework; path = Quantwm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A537F2E57A851B4AE27AC2ADE47BFA /* AsSingle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsSingle.swift; path = RxSwift/Observables/AsSingle.swift; sourceTree = "<group>"; };
 		86EBFCD6527B09FD9B2F4D5E945A037A /* ConcurrentDispatchQueueScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConcurrentDispatchQueueScheduler.swift; path = RxSwift/Schedulers/ConcurrentDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		884FA1E876622B749E0A9A66B5E77AB1 /* Lock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Lock.swift; path = RxSwift/Concurrency/Lock.swift; sourceTree = "<group>"; };
@@ -450,19 +448,20 @@
 		88AF25C63E97ED4E1CA62F8FC9BCB1CC /* OperationQueueScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OperationQueueScheduler.swift; path = RxSwift/Schedulers/OperationQueueScheduler.swift; sourceTree = "<group>"; };
 		8C119E4B97C57553F1E1075DCC64E66E /* SchedulerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SchedulerType.swift; path = RxSwift/SchedulerType.swift; sourceTree = "<group>"; };
 		8CE2756D9BF89C4E1314400D105944C6 /* AddRef.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddRef.swift; path = RxSwift/Observables/AddRef.swift; sourceTree = "<group>"; };
+		9088849EAD52FE39A7818C5357962627 /* QWMediator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWMediator.swift; path = Quantwm/Classes/QWMediator.swift; sourceTree = "<group>"; };
 		919A41515E9CBA25D86422CBAE2EA8F0 /* DispatchQueueConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatchQueueConfiguration.swift; path = RxSwift/Schedulers/Internal/DispatchQueueConfiguration.swift; sourceTree = "<group>"; };
 		939556F1C79D9213F455F01983DE2DA8 /* String+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Rx.swift"; path = "RxSwift/Extensions/String+Rx.swift"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94DDBC20ECD10EBF13511ABF93EDCAED /* RxMutableBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMutableBox.swift; path = RxSwift/RxMutableBox.swift; sourceTree = "<group>"; };
 		95E4FE6903C3DF978D192E5F9C8B05A9 /* UIButton+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIButton+AlamofireImage.swift"; path = "Source/UIButton+AlamofireImage.swift"; sourceTree = "<group>"; };
+		9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataUsage.swift; path = Quantwm/Classes/DataUsage.swift; sourceTree = "<group>"; };
 		97355F9EDEC60CA0A184675205E3E01B /* GroupBy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GroupBy.swift; path = RxSwift/Observables/GroupBy.swift; sourceTree = "<group>"; };
 		97CF048F611657C059F9B2DB253B25D8 /* Pods-Tests_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Tests_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		9A0DC74DDC5994686AC04C784D821F40 /* RetryWhen.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RetryWhen.swift; path = RxSwift/Observables/RetryWhen.swift; sourceTree = "<group>"; };
 		9A3FC2E6C09FB34156EA1D67DBECA58A /* Empty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Empty.swift; path = RxSwift/Observables/Empty.swift; sourceTree = "<group>"; };
-		9AA614FCB7ABC4C80EE3E811D7B6146A /* AlamofireImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AlamofireImage.modulemap; sourceTree = "<group>"; };
+		9AA614FCB7ABC4C80EE3E811D7B6146A /* AlamofireImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = AlamofireImage.modulemap; sourceTree = "<group>"; };
 		9B42772005740910B4EB37FA120E17ED /* AsMaybe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsMaybe.swift; path = RxSwift/Observables/AsMaybe.swift; sourceTree = "<group>"; };
 		9BCDDAB8D28E22CE49C7660275543716 /* Disposables.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Disposables.swift; path = RxSwift/Disposables/Disposables.swift; sourceTree = "<group>"; };
-		9D17A3CB9E8868149F53B503FF7D0A6D /* Quantwm-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quantwm-umbrella.h"; sourceTree = "<group>"; };
 		9D40396F36AE9395AD567F8BE8C3D478 /* Range.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Range.swift; path = RxSwift/Observables/Range.swift; sourceTree = "<group>"; };
 		9DB2A0774E64461AC1F5B5332CAAFD76 /* BooleanDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BooleanDisposable.swift; path = RxSwift/Disposables/BooleanDisposable.swift; sourceTree = "<group>"; };
 		9DCF74BED491288FB0A1CC933E6AE55E /* Pods-Quantwm_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Quantwm_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -471,11 +470,9 @@
 		9F0B8904BA6989020B9D8359604F818A /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = RxSwift/Observables/Zip.swift; sourceTree = "<group>"; };
 		9F603CCFBB83A1D5577625F4590D5914 /* Zip+arity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Zip+arity.swift"; path = "RxSwift/Observables/Zip+arity.swift"; sourceTree = "<group>"; };
 		9FCD5D0B76D1770AE380743F80418271 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
-		A29FC19F48E0EA179D111130E16B6D21 /* GenericViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericViewModel.swift; path = Quantwm/Classes/GenericViewModel.swift; sourceTree = "<group>"; };
 		A40975315826248D8E70A0BDCB6A0C6D /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = RxSwift/Observables/Optional.swift; sourceTree = "<group>"; };
-		A6A150335A66DDC1250EBF7F05ACB969 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6A150335A66DDC1250EBF7F05ACB969 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AlamofireImage.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E303D0EF96E631F79304BF7CC5AF86 /* Debounce.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debounce.swift; path = RxSwift/Observables/Debounce.swift; sourceTree = "<group>"; };
-		A7110B928C3C2941658BC573F033D7D5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8C1A5BDC0F93FDD35632F84B9F088F6 /* Reactive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reactive.swift; path = RxSwift/Reactive.swift; sourceTree = "<group>"; };
 		A9592B732F324D1C2EE6E28EDA3C5E79 /* Never.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Never.swift; path = RxSwift/Observables/Never.swift; sourceTree = "<group>"; };
 		A962495DB2F88852B32518D94AA7EBF7 /* Reduce.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reduce.swift; path = RxSwift/Observables/Reduce.swift; sourceTree = "<group>"; };
@@ -484,19 +481,20 @@
 		AA4B9F163B7679914F55CC37A528AEB2 /* HistoricalSchedulerTimeConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoricalSchedulerTimeConverter.swift; path = RxSwift/Schedulers/HistoricalSchedulerTimeConverter.swift; sourceTree = "<group>"; };
 		AA4F6527B6ABA9BD21595085489CD993 /* AnonymousDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnonymousDisposable.swift; path = RxSwift/Disposables/AnonymousDisposable.swift; sourceTree = "<group>"; };
 		AA9C5856BEAE5090A7D1EB450A10C04F /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AABDE7BC78048C12886EC0DF605BE186 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AABDE7BC78048C12886EC0DF605BE186 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RxSwift.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1A1D3A64893663455D5DBE1FE0BE95 /* NopDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NopDisposable.swift; path = RxSwift/Disposables/NopDisposable.swift; sourceTree = "<group>"; };
 		AB80B038F76BA10C918CA188130CDFD4 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		ABBBC4E633EF864DBB5987F5A3D0E594 /* Pods-Tests_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tests_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		AC0EF36EBDB9179242E2EAAF45F54BA6 /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerTrustPolicy.swift; path = Source/ServerTrustPolicy.swift; sourceTree = "<group>"; };
 		AE8264DF7C6906F5020B057135EBB584 /* TakeLast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TakeLast.swift; path = RxSwift/Observables/TakeLast.swift; sourceTree = "<group>"; };
+		AFBC3C93F65E85B94750F07368F61448 /* QWDependencyMgr.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWDependencyMgr.swift; path = Quantwm/Classes/QWDependencyMgr.swift; sourceTree = "<group>"; };
 		B1CF2DA4B989B1A1DAE7517F51E7A4BA /* ScheduledItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItem.swift; path = RxSwift/Schedulers/Internal/ScheduledItem.swift; sourceTree = "<group>"; };
-		B1E4A603797AD32E5BDD9E29DD072190 /* Quantwm.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quantwm.xcconfig; sourceTree = "<group>"; };
 		B2FF39E944C6D8CA2BD78E7D167D9AE9 /* SerialDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SerialDisposable.swift; path = RxSwift/Disposables/SerialDisposable.swift; sourceTree = "<group>"; };
 		B409069F3ABBAA11C04F98190F373706 /* HistoricalScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoricalScheduler.swift; path = RxSwift/Schedulers/HistoricalScheduler.swift; sourceTree = "<group>"; };
-		B442E25AEA2FADB1A3F4733DD947B33F /* Quantwm-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quantwm-dummy.m"; sourceTree = "<group>"; };
+		B499CAA61981D9A3267B7F51F3DCD942 /* Quantwm-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quantwm-prefix.pch"; sourceTree = "<group>"; };
 		B51D4BD4A9A9D22277C4E416A9170560 /* InfiniteSequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InfiniteSequence.swift; path = Platform/DataStructures/InfiniteSequence.swift; sourceTree = "<group>"; };
 		B57C4DCF811E0A48F7F4104CBAC75A78 /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
+		B6980FF3CB74DCDD98761F8138C57543 /* QWProperty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWProperty.swift; path = Quantwm/Classes/QWProperty.swift; sourceTree = "<group>"; };
 		B700E645D2F1C55B88DE47612208D1D8 /* ToArray.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToArray.swift; path = RxSwift/Observables/ToArray.swift; sourceTree = "<group>"; };
 		B73C515FAEDEFFCDC347C06542632DAB /* ScheduledItemType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledItemType.swift; path = RxSwift/Schedulers/Internal/ScheduledItemType.swift; sourceTree = "<group>"; };
 		B7474ECE6E5ADA62D2F25809255606E7 /* RxAlamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxAlamofire.swift; path = Sources/RxAlamofire.swift; sourceTree = "<group>"; };
@@ -504,25 +502,27 @@
 		B8334CA98BAC1AA74078C356FE321593 /* CombineLatest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CombineLatest.swift; path = RxSwift/Observables/CombineLatest.swift; sourceTree = "<group>"; };
 		B87415A6F2747B141BF1C1BEB5EF884A /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedDisposeType.swift; path = RxSwift/Concurrency/SynchronizedDisposeType.swift; sourceTree = "<group>"; };
 		B9F410D2FE7AC4462EF9991911B7D7D4 /* Pods-Quantwm_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Quantwm_Example-frameworks.sh"; sourceTree = "<group>"; };
+		BA78F62BFA19B3DE45C7FEB0385EAAF1 /* QWPathWalker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathWalker.swift; path = Quantwm/Classes/QWPathWalker.swift; sourceTree = "<group>"; };
 		BB5C404A49A61F7CD50302AE74884910 /* Pods-Quantwm_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Quantwm_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		BC3F4B309789D6D9B98C51D39FAE27D9 /* Take.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Take.swift; path = RxSwift/Observables/Take.swift; sourceTree = "<group>"; };
 		BEC9C48A770A2A2E7895F52EACE450D0 /* Pods-Tests_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests_Example-resources.sh"; sourceTree = "<group>"; };
 		BF796559483E382511C8695732828C0A /* BehaviorSubject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BehaviorSubject.swift; path = RxSwift/Subjects/BehaviorSubject.swift; sourceTree = "<group>"; };
 		C02026EBC34ED8D73784E0A4B4C150F1 /* DefaultIfEmpty.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultIfEmpty.swift; path = RxSwift/Observables/DefaultIfEmpty.swift; sourceTree = "<group>"; };
-		C0A4348EFC1F1E5C0B03CAFBF13BBEFB /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Alamofire.modulemap; sourceTree = "<group>"; };
+		C0A4348EFC1F1E5C0B03CAFBF13BBEFB /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Alamofire.modulemap; sourceTree = "<group>"; };
 		C1FC243E7F622625FE7F4939FDC8DD35 /* SingleAsync.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SingleAsync.swift; path = RxSwift/Observables/SingleAsync.swift; sourceTree = "<group>"; };
 		C360728A821AF8151A0A5C693A61A22E /* Completable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Completable.swift; path = RxSwift/Traits/Completable.swift; sourceTree = "<group>"; };
-		C4D46FAA05ECA4FA6020D4A12FCA486A /* Pods_Tests_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4D46FAA05ECA4FA6020D4A12FCA486A /* Pods_Tests_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Tests_Example.framework; path = "Pods-Tests_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57453581CD4AA843C1E5B51326E5029 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5ADBB4F14654FA9D511C111BEEC8739 /* ImmediateSchedulerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImmediateSchedulerType.swift; path = RxSwift/ImmediateSchedulerType.swift; sourceTree = "<group>"; };
 		C63DF0B336731971A9C3D144460FA66D /* SynchronizedUnsubscribeType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SynchronizedUnsubscribeType.swift; path = RxSwift/Concurrency/SynchronizedUnsubscribeType.swift; sourceTree = "<group>"; };
-		C69459401CF410F1F681A87F02EFD97F /* Pods-Quantwm_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Quantwm_Example.modulemap"; sourceTree = "<group>"; };
+		C69459401CF410F1F681A87F02EFD97F /* Pods-Quantwm_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Quantwm_Example.modulemap"; sourceTree = "<group>"; };
 		C6BC1CC7D768F3EFC34A107DB21B0DD0 /* Pods-Tests_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests_Example-frameworks.sh"; sourceTree = "<group>"; };
 		C7E9BAF1AAD87BB878AFD3E6C3B93B0B /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
-		C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWObserver.swift; path = Quantwm/Classes/QWObserver.swift; sourceTree = "<group>"; };
-		C91C76785CE3EA6CA29636BFF2470585 /* Pods_Quantwm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quantwm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C91C76785CE3EA6CA29636BFF2470585 /* Pods_Quantwm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Quantwm_Example.framework; path = "Pods-Quantwm_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C936E0C9FF4BE164E54DC78DAF144F8F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB4220547E5882765EA5CB4781C12472 /* Pods-Quantwm_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Quantwm_Example-dummy.m"; sourceTree = "<group>"; };
 		CB4C6A362B235500FCC0AB4CE9615A75 /* Timer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = RxSwift/Observables/Timer.swift; sourceTree = "<group>"; };
+		CC5F91A961A6E1F4B630EEB1B933FF0B /* QWTransactionStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWTransactionStack.swift; path = Quantwm/Classes/QWTransactionStack.swift; sourceTree = "<group>"; };
 		CCC2AB1DA3C67696AF7EA4B73B9F82A0 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		D02373BD6BF92156178E234190ECE92F /* UIImageView+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImageView+AlamofireImage.swift"; path = "Source/UIImageView+AlamofireImage.swift"; sourceTree = "<group>"; };
 		D033855AF3952BAD30BC7409DD8C6F95 /* ObservableType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObservableType.swift; path = RxSwift/ObservableType.swift; sourceTree = "<group>"; };
@@ -530,17 +530,17 @@
 		D1C11CA421F21EB1445CE83E0D9C84CC /* ElementAt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ElementAt.swift; path = RxSwift/Observables/ElementAt.swift; sourceTree = "<group>"; };
 		D2D1B0DA9F11176F5B2D8E0C8C0B3279 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Result.swift; sourceTree = "<group>"; };
 		D43A837F134CAFC1D1C9DA1DC3EE01C2 /* First.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = First.swift; path = RxSwift/Observables/First.swift; sourceTree = "<group>"; };
-		D554F6507D45CEB46A671909EDEF1819 /* Pods-Tests_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Tests_Example.modulemap"; sourceTree = "<group>"; };
+		D554F6507D45CEB46A671909EDEF1819 /* Pods-Tests_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Tests_Example.modulemap"; sourceTree = "<group>"; };
 		D63C94FD0C215807FD3B1DFA1D7A3389 /* AsyncSubject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncSubject.swift; path = RxSwift/Subjects/AsyncSubject.swift; sourceTree = "<group>"; };
 		D6F1C64FD840DCBEBA679CA90A95BABA /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = RxSwift/Errors.swift; sourceTree = "<group>"; };
 		D91FB341A772C105797F82AAC058EE4B /* RefCountDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RefCountDisposable.swift; path = RxSwift/Disposables/RefCountDisposable.swift; sourceTree = "<group>"; };
 		D9D37CB7F7D213D8D5D166B0F55FC4B2 /* RxAlamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxAlamofire-prefix.pch"; sourceTree = "<group>"; };
-		D9E3F44472836A0D7C46900FED168538 /* QWPathStateManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPathStateManager.swift; path = Quantwm/Classes/QWPathStateManager.swift; sourceTree = "<group>"; };
 		DA5ADB6D3288C4E6B5CAC93C76C419F1 /* VirtualTimeConverterType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VirtualTimeConverterType.swift; path = RxSwift/Schedulers/VirtualTimeConverterType.swift; sourceTree = "<group>"; };
-		DD0974D2DAD3F72210E100A6A8861798 /* QWPath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWPath.swift; path = Quantwm/Classes/QWPath.swift; sourceTree = "<group>"; };
+		DB2B36570CCE498B208B3E1E3647EAD3 /* QWMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWMap.swift; path = Quantwm/Classes/QWMap.swift; sourceTree = "<group>"; };
 		DF1AF508B95259A463E253558C51F5CF /* ScheduledDisposable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduledDisposable.swift; path = RxSwift/Disposables/ScheduledDisposable.swift; sourceTree = "<group>"; };
 		DF2797B941C372F8A31F682EB3DD913C /* Pods-Tests_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Tests_Example-dummy.m"; sourceTree = "<group>"; };
 		DFB7008079E7D5F9118A982287FFE356 /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
+		E13C712CF574CBDF7FD2CA3A7FA7FCAD /* QWTreeWalker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWTreeWalker.swift; path = Quantwm/Classes/QWTreeWalker.swift; sourceTree = "<group>"; };
 		E19C92109F8184F31D0468D86C2B6837 /* WithLatestFrom.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WithLatestFrom.swift; path = RxSwift/Observables/WithLatestFrom.swift; sourceTree = "<group>"; };
 		E1A85A7EF121EAE1E774A6405FF2169F /* Deferred.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Deferred.swift; path = RxSwift/Observables/Deferred.swift; sourceTree = "<group>"; };
 		E222043DDA2BC40392E3515EB2C8ED2F /* Timeline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timeline.swift; path = Source/Timeline.swift; sourceTree = "<group>"; };
@@ -638,10 +638,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AE7BFBDD076C0047655C1E011CAD1F6 /* Development Pods */ = {
+		1F388FD7858FAAC991D128610A0AC4D0 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EC0BA6683E207C41CC04FFB86DF08079 /* Quantwm */,
+				EFE4585A8A49F9BA60384B0385CDDDEC /* Quantwm */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -749,6 +749,7 @@
 			isa = PBXGroup;
 			children = (
 			);
+			name = Sourcery;
 			path = Sourcery;
 			sourceTree = "<group>";
 		};
@@ -756,7 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				0AE7BFBDD076C0047655C1E011CAD1F6 /* Development Pods */,
+				1F388FD7858FAAC991D128610A0AC4D0 /* Development Pods */,
 				69750F9014CEFA9B29584C65B2491D2E /* Frameworks */,
 				54E46328E9CCB4A5A25922AB9898EBD1 /* Pods */,
 				24CBA02673308409EE9739CA4944F73A /* Products */,
@@ -800,7 +801,22 @@
 				6C7F3655B9C568937C2B863C2D5F19DE /* Validation.swift */,
 				81314790C0FE05C06BBFD78601C3D854 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
+			sourceTree = "<group>";
+		};
+		91822552EBA8D9C9EBEC26A3AFE19057 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C936E0C9FF4BE164E54DC78DAF144F8F /* Info.plist */,
+				7F8C936C8F7401D4FC5AE093B0B14696 /* Quantwm.modulemap */,
+				019807A8BAD749BD0A60CAD6A9996981 /* Quantwm.xcconfig */,
+				2688E25DF26BA6A4D3FDC695D14F2909 /* Quantwm-dummy.m */,
+				B499CAA61981D9A3267B7F51F3DCD942 /* Quantwm-prefix.pch */,
+				5C0AADAEDE438105CDFBE172EC4FE617 /* Quantwm-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/Quantwm";
 			sourceTree = "<group>";
 		};
 		A135FAEE68E4CE93CEA484504F7E8136 /* RxSwift */ = {
@@ -956,6 +972,7 @@
 				E331BD9584B0366CE6E9FB589E96FBDE /* Zip+Collection.swift */,
 				D3931660D1F8959032DB0D21A54E9B4E /* Support Files */,
 			);
+			name = RxSwift;
 			path = RxSwift;
 			sourceTree = "<group>";
 		};
@@ -965,20 +982,6 @@
 				B7474ECE6E5ADA62D2F25809255606E7 /* RxAlamofire.swift */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		B0E60142D00FA9F9429F7609A6399B9E /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A7110B928C3C2941658BC573F033D7D5 /* Info.plist */,
-				235BFA8313DC133C0038B48EF0326B9D /* Quantwm.modulemap */,
-				B1E4A603797AD32E5BDD9E29DD072190 /* Quantwm.xcconfig */,
-				B442E25AEA2FADB1A3F4733DD947B33F /* Quantwm-dummy.m */,
-				632E315CA4E30B609F244106FD506E2A /* Quantwm-prefix.pch */,
-				9D17A3CB9E8868149F53B503FF7D0A6D /* Quantwm-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/Quantwm";
 			sourceTree = "<group>";
 		};
 		B4E467CC4DB4A07976D3EB9B366CB015 /* AlamofireImage */ = {
@@ -995,6 +998,7 @@
 				D02373BD6BF92156178E234190ECE92F /* UIImageView+AlamofireImage.swift */,
 				5695499C1BDC1B3BD5D6BB421112409B /* Support Files */,
 			);
+			name = AlamofireImage;
 			path = AlamofireImage;
 			sourceTree = "<group>";
 		};
@@ -1036,36 +1040,35 @@
 				A87C92F3E0B3AB579B5333A3953C9A6D /* Core */,
 				4DAE18B33B373AD0127D2FF9A2BDD3FF /* Support Files */,
 			);
+			name = RxAlamofire;
 			path = RxAlamofire;
 			sourceTree = "<group>";
 		};
-		EC0BA6683E207C41CC04FFB86DF08079 /* Quantwm */ = {
+		EFE4585A8A49F9BA60384B0385CDDDEC /* Quantwm */ = {
 			isa = PBXGroup;
 			children = (
-				7DFEF119C2DE5CD130EC9212543C9668 /* DataUsage.swift */,
-				A29FC19F48E0EA179D111130E16B6D21 /* GenericViewModel.swift */,
-				C8970D619F0CB748BF013F2FB62E25A5 /* QWObserver.swift */,
-				256960E11FE6FB5E00CF10A1 /* QWRegistrationUsage.swift */,
-				050554A8076072CF69430FE4B9E28958 /* QWCounter.swift */,
-				0786D14864B759C8D620B0C86DC15C08 /* QWDependencyMgr.swift */,
-				58C6838B45DF5B09AD386D1A07B90796 /* QWMap.swift */,
-				441F3F26E0F96CE2503BAB5EFB65224B /* QWMediator.swift */,
-				35497F3E9E9ABF05F1603D978D166B53 /* QWNode.swift */,
-				DD0974D2DAD3F72210E100A6A8861798 /* QWPath.swift */,
-				2C754F0F8553B9E025A0BA783B1E7E06 /* QWPathStateReader.swift */,
-				D9E3F44472836A0D7C46900FED168538 /* QWPathStateManager.swift */,
-				642C99228CA312852301C829A46BA8A7 /* QWProperty.swift */,
-				56439B5C5DD7745072DCF3B60ABCAEFE /* QWRegistration.swift */,
-				6DCCF635D296A5C381FDD2CDC509DD69 /* QWTransactionStack.swift */,
-				831BC531C09AF70DD391717B3FED6322 /* QWTreeWalker.swift */,
-				25FD37451FE5CE8200631923 /* QWPathWalker.swift */,
-				B0E60142D00FA9F9429F7609A6399B9E /* Support Files */,
+				9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */,
+				07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */,
+				714D6F786037406EF5D175A35B07491E /* QWCounter.swift */,
+				AFBC3C93F65E85B94750F07368F61448 /* QWDependencyMgr.swift */,
+				DB2B36570CCE498B208B3E1E3647EAD3 /* QWMap.swift */,
+				9088849EAD52FE39A7818C5357962627 /* QWMediator.swift */,
+				4EC4E8743F60719F722E1AB7C2EC0B0E /* QWNode.swift */,
+				0DC4798E72875E57C7CFF38971402349 /* QWObserver.swift */,
+				3C076BEDED0E8CDB715D14AC19E79566 /* QWPath.swift */,
+				48455C5C7F160F925744A5B87422E1B9 /* QWPathStateManager.swift */,
+				4FA081134933F21D3570B531917C33DC /* QWPathStateReader.swift */,
+				BA78F62BFA19B3DE45C7FEB0385EAAF1 /* QWPathWalker.swift */,
+				B6980FF3CB74DCDD98761F8138C57543 /* QWProperty.swift */,
+				406F523819365EB5731E29C67BFBF95A /* QWRegistration.swift */,
+				4D90C676F6B8274AF6E2A2D44CAB39FC /* QWRegistrationUsage.swift */,
+				CC5F91A961A6E1F4B630EEB1B933FF0B /* QWTransactionStack.swift */,
+				E13C712CF574CBDF7FD2CA3A7FA7FCAD /* QWTreeWalker.swift */,
+				91822552EBA8D9C9EBEC26A3AFE19057 /* Support Files */,
 			);
-			indentWidth = 2;
 			name = Quantwm;
 			path = ../..;
 			sourceTree = "<group>";
-			tabWidth = 2;
 		};
 /* End PBXGroup section */
 
@@ -1229,7 +1232,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 31061E08A754573454076BD677E370DB /* Build configuration list for PBXNativeTarget "Quantwm" */;
 			buildPhases = (
-				5FEA7A45F5C7A4816B1F869E8D3B4892 /* Sources */,
+				AF988A3E22140569FDE44D3353EFB928 /* Sources */,
 				A3AF84D5FC713FF5BA47B99F006D6BB4 /* Frameworks */,
 				503FAE2109E153425B143893FAC3077F /* Headers */,
 			);
@@ -1319,36 +1322,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5FEA7A45F5C7A4816B1F869E8D3B4892 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B24CBF977D8614BAAF74DDA64B2E4071 /* DataUsage.swift in Sources */,
-				ECCE94122A3F6CA2EA826E764292CA43 /* GenericViewModel.swift in Sources */,
-				ABFAA45EC959B8F4FD60AA997CB4A5AF /* QWObserver.swift in Sources */,
-				3EE40DCD7149A96FD601B19B7C9E6A48 /* Quantwm-dummy.m in Sources */,
-				FF9BABD6FB3623B67C1FE9233895063D /* QWCounter.swift in Sources */,
-				25FD37461FE5CE8200631923 /* QWPathWalker.swift in Sources */,
-				44B11213CFC53E53135116A61A4F61AD /* QWDependencyMgr.swift in Sources */,
-				3DA96A7B37B8C2462E223B31EAF0EBF0 /* QWMap.swift in Sources */,
-				256960E21FE6FB5E00CF10A1 /* QWRegistrationUsage.swift in Sources */,
-				FF43C930B919A1C2C3CB4760C0E16621 /* QWMediator.swift in Sources */,
-				B38843D4855E29BFBF157F595ED0AAD1 /* QWNode.swift in Sources */,
-				F5511960F330E4431B568BF7057CDA7E /* QWPath.swift in Sources */,
-				20076026D2CB2D1CE4C253E53FDEB824 /* QWPathStateReader.swift in Sources */,
-				A45AB1D73D85EDD35DA8E85238CD82F7 /* QWPathStateManager.swift in Sources */,
-				02617A9CEB2192BBD675DCD1706420E7 /* QWProperty.swift in Sources */,
-				EC194E7341BBCDC5EE56E1A49BAC9F86 /* QWRegistration.swift in Sources */,
-				3D57AF2FDF5600F85090CEFCBA0158C5 /* QWTransactionStack.swift in Sources */,
-				96AA4982DD2017EA4142128770D3ADB0 /* QWTreeWalker.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		710382825018C509D9F0417E4951353B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F3D61AFF688FF3A263060C7FD1F857EE /* Pods-Tests_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF988A3E22140569FDE44D3353EFB928 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3260E9C995A6C001E435A86DE9417BB /* DataUsage.swift in Sources */,
+				15D0B7A7DA7A73C8631F82DD36AC49F3 /* GenericViewModel.swift in Sources */,
+				492BB553B631D9A6C68E34A7909838AC /* Quantwm-dummy.m in Sources */,
+				9FB5BBD5F3287559B28C48B8BCF6ADE9 /* QWCounter.swift in Sources */,
+				DC281F75AC7C79F4721A634B57DB4605 /* QWDependencyMgr.swift in Sources */,
+				87C844C8EA46F0F4482032D682F97A1B /* QWMap.swift in Sources */,
+				7F51FD00D9CAB49AB28849E48EEDB88D /* QWMediator.swift in Sources */,
+				89D028B7DC4EFCDF12ADA9B86B12A4FA /* QWNode.swift in Sources */,
+				FD8A3F9CF1ED820D98A3813E15FD2293 /* QWObserver.swift in Sources */,
+				398A5DDF4859595A949D9C37D80BED9F /* QWPath.swift in Sources */,
+				AB0FA84805E5F6396E6E356DF657B641 /* QWPathStateManager.swift in Sources */,
+				80BC8B23131D305EA0E956A92B35F9CD /* QWPathStateReader.swift in Sources */,
+				969D8EA2CE787C4532F89B7BBBB8CE74 /* QWPathWalker.swift in Sources */,
+				2147BBBFA4538C846DFEB9BCB55C686B /* QWProperty.swift in Sources */,
+				56D29B6FD3957F8D07B83541BEC3DE15 /* QWRegistration.swift in Sources */,
+				AA07BEBE9B0B62E25DCBED6595DC9F2B /* QWRegistrationUsage.swift in Sources */,
+				81AA82ABD50E10DDCE3F95B8B044EDB8 /* QWTransactionStack.swift in Sources */,
+				BD69D31B7036C3B464CE1B5500B1060E /* QWTreeWalker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1691,7 +1694,7 @@
 		};
 		1D66F841AA44AF0369A71FF0A9FE9871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B1E4A603797AD32E5BDD9E29DD072190 /* Quantwm.xcconfig */;
+			baseConfigurationReference = 019807A8BAD749BD0A60CAD6A9996981 /* Quantwm.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1934,7 +1937,7 @@
 		};
 		9F805E57CA36836B78164A7178E61271 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B1E4A603797AD32E5BDD9E29DD072190 /* Quantwm.xcconfig */;
+			baseConfigurationReference = 019807A8BAD749BD0A60CAD6A9996981 /* Quantwm.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

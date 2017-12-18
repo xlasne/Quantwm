@@ -25,7 +25,7 @@
 {% endif %}
 
 {% if type.implements.QWNode_S %}
-{% for prop in type.storedVariables %}
+{% for prop in type.instanceVariables %}
 {% if prop|annotated:"property" %}
     // Quantwm Property: {{ prop.name|replace:"_","" }}
     static let {{ prop.name|replace:"_","" }}K = QWPropProperty(
@@ -51,19 +51,22 @@
 {% endif %}
         return {{ prop.name }}
       }
+{% if prop|annotated:"readOnly" %}
+{% else %}
       set {
-{% if prop|annotated:"allowBackgroundWrite" %}
+ {% if prop|annotated:"allowBackgroundWrite" %}
         self.qwCounter.performedWrite({{type.name}}.{{ prop.name|replace:"_","" }}K)
-{% else %}
-{% if prop|annotated:"contextual" %}
+ {% else %}
+  {% if prop|annotated:"contextual" %}
         self.qwCounter.performedContextualWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
-{% else %}
+  {% else %}
         self.qwCounter.performedWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
-{% endif %}
-{% endif %}
+  {% endif %}
+ {% endif %}
         {{ prop.name }} = newValue
       {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
       }
+{% endif %}
     }
 {% endif %}
 {% endfor %}

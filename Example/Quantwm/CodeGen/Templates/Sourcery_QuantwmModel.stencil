@@ -1,11 +1,11 @@
 import Quantwm
 {% for type in types.all %}
 {% if type.implements.QWRoot_S %}
-struct QWModel {
+class QWModel {
 {% for prop in type.staticVariables %}
 {% if prop|annotated:"root" %}
     static let rootProperty:QWRootProperty = {{type.name}}.{{prop.name}}
-    static let root = {{type.name}}QWModel(path: QWPath(root: rootProperty))
+    static var root = {{type.name}}QWModel(path: QWPath(root: rootProperty))
 {% endif %}
 {% endfor %}
 }
@@ -14,10 +14,11 @@ struct QWModel {
 
 {% for type in types.all %}
 {% if type.implements.QWNode_S %}
-struct {{ type.name }}QWModel
+class {{ type.name }}QWModel
 {
     let path:QWPath
     let node:QWMap
+    var readDependency: QWMap
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
 {% if prop.name|!hasPrefix:"_" %}}
@@ -31,32 +32,54 @@ Solution 3: Adopt an other convention and change this stencil.
 {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
 {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
 {% if prop|annotated:"node" %}
-{% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
-    let {{monitoredName}}: {{nodeTypeName}}QWModel
+{% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName.unwrappedTypeName}}{% endif %}{% endset %}
+    var {{monitoredName}}: {{nodeTypeName}}QWModel
+    var {{monitoredName}}_allRead: QWMap {
+        return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: true))
+    }
+{% if prop|annotated:"readOnly" %}
+{% else %}
+    var {{monitoredName}}_allWrite: QWMap {
+        return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: false))
+    }
+{% endif %}
+
 {% else %}
     fileprivate let {{monitoredName}}: QWPath
     var {{monitoredName}}_Read: QWMap {
         return {{monitoredName}}.map
+{% if prop|annotated:"dependency" %}
+        + {{prop.annotations.dependency}}
+{% endif %}
     }
+{% if prop|annotated:"readOnly" %}
+{% else %}
     var {{monitoredName}}_Write: QWMap {
         return {{monitoredName}}.readWrite(read: false).map
+{% if prop|annotated:"dependency" %}
++ {{prop.annotations.dependency}}
+{% endif %}
     }
+{% endif %}
+
 {% endif %}
 {% endif %}
 {% endfor %}
 
-    init(path: QWPath) {
+    init(path: QWPath, readDependency: QWMap? = nil) {
         self.path = path
         self.node = path.map
+        self.readDependency = readDependency ?? QWMap(pathArray:[])
+
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
   {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
   {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
   {% if prop|annotated:"node" %}
-    {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName}}{% endif %}{% endset %}
+    {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName.unwrappedTypeName}}{% endif %}{% endset %}
 
         // node: {{monitoredName}}
-        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }}))
+        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }}){% if prop|annotated:"dependency" %}, readDependency:{{prop.annotations.dependency}}{% endif %})
   {% else %}
 
         // property: {{monitoredName}}
@@ -66,9 +89,46 @@ Solution 3: Adopt an other convention and change this stencil.
 {% endfor %}
     }
 
+// MARK: Computed Variables Array
+
+{% for prop in type.computedVariables %}
+    {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
+    {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
+    {% if prop|annotated:"node" %}
+        {% if prop|annotated:"node" %}
+            {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName.unwrappedTypeName}}{% endif %}{% endset %}
+
+    // node: Computed {{monitoredName}}
+    var {{monitoredName}}:{{nodeTypeName}}QWModel {
+        return {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }}){% if prop|annotated:"dependency" %}, readDependency:{{prop.annotations.dependency}}{% endif %})
+    }
+        {% endif %}
+    {% endif %}
+
+    {% if prop|annotated:"property" %}
+    lazy fileprivate var {{monitoredName}}: QWPath = path.appending({{ propertyKName }})
+    var {{monitoredName}}_Read: QWMap {
+        return {{monitoredName}}.map
+        {% if prop|annotated:"dependency" %}
+            + {{prop.annotations.dependency}}
+        {% endif %}
+    }
+        {% if prop|annotated:"readOnly" %}
+        {% else %}
+    var {{monitoredName}}_Write: QWMap {
+        return {{monitoredName}}.readWrite(read: false).map
+            {% if prop|annotated:"dependency" %}
+        + {{prop.annotations.dependency}}
+            {% endif %}
+    }
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
     // MARK: Getter Array
 
-    {% for prop in type.storedVariables %}
+    {% for prop in type.instanceVariables %}
     {% if prop|annotated:"property" or prop|annotated:"node" %}
     {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
     {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
@@ -90,18 +150,21 @@ Solution 3: Adopt an other convention and change this stencil.
     {% endif %}
     {% endfor %}
 
+
     var all_Write: QWMap {
         return QWMap(pathArray: allPathGetter(read: false))
+            + self.readDependency
     }
 
     var all_Read: QWMap {
         return QWMap(pathArray: allPathGetter(read: true))
+            + self.readDependency
     }
 
-    func allPathGetter(read: Bool) -> [QWPath]{
+    fileprivate func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
         pathArray.append(path.readWrite(read: read))
-        {% for prop in type.storedVariables %}
+        {% for prop in type.instanceVariables %}
         {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
         {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
         {% if prop|annotated:"property" %}
@@ -117,7 +180,7 @@ Solution 3: Adopt an other convention and change this stencil.
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
-{% for prop in type.storedVariables %}
+{% for prop in type.instanceVariables %}
 {% if prop|annotated:"node" %}
         {{type.name}}.{{ prop.name|replace:"_","" }}K,   // node
 {% endif %}

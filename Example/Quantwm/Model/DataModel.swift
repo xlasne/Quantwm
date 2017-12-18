@@ -41,6 +41,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         qwMediator.registerRoot(
             qwRoot: self,
             rootProperty: DataModel.dataModelK)
+
     }
     
     var disposeBag = DisposeBag()
@@ -112,20 +113,32 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     fileprivate var _trackCollection : TrackCollection = TrackCollection()
 
     // MARK: - GETTER
-    static let selectedPlaylistMap = QWModel.root.selectedPlaylistId_Read +
-        QWModel.root.playlistsCollection.playlistDict_Read
+    static let selectedPlaylistDependencies =
+        QWModel.root.selectedPlaylistId_Read +
+        PlaylistsCollection.playlistMap(root: QWModel.root.playlistsCollection)
 
-    var selectedPlaylist: Playlist? {
+    // sourcery: property
+    // sourcery: readOnly
+    // sourcery: dependency = "DataModel.selectedPlaylistDependencies"
+    fileprivate var _selectedPlaylist: Playlist? {
         if let playlistId = selectedPlaylistId {
             return playlistsCollection.playlist(playlistId: playlistId)
         }
         return nil
     }
 
-    static let selectedTracklistMap = QWModel.root.selectedPlaylistId_Read
-        + QWModel.root.trackCollection.trackDict.all_Read
+//    static let selectedTracklistDependencies =
+//        QWModel.root.selectedPlaylistId_Read
+//        + QWModel.root.trackCollection.trackDict.all_Read
 
-    var selectedTracklist: Tracklist? {
+//    static let selectedTracklistMap = QWModel.root.selectedTracklist.all_Read
+//        + QWModel.root.selectedPlaylistId_Read
+//        + QWModel.root.trackCollection.trackDict.all_Read
+
+    // sourcery: node
+    // sourcery: readOnly
+    // sourcery: dependency = "QWModel.root.selectedPlaylistId_Read + QWModel.root.trackCollection.all_Read"
+    fileprivate var _selectedTracklist: Tracklist? {
         if let playlistId = selectedPlaylistId {
             return trackCollection.trackDict[playlistId]
         }
@@ -216,6 +229,27 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         _trackCollection = newValue
       }
     }
+    // Quantwm Property: selectedPlaylist
+    static let selectedPlaylistK = QWPropProperty(
+        propertyKeypath: \DataModel.selectedPlaylist,
+        description: "_selectedPlaylist")
+    var selectedPlaylist : Playlist? {
+      get {
+        self.qwCounter.performedReadOnMainThread(DataModel.selectedPlaylistK)
+        return _selectedPlaylist
+      }
+    }
+    // Quantwm Node:  selectedTracklist
+    static let selectedTracklistK = QWNodeProperty(
+        keypath: \DataModel.selectedTracklist,
+        description: "_selectedTracklist")
+    var selectedTracklist : Tracklist? {
+      get {
+        self.qwCounter.performedReadOnMainThread(DataModel.selectedTracklistK)
+        return _selectedTracklist
+      }
+    }
+
     // sourcery:end
     
 }

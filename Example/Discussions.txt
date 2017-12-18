@@ -93,6 +93,22 @@ Contract based registration returns for each path:
 For writter:
 - The array of nodes matching the path minus last written node / property
 
+Input: Model path
+Output: Accessor
+Accessor.registration => ReadPath + Write
+Accessor.getter => ()->(Value)
+Accessor.setter => (Value)->()
+
+Management of Optional -> Add Unwrap option
+Management of Subscripts -> Add IndexSelector option
+Management of Set -> Add FilterSelector option
+
+Computed Property:
+Add Read Dependency:
+    Set of all written or read path on reading the computed property
+    Inherited by its child node / property
+Add Write Dependency:
+    Set of all written or read path on writing the computed property
 
 
 
