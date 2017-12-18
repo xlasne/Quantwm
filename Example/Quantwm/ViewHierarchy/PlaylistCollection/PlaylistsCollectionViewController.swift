@@ -22,6 +22,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
         let viewModel = PlaylistsCollectionViewModel(dataModel: dataModel, owner: "PlaylistsCollectionViewController", playlistCollectionModel: model)
         navigationController?.setToolbarHidden(true, animated: true)
         self.viewModel = viewModel
+        playlistUpdatedRegistration = playlistUpdatedREG(viewModel: viewModel)
         viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
                 target: self,
@@ -43,6 +44,8 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
 
     //MARK: - REGISTRATION
 
+    var playlistUpdatedRegistration: QWRegistration?
+
     func playlistUpdatedREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
         return QWRegistration(
             selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated),
@@ -50,7 +53,9 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
     }
 
+    var refreshToken: QWObserverToken?
     @objc func playlistsCollectionUpdated() {
+        refreshToken = viewModel?.refreshToken()
         collectionView?.reloadData()
     }
 
@@ -96,7 +101,11 @@ extension PlaylistsCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.playlistCount() ?? 0
+
+        let result = viewModel?.asynchronousRefresh(target: self, token: refreshToken) {
+            return viewModel?.playlistCount()
+        }
+        return result ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView,
@@ -105,7 +114,9 @@ extension PlaylistsCollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! PlaylistCell
 
-        let coverInfo = viewModel?.playlistCoverInfoForIndexPath(indexPath: indexPath)
+        let coverInfo = viewModel?.asynchronousRefresh(target: self, token: refreshToken) {
+            return viewModel?.playlistCoverInfoForIndexPath(indexPath: indexPath)
+        }
         cell.configureCell(coverInfo: coverInfo)
         return cell
     }

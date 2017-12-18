@@ -204,6 +204,9 @@ public class QWMediator: NSObject {
       //print("Data Observer: Error of unregistering qwCounter \(keypath) - data is not registered")
     }
   }
+
+  // For asynchronous Refresh
+  var currentObserverToken: QWObserverToken?
 }
 
 // MARK: - Refresh UI
@@ -369,9 +372,11 @@ extension QWMediator
         // triggerIfDirty is called once per RefreshUI
         // The registered action is performed if QWMap has changed
         // since last RefreshUI for this keySetObserver
+        currentObserverToken = QWObserverToken(currentTag: currentRefreshTag, registrationUsage: processedObserver.registrationUsage)
         dataUsage?.monitoringIsActive = true
         processedObserver.triggerIfDirty(dataUsage, dataDict: self.pathStateManagerDict)
         dataUsage?.monitoringIsActive = false
+        currentObserverToken = nil
         // Pop Notification context on TransactionStack
         qwTransactionStack.popContext(roContext)
       }
@@ -476,7 +481,6 @@ extension QWMediator
 
 extension QWMediator
 {
-
   public func updateActionAndRefresh(owner: NSObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
@@ -500,6 +504,39 @@ extension QWMediator
       }
     }
   }
+
+  public func getCurrentObserverToken() -> QWObserverToken? {
+    if QUANTUM_MVVM_DEBUG {
+      return currentObserverToken
+    } else {
+      return nil
+    }
+  }
+
+  public func asynchronousRefresh<Value>(owner: NSObject, token: QWObserverToken?, handler: ()->(Value)) -> Value
+  {
+    if let token = token,
+      let registrationUsage = token.registrationUsage {
+      self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: token.currentTag)
+      dataUsage?.monitoringIsActive = false
+      let refreshContext = RWContext(NotificationWithOwner: owner,
+                                     registrationUsage: registrationUsage)
+      qwTransactionStack.pushContext(refreshContext)
+      dataUsage?.monitoringIsActive = true
+      registrationUsage.startCollecting()
+      let value: Value = handler()
+      registrationUsage.stopCollecting()
+      dataUsage?.monitoringIsActive = false
+      // Pop Notification context on TransactionStack
+      qwTransactionStack.popContext(refreshContext)
+      QuantwmDataUsage.unregisterContext(currentTag: token.currentTag)
+      dataUsage = nil
+      return value
+    } else {
+      return handler()
+    }
+  }
+
 
   fileprivate func pushUpdateContext(_ owner: NSObject?) -> RWContext
   {
@@ -529,5 +566,13 @@ extension QWMediator
 
 }
 
+public struct QWObserverToken {
+  let currentTag:String
+  weak var registrationUsage: QWRegistrationUsage?
+
+  public func displayUsage() {
+    registrationUsage?.displayUsage()
+  }
+}
 
 

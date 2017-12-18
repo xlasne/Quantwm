@@ -52,6 +52,17 @@ open class GenericViewModel<Model: QWMediatorOwner> : NSObject {
       assert(false, "Warning: Trying to update during refresh")
     }
   }
+
+  open func refreshToken() -> QWObserverToken? {
+    return qwMediator.getCurrentObserverToken()
+  }
+
+  open func asynchronousRefresh<Value>(target: NSObject, token: QWObserverToken?, handler: ()->(Value)) -> Value {
+    return qwMediator.asynchronousRefresh(owner: target,
+                                   token: token,
+                                   handler: handler)
+  }
+
 }
 
 open class QuantwmViewModel<Model: QWMediatorOwner> : NSObject, QWViewModel {
@@ -82,6 +93,7 @@ extension ModelWriter {
     self.getQWMediator().updateActionAndRefresh(owner: self.getOwner(),
                                            handler: handler)
   }
+
 }
 
 protocol ModelReader: QWViewModel { }

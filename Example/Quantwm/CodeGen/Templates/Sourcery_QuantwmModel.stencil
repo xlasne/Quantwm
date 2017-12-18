@@ -18,7 +18,6 @@ struct {{ type.name }}QWModel
 {
     let path:QWPath
     let node:QWMap
-    let all: QWMap
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
 {% if prop.name|!hasPrefix:"_" %}}
@@ -40,7 +39,7 @@ Solution 3: Adopt an other convention and change this stencil.
         return {{monitoredName}}.map
     }
     var {{monitoredName}}_Write: QWMap {
-        return {{monitoredName}}.write().map
+        return {{monitoredName}}.readWrite(read: false).map
     }
 {% endif %}
 {% endif %}
@@ -49,7 +48,6 @@ Solution 3: Adopt an other convention and change this stencil.
     init(path: QWPath) {
         self.path = path
         self.node = path.map
-        self.all = path.all().map
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
   {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
@@ -92,21 +90,25 @@ Solution 3: Adopt an other convention and change this stencil.
     {% endif %}
     {% endfor %}
 
-    var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter())
+    var all_Write: QWMap {
+        return QWMap(pathArray: allPathGetter(read: false))
     }
 
-    func allPathGetter() -> [QWPath]{
+    var all_Read: QWMap {
+        return QWMap(pathArray: allPathGetter(read: true))
+    }
+
+    func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray.append(path.write())
+        pathArray.append(path.readWrite(read: read))
         {% for prop in type.storedVariables %}
         {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
         {% set propertyKName %}{{type.name}}.{{monitoredName}}K{% endset %}
         {% if prop|annotated:"property" %}
-        pathArray.append(path.appending({{propertyKName}}).write())
+        pathArray.append(path.appending({{propertyKName}}).readWrite(read: read))
         {% endif %}
         {% if prop|annotated:"node" %}
-        pathArray += {{monitoredName}}.allPathGetter()
+        pathArray += {{monitoredName}}.allPathGetter(read: read)
         {% endif %}
         {% endfor %}
         return pathArray

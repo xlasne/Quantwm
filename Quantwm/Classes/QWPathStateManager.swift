@@ -88,15 +88,4 @@ class QWPathTraceManager
       return keypathBase
     }
   }
-    
-  // This function is only providing correct result just after a readChain method
-  func collectNodeSet() -> Set<RW_Action>
-  {
-    if let nodeSet = self.updatedNodeChain?.collectChainActionSet() {
-      return nodeSet
-    } else {
-      return Set<RW_Action>()
-    }
-  }
-
 }

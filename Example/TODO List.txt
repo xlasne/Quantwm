@@ -21,15 +21,11 @@ DONE: Assert directly on Read/Write actions
 
 DONE: Add Write path.dropLast in the Reading List
 DONE: Simplify QWMediator to only manage one Root
+DONE: Replace most of DataUsage by a QWRegistrationUsage
 
-- Replace most of DataUsage by a QWRegistrationUsage
 - Add Registration Options
 - Add DebugLevel
-
-//TODO when Root is unique:
-// make a full class initialized with currentTag and weak root Node
-// Create it on debug only
-
+- allRead / allWrite: instead of returning multiple path, return Set<PropertyID>
 - PrettyPrint Model
 - PrettyPrint Registration
 - Split Quantwm into Model and Mediator

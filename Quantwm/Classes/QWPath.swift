@@ -166,17 +166,15 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
                   access: access) as QWPath
   }
 
-  public func write() -> QWPath {
+  public func readWrite(read: Bool) -> QWPath {
     return QWPath(root: root,
-                  chain: chain,
-                  andAllChilds: andAllChilds,
-                  access: .writePath)
+                    chain: chain,
+                    andAllChilds: andAllChilds,
+                    access: read ? .readPath : .writePath)
   }
 
   var propertyDescriptionSet: Set<QWPropertyID> {
-    var result = Set(arrayLiteral: root.descriptor)
-    result.formUnion(chain.map({$0.descriptor}))
-    return result
+    return Set(chain.map({$0.descriptor}))
   }
 
 }

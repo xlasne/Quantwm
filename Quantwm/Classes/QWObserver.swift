@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class QWObserver: NSObject {
 
   //MARK: Init and update
@@ -150,10 +151,10 @@ class QWObserver: NSObject {
     // Normally performAction() should only read from the current dataset.
 
     // dataUsage is only defined in debug
-    if let dataUsage = dataUsage {
-      registrationUsage?.callPerformSelectorWith(target: target,
-                              dataUsage: dataUsage ,
-                              dataDict: dataDict)
+    if let _ = dataUsage {
+      registrationUsage?.startCollecting()
+      target.perform(self.actionSelector)
+      registrationUsage?.stopCollecting()
     } else {
       // Call the registered selector on the target
       target.perform(self.actionSelector)

@@ -11,20 +11,19 @@ struct DataModelQWModel
 {
     let path:QWPath
     let node:QWMap
-    let all: QWMap
     fileprivate let userId: QWPath
     var userId_Read: QWMap {
         return userId.map
     }
     var userId_Write: QWMap {
-        return userId.write().map
+        return userId.readWrite(read: false).map
     }
     fileprivate let selectedPlaylistId: QWPath
     var selectedPlaylistId_Read: QWMap {
         return selectedPlaylistId.map
     }
     var selectedPlaylistId_Write: QWMap {
-        return selectedPlaylistId.write().map
+        return selectedPlaylistId.readWrite(read: false).map
     }
     let playlistsCollection: PlaylistsCollectionQWModel
     let trackCollection: TrackCollectionQWModel
@@ -32,7 +31,6 @@ struct DataModelQWModel
     init(path: QWPath) {
         self.path = path
         self.node = path.map
-        self.all = path.all().map
 
         // property: userId
         self.userId = path.appending(DataModel.userIdK)
@@ -72,17 +70,21 @@ struct DataModelQWModel
     }
 
 
-    var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter())
+    var all_Write: QWMap {
+        return QWMap(pathArray: allPathGetter(read: false))
     }
 
-    func allPathGetter() -> [QWPath]{
+    var all_Read: QWMap {
+        return QWMap(pathArray: allPathGetter(read: true))
+    }
+
+    func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray.append(path.write())
-        pathArray.append(path.appending(DataModel.userIdK).write())
-        pathArray.append(path.appending(DataModel.selectedPlaylistIdK).write())
-        pathArray += playlistsCollection.allPathGetter()
-        pathArray += trackCollection.allPathGetter()
+        pathArray.append(path.readWrite(read: read))
+        pathArray.append(path.appending(DataModel.userIdK).readWrite(read: read))
+        pathArray.append(path.appending(DataModel.selectedPlaylistIdK).readWrite(read: read))
+        pathArray += playlistsCollection.allPathGetter(read: read)
+        pathArray += trackCollection.allPathGetter(read: read)
         return pathArray
     }
 
@@ -100,33 +102,31 @@ struct PlaylistsCollectionQWModel
 {
     let path:QWPath
     let node:QWMap
-    let all: QWMap
     fileprivate let playlistArray: QWPath
     var playlistArray_Read: QWMap {
         return playlistArray.map
     }
     var playlistArray_Write: QWMap {
-        return playlistArray.write().map
+        return playlistArray.readWrite(read: false).map
     }
     fileprivate let playlistDict: QWPath
     var playlistDict_Read: QWMap {
         return playlistDict.map
     }
     var playlistDict_Write: QWMap {
-        return playlistDict.write().map
+        return playlistDict.readWrite(read: false).map
     }
     fileprivate let total: QWPath
     var total_Read: QWMap {
         return total.map
     }
     var total_Write: QWMap {
-        return total.write().map
+        return total.readWrite(read: false).map
     }
 
     init(path: QWPath) {
         self.path = path
         self.node = path.map
-        self.all = path.all().map
 
         // property: playlistArray
         self.playlistArray = path.appending(PlaylistsCollection.playlistArrayK)
@@ -156,16 +156,20 @@ struct PlaylistsCollectionQWModel
         return root[keyPath:\PlaylistsCollection.total]
     }
 
-    var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter())
+    var all_Write: QWMap {
+        return QWMap(pathArray: allPathGetter(read: false))
     }
 
-    func allPathGetter() -> [QWPath]{
+    var all_Read: QWMap {
+        return QWMap(pathArray: allPathGetter(read: true))
+    }
+
+    func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray.append(path.write())
-        pathArray.append(path.appending(PlaylistsCollection.playlistArrayK).write())
-        pathArray.append(path.appending(PlaylistsCollection.playlistDictK).write())
-        pathArray.append(path.appending(PlaylistsCollection.totalK).write())
+        pathArray.append(path.readWrite(read: read))
+        pathArray.append(path.appending(PlaylistsCollection.playlistArrayK).readWrite(read: read))
+        pathArray.append(path.appending(PlaylistsCollection.playlistDictK).readWrite(read: read))
+        pathArray.append(path.appending(PlaylistsCollection.totalK).readWrite(read: read))
         return pathArray
     }
 
@@ -182,13 +186,11 @@ struct TrackCollectionQWModel
 {
     let path:QWPath
     let node:QWMap
-    let all: QWMap
     let trackDict: TracklistQWModel
 
     init(path: QWPath) {
         self.path = path
         self.node = path.map
-        self.all = path.all().map
 
         // node: trackDict
         self.trackDict = TracklistQWModel(path: path.appending(TrackCollection.trackDictK))
@@ -203,14 +205,18 @@ struct TrackCollectionQWModel
     }
 
 
-    var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter())
+    var all_Write: QWMap {
+        return QWMap(pathArray: allPathGetter(read: false))
     }
 
-    func allPathGetter() -> [QWPath]{
+    var all_Read: QWMap {
+        return QWMap(pathArray: allPathGetter(read: true))
+    }
+
+    func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray.append(path.write())
-        pathArray += trackDict.allPathGetter()
+        pathArray.append(path.readWrite(read: read))
+        pathArray += trackDict.allPathGetter(read: read)
         return pathArray
     }
 
@@ -225,19 +231,17 @@ struct TracklistQWModel
 {
     let path:QWPath
     let node:QWMap
-    let all: QWMap
     fileprivate let finalTracksArray: QWPath
     var finalTracksArray_Read: QWMap {
         return finalTracksArray.map
     }
     var finalTracksArray_Write: QWMap {
-        return finalTracksArray.write().map
+        return finalTracksArray.readWrite(read: false).map
     }
 
     init(path: QWPath) {
         self.path = path
         self.node = path.map
-        self.all = path.all().map
 
         // property: finalTracksArray
         self.finalTracksArray = path.appending(Tracklist.finalTracksArrayK)
@@ -251,14 +255,18 @@ struct TracklistQWModel
         return root[keyPath:\Tracklist.finalTracksArray]
     }
 
-    var writeAll: QWMap {
-        return QWMap(pathArray: allPathGetter())
+    var all_Write: QWMap {
+        return QWMap(pathArray: allPathGetter(read: false))
     }
 
-    func allPathGetter() -> [QWPath]{
+    var all_Read: QWMap {
+        return QWMap(pathArray: allPathGetter(read: true))
+    }
+
+    func allPathGetter(read: Bool) -> [QWPath]{
         var pathArray: [QWPath] = []
-        pathArray.append(path.write())
-        pathArray.append(path.appending(Tracklist.finalTracksArrayK).write())
+        pathArray.append(path.readWrite(read: read))
+        pathArray.append(path.appending(Tracklist.finalTracksArrayK).readWrite(read: read))
         return pathArray
     }
 

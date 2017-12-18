@@ -11,7 +11,6 @@ import Foundation
 public protocol QWPathTraceReader {
   init(rootObject: QWRoot, qwPath: QWPath)
   func compareWithPreviousState(_ previousPathState: QWPathTraceReader?) -> (isDirty:Bool, description: String)
-  func collectChainActionSet() -> Set<RW_Action>
 }
 
 class QWPathTrace: QWPathTraceReader {
@@ -33,14 +32,6 @@ class QWPathTrace: QWPathTraceReader {
     }
     return (isDirty:true, description: "Different QWPathTraceReader type")
   }
-
-  func collectChainActionSet() -> Set<RW_Action>
-  {
-    var nodeSet: Set<RW_Action> = []
-    node.collectActionSet(&nodeSet)
-    return nodeSet
-  }
-
 }
 
 class QWNodeState {
@@ -199,27 +190,6 @@ class QWNodeState {
       }
     }
     return (isDirty: false, description: "No change")
-  }
-
-  func collectActionSet(_ nodeSet:inout Set<RW_Action>)
-  {
-    let rootAction = RW_Action(nodeId: qwCounterId, property: self.parentToMeProperty)
-    nodeSet.insert(rootAction)
-
-    self.childKeys.forEach { (propID:QWPropertyID) in
-      if propID.isNode {
-        let childNodes = nextNodes.filter({ $0.parentToMeProperty == propID })
-        if childNodes.count > 0 {
-          childNodes.forEach({ $0.collectActionSet(&nodeSet) })
-        } else {
-          let action = RW_Action(nodeId: qwCounterId, property: propID)
-          nodeSet.insert(action)
-        }
-      } else {
-        let action = RW_Action(nodeId: qwCounterId, property: propID)
-        nodeSet.insert(action)
-      }
-    }
   }
 }
 
