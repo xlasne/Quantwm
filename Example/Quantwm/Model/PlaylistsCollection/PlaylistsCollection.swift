@@ -116,11 +116,11 @@ class PlaylistsCollection: QWNode_S, Codable {
         description: "_playlistArray")
     var playlistArray : [PlaylistID] {
       get {
-        self.qwCounter.performedReadOnMainThread(PlaylistsCollection.playlistArrayK)
+        self.qwCounter.read(PlaylistsCollection.playlistArrayK)
         return _playlistArray
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(PlaylistsCollection.playlistArrayK)
+        self.qwCounter.write(PlaylistsCollection.playlistArrayK)
         _playlistArray = newValue
       }
     }
@@ -130,11 +130,11 @@ class PlaylistsCollection: QWNode_S, Codable {
         description: "_playlistDict")
     var playlistDict : [PlaylistID:Playlist] {
       get {
-        self.qwCounter.performedReadOnMainThread(PlaylistsCollection.playlistDictK)
+        self.qwCounter.read(PlaylistsCollection.playlistDictK)
         return _playlistDict
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(PlaylistsCollection.playlistDictK)
+        self.qwCounter.write(PlaylistsCollection.playlistDictK)
         _playlistDict = newValue
       }
     }
@@ -144,11 +144,11 @@ class PlaylistsCollection: QWNode_S, Codable {
         description: "_total")
     var total : Int {
       get {
-        self.qwCounter.performedReadOnMainThread(PlaylistsCollection.totalK)
+        self.qwCounter.read(PlaylistsCollection.totalK)
         return _total
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(PlaylistsCollection.totalK)
+        self.qwCounter.write(PlaylistsCollection.totalK)
         _total = newValue
       }
     }

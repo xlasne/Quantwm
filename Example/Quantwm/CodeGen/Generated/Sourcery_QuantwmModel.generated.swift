@@ -2,7 +2,7 @@
 // DO NOT EDIT
 
 import Quantwm
-class QWModel {
+struct QWModel {
     static let rootProperty:QWRootProperty = DataModel.dataModelK
     static var root = DataModelQWModel(path: QWPath(root: rootProperty))
 }

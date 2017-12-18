@@ -19,6 +19,27 @@ import Foundation
 
 typealias NodeId = Int32
 
+//ReadOnly
+//allowBackgroundRead
+//allowBackgroundWrite
+//contextual
+
+
+public struct QWCounterOption: OptionSet {
+  public let rawValue: Int
+
+  public init(rawValue: QWCounterOption.RawValue) {
+    self.rawValue = rawValue & 7
+  }
+
+  public static let none            = QWCounterOption(rawValue: 0)
+  public static let backgroundRead  = QWCounterOption(rawValue: 1)   // versus read on main thread only
+  public static let backgroundWrite = QWCounterOption(rawValue: 2)  // versus write on main thread only
+  public static let contextual      = QWCounterOption(rawValue: 4)       // versus normal
+}
+
+
+
 open class QWCounter: NSObject, Codable {
 
   enum QWCounterAccess: Int {
@@ -74,7 +95,7 @@ open class QWCounter: NSObject, Codable {
 
   //MARK: - Read / Write monitoring
   
-  public func performedReadOnMainThread(_ property: QWProperty)
+  public func read(_ property: QWProperty)
   {
     let childKey = property
     if !Thread.isMainThread {
@@ -86,50 +107,36 @@ open class QWCounter: NSObject, Codable {
     }
   }
 
-  public func performedRead(_ property: QWProperty)
-  {
+  public func read(_ property: QWProperty, options: QWCounterOption = .none) {
+    if !options.contains(.backgroundRead) {
+      let childKey = property.propKey
+      if !Thread.isMainThread {
+        assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
+      }
+    }
+
     if let dataUsage = DataUsage.currentInstance(), dataUsage.monitoringIsActive {
       dataUsage.addRead(self, property: property.descriptor)
       checkReadAccess(dataUsage: dataUsage, property: property)
     }
+
   }
 
-  public func performedWriteOnMainThread(_ property: QWProperty)
-  {
-    let childKey = property.propKey
-    if !Thread.isMainThread {
-      assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
-    }
-    self.setDirty(property)
-    stageChange()
-
-    if let dataUsage = DataUsage.currentInstance() {
-      dataUsage.addWrite(self, property: property.descriptor)
-      checkWriteAccess(dataUsage: dataUsage, property: property)
-    }
-  }
-
-  // Contextual: Does not clear of the commit tag / stageChange -> does not trigger a save
-  public func performedContextualWriteOnMainThread(_ property: QWProperty)
-  {
-    let childKey = property.propKey
-    if !Thread.isMainThread {
-      assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
+  public func write(_ property: QWProperty, options: QWCounterOption = .none) {
+    if !options.contains(.backgroundWrite) {
+      let childKey = property.propKey
+      if !Thread.isMainThread {
+        assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
+      }
     }
     self.setDirty(property)
 
-    if let dataUsage = DataUsage.currentInstance() {
-      dataUsage.addWrite(self, property: property.descriptor)
-      checkWriteAccess(dataUsage: dataUsage, property: property)
+    // Contextual: Does not clear of the commit tag / stageChange -> does not trigger a save
+    if !options.contains(.contextual) {
+      stageChange()
     }
-  }
 
-  public func performedWrite(_ property: QWProperty)
-  {
-    self.setDirty(property)
-    stageChange()
     if let dataUsage = DataUsage.currentInstance() {
-
       dataUsage.addWrite(self, property: property.descriptor)
       checkWriteAccess(dataUsage: dataUsage, property: property)
     }

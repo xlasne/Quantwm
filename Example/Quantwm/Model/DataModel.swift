@@ -179,11 +179,11 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_userId")
     var userId : UserID {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.userIdK)
+        self.qwCounter.read(DataModel.userIdK)
         return _userId
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(DataModel.userIdK)
+        self.qwCounter.write(DataModel.userIdK)
         _userId = newValue
       }
     }
@@ -193,11 +193,11 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_selectedPlaylistId")
     var selectedPlaylistId : PlaylistID? {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.selectedPlaylistIdK)
+        self.qwCounter.read(DataModel.selectedPlaylistIdK)
         return _selectedPlaylistId
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(DataModel.selectedPlaylistIdK)
+        self.qwCounter.write(DataModel.selectedPlaylistIdK)
         _selectedPlaylistId = newValue
       }
     }
@@ -207,11 +207,11 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_playlistsCollection")
     var playlistsCollection : PlaylistsCollection {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.playlistsCollectionK)
+        self.qwCounter.read(DataModel.playlistsCollectionK)
         return _playlistsCollection
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(DataModel.playlistsCollectionK)
+        self.qwCounter.write(DataModel.playlistsCollectionK)
         _playlistsCollection = newValue
       }
     }
@@ -221,11 +221,11 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_trackCollection")
     var trackCollection : TrackCollection {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.trackCollectionK)
+        self.qwCounter.read(DataModel.trackCollectionK)
         return _trackCollection
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(DataModel.trackCollectionK)
+        self.qwCounter.write(DataModel.trackCollectionK)
         _trackCollection = newValue
       }
     }
@@ -235,7 +235,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_selectedPlaylist")
     var selectedPlaylist : Playlist? {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.selectedPlaylistK)
+        self.qwCounter.read(DataModel.selectedPlaylistK)
         return _selectedPlaylist
       }
     }
@@ -245,7 +245,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         description: "_selectedTracklist")
     var selectedTracklist : Tracklist? {
       get {
-        self.qwCounter.performedReadOnMainThread(DataModel.selectedTracklistK)
+        self.qwCounter.read(DataModel.selectedTracklistK)
         return _selectedTracklist
       }
     }

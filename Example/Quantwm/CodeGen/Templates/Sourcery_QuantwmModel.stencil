@@ -1,7 +1,7 @@
 import Quantwm
 {% for type in types.all %}
 {% if type.implements.QWRoot_S %}
-class QWModel {
+struct QWModel {
 {% for prop in type.staticVariables %}
 {% if prop|annotated:"root" %}
     static let rootProperty:QWRootProperty = {{type.name}}.{{prop.name}}

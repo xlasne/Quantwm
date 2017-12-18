@@ -23,7 +23,17 @@ DONE: Add Write path.dropLast in the Reading List
 DONE: Simplify QWMediator to only manage one Root
 DONE: Replace most of DataUsage by a QWRegistrationUsage
 
-- Add Registration Options
+DONE: Add Registration Options:
+    allowBackgroundRead
+    allowBackgroundWrite
+    contextual
+    ++++++++++++Not an option
+    ReadOnly         -> Sourcery
+    Node / Property  -> Sourcery
+    Dependency       -> Sourcery
+    Type             -> Sourcery
+    setProc          -> Sourcery
+
 - Add DebugLevel
 - allRead / allWrite: instead of returning multiple path, return Set<PropertyID>
 - PrettyPrint Model

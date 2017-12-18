@@ -45,24 +45,16 @@
     var {{ prop.name|replace:"_","" }} : {{ prop.typeName }} {
       get {
 {% if prop|annotated:"allowBackgroundRead" %}
-        self.qwCounter.performedRead({{type.name}}.{{ prop.name|replace:"_","" }}K)
+        self.qwCounter.read({{type.name}}.{{ prop.name|replace:"_","" }}K, option: .backgroundRead)
 {% else %}
-        self.qwCounter.performedReadOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
+        self.qwCounter.read({{type.name}}.{{ prop.name|replace:"_","" }}K)
 {% endif %}
         return {{ prop.name }}
       }
 {% if prop|annotated:"readOnly" %}
 {% else %}
       set {
- {% if prop|annotated:"allowBackgroundWrite" %}
-        self.qwCounter.performedWrite({{type.name}}.{{ prop.name|replace:"_","" }}K)
- {% else %}
-  {% if prop|annotated:"contextual" %}
-        self.qwCounter.performedContextualWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
-  {% else %}
-        self.qwCounter.performedWriteOnMainThread({{type.name}}.{{ prop.name|replace:"_","" }}K)
-  {% endif %}
- {% endif %}
+        self.qwCounter.write({{type.name}}.{{ prop.name|replace:"_","" }}K{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"contextual" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"contextual" %}, .contextual{% endif %}]{% endif %})
         {{ prop.name }} = newValue
       {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
       }

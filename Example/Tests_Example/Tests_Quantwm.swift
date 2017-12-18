@@ -36,11 +36,11 @@ class QuantwmTest: XCTestCase {
         fileprivate var _number: Int = 1
         var number : Int {
             get {
-                self.changeCounter.performedReadOnMainThread(TestStruct.numberK)
+                self.changeCounter.read(TestStruct.numberK)
                 return _number
             }
             set {
-                self.changeCounter.performedWriteOnMainThread(TestStruct.numberK)
+                self.changeCounter.write(TestStruct.numberK)
                 _number = newValue
             }
         }
@@ -82,11 +82,11 @@ class QuantwmTest: XCTestCase {
         fileprivate var _testStruct = TestStruct()
         var testStruct : TestStruct {
             get {
-                self.changeCounter.performedReadOnMainThread(MyClass.testStructK)
+                self.changeCounter.read(MyClass.testStructK)
                 return _testStruct
             }
             set {
-                self.changeCounter.performedWriteOnMainThread(MyClass.testStructK)
+                self.changeCounter.write(MyClass.testStructK)
                 _testStruct = newValue
             }
         }
@@ -97,11 +97,11 @@ class QuantwmTest: XCTestCase {
         fileprivate var _testDict: [String:TestStruct] = [:]
         var testDict : [String:TestStruct] {
             get {
-                self.changeCounter.performedReadOnMainThread( MyClass.testDictK)
+                self.changeCounter.read( MyClass.testDictK)
                 return _testDict
             }
             set {
-                self.changeCounter.performedWriteOnMainThread( MyClass.testDictK)
+                self.changeCounter.write( MyClass.testDictK)
                 _testDict = newValue
             }
         }
@@ -109,11 +109,11 @@ class QuantwmTest: XCTestCase {
 //            var _myEnum: MyEnum = MyEnum.item1(TestStruct())
 //            var myEnum: MyEnum  {
 //                get {
-//                    self.changeCounter.performedReadOnMainThread( MyClass.testEnumK)
+//                    self.changeCounter.read( MyClass.testEnumK)
 //                    return _myEnum
 //                }
 //                set {
-//                    self.changeCounter.performedWriteOnMainThread( MyClass.testEnumK)
+//                    self.changeCounter.write( MyClass.testEnumK)
 //                    _myEnum = newValue
 //                }
 //            }
@@ -157,11 +157,11 @@ class QuantwmTest: XCTestCase {
         fileprivate var _testClass: MyClass
         var testClass : MyClass {
             get {
-                self.changeCounter.performedReadOnMainThread( TestBase.testClassK)
+                self.changeCounter.read( TestBase.testClassK)
                 return _testClass
             }
             set {
-                self.changeCounter.performedWriteOnMainThread( TestBase.testClassK)
+                self.changeCounter.write( TestBase.testClassK)
                 _testClass = newValue
             }
         }
@@ -172,11 +172,11 @@ class QuantwmTest: XCTestCase {
         fileprivate var _optNumber: Int? = nil
         var optNumber : Int? {
             get {
-                self.changeCounter.performedReadOnMainThread( TestBase.optNumberK)
+                self.changeCounter.read( TestBase.optNumberK)
                 return _optNumber
             }
             set {
-                self.changeCounter.performedWriteOnMainThread( TestBase.optNumberK)
+                self.changeCounter.write( TestBase.optNumberK)
                 _optNumber = newValue
             }
         }
@@ -189,11 +189,11 @@ class QuantwmTest: XCTestCase {
         }()
         var lazyNumber : Int {
             get {
-                self.changeCounter.performedReadOnMainThread( TestBase.lazyNumberK)
+                self.changeCounter.read( TestBase.lazyNumberK)
                 return _lazyNumber
             }
             set {
-                self.changeCounter.performedWriteOnMainThread( TestBase.lazyNumberK)
+                self.changeCounter.write( TestBase.lazyNumberK)
                 _lazyNumber = newValue
             }
         }

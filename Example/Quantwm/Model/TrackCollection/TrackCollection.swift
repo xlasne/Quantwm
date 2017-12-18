@@ -31,11 +31,11 @@ class Tracklist: QWNode_S, Codable {
         description: "_finalTracksArray")
     var finalTracksArray : [Track] {
       get {
-        self.qwCounter.performedReadOnMainThread(Tracklist.finalTracksArrayK)
+        self.qwCounter.read(Tracklist.finalTracksArrayK)
         return _finalTracksArray
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(Tracklist.finalTracksArrayK)
+        self.qwCounter.write(Tracklist.finalTracksArrayK)
         _finalTracksArray = newValue
       }
     }
@@ -135,11 +135,11 @@ class TrackCollection: QWNode_S, Codable {
         description: "_trackDict")
     var trackDict : [PlaylistID:Tracklist] {
       get {
-        self.qwCounter.performedReadOnMainThread(TrackCollection.trackDictK)
+        self.qwCounter.read(TrackCollection.trackDictK)
         return _trackDict
       }
       set {
-        self.qwCounter.performedWriteOnMainThread(TrackCollection.trackDictK)
+        self.qwCounter.write(TrackCollection.trackDictK)
         _trackDict = newValue
       }
     }
