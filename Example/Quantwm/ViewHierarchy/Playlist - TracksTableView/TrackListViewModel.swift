@@ -11,24 +11,24 @@ import Quantwm
 
 class TrackListViewModel: GenericViewModel<DataModel>
 {
-    let trackCollectionModel: TrackCollectionQWModel
+    let trackListCollectionModel: TrackListCollectionQWModel
 
     init(dataModel: DataModel, owner: String,
-         trackCollectionModel: TrackCollectionQWModel) {
-        self.trackCollectionModel = trackCollectionModel
+         trackListCollectionModel: TrackListCollectionQWModel) {
+        self.trackListCollectionModel = trackListCollectionModel
         super.init(dataModel: dataModel, owner: owner)
     }
 
     // Datasource for tracks table view
     var mapForTracksTableDataSource: QWMap {
-        return trackCollectionModel.trackDict.all_Read
+        return trackListCollectionModel.trackDict.all_Read
         + QWModel.root.selectedPlaylistId_Read
     }
 
     var trackArray: [Track] {
         let selectedPlaylistId = QWModel.root.selectedPlaylistIdGetter(dataModel)
         if let selectedPlaylistId = selectedPlaylistId {
-            let trackDict = QWModel.root.trackCollectionGetter(dataModel).trackDict
+            let trackDict = QWModel.root.trackListCollectionGetter(dataModel).trackDict
             return trackDict[selectedPlaylistId]?.tracksArray ?? []
         } else {
             return []

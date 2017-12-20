@@ -35,15 +35,19 @@ DONE: Add Registration Options:
     setProc          -> Sourcery
 
 - Add DebugLevel
-- allRead / allWrite: instead of returning multiple path, return Set<PropertyID>
-- PrettyPrint Model
-- PrettyPrint Registration
-- Split Quantwm into Model and Mediator
 - Write a good ReadMe
-- sourcery: .customPropertyDefinition
+- Add more tests
 
 //TODO: Manage the inserting of new priorityScheduling registration
 // during Priority Scheduling
 // and reject registrations to priority level higher than the current one.
 
+//POSTPONNED: Add Reducer / Indexer after collection properties -> Replaced by read Computed property
 //POSTPONNED: Provide property Setter via Model
+
+- allRead / allWrite: instead of returning multiple path, return Set<PropertyID>
+- PrettyPrint Model
+- PrettyPrint Registration
+- Split Quantwm into Model and Mediator
+- sourcery: .customPropertyDefinition
+

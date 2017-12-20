@@ -42,35 +42,34 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
             qwRoot: self,
             rootProperty: DataModel.dataModelK)
 
+        qwMediator.updateActionAndRefresh(owner: self) {
+            networkMgr.postInit(dataModel: self)
+            coordinator.postInit(dataModel: self)
+        }
     }
     
     var disposeBag = DisposeBag()
 
     func applicationBecomeActive() {
-        qwMediator.updateActionAndRefresh(owner: self) {
 
-            networkMgr.postInitialization(dataModel: self)
-
-            networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
-                print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
-                if let me = self {
-                    me.qwMediator.updateActionAndRefresh(owner: me) {
-                        me.playlistsCollection.importChunck(chunk: indexedPlaylist)
-                    }
+        networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
+            print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
+            if let me = self {
+                me.qwMediator.updateActionAndRefresh(owner: me) {
+                    me.playlistsCollection.importChunck(chunk: indexedPlaylist)
                 }
             }
-
-            networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
-                print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
-                if let me = self {
-                    me.qwMediator.updateActionAndRefresh(owner: me) {
-                        me.trackCollection.importChunck(chunk: indexedTrack)
-                    }
-                }
-            }
-
-            coordinator.postInit(dataModel: self)
         }
+
+        networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
+            print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
+            if let me = self {
+                me.qwMediator.updateActionAndRefresh(owner: me) {
+                    me.trackListCollection.importChunck(chunk: indexedTrack)
+                }
+            }
+        }
+
     }
 
     func applicationBecomeInactive() {
@@ -86,7 +85,7 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     //      |      |
     //      |      L- playlistDict:[PlaylistID:Playlist] - prop   -> PlaylistCollectionViewController.playlistUpdatedREG
     //      |
-    //      |-trackCollection:TrackCollection - node
+    //      |-trackListCollection:TrackListCollection - node
     //      |      |
     //      |      |-trackDict: [PlaylistID:Tracklist] - prop     -> TracklistTableViewController.tracklistREG
     //      |
@@ -110,12 +109,16 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
     fileprivate var _playlistsCollection : PlaylistsCollection = PlaylistsCollection()
 
     // sourcery: node
-    fileprivate var _trackCollection : TrackCollection = TrackCollection()
+    fileprivate var _trackListCollection : TrackListCollection = TrackListCollection()
 
-    // MARK: - GETTER
+
+    // MARK: - Computed Properties
+    // Shall be read-only
+    // Dependencies shall be added manually and injected in Model via sourcery dependency annotation.
+
     static let selectedPlaylistDependencies =
         QWModel.root.selectedPlaylistId_Read +
-        PlaylistsCollection.playlistMap(root: QWModel.root.playlistsCollection)
+        PlaylistsCollection.playlistsDataSourceMap(root: QWModel.root.playlistsCollection)
 
     // sourcery: property
     // sourcery: readOnly
@@ -127,28 +130,18 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         return nil
     }
 
-//    static let selectedTracklistDependencies =
-//        QWModel.root.selectedPlaylistId_Read
-//        + QWModel.root.trackCollection.trackDict.all_Read
-
-//    static let selectedTracklistMap = QWModel.root.selectedTracklist.all_Read
-//        + QWModel.root.selectedPlaylistId_Read
-//        + QWModel.root.trackCollection.trackDict.all_Read
+    static let selectedTracklistDependencies =
+        QWModel.root.selectedPlaylistId_Read
+        + QWModel.root.trackListCollection.trackDict.all_Read
 
     // sourcery: node
     // sourcery: readOnly
-    // sourcery: dependency = "QWModel.root.selectedPlaylistId_Read + QWModel.root.trackCollection.all_Read"
+    // sourcery: dependency = "DataModel.selectedTracklistDependencies"
     fileprivate var _selectedTracklist: Tracklist? {
         if let playlistId = selectedPlaylistId {
-            return trackCollection.trackDict[playlistId]
+            return trackListCollection.trackDict[playlistId]
         }
         return nil
-    }
-
-    // MARK: - UPDATE
-    func synchronizeTracksFromPlaylistCollection() {
-        let playlistIdArray = playlistsCollection.playlistArray
-        trackCollection.updateTracks(playlistIdArray: playlistIdArray)
     }
 
 
@@ -215,18 +208,18 @@ class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
         _playlistsCollection = newValue
       }
     }
-    // Quantwm Node:  trackCollection
-    static let trackCollectionK = QWNodeProperty(
-        keypath: \DataModel.trackCollection,
-        description: "_trackCollection")
-    var trackCollection : TrackCollection {
+    // Quantwm Node:  trackListCollection
+    static let trackListCollectionK = QWNodeProperty(
+        keypath: \DataModel.trackListCollection,
+        description: "_trackListCollection")
+    var trackListCollection : TrackListCollection {
       get {
-        self.qwCounter.read(DataModel.trackCollectionK)
-        return _trackCollection
+        self.qwCounter.read(DataModel.trackListCollectionK)
+        return _trackListCollection
       }
       set {
-        self.qwCounter.write(DataModel.trackCollectionK)
-        _trackCollection = newValue
+        self.qwCounter.write(DataModel.trackListCollectionK)
+        _trackListCollection = newValue
       }
     }
     // Quantwm Property: selectedPlaylist

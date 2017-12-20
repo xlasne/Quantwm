@@ -33,8 +33,7 @@ class Coordinator: NSObject {
         name: "Coordinator.userIdUpdated",
         writtenMap: QWModel.root.playlistsCollection.all_Write +
             QWModel.root.selectedPlaylistId_Write +
-            QWModel.root.trackCollection.trackDict.all_Write,
-        schedulingPriority: -1)
+            QWModel.root.trackListCollection.all_Write)
 
     var previousUserId: UserID? = nil
 
@@ -48,7 +47,8 @@ class Coordinator: NSObject {
             let userId = dataModel.userId
             dataModel.selectedPlaylistId = nil
             dataModel.playlistsCollection.updateUserId(userId: userId)
-            dataModel.synchronizeTracksFromPlaylistCollection()
+            let playlistIdArray = dataModel.playlistsCollection.playlistArray.map({$0.id})
+            dataModel.trackListCollection.updateTracks(playlistIdArray: playlistIdArray)
             dataModel.networkMgr.getRxPlaylist(userId: userId)
         }
         dataModel.qwMediator.getCurrentObserverToken()?.displayUsage()

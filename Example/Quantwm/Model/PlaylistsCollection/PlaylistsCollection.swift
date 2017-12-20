@@ -18,44 +18,29 @@ class PlaylistsCollection: QWNode_S, Codable {
 
     enum CodingKeys: String, CodingKey {
         case _playlistArray = "playlistArray"
-        case _playlistDict = "playlistDict"
         case _userId = "userId"
         case _total = "total"
     }
 
-    // Best practice: Storing playlist order and playlist content separately
-    // Change of order, insertion, deletion does not trigger refresh of Playlist ID based content.
-
     fileprivate var _userId: UserID?
 
     // sourcery: property
-    fileprivate var _playlistArray: [PlaylistID] = []
-
-    // sourcery: property
-    fileprivate var _playlistDict: [PlaylistID:Playlist] = [:]
+    fileprivate var _playlistArray: [Playlist] = []
 
     // sourcery: property
     fileprivate var _total: Int = -1
 
-
-    required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        _playlistArray = try values.decode([PlaylistID].self, forKey: ._playlistArray)
-        _playlistDict = try values.decode([PlaylistID:Playlist].self, forKey: ._playlistDict)
-        _userId = try values.decode(UserID.self, forKey: ._userId)
-        _total = try values.decode(Int.self, forKey: ._total)
-    }
-
-
     // MARK: - UPDATE
-    var updateIndex: Int?
-    var updatedPlaylistArray: [PlaylistID] = []
+    var updateIndex: Int? = nil
+    var neverUpdatedYet: Bool {
+        return updateIndex == nil
+    }
+    var updatedPlaylistArray: [Playlist] = []
 
     func updateUserId(userId newUserId: UserID) {
         if _userId != newUserId {
             _userId = newUserId
             print("Playlist collection UserId \(newUserId) ")
-            playlistDict = [:]
             playlistArray = []
             updateIndex = nil
             updatedPlaylistArray = []
@@ -74,12 +59,9 @@ class PlaylistsCollection: QWNode_S, Codable {
 
         let newPlaylists:[Playlist] = chunk.playlists.flatMap({ Playlist(index:chunk.index, json: $0) })
 
-        for playlist in newPlaylists {
-            playlistDict[playlist.id] = playlist
-            updatedPlaylistArray.append(playlist.id)
-        }
+        updatedPlaylistArray += newPlaylists
 
-        if updateIndex == nil {
+        if neverUpdatedYet {
             playlistArray = updatedPlaylistArray
             total = chunk.total
         }
@@ -87,10 +69,6 @@ class PlaylistsCollection: QWNode_S, Codable {
         if chunk.lastChunk {
             playlistArray = updatedPlaylistArray
             total = updatedPlaylistArray.count
-            playlistDict = playlistDict.filter({ (key: PlaylistID, playlist: Playlist) -> Bool in
-                return playlistArray.contains(key)
-            })
-            assert(playlistArray.count == playlistDict.keys.count, "Inconsistent playlist")
             updatedPlaylistArray = []
             updateIndex = chunk.index
         }
@@ -114,7 +92,7 @@ class PlaylistsCollection: QWNode_S, Codable {
     static let playlistArrayK = QWPropProperty(
         propertyKeypath: \PlaylistsCollection.playlistArray,
         description: "_playlistArray")
-    var playlistArray : [PlaylistID] {
+    var playlistArray : [Playlist] {
       get {
         self.qwCounter.read(PlaylistsCollection.playlistArrayK)
         return _playlistArray
@@ -122,20 +100,6 @@ class PlaylistsCollection: QWNode_S, Codable {
       set {
         self.qwCounter.write(PlaylistsCollection.playlistArrayK)
         _playlistArray = newValue
-      }
-    }
-    // Quantwm Property: playlistDict
-    static let playlistDictK = QWPropProperty(
-        propertyKeypath: \PlaylistsCollection.playlistDict,
-        description: "_playlistDict")
-    var playlistDict : [PlaylistID:Playlist] {
-      get {
-        self.qwCounter.read(PlaylistsCollection.playlistDictK)
-        return _playlistDict
-      }
-      set {
-        self.qwCounter.write(PlaylistsCollection.playlistDictK)
-        _playlistDict = newValue
       }
     }
     // Quantwm Property: total
@@ -161,32 +125,24 @@ extension PlaylistsCollection // Data Source
 
     // MARK: - GETTERS
 
-    // RefreshUI Access: register to playlistArrayMap
-    static func playlistsCountMap(root: PlaylistsCollectionQWModel) -> QWMap {
+    // Data Source for playlistArray
+    static func playlistsDataSourceMap(root: PlaylistsCollectionQWModel) -> QWMap {
         return root.playlistArray_Read
     }
+
     var playlistsCount: Int {
         return playlistArray.count
     }
 
-    // RefreshUI Access: register to playlistDictMap / playlistArrayMap
-    static func playlistForIndexMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistArray_Read + root.playlistDict_Read
-    }
     func playlistForIndex(rowIndex: Int) -> Playlist? {
         if (0 <= rowIndex) && (rowIndex < playlistArray.count) {
-            let playlistID = playlistArray[rowIndex]
-            return playlistDict[playlistID]
+            return playlistArray[rowIndex]
         }
         return nil
     }
 
-    // RefreshUI Access: register to playlistDictMap
-    static func playlistMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistDict_Read
-    }
     func playlist(playlistId: PlaylistID) -> Playlist? {
-        return playlistDict[playlistId]
+        return playlistArray.filter({$0.id == playlistId}).first
     }
 
 }

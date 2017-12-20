@@ -1,5 +1,5 @@
 //
-//  TrackCollection.swift
+//  TrackListCollection.swift
 //  deezer
 //
 //  Created by Xavier on 09/12/2017.
@@ -9,104 +9,37 @@
 import Foundation
 import Quantwm
 
-class Tracklist: QWNode_S, Codable {
-
-    // sourcery:inline:Tracklist.QuantwmDeclarationInline
-
-    // MARK: - Sourcery
-
-    // QWNode protocol
-    func getQWCounter() -> QWCounter {
-      return qwCounter
-    }
-    let qwCounter = QWCounter(name:"Tracklist")
-    func getPropertyArray() -> [QWProperty] {
-        return TracklistQWModel.getPropertyArray()
-    }
-
-
-    // Quantwm Property: finalTracksArray
-    static let finalTracksArrayK = QWPropProperty(
-        propertyKeypath: \Tracklist.finalTracksArray,
-        description: "_finalTracksArray")
-    var finalTracksArray : [Track] {
-      get {
-        self.qwCounter.read(Tracklist.finalTracksArrayK)
-        return _finalTracksArray
-      }
-      set {
-        self.qwCounter.write(Tracklist.finalTracksArrayK)
-        _finalTracksArray = newValue
-      }
-    }
-    // sourcery:end
-
-
-    private var _finalImportIndex: Int? = nil
-
-    // sourcery: property
-    private var _finalTracksArray: [Track] = []
-
-    private var _inProgressImportIndex: Int? = nil
-    private var _inProgressTracksArray: [Track] = []
-
-    func addTracks(importIndex: Int, tracksArray: [Track], lastChunk: Bool) {
-        if importIndex != _inProgressImportIndex {
-            _inProgressImportIndex = importIndex
-            _inProgressTracksArray = []
-        }
-        _inProgressTracksArray += tracksArray
-        if _finalImportIndex == nil {
-            // If nothing present, start displaying in progress download.
-            finalTracksArray = _inProgressTracksArray
-        }
-        if lastChunk {
-            _finalImportIndex = _inProgressImportIndex
-            finalTracksArray = _inProgressTracksArray
-            _inProgressImportIndex = importIndex
-            _inProgressTracksArray = []
-        }
-    }
-
-    var tracksArray: [Track] {
-        return finalTracksArray
-    }
-
-
-}
-
-class TrackCollection: QWNode_S, Codable {
-
-    init() {
-    }
+class TrackListCollection: QWNode_S, Codable {
 
     enum CodingKeys: String, CodingKey {
         case _trackDict = "trackDict"
     }
 
-
     // sourcery: node
     // sourcery: type = "Tracklist"
     fileprivate var _trackDict: [PlaylistID:Tracklist] = [:]
 
-    required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        _trackDict = try values.decode([PlaylistID:Tracklist].self, forKey: ._trackDict)
-    }
-
-    // MARK: - UPDATE
 
     //MARK: - UPDATE Tracks
 
+    // On network response, update tracks by chunk
     // Tracks are refreshed by indexed chunk
     func importChunck(chunk: TrackChunk) {
         print("Track Collection: importChunck \(chunk.index) [\(chunk.data.count)] last: \(chunk.lastChunk)")
+
+        // Retrieve the Tracks from the the chunk
         let tracksDelta:[Track] = chunk.data.flatMap({ Track(index:chunk.index, jsonTrack: $0) })
+
+        // Find the Tracklist corresponding to this chunk, or create it if not existing
         let trackList = trackDict[chunk.playlistId] ?? Tracklist()
+
+        // Add the tracks to this TrackList
         trackList.addTracks(importIndex: chunk.index, tracksArray: tracksDelta, lastChunk: chunk.lastChunk)
         trackDict[chunk.playlistId] = trackList
     }
 
+    // On change of user id, cleanup the cache
+    // and remove obsolete trackList.
     func updateTracks(playlistIdArray: [PlaylistID]) {
         for playlistId in trackDict.keys {
             if !playlistIdArray.contains(playlistId) {
@@ -115,7 +48,7 @@ class TrackCollection: QWNode_S, Codable {
         }
     }
     
-    // sourcery:inline:TrackCollection.QuantwmDeclarationInline
+    // sourcery:inline:TrackListCollection.QuantwmDeclarationInline
 
     // MARK: - Sourcery
 
@@ -123,23 +56,23 @@ class TrackCollection: QWNode_S, Codable {
     func getQWCounter() -> QWCounter {
       return qwCounter
     }
-    let qwCounter = QWCounter(name:"TrackCollection")
+    let qwCounter = QWCounter(name:"TrackListCollection")
     func getPropertyArray() -> [QWProperty] {
-        return TrackCollectionQWModel.getPropertyArray()
+        return TrackListCollectionQWModel.getPropertyArray()
     }
 
 
     // Quantwm Node:  trackDict
     static let trackDictK = QWNodeProperty(
-        keypath: \TrackCollection.trackDict,
+        keypath: \TrackListCollection.trackDict,
         description: "_trackDict")
     var trackDict : [PlaylistID:Tracklist] {
       get {
-        self.qwCounter.read(TrackCollection.trackDictK)
+        self.qwCounter.read(TrackListCollection.trackDictK)
         return _trackDict
       }
       set {
-        self.qwCounter.write(TrackCollection.trackDictK)
+        self.qwCounter.write(TrackListCollection.trackDictK)
         _trackDict = newValue
       }
     }

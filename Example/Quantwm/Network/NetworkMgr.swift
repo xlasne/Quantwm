@@ -14,7 +14,7 @@ import RxSwift
 import Quantwm
 
 protocol DeezerAPI: class, DeezerTracksAPI, DeezerPlaylistAPI {
-    func postInitialization(dataModel: DataModel)
+    func postInit(dataModel: DataModel)
 }
 
 //TODO: Reachability
@@ -46,10 +46,13 @@ class NetworkMgr: NSObject, DeezerAPI {
     }
 
     // To be called just after application launch
-    func postInitialization(dataModel: DataModel) {
+    func postInit(dataModel: DataModel) {
         self.dataModel = dataModel
-        dataModel.getQWMediator().registerObserver(target: self,
-                                                   registrationDesc: NetworkMgr.playlistSelectedREG)
+        dataModel.qwMediator.updateActionAndRefresh(owner: self) {
+            dataModel.qwMediator.registerObserver(
+                target: self,
+                registrationDesc: NetworkMgr.playlistSelectedREG)
+        }
     }
 
     //MARK: - GET Request: Set of tracks of selected playlist

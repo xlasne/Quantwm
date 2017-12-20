@@ -36,12 +36,12 @@ class DataModelQWModel
         return QWMap(pathArray: playlistsCollection.allPathGetter(read: false))
     }
 
-    var trackCollection: TrackCollectionQWModel
-    var trackCollection_allRead: QWMap {
-        return QWMap(pathArray: trackCollection.allPathGetter(read: true))
+    var trackListCollection: TrackListCollectionQWModel
+    var trackListCollection_allRead: QWMap {
+        return QWMap(pathArray: trackListCollection.allPathGetter(read: true))
     }
-    var trackCollection_allWrite: QWMap {
-        return QWMap(pathArray: trackCollection.allPathGetter(read: false))
+    var trackListCollection_allWrite: QWMap {
+        return QWMap(pathArray: trackListCollection.allPathGetter(read: false))
     }
 
 
@@ -60,11 +60,11 @@ class DataModelQWModel
         // node: playlistsCollection
         self.playlistsCollection = PlaylistsCollectionQWModel(path: path.appending(DataModel.playlistsCollectionK))
 
-        // node: trackCollection
-        self.trackCollection = TrackCollectionQWModel(path: path.appending(DataModel.trackCollectionK))
+        // node: trackListCollection
+        self.trackListCollection = TrackListCollectionQWModel(path: path.appending(DataModel.trackListCollectionK))
     }
 
-// MARK: Computed Variables Array
+    // MARK: Computed Variables Array
 
 
     lazy fileprivate var selectedPlaylist: QWPath = path.appending(DataModel.selectedPlaylistK)
@@ -75,7 +75,7 @@ class DataModelQWModel
 
     // node: Computed selectedTracklist
     var selectedTracklist:TracklistQWModel {
-        return TracklistQWModel(path: path.appending(DataModel.selectedTracklistK), readDependency:QWModel.root.selectedPlaylistId_Read + QWModel.root.trackCollection.all_Read)
+        return TracklistQWModel(path: path.appending(DataModel.selectedTracklistK), readDependency:DataModel.selectedTracklistDependencies)
     }
 
 
@@ -99,9 +99,9 @@ class DataModelQWModel
     }
 
 
-    // node: Getter trackCollection
-    func trackCollectionGetter(_ root:DataModel) -> TrackCollection {
-        return root[keyPath:\DataModel.trackCollection]
+    // node: Getter trackListCollection
+    func trackListCollectionGetter(_ root:DataModel) -> TrackListCollection {
+        return root[keyPath:\DataModel.trackListCollection]
     }
 
 
@@ -133,7 +133,7 @@ class DataModelQWModel
         pathArray.append(path.appending(DataModel.userIdK).readWrite(read: read))
         pathArray.append(path.appending(DataModel.selectedPlaylistIdK).readWrite(read: read))
         pathArray += playlistsCollection.allPathGetter(read: read)
-        pathArray += trackCollection.allPathGetter(read: read)
+        pathArray += trackListCollection.allPathGetter(read: read)
         pathArray.append(path.appending(DataModel.selectedPlaylistK).readWrite(read: read))
         pathArray += selectedTracklist.allPathGetter(read: read)
         return pathArray
@@ -145,7 +145,7 @@ class DataModelQWModel
         DataModel.userIdK,  // property
         DataModel.selectedPlaylistIdK,  // property
         DataModel.playlistsCollectionK,   // node
-        DataModel.trackCollectionK,   // node
+        DataModel.trackListCollectionK,   // node
         DataModel.selectedPlaylistK,  // property
         DataModel.selectedTracklistK,   // node
     ]
@@ -162,14 +162,6 @@ class PlaylistsCollectionQWModel
     }
     var playlistArray_Write: QWMap {
         return playlistArray.readWrite(read: false).map
-    }
-
-    fileprivate let playlistDict: QWPath
-    var playlistDict_Read: QWMap {
-        return playlistDict.map
-    }
-    var playlistDict_Write: QWMap {
-        return playlistDict.readWrite(read: false).map
     }
 
     fileprivate let total: QWPath
@@ -190,14 +182,12 @@ class PlaylistsCollectionQWModel
         // property: playlistArray
         self.playlistArray = path.appending(PlaylistsCollection.playlistArrayK)
 
-        // property: playlistDict
-        self.playlistDict = path.appending(PlaylistsCollection.playlistDictK)
-
         // property: total
         self.total = path.appending(PlaylistsCollection.totalK)
     }
 
-// MARK: Computed Variables Array
+    // MARK: Computed Variables Array
+
 
 
 
@@ -206,13 +196,8 @@ class PlaylistsCollectionQWModel
 
 
     // property: playlistArray
-    func playlistArrayGetter(_ root:PlaylistsCollection) -> [PlaylistID] {
+    func playlistArrayGetter(_ root:PlaylistsCollection) -> [Playlist] {
         return root[keyPath:\PlaylistsCollection.playlistArray]
-    }
-
-    // property: playlistDict
-    func playlistDictGetter(_ root:PlaylistsCollection) -> [PlaylistID:Playlist] {
-        return root[keyPath:\PlaylistsCollection.playlistDict]
     }
 
     // property: total
@@ -235,7 +220,6 @@ class PlaylistsCollectionQWModel
         var pathArray: [QWPath] = []
         pathArray.append(path.readWrite(read: read))
         pathArray.append(path.appending(PlaylistsCollection.playlistArrayK).readWrite(read: read))
-        pathArray.append(path.appending(PlaylistsCollection.playlistDictK).readWrite(read: read))
         pathArray.append(path.appending(PlaylistsCollection.totalK).readWrite(read: read))
         return pathArray
     }
@@ -244,12 +228,11 @@ class PlaylistsCollectionQWModel
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
         PlaylistsCollection.playlistArrayK,  // property
-        PlaylistsCollection.playlistDictK,  // property
         PlaylistsCollection.totalK,  // property
     ]
 }
 
-class TrackCollectionQWModel
+class TrackListCollectionQWModel
 {
     let path:QWPath
     let node:QWMap
@@ -270,10 +253,10 @@ class TrackCollectionQWModel
 
 
         // node: trackDict
-        self.trackDict = TracklistQWModel(path: path.appending(TrackCollection.trackDictK))
+        self.trackDict = TracklistQWModel(path: path.appending(TrackListCollection.trackDictK))
     }
 
-// MARK: Computed Variables Array
+    // MARK: Computed Variables Array
 
 
 
@@ -281,8 +264,8 @@ class TrackCollectionQWModel
 
 
     // node: Getter trackDict
-    func trackDictGetter(_ root:TrackCollection) -> [PlaylistID:Tracklist] {
-        return root[keyPath:\TrackCollection.trackDict]
+    func trackDictGetter(_ root:TrackListCollection) -> [PlaylistID:Tracklist] {
+        return root[keyPath:\TrackListCollection.trackDict]
     }
 
 
@@ -307,7 +290,7 @@ class TrackCollectionQWModel
     // MARK: Property Array
     static func getPropertyArray() -> [QWProperty] { return qwPropertyArrayK }
     static let qwPropertyArrayK:[QWProperty] = [
-        TrackCollection.trackDictK,   // node
+        TrackListCollection.trackDictK,   // node
     ]
 }
 
@@ -335,7 +318,7 @@ class TracklistQWModel
         self.finalTracksArray = path.appending(Tracklist.finalTracksArrayK)
     }
 
-// MARK: Computed Variables Array
+    // MARK: Computed Variables Array
 
 
 

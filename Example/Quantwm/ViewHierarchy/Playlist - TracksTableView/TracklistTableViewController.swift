@@ -38,7 +38,7 @@ class TracklistTableViewController: UITableViewController, MyModel {
         let viewModel = TrackListViewModel(
             dataModel: dataModel,
             owner: "TracklistTableViewController",
-            trackCollectionModel: QWModel.root.trackCollection)
+            trackListCollectionModel: QWModel.root.trackListCollection)
 
         self.viewModel = viewModel
         viewModel.updateActionAndRefresh {

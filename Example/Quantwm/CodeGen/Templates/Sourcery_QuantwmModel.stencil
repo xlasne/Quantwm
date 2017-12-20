@@ -89,7 +89,7 @@ Solution 3: Adopt an other convention and change this stencil.
 {% endfor %}
     }
 
-// MARK: Computed Variables Array
+    // MARK: Computed Variables Array
 
 {% for prop in type.computedVariables %}
     {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}

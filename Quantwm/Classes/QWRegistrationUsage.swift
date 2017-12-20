@@ -127,7 +127,8 @@ protocol QWRegistrationUsageProtocol {
 extension QWRegistrationUsage: QWRegistrationUsageProtocol {
 
     func addReadAction(readAction: RW_Action) {
-        if !configuredReadPropertySet.contains(readAction.propertyDesc) {
+        if !configuredReadPropertySet.contains(readAction.propertyDesc) &&
+          !configuredWritePropertySet.contains(readAction.propertyDesc) {
             let errorStr = "QWRegistrationUsage: Warning: Read of \(name) performs a read of \(readAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
             print(errorStr)
             assert(false,errorStr)

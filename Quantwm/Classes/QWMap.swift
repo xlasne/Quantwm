@@ -12,6 +12,10 @@ public struct QWMap
 {
   let qwPathSet : Set<QWPath>
 
+  public init(map : QWMap) {
+    qwPathSet = map.qwPathSet
+  }
+
   public init(path : QWPath) {
     qwPathSet = [path]
   }
@@ -42,5 +46,6 @@ public struct QWMap
 
 public func +(lhs: QWMap, rhs: QWMap) -> QWMap
 {
-  return lhs.appending(qwMap: rhs)
+  let map = QWMap(pathArray: Array(lhs.qwPathSet))
+  return map.appending(qwMap: rhs)
 }

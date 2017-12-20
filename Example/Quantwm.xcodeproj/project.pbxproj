@@ -48,6 +48,7 @@
 		25D4CD7F1FE153EB000EA8E3 /* DeezerPlaylist3.json in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D911FE13E1B00F30682 /* DeezerPlaylist3.json */; };
 		25D4CD801FE153EB000EA8E3 /* DeezerPlaylist4.json in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D921FE13E1B00F30682 /* DeezerPlaylist4.json */; };
 		25D4CD811FE153EB000EA8E3 /* DeezerPlaylist5.json in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */; };
+		25DA65FA1FEA25260001F8E9 /* TrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DA65F91FEA25260001F8E9 /* TrackList.swift */; };
 		25FDDAE11FE12B5800E16C74 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDDADF1FE12B5800E16C74 /* Coordinator.swift */; };
 		25FDDAE21FE12B5800E16C74 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDDAE01FE12B5800E16C74 /* DataModel.swift */; };
 		5792A50785E736C1FDEAAEB2 /* Pods_Tests_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAD90C4A34D8176F8950C58 /* Pods_Tests_Example.framework */; };
@@ -129,6 +130,7 @@
 		25D4CD6D1FE1537E000EA8E3 /* Tests_Example.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests_Example.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_Quantwm.swift; sourceTree = "<group>"; };
 		25D4CD711FE1537E000EA8E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25DA65F91FEA25260001F8E9 /* TrackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackList.swift; sourceTree = "<group>"; };
 		25FD37441FE550B400631923 /* Discussions.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Discussions.txt; sourceTree = "<group>"; };
 		25FDDADF1FE12B5800E16C74 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		25FDDAE01FE12B5800E16C74 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				255C5D7C1FE13AC600F30682 /* TrackCollection.swift */,
+				25DA65F91FEA25260001F8E9 /* TrackList.swift */,
 				255C5D7D1FE13AC600F30682 /* Tracks */,
 			);
 			path = TrackCollection;
@@ -758,6 +761,7 @@
 				255C5D831FE13AC600F30682 /* TrackCollection.swift in Sources */,
 				255C5D481FE12DBA00F30682 /* XibView.swift in Sources */,
 				255C5D861FE13AC600F30682 /* PlaylistsCollection.swift in Sources */,
+				25DA65FA1FEA25260001F8E9 /* TrackList.swift in Sources */,
 				255C5D3B1FE12D7500F30682 /* NetworkMgr.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				255C5D471FE12DBA00F30682 /* Utils.swift in Sources */,

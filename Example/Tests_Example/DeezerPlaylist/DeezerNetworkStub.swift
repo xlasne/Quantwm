@@ -14,7 +14,7 @@ import RxSwift
 class NetworkStub: DeezerAPI {
 
 
-    func postInitialization(dataModel: DataModel) {
+    func postInit(dataModel: DataModel) {
 
     }
 
