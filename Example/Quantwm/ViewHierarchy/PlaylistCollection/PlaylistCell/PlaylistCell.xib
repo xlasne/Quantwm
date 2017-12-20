@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlaylistCell" customModule="deezer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlaylistCell" customModule="Quantwm_Example" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="xy9-c7-sE9" id="yt4-VM-s60"/>
                 <outlet property="titleLabel" destination="bMk-dF-A51" id="KUL-SF-KnR"/>
@@ -31,10 +31,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="bMk-dF-A51">
-                    <rect key="frame" x="0.0" y="255.5" width="300" height="44.5"/>
+                    <rect key="frame" x="0.0" y="211" width="300" height="89"/>
                     <color key="backgroundColor" white="0.0" alpha="0.7023822623" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="bMk-dF-A51" secondAttribute="height" multiplier="135:20" id="7vB-Ag-gH0"/>
+                        <constraint firstAttribute="width" secondItem="bMk-dF-A51" secondAttribute="height" multiplier="135:40" priority="750" id="7vB-Ag-gH0"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="12"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,14 +43,14 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="xy9-c7-sE9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="0Dy-pd-VY0"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bMk-dF-A51" secondAttribute="trailing" id="0bm-DM-Ryd"/>
-                <constraint firstItem="bMk-dF-A51" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Rqo-hH-wTq"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bMk-dF-A51" secondAttribute="bottom" id="Sr9-ud-nWC"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="xy9-c7-sE9" secondAttribute="bottom" id="dFF-eL-6sx"/>
-                <constraint firstItem="bMk-dF-A51" firstAttribute="width" secondItem="bMk-dF-A51" secondAttribute="height" multiplier="135:20" id="tjV-hN-2Ve"/>
-                <constraint firstItem="xy9-c7-sE9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uko-dS-1Sg"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xy9-c7-sE9" secondAttribute="trailing" id="x0p-2S-Led"/>
+                <constraint firstItem="xy9-c7-sE9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" priority="999" id="0Dy-pd-VY0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bMk-dF-A51" secondAttribute="trailing" priority="999" id="0bm-DM-Ryd"/>
+                <constraint firstItem="bMk-dF-A51" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="999" id="Rqo-hH-wTq"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bMk-dF-A51" secondAttribute="bottom" priority="999" id="Sr9-ud-nWC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="xy9-c7-sE9" secondAttribute="bottom" priority="999" id="dFF-eL-6sx"/>
+                <constraint firstItem="bMk-dF-A51" firstAttribute="width" secondItem="bMk-dF-A51" secondAttribute="height" multiplier="135:40" priority="750" id="tjV-hN-2Ve"/>
+                <constraint firstItem="xy9-c7-sE9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="999" id="uko-dS-1Sg"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xy9-c7-sE9" secondAttribute="trailing" priority="999" id="x0p-2S-Led"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

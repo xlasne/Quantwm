@@ -38,6 +38,10 @@ DONE: Add Registration Options:
 - Write a good ReadMe
 - Add more tests
 
+- XibView for PlaylistCell.xib
+- Shield for reload
+- Data Processor instead of computed Property
+
 //TODO: Manage the inserting of new priorityScheduling registration
 // during Priority Scheduling
 // and reject registrations to priority level higher than the current one.

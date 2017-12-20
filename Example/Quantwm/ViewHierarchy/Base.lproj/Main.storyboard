@@ -68,7 +68,7 @@
                                             <rect key="frame" x="8" y="164.66666666666666" width="184" height="27.333333333333343"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.70238226232394363" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="gs4-i6-erP" secondAttribute="height" multiplier="135:20" id="3kC-n4-G8g"/>
+                                                <constraint firstAttribute="width" secondItem="gs4-i6-erP" secondAttribute="height" multiplier="135:20" priority="998" id="3kC-n4-G8g"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="12"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -78,13 +78,13 @@
                                 </view>
                                 <color key="backgroundColor" red="0.68170224942768987" green="0.68845177664974622" blue="0.68845177664974622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="gs4-i6-erP" firstAttribute="leading" secondItem="tBi-JQ-sxO" secondAttribute="leadingMargin" id="48S-WS-0Sj"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="mzI-a2-Xsx" secondAttribute="bottom" id="Czr-vA-oRU"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="gs4-i6-erP" secondAttribute="trailing" id="asr-4v-KGS"/>
-                                    <constraint firstItem="mzI-a2-Xsx" firstAttribute="top" secondItem="tBi-JQ-sxO" secondAttribute="topMargin" id="exN-c4-0nx"/>
-                                    <constraint firstItem="mzI-a2-Xsx" firstAttribute="leading" secondItem="tBi-JQ-sxO" secondAttribute="leadingMargin" id="oTb-fI-zP7"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="gs4-i6-erP" secondAttribute="bottom" id="vAm-RP-z6c"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="mzI-a2-Xsx" secondAttribute="trailing" id="vSs-MW-nyl"/>
+                                    <constraint firstItem="gs4-i6-erP" firstAttribute="leading" secondItem="tBi-JQ-sxO" secondAttribute="leadingMargin" priority="999" id="48S-WS-0Sj"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="mzI-a2-Xsx" secondAttribute="bottom" priority="999" id="Czr-vA-oRU"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="gs4-i6-erP" secondAttribute="trailing" priority="999" id="asr-4v-KGS"/>
+                                    <constraint firstItem="mzI-a2-Xsx" firstAttribute="top" secondItem="tBi-JQ-sxO" secondAttribute="topMargin" priority="999" id="exN-c4-0nx"/>
+                                    <constraint firstItem="mzI-a2-Xsx" firstAttribute="leading" secondItem="tBi-JQ-sxO" secondAttribute="leadingMargin" priority="999" id="oTb-fI-zP7"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="gs4-i6-erP" secondAttribute="bottom" priority="999" id="vAm-RP-z6c"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="mzI-a2-Xsx" secondAttribute="trailing" priority="999" id="vSs-MW-nyl"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>

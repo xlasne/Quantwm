@@ -23,6 +23,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
         navigationController?.setToolbarHidden(true, animated: true)
         self.viewModel = viewModel
         playlistUpdatedRegistration = playlistUpdatedREG(viewModel: viewModel)
+        installsStandardGestureForInteractiveMovement = true
         viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
                 target: self,
@@ -120,6 +121,11 @@ extension PlaylistsCollectionViewController {
         cell.configureCell(coverInfo: coverInfo)
         return cell
     }
+
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        viewModel?.playlistMoveItem(from: sourceIndexPath, to: destinationIndexPath)
+    }
+
 }
 
 // MARK: - UICollectionViewDelegate

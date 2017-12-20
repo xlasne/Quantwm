@@ -51,17 +51,40 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
     var mapForTitle: QWMap {
         return QWModel.root.userId_Read +
             playlistCollectionModel.total_Read +
-            PlaylistsCollection.playlistsCountMap(root: playlistCollectionModel)
+            PlaylistsCollection.playlistsDataSourceMap(root: playlistCollectionModel)
     }
-
 
     func getTitle() -> String {
         var title = "\(dataModel.userId)"
-        let total = dataModel.playlistsCollection.total
+        let total = totalAccessor3(dataModel)
         if total != -1 {
             title += " \(dataModel.playlistsCollection.playlistsCount)/\(total)"
         }
         return title
+    }
+
+    static let accessor = (
+        a: QWModel.root.playlistsCollectionGetter,
+        b: QWModel.root.playlistsCollection.totalGetter)
+
+    let totalAccessor: (DataModel) -> Int = { (root: DataModel) -> Int in
+        let collection = PlaylistsCollectionViewModel.accessor.a(root)
+        let total = PlaylistsCollectionViewModel.accessor.b(collection)
+        return total
+    }
+
+    let totalAccessor2: (DataModel) -> Int = { (root: DataModel) -> Int in
+        return root[keyPath:\DataModel.playlistsCollection.total]
+    }
+
+    let totalAccessor3 = QWModel.root.playlistsCollectionGetter
+                        |> QWModel.root.playlistsCollection.totalGetter
+
+    let totalAccessor4: (DataModel) -> Int = { (root: DataModel) -> Int in
+        let keypath1 = \DataModel.playlistsCollection
+        let keypath2 = \PlaylistsCollection.total
+        let keypath = keypath1.appending(path: keypath2)
+        return root[keyPath:keypath]
     }
 
     // MARK: - Data Source for Playlist Collection
@@ -71,8 +94,7 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
     // But to show example for more complex situation, let's do as if there was
     // multiple playlistsCollection in the model
     var mapForPlaylistCollectionDataSource: QWMap {
-        return PlaylistsCollection.playlistsCountMap(root: playlistCollectionModel) +
-            PlaylistsCollection.playlistForIndexMap(root: playlistCollectionModel)
+        return PlaylistsCollection.playlistsDataSourceMap(root: playlistCollectionModel)
     }
 
     // This map gives access to the 3 functions below for reading the model only
@@ -108,4 +130,24 @@ class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
         }
         return nil
     }
+
+    func playlistMoveItem(from: IndexPath, to: IndexPath) {
+        updateActionAndRefresh {
+            let sourceRow = from.row
+            let destRow = to.row
+            let playlist = dataModel.playlistsCollection.playlistArray.remove(at: sourceRow)
+            dataModel.playlistsCollection.playlistArray.insert(playlist, at: destRow)
+        }
+    }
+
 }
+
+
+infix operator |>: AdditionPrecedence
+
+public func |><U,V,W>(lhs: @escaping (U)->V, rhs: @escaping (V)->W) -> (U)->W {
+    return { (u:U)->W in return rhs(lhs(u))
+    }
+}
+
+
