@@ -18,7 +18,6 @@
 		255C5D471FE12DBA00F30682 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D431FE12DB900F30682 /* Utils.swift */; };
 		255C5D481FE12DBA00F30682 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D441FE12DB900F30682 /* XibView.swift */; };
 		255C5D6F1FE1370300F30682 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D601FE1370300F30682 /* PlaylistCell.swift */; };
-		255C5D701FE1370300F30682 /* PlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D611FE1370300F30682 /* PlaylistCell.xib */; };
 		255C5D711FE1370300F30682 /* PlaylistCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D621FE1370300F30682 /* PlaylistCollectionViewModel.swift */; };
 		255C5D721FE1370300F30682 /* PlaylistsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D631FE1370300F30682 /* PlaylistsCollectionViewController.swift */; };
 		255C5D731FE1370300F30682 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D651FE1370300F30682 /* TrackCell.swift */; };
@@ -87,7 +86,6 @@
 		255C5D5B1FE134DA00F30682 /* Sourcery_QuantwmProperties.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Sourcery_QuantwmProperties.stencil; sourceTree = "<group>"; };
 		255C5D5C1FE134DA00F30682 /* stat.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = stat.stencil; sourceTree = "<group>"; };
 		255C5D601FE1370300F30682 /* PlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
-		255C5D611FE1370300F30682 /* PlaylistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistCell.xib; sourceTree = "<group>"; };
 		255C5D621FE1370300F30682 /* PlaylistCollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewModel.swift; sourceTree = "<group>"; };
 		255C5D631FE1370300F30682 /* PlaylistsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsCollectionViewController.swift; sourceTree = "<group>"; };
 		255C5D651FE1370300F30682 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
@@ -265,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				255C5D601FE1370300F30682 /* PlaylistCell.swift */,
-				255C5D611FE1370300F30682 /* PlaylistCell.xib */,
 			);
 			path = PlaylistCell;
 			sourceTree = "<group>";
@@ -592,7 +589,6 @@
 				255C5D8B1FE13C5C00F30682 /* DZ_Logo_CMYK_W.png in Resources */,
 				255C5D8A1FE13C5C00F30682 /* placeholder.png in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-				255C5D701FE1370300F30682 /* PlaylistCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
