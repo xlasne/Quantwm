@@ -34,11 +34,10 @@ DONE: Add Registration Options:
     Type             -> Sourcery
     setProc          -> Sourcery
 
+WIP: Write a good ReadMe
 - Add DebugLevel
-- Write a good ReadMe
 - Add more tests
 
-- XibView for PlaylistCell.xib
 - Shield for reload
 - Data Processor instead of computed Property
 
