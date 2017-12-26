@@ -15,33 +15,41 @@ class DataModelQWModel
     fileprivate let userId: QWPath
     var userId_Read: QWMap {
         return userId.map
+        + self.readDependency
     }
     var userId_Write: QWMap {
         return userId.readWrite(read: false).map
+        + self.readDependency
     }
 
     fileprivate let selectedPlaylistId: QWPath
     var selectedPlaylistId_Read: QWMap {
         return selectedPlaylistId.map
+        + self.readDependency
     }
     var selectedPlaylistId_Write: QWMap {
         return selectedPlaylistId.readWrite(read: false).map
+        + self.readDependency
     }
 
     var playlistsCollection: PlaylistsCollectionQWModel
     var playlistsCollection_allRead: QWMap {
         return QWMap(pathArray: playlistsCollection.allPathGetter(read: true))
+            + self.readDependency
     }
     var playlistsCollection_allWrite: QWMap {
         return QWMap(pathArray: playlistsCollection.allPathGetter(read: false))
+            + self.readDependency
     }
 
     var trackListCollection: TrackListCollectionQWModel
     var trackListCollection_allRead: QWMap {
         return QWMap(pathArray: trackListCollection.allPathGetter(read: true))
+            + self.readDependency
     }
     var trackListCollection_allWrite: QWMap {
         return QWMap(pathArray: trackListCollection.allPathGetter(read: false))
+            + self.readDependency
     }
 
 
@@ -58,10 +66,12 @@ class DataModelQWModel
         self.selectedPlaylistId = path.appending(DataModel.selectedPlaylistIdK)
 
         // node: playlistsCollection
-        self.playlistsCollection = PlaylistsCollectionQWModel(path: path.appending(DataModel.playlistsCollectionK))
+        self.playlistsCollection = PlaylistsCollectionQWModel(path: path.appending(DataModel.playlistsCollectionK)
+            , readDependency: self.readDependency)
 
         // node: trackListCollection
-        self.trackListCollection = TrackListCollectionQWModel(path: path.appending(DataModel.trackListCollectionK))
+        self.trackListCollection = TrackListCollectionQWModel(path: path.appending(DataModel.trackListCollectionK)
+            , readDependency: self.readDependency)
     }
 
     // MARK: Computed Variables Array
@@ -159,17 +169,21 @@ class PlaylistsCollectionQWModel
     fileprivate let playlistArray: QWPath
     var playlistArray_Read: QWMap {
         return playlistArray.map
+        + self.readDependency
     }
     var playlistArray_Write: QWMap {
         return playlistArray.readWrite(read: false).map
+        + self.readDependency
     }
 
     fileprivate let total: QWPath
     var total_Read: QWMap {
         return total.map
+        + self.readDependency
     }
     var total_Write: QWMap {
         return total.readWrite(read: false).map
+        + self.readDependency
     }
 
 
@@ -240,9 +254,11 @@ class TrackListCollectionQWModel
     var trackDict: TracklistQWModel
     var trackDict_allRead: QWMap {
         return QWMap(pathArray: trackDict.allPathGetter(read: true))
+            + self.readDependency
     }
     var trackDict_allWrite: QWMap {
         return QWMap(pathArray: trackDict.allPathGetter(read: false))
+            + self.readDependency
     }
 
 
@@ -253,7 +269,8 @@ class TrackListCollectionQWModel
 
 
         // node: trackDict
-        self.trackDict = TracklistQWModel(path: path.appending(TrackListCollection.trackDictK))
+        self.trackDict = TracklistQWModel(path: path.appending(TrackListCollection.trackDictK)
+            , readDependency: self.readDependency)
     }
 
     // MARK: Computed Variables Array
@@ -302,9 +319,11 @@ class TracklistQWModel
     fileprivate let finalTracksArray: QWPath
     var finalTracksArray_Read: QWMap {
         return finalTracksArray.map
+        + self.readDependency
     }
     var finalTracksArray_Write: QWMap {
         return finalTracksArray.readWrite(read: false).map
+        + self.readDependency
     }
 
 

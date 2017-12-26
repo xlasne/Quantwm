@@ -124,7 +124,24 @@ class DataUsage: NSObject
 
   // monitoringIsActive is activated during call of Notifications,
   // not when QWMediator scan the paths
-  var monitoringIsActive: Bool = false
+  var readMonitoringIsActive: Bool = false
+  var writeMonitoringIsActive: Bool = false
+
+  func activateMonitoring() {
+    readMonitoringIsActive = true
+    writeMonitoringIsActive = true
+  }
+
+  func activateWriteMonitoring() {
+    readMonitoringIsActive = false
+    writeMonitoringIsActive = true
+  }
+
+  func disableMonitoring() {
+    readMonitoringIsActive = false
+    writeMonitoringIsActive = false
+  }
+
 
   fileprivate unowned var qwTransactionStack: QWTransactionStack
   

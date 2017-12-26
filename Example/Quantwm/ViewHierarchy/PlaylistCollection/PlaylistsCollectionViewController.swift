@@ -26,11 +26,13 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
         installsStandardGestureForInteractiveMovement = true
         viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
+                registration: playlistUpdatedREG(viewModel: viewModel),
                 target: self,
-                registrationDesc: playlistUpdatedREG(viewModel: viewModel))
+                selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated))
             viewModel.registerObserver(
+                registration: userIdREG(viewModel: viewModel),
                 target: self,
-                registrationDesc: userIdREG(viewModel: viewModel))
+                selector: #selector(PlaylistsCollectionViewController.titleUpdated))
         }
     }
 
@@ -49,8 +51,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
 
     func playlistUpdatedREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
         return QWRegistration(
-            selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated),
-            readMap: viewModel.mapForPlaylistCollectionDataSource,
+            smartWithReadMap: viewModel.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
     }
 
@@ -62,8 +63,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
 
     func userIdREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
         return QWRegistration(
-        selector: #selector(PlaylistsCollectionViewController.titleUpdated),
-        readMap: viewModel.mapForTitle,
+        smartWithReadMap: viewModel.mapForTitle,
         name: "PlaylistsCollectionViewController.titleUpdated")
     }
 

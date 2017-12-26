@@ -30,7 +30,7 @@ func ==(lhs: QWPropertyID, rhs: QWPropertyID) -> Bool {
     && (lhs.isNode == rhs.isNode)
 }
 
-public struct QWRootProperty: Equatable, Encodable
+public class QWRootProperty: Equatable, Encodable
 {
 
   // Codable for logging purpose only

@@ -28,14 +28,18 @@ open class GenericViewModel<Model: QWMediatorOwner> : NSObject {
     super.init()
   }
   // MARK: - Registration
-  open func registerObserver(target: NSObject,
-                             registrationDesc: QWRegistration) {
-    qwMediator.registerObserver(target: target,
-                                             registrationDesc: registrationDesc)
+  open func registerObserver(registration: QWRegistration,
+                             target: NSObject,
+                             selector: Selector) {
+
+    qwMediator.registerObserver(registration: registration,
+                                target: target,
+                                selector: selector)
   }
+
   // Not mandatory. If not performed, may generate a warning.
   open func unregisterDataSet(target: NSObject) {
-      qwMediator.unregisterDataSetWithTarget(target)
+      qwMediator.unregisterRegistrationWithTarget(target)
   }
 
   // MARK: - Repository Observer wrappers
@@ -99,15 +103,17 @@ extension ModelWriter {
 protocol ModelReader: QWViewModel { }
 extension ModelReader {
   // MARK: - Registration
-  func registerObserver(target: NSObject,
-                             registrationDesc: QWRegistration,
-                             name: String? = nil) {
-    self.getQWMediator().registerObserver(target: target,
-                                     registrationDesc: registrationDesc)
+  func registerObserver(registration: QWRegistration,
+                        target: NSObject,
+                        selector: Selector) {
+    self.getQWMediator().registerObserver(
+      registration: registration,
+      target: target,
+      selector: selector)
   }
   // Not mandatory. If not performed, may generate a warning.
   func unregisterDataSet(target: NSObject) {
-    self.getQWMediator().unregisterDataSetWithTarget(target)
+    self.getQWMediator().unregisterRegistrationWithTarget(target)
   }
 }
 

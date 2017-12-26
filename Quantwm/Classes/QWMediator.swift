@@ -11,7 +11,7 @@ import Foundation
 public class QWMediator: NSObject {
   
   var rootDescriptor: QWPropertyID? = nil  // Set at first root registration
-                      // A Mediator is associated to a unique root type
+  // A Mediator is associated to a unique root type
   weak var rootObject: QWRoot? = nil
 
   var dependencyMgr: QWDependencyMgr = QWDependencyMgr(registrationSet:[])
@@ -102,82 +102,32 @@ public class QWMediator: NSObject {
     }
   }
 
-  // MARK: ObserverSet Registration - Public
-
-  open  func registerObserver(target: NSObject,
-                             registrationDesc reg: QWRegistration)
-  {
-
-    let selector = reg.selector
-    let qwPathSet = reg.readPathSet
-    let maximumAllowedRegistrationWithSameTypeSelector = reg.maximumAllowedRegistrationWithSameTypeSelector
-
-    if qwTransactionStack.isRootRefresh {
-      assert(false,"Error: Register shall not be performed inside a refresh UI call")
-    }
-    
-    if let _ = self.getObserverForTarget(target, selector: selector)
-    {
-      print("Warning: multiple dataset registration for the same (target:\(target.description),selector:\(selector.description)). Use addMonitorData / removeMonitorData to modify a dataset, or delete it before with unregisterDataSetWithTarget")
-      self.unregisterDataSetWithTarget(target, selector: selector)
-    }
-    
-    let sameTypeArray = self.getObserverSetForType(Swift.type(of: target), selector: selector)
-    if let count = maximumAllowedRegistrationWithSameTypeSelector {
-      if (count > 0) && (sameTypeArray.count > count-1) { // count-1 because we are not registered yet
-        assert(false,"Error: The number of registration for the same (type,selector) exceed the configured \(String(describing: maximumAllowedRegistrationWithSameTypeSelector)) value")
-      }
-    } else {
-      if sameTypeArray.count > 0 {
-        print("Warning: multiple dataset registration for the same (\(target),\(selector)): \(qwPathSet). Check that object are not leaking or increment maximumAllowedRegistrationWithSameTypeSelector to the number of allowed instance or set maximumAllowedRegistrationWithSameTypeSelector = 0 to disable check")
-      }
-    }
-
-    for qwPath in qwPathSet {
-      self.registerPathTraceManager(QWPathTraceManager(qwPath: qwPath))
-    }
-
-    let keySetObserver = QWObserver(target: target,
-                                    registration: reg,
-                                    registrationUsageMonitoring: true)
-    
-    self.observerSet.insert(keySetObserver)
-
-    self.dependencyMgr = QWDependencyMgr(
-      registrationSet: Set(observerSet.map({$0.registration})))
-  }
-  
-  open func unregisterDataSetWithTarget(_ target: NSObject, selector: Selector? = nil)
-  {
-    let unregisterArray = observerSet.filter({$0.matchesTarget(target, selector: selector)})
-    observerSet.subtract(unregisterArray)
-  }
   
   //MARK: Helper functions
-  fileprivate func getObserverSetForType(_ targetType: Any.Type, selector: Selector) -> Set<QWObserver>
+  fileprivate func getObserverSetForName(_ name : String) -> Set<QWObserver>
   {
-    let filteredObserverSet = observerSet.filter({$0.matchesType(targetType, selector: selector)})
+    let filteredObserverSet = observerSet.filter({$0.matchesName(name : name)})
     return filteredObserverSet
   }
   
-  fileprivate func getObserverSetForTarget(_ target: NSObject, selector: Selector? = nil) -> Set<QWObserver>
+  fileprivate func getObserverSetForTarget(_ target: AnyObject, name: String? = nil) -> Set<QWObserver>
   {
-    let filteredObserverSet = observerSet.filter({$0.matchesTarget(target, selector: selector)})
+    let filteredObserverSet = observerSet.filter({$0.matchesTarget(target, name: name)})
     return filteredObserverSet
   }
   
-  fileprivate func getObserverForTarget(_ target: NSObject, selector: Selector) -> QWObserver?
+  fileprivate func getObserverForTarget(_ target: AnyObject, name: String) -> QWObserver?
   {
-    let dataSet = self.getObserverSetForTarget(target, selector: selector)
+    let dataSet = self.getObserverSetForTarget(target, name: name)
     return dataSet.first
   }
   
   open func displayUsage(owner: NSObject) {
-        let observerArray = self.getObserverSetForTarget(owner)
-        for observer in observerArray    // .filter({!$0.isValid()})
-        {
-          observer.displayUsage()
-        }
+    let observerArray = self.getObserverSetForTarget(owner)
+    for observer in observerArray    // .filter({!$0.isValid()})
+    {
+      observer.displayUsage()
+    }
   }
   
   // MARK: Observer Registration - Private
@@ -243,8 +193,8 @@ extension QWMediator
     
     print("Start RefreshUI")
 
-//    dependencyMgr.debugDescription()
-//    print("Starting RefreshUI")
+    //    dependencyMgr.debugDescription()
+    //    print("Starting RefreshUI")
 
     // MARK: Cleanup
 
@@ -255,7 +205,7 @@ extension QWMediator
     var pathWalker:QWPathWalker? = nil
     if QUANTUM_MVVM_DEBUG {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: currentRefreshTag)
-      dataUsage?.monitoringIsActive = false
+      dataUsage?.disableMonitoring()
       pathWalker = QWPathWalker(root: rootNode, tag: currentRefreshTag)
     }
 
@@ -302,9 +252,11 @@ extension QWMediator
           // triggerIfDirty is called once per RefreshUI
           // The registered action is performed if QWMap has changed
           // since last RefreshUI for this keySetObserver
-          dataUsage?.monitoringIsActive = true
+
+          // No Monitoring during hard scheduling
+          dataUsage?.disableMonitoring()
           processedObserver.triggerIfDirty(dataUsage, dataDict: self.pathStateManagerDict)
-          dataUsage?.monitoringIsActive = false
+
           qwTransactionStack.popContext(updateContext)
         }
       }
@@ -331,7 +283,7 @@ extension QWMediator
     // Should be performed once, here, if new registrations have been performed
 
     setOfObserversToNotify = observerSet.filter({!$0.isPrioritySchedulingType})
-        setOfObserversToNotify.sort {
+    setOfObserversToNotify.sort {
       (k1:QWObserver, k2: QWObserver) -> Bool in
       return dependencyMgr.level(reg: k1.registration) < dependencyMgr.level(reg: k2.registration)
     }
@@ -373,9 +325,13 @@ extension QWMediator
         // The registered action is performed if QWMap has changed
         // since last RefreshUI for this keySetObserver
         currentObserverToken = QWObserverToken(currentTag: currentRefreshTag, registrationUsage: processedObserver.registrationUsage)
-        dataUsage?.monitoringIsActive = true
+        if processedObserver.alwaysTrigger {
+          dataUsage?.activateWriteMonitoring()
+        } else {
+          dataUsage?.activateMonitoring()
+        }
         processedObserver.triggerIfDirty(dataUsage, dataDict: self.pathStateManagerDict)
-        dataUsage?.monitoringIsActive = false
+        dataUsage?.disableMonitoring()
         currentObserverToken = nil
         // Pop Notification context on TransactionStack
         qwTransactionStack.popContext(roContext)
@@ -429,7 +385,7 @@ extension QWMediator
     // Undo Management: Check if the model has been updated
     // and call Undo Manager if needed
     if let root = modelRootNode,
-        let modelUpdatedClosure = modelUpdatedClosure {
+      let modelUpdatedClosure = modelUpdatedClosure {
       let tag = currentCommit ?? ""
       let isUpdated = QWTreeWalker.scanNodeTreeReduce(
         fromParent: root,
@@ -443,15 +399,15 @@ extension QWMediator
           return nodeIsUpdated
       })
       modelUpdatedClosure(isUpdated)
+    }
 
-      // Commit the changes
-      let commitTag = UUID().uuidString
-      currentCommit = commitTag
-      if let root = modelRootNode {
-        QWTreeWalker.scanNodeTreeMap(fromParent: root, closure: { (node: QWNode) in
-          node.getQWCounter().commit(tag: commitTag)
-        })
-      }
+    // Commit the changes
+    let commitTag = UUID().uuidString
+    currentCommit = commitTag
+    if let root = modelRootNode {
+      QWTreeWalker.scanNodeTreeMap(fromParent: root, closure: { (node: QWNode) in
+        node.getQWCounter().commit(tag: commitTag)
+      })
     }
   }
 
@@ -467,12 +423,88 @@ extension QWMediator
         let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
         if nodeIsUpdated {
           print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-//          print(" \(node.getQWCounter().changeCountDict)")
+          //          print(" \(node.getQWCounter().changeCountDict)")
         }
         return nodeIsUpdated
     })
     print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
     return isUpdated
+  }
+
+}
+
+// MARK: - Registration
+extension QWMediator
+{
+
+  // MARK: ObserverSet Registration - Public
+
+  public func registerObserver(registration: QWRegistration,
+                               target: NSObject,
+                               selector: Selector)
+  {
+
+    if !target.responds(to: selector) {
+      assert(false,"Error \(target) does not respond to selector \(selector)")
+    }
+
+    let notificationClosure = { [weak target] () -> () in
+      if let target = target {
+        target.perform(selector)
+      }
+    }
+
+    self.registerObserver(registration: registration,
+                          target: target,
+                          notificationClosure: notificationClosure)
+  }
+
+  public func registerObserver(registration reg: QWRegistration,
+                        target: AnyObject,
+                        notificationClosure: @escaping () -> ())
+  {
+    let qwPathSet = reg.readPathSet
+    let maxNbRegistrationWithSameName = reg.maxNbRegistrationWithSameName
+
+    if qwTransactionStack.isRootRefresh {
+      assert(false,"Error: Register shall not be performed inside a refresh UI call")
+    }
+
+    if let _ = self.getObserverForTarget(target, name: reg.name)
+    {
+      print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Delete it before with unregisterRegistrationWithTarget")
+      self.unregisterRegistrationWithTarget(target, name: reg.name)
+    }
+
+    let sameTypeArray = self.getObserverSetForName(reg.name)
+    if let count = maxNbRegistrationWithSameName {
+      if (count > 0) && (sameTypeArray.count > count-1) { // count-1 because we are not registered yet
+        assert(false,"Error: The number of registration for the same (type,selector) exceed the configured \(String(describing: maxNbRegistrationWithSameName)) value")
+      }
+    } else {
+      if sameTypeArray.count > 0 {
+        print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Check that object are not leaking or increment maxNbRegistrationWithSameName to the number of allowed instance or set maxNbRegistrationWithSameName = 0 to disable check")
+      }
+    }
+
+    for qwPath in qwPathSet {
+      self.registerPathTraceManager(QWPathTraceManager(qwPath: qwPath))
+    }
+
+    let observer = QWObserver(target: target,
+                              notificationClosure: notificationClosure,
+                              registration: reg)
+
+    self.observerSet.insert(observer)
+
+    self.dependencyMgr = QWDependencyMgr(
+      registrationSet: Set(observerSet.map({$0.registration})))
+  }
+
+  public func unregisterRegistrationWithTarget(_ target: AnyObject, name: String? = nil)
+  {
+    let unregisterArray = observerSet.filter({$0.matchesTarget(target, name: name)})
+    observerSet.subtract(unregisterArray)
   }
 
 }
@@ -488,6 +520,15 @@ extension QWMediator
     self.refreshUICalledWhileContextStackWasNotEmpty = true
     self.popContext(writeContext)
   }
+
+  // Reserved for special usage
+  public func updateActionAnd_NO_REFRESH(owner: NSObject?, handler: ()->())
+  {
+    let writeContext = self.pushUpdateContext(owner)
+    handler()
+    self.popContext(writeContext)
+  }
+
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
   public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: NSObject?, escapingHandler: @escaping ()->())
@@ -518,15 +559,19 @@ extension QWMediator
     if let token = token,
       let registrationUsage = token.registrationUsage {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: token.currentTag)
-      dataUsage?.monitoringIsActive = false
+      dataUsage?.disableMonitoring()
       let refreshContext = RWContext(NotificationWithOwner: owner,
                                      registrationUsage: registrationUsage)
       qwTransactionStack.pushContext(refreshContext)
-      dataUsage?.monitoringIsActive = true
+      if registrationUsage.registration.readPathSet.isEmpty {
+        dataUsage?.activateWriteMonitoring()
+      } else {
+        dataUsage?.activateMonitoring()
+      }
       registrationUsage.startCollecting()
       let value: Value = handler()
       registrationUsage.stopCollecting()
-      dataUsage?.monitoringIsActive = false
+      dataUsage?.disableMonitoring()
       // Pop Notification context on TransactionStack
       qwTransactionStack.popContext(refreshContext)
       QuantwmDataUsage.unregisterContext(currentTag: token.currentTag)

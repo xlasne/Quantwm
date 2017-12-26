@@ -36,11 +36,13 @@ Solution 3: Adopt an other convention and change this stencil.
     var {{monitoredName}}: {{nodeTypeName}}QWModel
     var {{monitoredName}}_allRead: QWMap {
         return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: true))
+            + self.readDependency
     }
 {% if prop|annotated:"readOnly" %}
 {% else %}
     var {{monitoredName}}_allWrite: QWMap {
         return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: false))
+            + self.readDependency
     }
 {% endif %}
 
@@ -48,6 +50,7 @@ Solution 3: Adopt an other convention and change this stencil.
     fileprivate let {{monitoredName}}: QWPath
     var {{monitoredName}}_Read: QWMap {
         return {{monitoredName}}.map
+        + self.readDependency
 {% if prop|annotated:"dependency" %}
         + {{prop.annotations.dependency}}
 {% endif %}
@@ -56,6 +59,7 @@ Solution 3: Adopt an other convention and change this stencil.
 {% else %}
     var {{monitoredName}}_Write: QWMap {
         return {{monitoredName}}.readWrite(read: false).map
+        + self.readDependency
 {% if prop|annotated:"dependency" %}
 + {{prop.annotations.dependency}}
 {% endif %}
@@ -79,7 +83,9 @@ Solution 3: Adopt an other convention and change this stencil.
     {% set nodeTypeName %}{% if prop|annotated:"type" %}{{prop.annotations.type}}{% else %}{{prop.typeName.unwrappedTypeName}}{% endif %}{% endset %}
 
         // node: {{monitoredName}}
-        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }}){% if prop|annotated:"dependency" %}, readDependency:{{prop.annotations.dependency}}{% endif %})
+        self.{{monitoredName}} = {{nodeTypeName}}QWModel(path: path.appending({{ propertyKName }})
+            , readDependency: self.readDependency{% if prop|annotated:"dependency" %}
+                + {{prop.annotations.dependency}}{% endif %})
   {% else %}
 
         // property: {{monitoredName}}

@@ -50,8 +50,9 @@ class NetworkMgr: NSObject, DeezerAPI {
         self.dataModel = dataModel
         dataModel.qwMediator.updateActionAndRefresh(owner: self) {
             dataModel.qwMediator.registerObserver(
+                registration: NetworkMgr.playlistSelectedREG,
                 target: self,
-                registrationDesc: NetworkMgr.playlistSelectedREG)
+                selector: #selector(NetworkMgr.loadSelectedPlaylistTracks))
         }
     }
 
@@ -59,8 +60,7 @@ class NetworkMgr: NSObject, DeezerAPI {
     // Triggered by the selection of a playlist
 
     static let playlistSelectedREG: QWRegistration = QWRegistration(
-        selector: #selector(NetworkMgr.loadSelectedPlaylistTracks),
-        readMap: QWModel.root.selectedPlaylistId_Read,
+        smartWithReadMap: QWModel.root.selectedPlaylistId_Read,
         name: "NetworkMgr.loadSelectedPlaylistTracks")
 
     @objc func loadSelectedPlaylistTracks() {

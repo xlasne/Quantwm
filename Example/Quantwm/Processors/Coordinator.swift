@@ -22,14 +22,14 @@ class Coordinator: NSObject {
         self.dataModel = dataModel
         dataModel.qwMediator.updateActionAndRefresh(owner: self) {
         dataModel.qwMediator.registerObserver(
+            registration: Coordinator.userIdUpdatedREG,
             target: self,
-            registrationDesc: Coordinator.userIdUpdatedREG)
+            selector: #selector(Coordinator.userIdUpdated))
         }
     }
 
     static let userIdUpdatedREG: QWRegistration = QWRegistration(
-        selector: #selector(Coordinator.userIdUpdated),
-        readMap: QWModel.root.userId_Read,
+        smartWithReadMap: QWModel.root.userId_Read,
         name: "Coordinator.userIdUpdated",
         writtenMap: QWModel.root.playlistsCollection.all_Write +
             QWModel.root.selectedPlaylistId_Write +

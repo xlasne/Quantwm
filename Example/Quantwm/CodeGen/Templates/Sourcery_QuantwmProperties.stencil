@@ -31,30 +31,32 @@
     static let {{ prop.name|replace:"_","" }}K = QWPropProperty(
         propertyKeypath: \{{type.name}}.{{prop.name|replace:"_",""}},
         description: "{{ prop.name }}")
-{% endif %}
+    {% endif %}
 {% if prop|annotated:"node" %}
     // Quantwm Node:  {{ prop.name|replace:"_","" }}
     static let {{ prop.name|replace:"_","" }}K = QWNodeProperty(
         keypath: \{{type.name}}.{{prop.name|replace:"_",""}},
         description: "{{ prop.name }}")
 {% endif %}
-{% if prop|annotated:"property" or prop|annotated:"node" %}
+{% if prop|annotated:"property" or prop|annotated:"node" or prop|annotated:"collector" %}
+{% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
+{% set propertyKName %}{% ifnot prop|annotated:"collector" %}{{type.name}}.{{monitoredName}}K{% else %}{{prop.annotations.collector}}{% endif %}{% endset %}
 {% if prop.readAccess == "public" or prop.readAccess == "open" or prop.readAccess == "internal" %}
 //FIXME: Variable {{ prop.name }} shall be fileprivate
 {% endif %}
-    var {{ prop.name|replace:"_","" }} : {{ prop.typeName }} {
+    var {{ monitoredName }} : {{ prop.typeName }} {
       get {
 {% if prop|annotated:"allowBackgroundRead" %}
-        self.qwCounter.read({{type.name}}.{{ prop.name|replace:"_","" }}K, option: .backgroundRead)
+self.qwCounter.read({{ propertyKName }}, options: .backgroundRead)
 {% else %}
-        self.qwCounter.read({{type.name}}.{{ prop.name|replace:"_","" }}K)
+        self.qwCounter.read({{ propertyKName }})
 {% endif %}
         return {{ prop.name }}
       }
 {% if prop|annotated:"readOnly" %}
 {% else %}
       set {
-        self.qwCounter.write({{type.name}}.{{ prop.name|replace:"_","" }}K{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"contextual" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"contextual" %}, .contextual{% endif %}]{% endif %})
+        self.qwCounter.write({{ propertyKName }}{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"contextual" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"contextual" %}, .contextual{% endif %}]{% endif %})
         {{ prop.name }} = newValue
       {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
       }

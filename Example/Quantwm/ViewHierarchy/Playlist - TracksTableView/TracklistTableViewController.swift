@@ -43,8 +43,9 @@ class TracklistTableViewController: UITableViewController, MyModel {
         self.viewModel = viewModel
         viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
+                registration: tracklistREG(viewModel: viewModel),
                 target: self,
-                registrationDesc: tracklistREG(viewModel: viewModel))
+                selector: #selector(TracklistTableViewController.updateTable))
         }
     }
 
@@ -58,8 +59,7 @@ class TracklistTableViewController: UITableViewController, MyModel {
     // This request has been triggerred by NetworkMgr, who is monitoring the playlist selection
     func tracklistREG(viewModel: TrackListViewModel) -> QWRegistration {
         return QWRegistration(
-        selector: #selector(TracklistTableViewController.updateTable),
-        readMap: viewModel.mapForTracksTableDataSource,
+        smartWithReadMap: viewModel.mapForTracksTableDataSource,
         name: "TracklistTableViewController.updateTable")
     }
 

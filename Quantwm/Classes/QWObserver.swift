@@ -12,37 +12,43 @@ import Foundation
 class QWObserver: NSObject {
 
   //MARK: Init and update
-  init(target: NSObject, registration: QWRegistration, registrationUsageMonitoring: Bool)
+  init(target: AnyObject, notificationClosure: @escaping ()->(), registration: QWRegistration)
   {
     self.target = target
     self.type = Swift.type(of: target)
     self.registration = registration
+    self.notificationClosure = notificationClosure
 
-    if registrationUsageMonitoring {
+    switch registration.registrationType {
+    case .AlwaysTrigger:
       self.registrationUsage = QWRegistrationUsage(registration: registration)
-    } else {
+    case .Collector:
+      self.registrationUsage = QWRegistrationUsage(registration: registration)
+    case .SmartScheduling:
+      self.registrationUsage = QWRegistrationUsage(registration: registration)
+    case .HardScheduling:
       self.registrationUsage = nil
     }
 
     super.init()
-    //print("QWObserver: target \(name) type \(self.type) created with \(keypathSet)")
+    print("QWObserver: R(\(registration.readPathSet.count)) W(\(registration.writtenPathSet.count)) target \(name) type \(self.type).")
 
-    if !target.responds(to: actionSelector) {
-      assert(false,"Error \(target) does not respond to selector \(actionSelector)")
-    }
   }
 
   // The target + Action: The method which will be called if dataset is dirty
-  weak var target: NSObject?
+//  weak var target: NSObject?
   let type: Any.Type  // used to detect multiple registration with the same type + selector
 
   let registration: QWRegistration
+
   var registrationUsage: QWRegistrationUsage?
+
+  weak var target: AnyObject?
+  var notificationClosure: () -> ()
 
   // The set of PropertyDescription which can be written during the action
   // And enable exception to the write interdiction
 
-  fileprivate var actionSelector: Selector { return registration.selector }
   var observedPathSet: Set<QWPath> { return registration.readPathSet }
   var writtenPathSet: Set<QWPath> { return registration.writtenPathSet }
   var name: String { return registration.name }
@@ -52,6 +58,10 @@ class QWObserver: NSObject {
   // and if not nil, its priority
   var isPrioritySchedulingType: Bool {
     return schedulingPriority != nil
+  }
+
+  var alwaysTrigger: Bool {
+    return observedPathSet.isEmpty
   }
 
   // The set of keypath triggering this action
@@ -76,11 +86,11 @@ class QWObserver: NSObject {
   }
   
   // return true is target matches, and if selector matches. Nil matches all selectors
-  func matchesTarget(_ target: NSObject, selector: Selector? = nil) -> Bool
+  func matchesTarget(_ target: AnyObject, name: String?) -> Bool
   {
-    if target == self.target {
-      if let selector = selector {
-        return selector == self.actionSelector
+    if target === self.target {
+      if let name = name {
+        return name == self.name
       } else {
         return true
       }
@@ -90,16 +100,20 @@ class QWObserver: NSObject {
 
   // Check if the same (target Type, Selector) is registered several times.
   // Useful to detect View Controllers which are not properly released
-  func matchesType(_ type: Any.Type, selector: Selector) -> Bool
+  func matchesName(name: String) -> Bool
   {
-    return (self.type == type) && (actionSelector == selector)
+    return (self.name == name)
   }
 
   // Called once during refresh
   fileprivate func updateDirtyStatus(_ dataDict: [QWPath:QWPathTraceManager]) ->  (isDirty:Bool, description: String) {
     var desc: String = ""
     var isDirty = false
-    
+
+    if alwaysTrigger {
+      return (isDirty:true, description: "AlwaysTrigger")
+    }
+
     for keypath in observedPathSet
     {
       var currentChangeCount = -1
@@ -126,9 +140,6 @@ class QWObserver: NSObject {
       return (isDirty:true, description: desc)
     }
     
-    if observedPathSet.isEmpty {
-      return (isDirty:true, description: "Trigger at each cycle (empty keypath set)")
-    }
     
     return (isDirty:false, description: "Not Dirty")
   }
@@ -136,7 +147,7 @@ class QWObserver: NSObject {
   func triggerIfDirty(_ dataUsage: DataUsage?, dataDict: [QWPath:QWPathTraceManager])
   {
     // Let check this if target has been released since last removal.
-    guard let target = target else {
+    guard let _ = target else {
       print("Warning: QWObserver \(name). Attempt to perform refresh with nil target")
       return
     }
@@ -152,12 +163,13 @@ class QWObserver: NSObject {
 
     // dataUsage is only defined in debug
     if let _ = dataUsage {
+      registrationUsage?.updateCollectorActionSet(collectorSet: self.registration.collectorPathSet)
       registrationUsage?.startCollecting()
-      target.perform(self.actionSelector)
+      notificationClosure()
       registrationUsage?.stopCollecting()
     } else {
       // Call the registered selector on the target
-      target.perform(self.actionSelector)
+      notificationClosure()
     }
   }
 

@@ -9,8 +9,8 @@ import Foundation
 
 public class QWRegistrationUsage {
 
-/*
- The goal of this class is to collect the usage of the properties during the notification processing, and to compare them to the registration set.
+  /*
+   The goal of this class is to collect the usage of the properties during the notification processing, and to compare them to the registration set.
    QWRegistrationUsage usage belong to QWObserver, if this observer is created with registrationUsageMonitoring = true.
    On perform notification, QWRegistrationUsage is added as parameter to the QWContextStack, and records via DataUsage
    the set of ReadAction and WriteAction performed.
@@ -18,13 +18,13 @@ public class QWRegistrationUsage {
    There is 2 kind of collection:
    - The collection of Read and Write during the perform notification, to check that each R/W action belong to the registration set.
    - The cumulated collection of Read action over multiple perform notification, to check the coverage of these cumulated read actions with the configured QWRegistration - over-registration detection.
-*/
+   */
   
   let registration: QWRegistration
-  fileprivate var actionSelector: Selector { return registration.selector }
   var observedPathSet: Set<QWPath> { return registration.readPathSet }
   var writtenPathSet: Set<QWPath> { return registration.writtenPathSet }
   var name: String { return registration.name }
+  var configuredCollectorPropertySet:Set<QWPropertyID>
   var configuredReadPropertySet:Set<QWPropertyID>
   var configuredWritePropertySet:Set<QWPropertyID>
 
@@ -41,6 +41,8 @@ public class QWRegistrationUsage {
     self.registration = registration
     self.unionReadDescription = []
     self.unionWriteDescription = []
+    let collectorProperties = QWRegistrationUsage.convertToProperty(paths: registration.collectorPathSet)
+    self.configuredCollectorPropertySet = collectorProperties
     let readProperties = QWRegistrationUsage.convertToProperty(paths: registration.readPathSet)
     self.configuredReadPropertySet = readProperties
     let writtenProperties = Set(registration.writtenPropertySet.map({$0.descriptor}))
@@ -51,10 +53,10 @@ public class QWRegistrationUsage {
     let _ = displayUsage()
   }
 
-
   // Collect Actions during monitoring
   var writeActionSet: Set<RW_Action> = Set()
   var  readActionSet: Set<RW_Action> = Set()
+  var collectorActionSet: Set<RW_Action> = Set()
 
   // Maintain the union of all the RW_Action which are actually read
   // in order to detect registration to unused actions
@@ -68,6 +70,12 @@ public class QWRegistrationUsage {
     // which is needed by other keySetObservers
     writeActionSet = []
     readActionSet = []
+    collectorActionSet = []
+  }
+
+  func updateCollectorActionSet(collectorSet: Set<QWPath>) {
+    let collectorProperties = QWRegistrationUsage.convertToProperty(paths: registration.collectorPathSet)
+    self.configuredCollectorPropertySet = collectorProperties
   }
 
   func stopCollecting() {
@@ -89,7 +97,7 @@ public class QWRegistrationUsage {
 
     if (unionReadDescription == configuredReadPropertySet) &&
       (unionWriteDescription == configuredWritePropertySet)
-      {
+    {
       print("QWRegistrationUsage cumulated: Info: \(name) matches exactly its QWRegistration")
     }
 
@@ -126,23 +134,31 @@ protocol QWRegistrationUsageProtocol {
 
 extension QWRegistrationUsage: QWRegistrationUsageProtocol {
 
-    func addReadAction(readAction: RW_Action) {
-        if !configuredReadPropertySet.contains(readAction.propertyDesc) &&
-          !configuredWritePropertySet.contains(readAction.propertyDesc) {
-            let errorStr = "QWRegistrationUsage: Warning: Read of \(name) performs a read of \(readAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
-            print(errorStr)
-            assert(false,errorStr)
-        }
-        readActionSet.insert(readAction)
+  func addReadAction(readAction: RW_Action) {
+    if configuredReadPropertySet.isEmpty {
+      return // No read monitoring on AlwaysTrigger
     }
+    if !configuredReadPropertySet.contains(readAction.propertyDesc) &&
+      !configuredWritePropertySet.contains(readAction.propertyDesc) &&
+      !configuredCollectorPropertySet.contains(readAction.propertyDesc){
+      let errorStr = "QWRegistrationUsage: Warning: Read of \(name) performs a read of \(readAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
+      print(errorStr)
+      assert(false,errorStr)
+    }
+    if configuredCollectorPropertySet.contains(readAction.propertyDesc) {
+      collectorActionSet.insert(readAction)
+    } else {
+      readActionSet.insert(readAction)
+    }
+  }
 
-    func addWriteAction(writeAction: RW_Action) {
-        if !configuredWritePropertySet.contains(writeAction.propertyDesc) {
-            let errorStr = "QWRegistrationUsage: Warning: Write of \(name) performs a write of \(writeAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
-            print(errorStr)
-            assert(false,errorStr)
-        }
-        writeActionSet.insert(writeAction)
+  func addWriteAction(writeAction: RW_Action) {
+    if !configuredWritePropertySet.contains(writeAction.propertyDesc) {
+      let errorStr = "QWRegistrationUsage: Warning: Write of \(name) performs a write of \(writeAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
+      print(errorStr)
+      assert(false,errorStr)
     }
+    writeActionSet.insert(writeAction)
+  }
 }
 

@@ -26,8 +26,9 @@ class PlaylistHeaderViewController: UIViewController, MyModel {
         viewModel = PlaylistHeaderViewModel(dataModel: dataModel, owner: "PlaylistViewController")
         viewModel?.updateActionAndRefresh {
             viewModel?.registerObserver(
+                registration: PlaylistHeaderViewController.playlistREG,
                 target: self,
-                registrationDesc: PlaylistHeaderViewController.playlistREG)
+                selector: #selector(PlaylistHeaderViewController.playlistUpdated))
         }
     }
 
@@ -38,8 +39,7 @@ class PlaylistHeaderViewController: UIViewController, MyModel {
     }
 
     static let playlistREG: QWRegistration = QWRegistration(
-        selector: #selector(PlaylistHeaderViewController.playlistUpdated),
-        readMap: PlaylistHeaderViewModel.currentPlaylistHeaderMap,
+        smartWithReadMap: PlaylistHeaderViewModel.currentPlaylistHeaderMap,
         name: "PlaylistHeaderViewController.playlistUpdated")
     
     @objc func playlistUpdated() {

@@ -67,7 +67,7 @@ class QWPathTraceManager
       self.updateCounter += (comparison.isDirty ? 1 : 0)
       print("QWPathTraceManager: \(keypath) : \(comparison.description) counter updated to \(updateCounter)")
     } else {
-      print("QWPathTraceManager: \(keypath) : \(comparison.description)")
+//      print("QWPathTraceManager: \(keypath) : \(comparison.description)")
     }
     
   }

@@ -101,7 +101,8 @@ open class QWCounter: NSObject, Codable {
     if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
     }
-    if let dataUsage = DataUsage.currentInstance(), dataUsage.monitoringIsActive {
+    if let dataUsage = DataUsage.currentInstance(),
+      dataUsage.readMonitoringIsActive {
       dataUsage.addRead(self, property: property.descriptor)
       checkReadAccess(dataUsage: dataUsage, property: property)
     }
@@ -115,7 +116,8 @@ open class QWCounter: NSObject, Codable {
       }
     }
 
-    if let dataUsage = DataUsage.currentInstance(), dataUsage.monitoringIsActive {
+    if let dataUsage = DataUsage.currentInstance(),
+      dataUsage.readMonitoringIsActive {
       dataUsage.addRead(self, property: property.descriptor)
       checkReadAccess(dataUsage: dataUsage, property: property)
     }
@@ -145,7 +147,7 @@ open class QWCounter: NSObject, Codable {
   //MARK: - Access management
   func checkReadAccess(dataUsage: DataUsage, property: QWProperty) {
     if dataUsage.currentTag == accessTag,
-        dataUsage.monitoringIsActive {
+        dataUsage.readMonitoringIsActive {
       // This counter is monitored .. Let's continue
       if let access = accessDict[property.propKey] {
         switch access {
@@ -163,8 +165,8 @@ open class QWCounter: NSObject, Codable {
   }
 
   func checkWriteAccess(dataUsage: DataUsage, property: QWProperty) {
-    if dataUsage.currentTag == accessTag
-    {
+    if dataUsage.currentTag == accessTag,
+      dataUsage.writeMonitoringIsActive {
       // This counter is monitored .. Let's continue
       if let access = accessDict[property.propKey] {
         switch access {
@@ -313,7 +315,6 @@ open class QWCounter: NSObject, Codable {
       switch state {
       case .Committed(let previousTag):
         assert(tag == previousTag,"commit tag shall match")
-        assert(false,"commit performed twice on the same node")
       default:
         break
       }

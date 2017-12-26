@@ -30,26 +30,44 @@ public class QWDependencyMgr: Encodable {
   var propertyLevel: [QWProperty:Int]
   var registrationLevel: [QWRegistration:Int]
   var writtenPropertySet:Set<QWProperty>
-
   var registrationSet: Set<QWRegistration>
 
+
   init(registrationSet: Set<QWRegistration>) {
-    self.registrationSet = registrationSet.filter() {$0.schedulingPriority == nil}
+    self.registrationSet = registrationSet
+      .filter() {$0.schedulingPriority == nil}
+      .filter() {!($0.readPathSet.isEmpty)}
     self.propertySet = []
     self.dependsFromPropertySet = [:]
     self.propertyLevel = [:]
     self.registrationLevel = [:]
     self.writtenPropertySet = []
 
+    let collectorSet = registrationSet.filter({$0.registrationType == QWRegistrationType.Collector})
+    for registration in registrationSet {
+      registration.injectCollectors(collectorSet)
+    }
+
+
     // Start computation
     computeDependsFromPropertySet()
     computeAllPropertiesLevel()
-    computeRegistrationLevel()
+    let maxLevel = computeRegistrationLevel()
 
     // Consistency Check
     // Written Properties can only belong to one QWRegistration
     // Written Properties shall have greater level than read properties
     checkWrittenProperties()
+
+    let alwaysTriggerSet = registrationSet
+      .filter() {$0.schedulingPriority == nil}
+      .filter() {$0.readPathSet.isEmpty}
+
+    for reg in alwaysTriggerSet {
+      registrationLevel[reg] = maxLevel + 1
+    }
+    self.registrationSet.formUnion(alwaysTriggerSet)
+
   }
 
   func level(reg: QWRegistration) -> Int {
@@ -106,7 +124,8 @@ public class QWDependencyMgr: Encodable {
   }
 
   // - Then compute the level of each QWRegistration
-  func computeRegistrationLevel() {
+  func computeRegistrationLevel() -> Int {
+    var maxLevel = 0
     for reg in registrationSet {
       var level = 0
       for qwPath in reg.readPathSet {
@@ -121,7 +140,11 @@ public class QWDependencyMgr: Encodable {
         }
       }
       registrationLevel[reg] = level
+      if level > maxLevel {
+        maxLevel = level
+      }
     }
+    return maxLevel
   }
 
   func checkWrittenProperties() {

@@ -47,7 +47,7 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
 
   // Set andAllChilds to true if checkSourceTypeMatchesDestinationTypeOf fails to correctly
   // match the source and destination types between Objective-C and Swift
-  fileprivate init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false, access: QWAccess)
+  init(root: QWRootProperty, chain: [QWProperty], andAllChilds: Bool = false, access: QWAccess = .readPath)
   {
     self.root = root
     self.chain = chain
