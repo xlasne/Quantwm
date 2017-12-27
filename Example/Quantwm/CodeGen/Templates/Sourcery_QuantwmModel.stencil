@@ -17,7 +17,7 @@ struct QWModel {
 class {{ type.name }}QWModel
 {
     let path:QWPath
-    let node:QWMap
+    fileprivate let node:QWMap
     var readDependency: QWMap
 {% for prop in type.storedVariables %}
 {% if prop|annotated:"property" or prop|annotated:"node" %}
@@ -38,10 +38,18 @@ Solution 3: Adopt an other convention and change this stencil.
         return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: true))
             + self.readDependency
     }
+    var {{monitoredName}}_Read: QWMap {
+        return {{monitoredName}}.path.map
+            + self.readDependency
+    }
 {% if prop|annotated:"readOnly" %}
 {% else %}
     var {{monitoredName}}_allWrite: QWMap {
         return QWMap(pathArray: {{monitoredName}}.allPathGetter(read: false))
+            + self.readDependency
+    }
+    var {{monitoredName}}_Write: QWMap {
+        return {{monitoredName}}.path.readWrite(read: false).map
             + self.readDependency
     }
 {% endif %}
@@ -55,8 +63,7 @@ Solution 3: Adopt an other convention and change this stencil.
         + {{prop.annotations.dependency}}
 {% endif %}
     }
-{% if prop|annotated:"readOnly" %}
-{% else %}
+{% if not prop|annotated:"readOnly" %}
     var {{monitoredName}}_Write: QWMap {
         return {{monitoredName}}.readWrite(read: false).map
         + self.readDependency

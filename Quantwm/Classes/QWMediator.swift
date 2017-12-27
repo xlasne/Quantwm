@@ -122,7 +122,7 @@ public class QWMediator: NSObject {
     return dataSet.first
   }
   
-  open func displayUsage(owner: NSObject) {
+  open func displayUsage(owner: AnyObject) {
     let observerArray = self.getObserverSetForTarget(owner)
     for observer in observerArray    // .filter({!$0.isValid()})
     {
@@ -516,7 +516,7 @@ extension QWMediator
 
 extension QWMediator
 {
-  public func updateActionAndRefresh(owner: NSObject?, handler: ()->())
+  public func updateActionAndRefresh(owner: AnyObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
@@ -525,7 +525,7 @@ extension QWMediator
   }
 
   // Reserved for special usage
-  public func updateActionAnd_NO_REFRESH(owner: NSObject?, handler: ()->())
+  public func updateActionAnd_NO_REFRESH(owner: AnyObject?, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
@@ -534,7 +534,7 @@ extension QWMediator
 
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
-  public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: NSObject?, escapingHandler: @escaping ()->())
+  public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: AnyObject?, escapingHandler: @escaping ()->())
   {
     if !qwTransactionStack.isRootRefresh {
       //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync scheduled immediately")
@@ -557,7 +557,7 @@ extension QWMediator
     }
   }
 
-  public func asynchronousRefresh<Value>(owner: NSObject, token: QWObserverToken?, handler: ()->(Value)) -> Value
+  public func asynchronousRefresh<Value>(owner: AnyObject, token: QWObserverToken?, handler: ()->(Value)) -> Value
   {
     if let token = token,
       let registrationUsage = token.registrationUsage {
@@ -586,7 +586,7 @@ extension QWMediator
   }
 
 
-  fileprivate func pushUpdateContext(_ owner: NSObject?) -> RWContext
+  fileprivate func pushUpdateContext(_ owner: AnyObject?) -> RWContext
   {
     let updateContext = RWContext(UpdateWithOwner:owner)
     // this is the first update on the stack

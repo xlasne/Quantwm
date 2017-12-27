@@ -34,6 +34,18 @@ open class GenericViewModel<Model: QWRoot> : NSObject {
                                 maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
   }
 
+  open func registerObserver(registration: QWRegistration,
+                             target: AnyObject,
+                             notificationClosure: @escaping () -> (),
+                             maxNbRegistrationWithSameName: Int? = nil) {
+
+    qwMediator.registerObserver(registration: registration,
+                                target: target,
+                                notificationClosure: notificationClosure,
+                                maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
+  }
+
+
   // Not mandatory. If not performed, may generate a warning.
   open func unregisterDataSet(target: NSObject) {
       qwMediator.unregisterRegistrationWithTarget(target)

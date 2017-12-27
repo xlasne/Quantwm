@@ -90,9 +90,13 @@ class MyClass: QWNode_S {
 ```
 
 - Your Model shall have a root class, containing all the monitored properties.
-This root class shall have the QWRoot_S protocol, and be a class, not a struct.
+This root class shall have the additional QWRoot_S protocol, and be a class, not a struct.
 
-
+```swift
+class DataModel : QWRoot_S, QWNode_S  {
+  ...
+}
+```
 
 
 ### Model Property generation
@@ -135,44 +139,60 @@ class MyClass: QWNode_S {
 Sourcery property command are composed of a main command,
 followed by optional modifiers.
 
-The main command is one of these 3 commands:
-// sourcery: property
-// sourcery: node
-// sourcery: sharedProperty = "MyClass.propertyK"
+The main command is one of these 4 commands:
 // sourcery: root
+// sourcery: node
+// sourcery: property
+// sourcery: sharedProperty = "MyClass.propertyK"
 
-Use property command to monitor a value type
-Use node command to monitor a reference type, and the reference type shall be compliant with QWNode protocol.
-Use sharedProperty command to share a property counter with an other property of your class. An update of any property sharing the same counter will increment this counter.
-
-Use root command to deifne the root of your Model, in the QWRoot class.
+* Use root command to define the unique root of your Model, in the QWRoot class.
 ```swift
 // sourcery: root
 static let dataModelK = QWRootProperty(rootType: DataModel.self,
                                        rootId: "dataModel")
 ```
 
+* Use node command to monitor a reference type, and the reference type shall be compliant with QWNode protocol.
+
+* Use property command to monitor a value type
+
+* Use sharedProperty command to share a property counter with an other property of your class. An update of any property sharing the same counter will increment this counter.
+
+
 Then the modifiers are:
+
+#### contextual
 
 // sourcery: contextual
 Will be used in a future version of Quantwm, to indicate properties whose update shall not trigger a save of the document.
 
-// sourcery: readOnly
-If your property is readOnly, it will not generate the setter. This is useful for computed properties.
+#### readOnly
 
 // sourcery: readOnly
 If your property is readOnly, it will not generate the setter. This is useful for computed properties.
 
+#### type
+When the type of the node is a complex type (array, dictionary, etc ...), use the type modifier to specify the exact type.
 
+```swift
+// sourcery: node
+// sourcery: type = "HeaderTitle"
+var _headerArray: [HeaderTitle] = []
+```
 
+#### allowBackgroundRead , allowBackgroundWrite
+To disable the main-thread only access for a monitored property, at your your own risk:
 
+```swift
+// sourcery: allowBackgroundRead
+// sourcery: allowBackgroundWrite
+```
 
-
-Computed Properties:
+#### Computed Properties
 
 For the moment, Quantwm only support Read Only computed properties.
-
-
+The dependencies inherited from the computed property computation
+shall be specified in a static variable, and added with sourcery: dependency modifier.
 
 ```swift
 // MARK: - Computed Properties
@@ -192,9 +212,63 @@ fileprivate var _selectedPlaylist: Playlist? {
     }
     return nil
 }
+```
+
+#### Model Scheme
+
+Once your model is instrumented, Sourcery_QuantwmModel.generated.Swift contains the generated model scheme,
+allowing to easily select the read and write path.
+
+To select a read property: QWModel.root.playlistsCollection.playlistArray_Read
+To select a write property: QWModel.root.playlistsCollection.playlistArray_Write
+
+To select a read node: QWModel.root.playlistsCollection.selectedPlaylist_Read
+To select a write node: QWModel.root.playlistsCollection.selectedPlaylist_Write
+
+To select a read node and all its children: QWModel.root.selectedPlaylist_allRead
+To select a write node and all its children: QWModel.root.selectedPlaylist_allWrite
+
+
+### View Model
+
+View Model shall inherit from GenericViewModel<YourRootClass>
+
 ```swift
+class PlaylistHeaderViewModel: GenericViewModel<DataModel>
+{
+  public init(dataModel : Model, owner: String) {}
 
+}
+```
+ViewModel are normally owned by View Controllers.
 
+I usually create them in viewWillAppear and perform registration immediately:
+
+```swift
+override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    viewModel = PlaylistHeaderViewModel(dataModel: dataModel, owner: "PlaylistViewController")
+    viewModel?.updateActionAndRefresh {
+        viewModel?.registerObserver(
+            registration: PlaylistHeaderViewController.playlistREG,
+            target: self,
+            selector: #selector(PlaylistHeaderViewController.playlistUpdated))
+    }
+}
+```
+
+and unregister / delete them in viewDidDisappear:
+
+```swift
+override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    viewModel?.unregisterDataSet(target: self)
+    viewModel = nil
+}
+```
+
+#### View Model Action
 
 
 

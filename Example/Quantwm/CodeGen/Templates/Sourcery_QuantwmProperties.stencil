@@ -4,7 +4,6 @@
     // MARK: - Sourcery
 
 {% if type.implements.QWRoot_S %}
-    // QWMediatorOwner Protocol
     let qwMediator = QWMediator()
     func getQWMediator() -> QWMediator
     {

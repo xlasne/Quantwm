@@ -10,7 +10,7 @@ struct QWModel {
 class DataModelQWModel
 {
     let path:QWPath
-    let node:QWMap
+    fileprivate let node:QWMap
     var readDependency: QWMap
     fileprivate let userId: QWPath
     var userId_Read: QWMap {
@@ -37,8 +37,16 @@ class DataModelQWModel
         return QWMap(pathArray: playlistsCollection.allPathGetter(read: true))
             + self.readDependency
     }
+    var playlistsCollection_Read: QWMap {
+        return playlistsCollection.path.map
+            + self.readDependency
+    }
     var playlistsCollection_allWrite: QWMap {
         return QWMap(pathArray: playlistsCollection.allPathGetter(read: false))
+            + self.readDependency
+    }
+    var playlistsCollection_Write: QWMap {
+        return playlistsCollection.path.readWrite(read: false).map
             + self.readDependency
     }
 
@@ -47,8 +55,16 @@ class DataModelQWModel
         return QWMap(pathArray: trackListCollection.allPathGetter(read: true))
             + self.readDependency
     }
+    var trackListCollection_Read: QWMap {
+        return trackListCollection.path.map
+            + self.readDependency
+    }
     var trackListCollection_allWrite: QWMap {
         return QWMap(pathArray: trackListCollection.allPathGetter(read: false))
+            + self.readDependency
+    }
+    var trackListCollection_Write: QWMap {
+        return trackListCollection.path.readWrite(read: false).map
             + self.readDependency
     }
 
@@ -164,7 +180,7 @@ class DataModelQWModel
 class PlaylistsCollectionQWModel
 {
     let path:QWPath
-    let node:QWMap
+    fileprivate let node:QWMap
     var readDependency: QWMap
     fileprivate let playlistArray: QWPath
     var playlistArray_Read: QWMap {
@@ -249,15 +265,23 @@ class PlaylistsCollectionQWModel
 class TrackListCollectionQWModel
 {
     let path:QWPath
-    let node:QWMap
+    fileprivate let node:QWMap
     var readDependency: QWMap
     var trackDict: TracklistQWModel
     var trackDict_allRead: QWMap {
         return QWMap(pathArray: trackDict.allPathGetter(read: true))
             + self.readDependency
     }
+    var trackDict_Read: QWMap {
+        return trackDict.path.map
+            + self.readDependency
+    }
     var trackDict_allWrite: QWMap {
         return QWMap(pathArray: trackDict.allPathGetter(read: false))
+            + self.readDependency
+    }
+    var trackDict_Write: QWMap {
+        return trackDict.path.readWrite(read: false).map
             + self.readDependency
     }
 
@@ -314,7 +338,7 @@ class TrackListCollectionQWModel
 class TracklistQWModel
 {
     let path:QWPath
-    let node:QWMap
+    fileprivate let node:QWMap
     var readDependency: QWMap
     fileprivate let finalTracksArray: QWPath
     var finalTracksArray_Read: QWMap {

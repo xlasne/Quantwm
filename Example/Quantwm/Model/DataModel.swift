@@ -23,7 +23,7 @@ extension MyModel {
     }
 }
 
-class DataModel : NSObject, QWRoot_S, QWNode_S  {
+class DataModel : QWRoot_S, QWNode_S  {
 
     static let debug_userID = 10
 
@@ -34,7 +34,6 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
 
         self.networkMgr = networkMgr
         _userId = DataModel.debug_userID
-        super.init()
 
         _playlistsCollection.updateUserId(userId: userId)
 
@@ -149,7 +148,6 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
 
     // MARK: - Sourcery
 
-    // QWMediatorOwner Protocol
     let qwMediator = QWMediator()
     func getQWMediator() -> QWMediator
     {
