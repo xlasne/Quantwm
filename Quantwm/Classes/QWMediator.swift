@@ -14,7 +14,7 @@ public class QWMediator: NSObject {
   // A Mediator is associated to a unique root type
   weak var rootObject: QWRoot? = nil
 
-  var dependencyMgr: QWDependencyMgr = QWDependencyMgr(registrationSet:[])
+  var dependencyMgr: QWDependencyMgr = QWDependencyMgr(observerSet:[])
 
   // Root Node of the Model to be archived
   weak var modelRootNode: QWRoot?
@@ -193,13 +193,11 @@ extension QWMediator
     
     print("Start RefreshUI")
 
-    //    dependencyMgr.debugDescription()
-    //    print("Starting RefreshUI")
-
     // MARK: Cleanup
 
     // Remove observerSet whose target is deallocated
     observerSet = Set(observerSet.filter({$0.isValid()}))
+    observerSet.forEach({ $0.hasBeenProcessed = false })
 
     let currentRefreshTag = UUID().uuidString
     var pathWalker:QWPathWalker? = nil
@@ -212,56 +210,57 @@ extension QWMediator
     // MARK: Hard-coded Priority Scheduling
 
     // First perform scheduling of hard-coded priority registration
-    var setOfObserversToNotify : [QWObserver] = []
-    setOfObserversToNotify = observerSet.filter({$0.isPrioritySchedulingType})
-    
-    setOfObserversToNotify.sort {
-      (k1:QWObserver, k2: QWObserver) -> Bool in
-      return k1.schedulingPriority! < k2.schedulingPriority!
+    func getFirstHardcodedObserver(observerSet: Set<QWObserver>, priority: Int?) -> QWObserver? {
+      var setOfObserversToNotify = Array(observerSet)
+        .filter({$0.isPrioritySchedulingType})
+        .filter({$0.hasBeenProcessed == false })
+        .sorted {
+          (k1:QWObserver, k2: QWObserver) -> Bool in
+          return k1.schedulingPriority! < k2.schedulingPriority!
+      }
+      // New Registration with priority higher than current one are ignored
+      if let priority = priority {
+        setOfObserversToNotify = setOfObserversToNotify
+          .filter({$0.schedulingPriority! >= priority })
+      }
+      return setOfObserversToNotify.first
     }
-
-    //TODO: Manage the inserting of new priorityScehduling registration
-    // during Priority Scheduling (Smart Registrations are already managed)
-    // and reject registrations to priority level higher than the current one.
-    // -> Mark keySetObserver as processed and perform a while loop
 
     // First, perform Update transaction for priority Scheduling
-    if !setOfObserversToNotify.isEmpty
+    // push Update context on root, avoiding refresh UI during configuration refresh
+    let outerUpdateContext = RWContext(UpdateWithOwner: self)
+    qwTransactionStack.pushContext(outerUpdateContext)
+
+    var currentPriority: Int? = nil
+    while let processedObserver =  getFirstHardcodedObserver(observerSet: observerSet,
+                                                             priority: currentPriority)
     {
-      // push Update context on root, avoiding refresh UI during configuration refresh
-      let outerUpdateContext = RWContext(UpdateWithOwner: self)
-      qwTransactionStack.pushContext(outerUpdateContext)
-      
-      while !setOfObserversToNotify.isEmpty
-      {
-        let processedObserver = setOfObserversToNotify.removeFirst()
-        
-        if let target = processedObserver.target {
-          let updateContext = RWContext(UpdateWithOwner: target)
-          qwTransactionStack.pushContext(updateContext)
-          
-          // Evaluate the pathStateManager associated to it
-          // As any write are possible, readAndCompareTrace must be redone for each QWPath
-          for readPath in processedObserver.observedPathSet
-          {
-            if let pathStateManager = self.pathStateManagerDict[readPath] {
-              pathWalker?.applyReadOnlyPathAccess(path: readPath)
-              pathStateManager.readAndCompareTrace(rootNode: rootNode)
-            }
+      if let target = processedObserver.target {
+        let updateContext = RWContext(UpdateWithOwner: target)
+        qwTransactionStack.pushContext(updateContext)
+
+        // Evaluate the pathStateManager associated to it
+        // As any write are possible, readAndCompareTrace must be redone for each QWPath
+        for readPath in processedObserver.observedPathSet
+        {
+          if let pathStateManager = self.pathStateManagerDict[readPath] {
+            pathWalker?.applyReadOnlyPathAccess(path: readPath)
+            pathStateManager.readAndCompareTrace(rootNode: rootNode)
           }
-          // triggerIfDirty is called once per RefreshUI
-          // The registered action is performed if QWMap has changed
-          // since last RefreshUI for this keySetObserver
-
-          // No Monitoring during hard scheduling
-          dataUsage?.disableMonitoring()
-          processedObserver.triggerIfDirty(dataUsage, dataDict: self.pathStateManagerDict)
-
-          qwTransactionStack.popContext(updateContext)
         }
+        // triggerIfDirty is called once per RefreshUI
+        // The registered action is performed if QWMap has changed
+        // since last RefreshUI for this keySetObserver
+
+        // No Monitoring during hard scheduling
+        dataUsage?.disableMonitoring()
+        processedObserver.triggerIfDirty(dataUsage, dataDict: self.pathStateManagerDict)
+        processedObserver.hasBeenProcessed = true
+        currentPriority = processedObserver.schedulingPriority
+        qwTransactionStack.popContext(updateContext)
       }
-      qwTransactionStack.popContext(outerUpdateContext)
     }
+    qwTransactionStack.popContext(outerUpdateContext)
 
     // MARK: Prepare Smart Scheduling
 
@@ -279,13 +278,17 @@ extension QWMediator
     // Then perform scheduling of smart type registration only
     observerSet = observerSet.filter({$0.isValid()})
 
-    // TODO: dependencyMgr level is currently computed at registration
-    // Should be performed once, here, if new registrations have been performed
+    // DependencyMgr computation shall be done here, once, if needed,
+    // to include registrations added during hard-scheduling.
+    if QWDependencyMgr.isDependencyRequired(observerSet: observerSet) {
+      self.dependencyMgr = QWDependencyMgr(observerSet: observerSet)
+    }
 
-    setOfObserversToNotify = observerSet.filter({!$0.isPrioritySchedulingType})
-    setOfObserversToNotify.sort {
+    var setOfObserversToNotify = Array(observerSet
+      .filter({dependencyMgr.level(reg:$0.registration) != nil}))
+      .sorted {
       (k1:QWObserver, k2: QWObserver) -> Bool in
-      return dependencyMgr.level(reg: k1.registration) < dependencyMgr.level(reg: k2.registration)
+      return dependencyMgr.level(reg: k1.registration)! < dependencyMgr.level(reg: k2.registration)!
     }
 
     // MARK: Smart Scheduling
@@ -441,7 +444,8 @@ extension QWMediator
 
   public func registerObserver(registration: QWRegistration,
                                target: NSObject,
-                               selector: Selector)
+                               selector: Selector,
+                               maxNbRegistrationWithSameName: Int? = nil)
   {
 
     if !target.responds(to: selector) {
@@ -456,15 +460,16 @@ extension QWMediator
 
     self.registerObserver(registration: registration,
                           target: target,
-                          notificationClosure: notificationClosure)
+                          notificationClosure: notificationClosure,
+                          maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
   }
 
   public func registerObserver(registration reg: QWRegistration,
                         target: AnyObject,
-                        notificationClosure: @escaping () -> ())
+                        notificationClosure: @escaping () -> (),
+                        maxNbRegistrationWithSameName: Int? = nil)
   {
     let qwPathSet = reg.readPathSet
-    let maxNbRegistrationWithSameName = reg.maxNbRegistrationWithSameName
 
     if qwTransactionStack.isRootRefresh {
       assert(false,"Error: Register shall not be performed inside a refresh UI call")
@@ -497,8 +502,6 @@ extension QWMediator
 
     self.observerSet.insert(observer)
 
-    self.dependencyMgr = QWDependencyMgr(
-      registrationSet: Set(observerSet.map({$0.registration})))
   }
 
   public func unregisterRegistrationWithTarget(_ target: AnyObject, name: String? = nil)

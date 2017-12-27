@@ -24,14 +24,14 @@ extension MyModel {
 }
 
 class DataModel : NSObject, QWRoot_S, QWNode_S  {
-    
+
     static let debug_userID = 10
-    
+
     unowned var networkMgr: DeezerAPI
     var coordinator: Coordinator = Coordinator()
 
     init(networkMgr: DeezerAPI) {
-        
+
         self.networkMgr = networkMgr
         _userId = DataModel.debug_userID
         super.init()
@@ -47,7 +47,7 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
             coordinator.postInit(dataModel: self)
         }
     }
-    
+
     var disposeBag = DisposeBag()
 
     func applicationBecomeActive() {
@@ -75,7 +75,7 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
     func applicationBecomeInactive() {
         disposeBag = DisposeBag()
     }
-    
+
     // The model is:
     //   DataModel
     //      |
@@ -91,11 +91,11 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
     //      |
     //      |-selectedPlaylistId:PlaylistID? - prop               -> NetworkMgr.playlistSelectedREG
     //                                                            -> TracklistTableViewController.tracklistREG
-    
-    
+
+
 
     // MARK: - Quantwm Properties and Nodes
-    
+
     // sourcery: root
     static let dataModelK = QWRootProperty(rootType: DataModel.self, rootId: "dataModel")
 
@@ -244,5 +244,5 @@ class DataModel : NSObject, QWRoot_S, QWNode_S  {
     }
 
     // sourcery:end
-    
+
 }

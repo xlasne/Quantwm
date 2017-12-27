@@ -32,8 +32,17 @@ public class QWDependencyMgr: Encodable {
   var writtenPropertySet:Set<QWProperty>
   var registrationSet: Set<QWRegistration>
 
+  static func isDependencyRequired(observerSet: Set<QWObserver>) -> Bool {
+    let observedSetCount = observerSet
+      .filter() {$0.hasBeenProcessed == false}
+      .count
+    return observedSetCount > 0
+  }
 
-  init(registrationSet: Set<QWRegistration>) {
+  init(observerSet: Set<QWObserver>) {
+    observerSet.forEach({$0.hasBeenProcessed = true})
+    
+    self.registrationSet = Set(observerSet.map({$0.registration}))
     self.registrationSet = registrationSet
       .filter() {$0.schedulingPriority == nil}
       .filter() {!($0.readPathSet.isEmpty)}
@@ -43,11 +52,18 @@ public class QWDependencyMgr: Encodable {
     self.registrationLevel = [:]
     self.writtenPropertySet = []
 
-    let collectorSet = registrationSet.filter({$0.registrationType == QWRegistrationType.Collector})
+    // Inject Collectors
+    // A registration of type Collector shall obey the rule that
+    // if a property of the collector read set has been updated,
+    // then the collectorMap is updated.
+    // Thus, registering to the collectorMap entitle to read the properties in collector read set
+    // without registering to them in the read set.
+    let collectorSet = observerSet
+      .map({$0.registration})
+      .filter({$0.registrationType == QWRegistrationType.Collector})
     for registration in registrationSet {
-      registration.injectCollectors(collectorSet)
+      registration.injectCollectors(Set(collectorSet))
     }
-
 
     // Start computation
     computeDependsFromPropertySet()
@@ -59,19 +75,20 @@ public class QWDependencyMgr: Encodable {
     // Written Properties shall have greater level than read properties
     checkWrittenProperties()
 
-    let alwaysTriggerSet = registrationSet
+    let alwaysTriggerArray = observerSet
+      .map({$0.registration})
       .filter() {$0.schedulingPriority == nil}
       .filter() {$0.readPathSet.isEmpty}
 
-    for reg in alwaysTriggerSet {
+    for reg in alwaysTriggerArray {
       registrationLevel[reg] = maxLevel + 1
     }
-    self.registrationSet.formUnion(alwaysTriggerSet)
+    self.registrationSet.formUnion(alwaysTriggerArray)
 
   }
 
-  func level(reg: QWRegistration) -> Int {
-    return registrationLevel[reg]!
+  func level(reg: QWRegistration) -> Int? {
+    return registrationLevel[reg]
   }
 
 

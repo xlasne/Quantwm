@@ -25,11 +25,13 @@ open class GenericViewModel<Model: QWRoot> : NSObject {
   // MARK: - Registration
   open func registerObserver(registration: QWRegistration,
                              target: NSObject,
-                             selector: Selector) {
+                             selector: Selector,
+                             maxNbRegistrationWithSameName: Int? = nil) {
 
     qwMediator.registerObserver(registration: registration,
                                 target: target,
-                                selector: selector)
+                                selector: selector,
+                                maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
   }
 
   // Not mandatory. If not performed, may generate a warning.

@@ -29,7 +29,6 @@ public final class QWRegistration: NSObject, Encodable
   let name: String
   let writtenPathSet: Set<QWPath>
   let schedulingPriority: Int?
-  let maxNbRegistrationWithSameName: Int?
   let registrationType: QWRegistrationType
   var collectorPathSet: Set<QWPath> = []   // Contains collector values which can be read, but does not require registration to because their contract is managed via Collector.
 
@@ -37,16 +36,13 @@ public final class QWRegistration: NSObject, Encodable
        readMap: QWMap,
        name: String,
        writtenMap: QWMap = QWMap(pathArray : []),
-       schedulingPriority: Int?,
-       maxNbRegistrationWithSameName: Int?
-    )
+       schedulingPriority: Int?)
   {
     self.registrationType = registrationType
     self.readPathSet = readMap.qwPathSet
     self.name = name
     self.writtenPathSet = writtenMap.qwPathSet
     self.schedulingPriority = schedulingPriority
-    self.maxNbRegistrationWithSameName = maxNbRegistrationWithSameName
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
@@ -136,14 +132,12 @@ public final class QWRegistration: NSObject, Encodable
                readMap: collectedMap,
                name: name,
                writtenMap: collectorMap,
-               schedulingPriority: schedulingPriority,
-               maxNbRegistrationWithSameName: 1)
+               schedulingPriority: schedulingPriority)
   }
 
   public convenience init(smartWithReadMap readMap: QWMap,
               name: String,
-              writtenMap: QWMap = QWMap(pathArray : []),
-              maxNbRegistrationWithSameName: Int? = nil) {
+              writtenMap: QWMap = QWMap(pathArray : [])) {
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
@@ -161,14 +155,12 @@ public final class QWRegistration: NSObject, Encodable
                readMap: readMap,
                name: name,
                writtenMap: writtenMap,
-               schedulingPriority: nil,
-               maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
+               schedulingPriority: nil)
   }
 
   public convenience init(hardWithReadMap readMap: QWMap,
               name: String,
-              schedulingPriority: Int,
-              maxNbRegistrationWithSameName: Int? = nil) {
+              schedulingPriority: Int) {
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
@@ -180,8 +172,7 @@ public final class QWRegistration: NSObject, Encodable
                readMap: readMap,
                name: name,
                writtenMap: QWMap(pathArray : []),
-               schedulingPriority: schedulingPriority,
-               maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
+               schedulingPriority: schedulingPriority)
   }
 
   public convenience init(alwaysRefreshWithName name: String) {
@@ -190,8 +181,7 @@ public final class QWRegistration: NSObject, Encodable
               readMap: QWMap(pathArray : []),
               name: name,
               writtenMap: QWMap(pathArray : []),
-              schedulingPriority: nil,
-              maxNbRegistrationWithSameName: nil)
+              schedulingPriority: nil)
   }
 
   public func injectCollectors(_ collectorSet: Set<QWRegistration>) {

@@ -15,7 +15,7 @@ class QWObserver: NSObject {
   init(target: AnyObject, notificationClosure: @escaping ()->(), registration: QWRegistration)
   {
     self.target = target
-    self.type = Swift.type(of: target)
+    //self.type = Swift.type(of: target)
     self.registration = registration
     self.notificationClosure = notificationClosure
 
@@ -31,20 +31,25 @@ class QWObserver: NSObject {
     }
 
     super.init()
-    print("QWObserver: R(\(registration.readPathSet.count)) W(\(registration.writtenPathSet.count)) target \(name) type \(self.type).")
+    print("QWObserver: R(\(registration.readPathSet.count)) W(\(registration.writtenPathSet.count)) target \(name).")
 
   }
 
-  // The target + Action: The method which will be called if dataset is dirty
-//  weak var target: NSObject?
-  let type: Any.Type  // used to detect multiple registration with the same type + selector
+  // hasBeenProcessed is set to true after its scheduling
+  var hasBeenProcessed = false
+  var hasBeenDependencyOrdered = false
 
   let registration: QWRegistration
 
+  // Used to monitor usage during debug
   var registrationUsage: QWRegistrationUsage?
 
+  // When target is released, the QWObserver is deleted.
   weak var target: AnyObject?
+
+  // notificationClosure is called when readSet is dirty
   var notificationClosure: () -> ()
+
 
   // The set of PropertyDescription which can be written during the action
   // And enable exception to the write interdiction
