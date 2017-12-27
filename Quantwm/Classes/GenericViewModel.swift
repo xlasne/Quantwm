@@ -8,12 +8,7 @@
 
 import Foundation
 
-public protocol QWMediatorOwner: class
-{
-  func getQWMediator() -> QWMediator
-}
-
-open class GenericViewModel<Model: QWMediatorOwner> : NSObject {
+open class GenericViewModel<Model: QWRoot> : NSObject {
   open unowned var dataModel: Model
 
   var qwMediator : QWMediator {
@@ -67,54 +62,6 @@ open class GenericViewModel<Model: QWMediatorOwner> : NSObject {
                                    handler: handler)
   }
 
-}
-
-open class QuantwmViewModel<Model: QWMediatorOwner> : NSObject, QWViewModel {
-  open unowned var dataModel: Model
-  open let owner: NSString
-  public init(dataModel : Model, owner: String)
-  {
-    self.dataModel = dataModel
-    self.owner = NSString(string: owner)
-    super.init()
-  }
-  func getOwner() -> NSObject { return owner }
-  public func getQWMediator() -> QWMediator { return dataModel.getQWMediator() }
-}
-
-protocol QWViewModel: QWMediatorOwner {
-  func getOwner() -> NSObject
-}
-
-protocol ModelWriter: QWViewModel { }
-extension ModelWriter {
-  // MARK: - Repository Observer wrappers
-  var isUnderRefresh: Bool {
-    return self.getQWMediator().isUnderRefresh
-  }
-
-  func updateActionAndRefresh(handler: ()->()) {
-    self.getQWMediator().updateActionAndRefresh(owner: self.getOwner(),
-                                           handler: handler)
-  }
-
-}
-
-protocol ModelReader: QWViewModel { }
-extension ModelReader {
-  // MARK: - Registration
-  func registerObserver(registration: QWRegistration,
-                        target: NSObject,
-                        selector: Selector) {
-    self.getQWMediator().registerObserver(
-      registration: registration,
-      target: target,
-      selector: selector)
-  }
-  // Not mandatory. If not performed, may generate a warning.
-  func unregisterDataSet(target: NSObject) {
-    self.getQWMediator().unregisterRegistrationWithTarget(target)
-  }
 }
 
 

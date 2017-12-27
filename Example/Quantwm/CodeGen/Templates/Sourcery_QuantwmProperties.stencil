@@ -3,7 +3,7 @@
 
     // MARK: - Sourcery
 
-{% if type.implements.QWMediatorOwner_S %}
+{% if type.implements.QWRoot_S %}
     // QWMediatorOwner Protocol
     let qwMediator = QWMediator()
     func getQWMediator() -> QWMediator
@@ -38,9 +38,9 @@
         keypath: \{{type.name}}.{{prop.name|replace:"_",""}},
         description: "{{ prop.name }}")
 {% endif %}
-{% if prop|annotated:"property" or prop|annotated:"node" or prop|annotated:"collector" %}
+{% if prop|annotated:"property" or prop|annotated:"node" or prop|annotated:"sharedProperty" %}
 {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
-{% set propertyKName %}{% ifnot prop|annotated:"collector" %}{{type.name}}.{{monitoredName}}K{% else %}{{prop.annotations.collector}}{% endif %}{% endset %}
+{% set propertyKName %}{% ifnot prop|annotated:"sharedProperty" %}{{type.name}}.{{monitoredName}}K{% else %}{{prop.annotations.sharedProperty}}{% endif %}{% endset %}
 {% if prop.readAccess == "public" or prop.readAccess == "open" or prop.readAccess == "internal" %}
 //FIXME: Variable {{ prop.name }} shall be fileprivate
 {% endif %}

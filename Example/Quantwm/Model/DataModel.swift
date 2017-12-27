@@ -23,7 +23,7 @@ extension MyModel {
     }
 }
 
-class DataModel : NSObject, QWRoot_S, QWMediatorOwner_S, QWNode_S  {
+class DataModel : NSObject, QWRoot_S, QWNode_S  {
     
     static let debug_userID = 10
     

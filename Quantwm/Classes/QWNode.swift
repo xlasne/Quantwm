@@ -11,6 +11,7 @@ import Foundation
 public protocol QWRoot: class, QWNode
 {
   func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceReader
+  func getQWMediator() -> QWMediator
 }
 
 public extension QWRoot {

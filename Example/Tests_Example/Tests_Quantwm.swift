@@ -130,7 +130,7 @@ class QuantwmTest: XCTestCase {
 
     }
 
-    class TestBase: QWRoot, QWMediatorOwner
+    class TestBase: QWRoot
     {
         let changeCounter = QWCounter(name: "TestBase")
         func getQWCounter() -> QWCounter {
@@ -140,7 +140,7 @@ class QuantwmTest: XCTestCase {
             return []
         }
 
-        // QWMediatorOwner Protocol
+        // QWRoot Protocol
         let qwMediator = QWMediator()
         func getQWMediator() -> QWMediator
         {
