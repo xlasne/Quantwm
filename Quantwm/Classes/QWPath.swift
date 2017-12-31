@@ -77,18 +77,6 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
     }
   }
   
-  func key(_ index: Int)-> String? {
-    if index == 0 {
-      return root.rootId
-    }
-    let chainIndex = index - 1
-    if (chainIndex >= 0) && (chainIndex < chain.count) {
-      return chain[chainIndex].propDescription
-    }
-    assert(false,"Error: Invalid index \(index) for \(keypath)")
-    return nil
-  }
-  
   var rootPath: String {
     return root.rootId
   }
@@ -127,38 +115,45 @@ public struct QWPath: CustomDebugStringConvertible, Hashable, Equatable, Encodab
   }
 
   public func appending(_ chainElement: QWProperty) -> QWPath {
-    // Shall I disable this test in release mode ?
-    switch self.type
-    {
-    case .tree:
-      preconditionFailure("Error QWPath: Adding \(chainElement.propDescription) on a subtree QWPath \(keypath)")
-    case .property:
-      preconditionFailure("Error QWPath: Adding \(chainElement.propDescription) on a property QWPath \(keypath)")
-    case .node:
-      break
+    if QWConfiguration.CheckPropertyConsistency.notIgnore {
+      switch self.type
+      {
+      case .tree:
+        let errorStr = "Error QWPath: Adding \(chainElement.propDescription) on a subtree QWPath \(keypath)"
+        QWConfiguration.CheckPropertyConsistency.process(errorStr: errorStr)
+      case .property:
+        let errorStr = "Error QWPath: Adding \(chainElement.propDescription) on a property QWPath \(keypath)"
+        QWConfiguration.CheckPropertyConsistency.process(errorStr: errorStr)
+      case .node:
+        break
+      }
+      let previousProperty: Any.Type = chain.last?.destType ?? root.sourceType
+      if chainElement.source != String(describing: previousProperty) {
+        let errorStr = "Error: \(previousProperty) is declared of " +
+        "type \(previousProperty) instead of type \(chainElement.source)"
+        QWConfiguration.CheckPropertyConsistency.process(errorStr: errorStr)
+      }
     }
-    let _ = validate(newElement: chainElement)
     return QWPath(root: self.root,
                   chain: self.chain + [chainElement],
                   andAllChilds: false,
                   access: access) as QWPath
   }
 
-  func validate(newElement: QWProperty) -> Bool
-  {
-    let previousProperty: Any.Type = chain.last?.destType ?? root.sourceType
-    return newElement.checkSourceTypeMatchesDestinationTypeOf(previousProperty: previousProperty)
-  }
 
   public func all() -> QWPath {
-    switch self.type
-    {
-    case .tree:
-      print("Warning QWPath: Adding all() on a subtree QWPath \(keypath)")
-    case .property:
-      preconditionFailure("Error QWPath: Adding all() on a property QWPath \(keypath)")
-    case .node:
-      break
+    if QWConfiguration.CheckPropertyConsistency.notIgnore {
+      switch self.type
+      {
+      case .tree:
+        let errorStr = "Warning QWPath: Adding all() on a subtree QWPath \(keypath)"
+        QWConfiguration.CheckPropertyConsistency.process(errorStr: errorStr)
+      case .property:
+        let errorStr = "Error QWPath: Adding all() on a property QWPath \(keypath)"
+        QWConfiguration.CheckPropertyConsistency.process(errorStr: errorStr)
+      case .node:
+        break
+      }
     }
     return QWPath(root: self.root,
                   chain: self.chain,

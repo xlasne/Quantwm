@@ -38,6 +38,7 @@
 		1DAFED2392A0BC06F24F724BB0246D3A /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919A41515E9CBA25D86422CBAE2EA8F0 /* DispatchQueueConfiguration.swift */; };
 		202822E4668C16D115A8F68F3ADF0E0F /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C53365A51D088F4D991FA9371B6FAEB /* ImageDownloader.swift */; };
 		2147BBBFA4538C846DFEB9BCB55C686B /* QWProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6980FF3CB74DCDD98761F8138C57543 /* QWProperty.swift */; };
+		2540F03E1FF93D4000352677 /* QWConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2540F03C1FF93CF400352677 /* QWConfiguration.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		2761B22412F85C8FB230E0CBCB99EEE6 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF2DA4B989B1A1DAE7517F51E7A4BA /* ScheduledItem.swift */; };
@@ -356,6 +357,7 @@
 		23A4E67C22314EBD4E31F2DAE17F95E6 /* AlamofireImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-umbrella.h"; sourceTree = "<group>"; };
 		241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-umbrella.h"; sourceTree = "<group>"; };
 		24547D3C83BC31586420960391920929 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
+		2540F03C1FF93CF400352677 /* QWConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QWConfiguration.swift; path = Quantwm/Classes/QWConfiguration.swift; sourceTree = "<group>"; };
 		2688E25DF26BA6A4D3FDC695D14F2909 /* Quantwm-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quantwm-dummy.m"; sourceTree = "<group>"; };
 		2739CB7A8A23BE7D701F2F7DAE44CB20 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		28BC2C578BD1047F484956A70FD6D6F2 /* Concat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Concat.swift; path = RxSwift/Observables/Concat.swift; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 		EFE4585A8A49F9BA60384B0385CDDDEC /* Quantwm */ = {
 			isa = PBXGroup;
 			children = (
+				2540F03C1FF93CF400352677 /* QWConfiguration.swift */,
 				9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */,
 				07C4C522CE8B82927886EC46939E6BB4 /* QWViewModel.swift */,
 				714D6F786037406EF5D175A35B07491E /* QWCounter.swift */,
@@ -1337,6 +1340,7 @@
 				9FB5BBD5F3287559B28C48B8BCF6ADE9 /* QWCounter.swift in Sources */,
 				DC281F75AC7C79F4721A634B57DB4605 /* QWDependencyMgr.swift in Sources */,
 				87C844C8EA46F0F4482032D682F97A1B /* QWMap.swift in Sources */,
+				2540F03E1FF93D4000352677 /* QWConfiguration.swift in Sources */,
 				7F51FD00D9CAB49AB28849E48EEDB88D /* QWMediator.swift in Sources */,
 				89D028B7DC4EFCDF12ADA9B86B12A4FA /* QWNode.swift in Sources */,
 				FD8A3F9CF1ED820D98A3813E15FD2293 /* QWObserver.swift in Sources */,

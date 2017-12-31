@@ -201,7 +201,7 @@ extension QWMediator
 
     let currentRefreshTag = UUID().uuidString
     var pathWalker:QWPathWalker? = nil
-    if QUANTUM_MVVM_DEBUG {
+    if QWConfiguration.QUANTWM_DEBUG {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: currentRefreshTag)
       dataUsage?.disableMonitoring()
       pathWalker = QWPathWalker(root: rootNode, tag: currentRefreshTag)
@@ -353,7 +353,7 @@ extension QWMediator
     observerSet = Set(observerSet.filter({$0.isValid()}))
 
     // Stop Data Usage Monitoring
-    if QUANTUM_MVVM_DEBUG {
+    if QWConfiguration.QUANTWM_DEBUG {
       QuantwmDataUsage.unregisterContext(currentTag: currentRefreshTag)
       dataUsage = nil
     }
@@ -544,7 +544,7 @@ extension QWMediator
   }
 
   public func getCurrentObserverToken() -> QWObserverToken? {
-    if QUANTUM_MVVM_DEBUG {
+    if QWConfiguration.QUANTWM_DEBUG {
       return currentObserverToken
     } else {
       return nil

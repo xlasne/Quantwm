@@ -12,18 +12,12 @@
 // DataUsage is a global spy which is monitoring the reads and writes on any monitored property,
 // belonging or not to the current refresh action.
 // DataUsage is only active during the "perform Action" step of the RefreshUI
-// DataUsage is only activated in Debug mode (QUANTUM_MVVM_DEBUG = true)
+// DataUsage is only activated in Debug mode (QWConfiguration.QUANTWM_DEBUG = true)
 //
 // When any monitored property is read or written, DataUsage check the RWContextStack to find which
 // target is performing the current refresh action, and then add this RWAction in the contextDict for this owner.
 // The problem in registering these read and write is that RefreshUI calls are recursively nested.
 // The monitored usage is allocated to the most inner target.
-
-//#if DEBUG
-let QUANTUM_MVVM_DEBUG = true
-//#else
-//let QUANTUM_MVVM_DEBUG = false
-//#endif
 
 import Foundation
 
@@ -90,7 +84,7 @@ class QuantwmDataUsage: NSObject {
     let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     if let _ = threadDictionary[quantumKey] {
-      assert(false,"Error in DataUsage: Context has not been unregistered")
+      assert(false,"Quantwm Error: DataUsage: Context has not been unregistered")
     }
     let dataUsage = DataUsage(qwTransactionStack: qwTransactionStack, currentTag: currentTag)
     let quantumUsage = QuantwmDataUsage(dataUsage: dataUsage, id: currentTag)
@@ -103,7 +97,7 @@ class QuantwmDataUsage: NSObject {
     let currentThread = Thread.current
     let threadDictionary  = currentThread.threadDictionary
     if let currentUsage = threadDictionary[quantumKey] as? QuantwmDataUsage {
-      assert(currentUsage.id == currentTag,"Error: Mismatch in DataUsage register")
+      assert(currentUsage.id == currentTag,"Quantwm Error: : Mismatch in DataUsage register")
       threadDictionary[quantumKey] = nil
     }
   }
@@ -119,7 +113,6 @@ class DataUsage: NSObject
     return currentUsage?.dataUsage
   }
   
-  let checkStack = true
   let currentTag: String
 
   // monitoringIsActive is activated during call of Notifications,
@@ -152,28 +145,26 @@ class DataUsage: NSObject
   }
 
   func addRead(_ node: QWCounter, property: QWPropertyID) {
-    if checkStack {
-      guard let lastContext = qwTransactionStack.rwContextStack.last else {
-        assert(false,"Error: Trying to read while stack is empty")
-        return
-      }
-      if let registrationUsage = lastContext.registrationUsage {
-        let readAction = RW_Action(nodeId: node.nodeId, property: property)
-        registrationUsage.addReadAction(readAction: readAction)
-      }
+    guard let lastContext = qwTransactionStack.rwContextStack.last else {
+      let errorStr = "Error: Trying to read while stack is empty"
+      QWConfiguration.CheckQuantwmStack.process(errorStr: errorStr)
+      return
+    }
+    if let registrationUsage = lastContext.registrationUsage {
+      let readAction = RW_Action(nodeId: node.nodeId, property: property)
+      registrationUsage.addReadAction(readAction: readAction)
     }
   }
   
   func addWrite(_ node: QWCounter, property: QWPropertyID) {
-    if checkStack {
-      guard let lastContext = qwTransactionStack.rwContextStack.last else {
-        assert(false,"Error: Trying to write while stack is empty")
-        return
-      }
-      if let registrationUsage = lastContext.registrationUsage {
-        let writeAction = RW_Action(nodeId: node.nodeId, property: property)
-        registrationUsage.addWriteAction(writeAction: writeAction)
-      }
+    guard let lastContext = qwTransactionStack.rwContextStack.last else {
+      let errorStr = "Error: Trying to write while stack is empty"
+      QWConfiguration.CheckQuantwmStack.process(errorStr: errorStr)
+      return
+    }
+    if let registrationUsage = lastContext.registrationUsage {
+      let writeAction = RW_Action(nodeId: node.nodeId, property: property)
+      registrationUsage.addWriteAction(writeAction: writeAction)
     }
   }
 }

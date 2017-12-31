@@ -79,13 +79,13 @@ public class QWRegistrationUsage {
   }
 
   func stopCollecting() {
-
+    
     let commonReadPropertySet = commonProperties(actionSet: readActionSet, propertySet: configuredReadPropertySet)
     unionReadDescription.formUnion(commonReadPropertySet)
-
+    
     let commonWritePropertySet = commonProperties(actionSet: writeActionSet, propertySet: configuredWritePropertySet)
     unionWriteDescription.formUnion(commonWritePropertySet)
-
+    
     writeActionSet = []
     readActionSet = []
   }
@@ -138,27 +138,33 @@ extension QWRegistrationUsage: QWRegistrationUsageProtocol {
     if configuredReadPropertySet.isEmpty {
       return // No read monitoring on AlwaysTrigger
     }
-    if !configuredReadPropertySet.contains(readAction.propertyDesc) &&
-      !configuredWritePropertySet.contains(readAction.propertyDesc) &&
-      !configuredCollectorPropertySet.contains(readAction.propertyDesc){
-      let errorStr = "QWRegistrationUsage: Warning: Read of \(name) performs a read of \(readAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
-      print(errorStr)
-      assert(false,errorStr)
+    if QWConfiguration.ReadNonRegisteredProperty.notIgnore {
+      if !configuredReadPropertySet.contains(readAction.propertyDesc) &&
+        !configuredWritePropertySet.contains(readAction.propertyDesc) &&
+        !configuredCollectorPropertySet.contains(readAction.propertyDesc){
+        let errorStr = "QWRegistrationUsage: Warning: Read of \(name) performs a read of \(readAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
+        QWConfiguration.ReadNonRegisteredProperty.process(errorStr: errorStr)
+      }
     }
-    if configuredCollectorPropertySet.contains(readAction.propertyDesc) {
-      collectorActionSet.insert(readAction)
-    } else {
-      readActionSet.insert(readAction)
+    if QWConfiguration.CollectPropertyUsage.notIgnore {
+      if configuredCollectorPropertySet.contains(readAction.propertyDesc) {
+        collectorActionSet.insert(readAction)
+      } else {
+        readActionSet.insert(readAction)
+      }
     }
   }
 
   func addWriteAction(writeAction: RW_Action) {
-    if !configuredWritePropertySet.contains(writeAction.propertyDesc) {
-      let errorStr = "QWRegistrationUsage: Warning: Write of \(name) performs a write of \(writeAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
-      print(errorStr)
-      assert(false,errorStr)
+    if QWConfiguration.WriteNonRegisteredProperty.notIgnore {
+      if !configuredWritePropertySet.contains(writeAction.propertyDesc) {
+        let errorStr = "QWRegistrationUsage: Warning: Write of \(name) performs a write of \(writeAction.propertyDesc.propDescription) which is not part of the registered QWObserver. Consider manually adding this keypath to the registered \(name) QWObserver"
+        QWConfiguration.WriteNonRegisteredProperty.process(errorStr: errorStr)
+      }
     }
-    writeActionSet.insert(writeAction)
+    if QWConfiguration.CollectPropertyUsage.notIgnore {
+      writeActionSet.insert(writeAction)
+    }
   }
 }
 

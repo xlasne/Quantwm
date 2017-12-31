@@ -157,13 +157,6 @@ public class QWProperty: Hashable, Encodable
     self.destType = destinationType
     self.dest = String(describing: destType)
   }
-
-  func checkSourceTypeMatchesDestinationTypeOf(previousProperty: Any.Type) -> Bool
-  {
-    if source == String(describing: previousProperty) { return true}
-    preconditionFailure("Error: \(previousProperty) is declared of " +
-      "type \(previousProperty) instead of type \(source)")
-  }
 }
 
 public class QWNodeProperty: QWProperty

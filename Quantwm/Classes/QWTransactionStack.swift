@@ -9,12 +9,12 @@
 import Foundation
 
 // Define the current context of Quantwm framework
-// - reading: allows reading from the model
+// - notif: allows reading from the model
 // - update: allows read and write from the model
 // - refresh: indicates that a refreshUI() is under processing.
 //
 // These contexts are stacked on a context stack. The first item is the rootContext.
-// Based on the rootContext, the stack becomes a loading, update or refresh stack.
+// Based on the rootContext, the stack becomes an update or refresh stack.
 //
 // - Refresh shall always be pushed on an empty stack.
 // - Update can only be pushed on an update stack, and thus forbidden on refresh or reading stack.
@@ -22,7 +22,7 @@ import Foundation
 //
 
 //MARK: - RWContext
-struct RWContext: Equatable, CustomDebugStringConvertible
+class RWContext: CustomDebugStringConvertible
 {
   enum RW: Int
   {
@@ -79,11 +79,6 @@ struct RWContext: Equatable, CustomDebugStringConvertible
   }
 }
 
-func ==(lhs: RWContext, rhs: RWContext) -> Bool {
-  let areEqual = lhs.rw.rawValue == rhs.rw.rawValue &&
-    lhs.owner == rhs.owner
-  return areEqual
-}
 
 struct QWStackReadLevel {
   let currentTag: String
@@ -119,13 +114,9 @@ class QWTransactionStack {
   var isRootUpdate: Bool {
     return rootContext?.isUpdating ?? false
   }
-  
-  var isRootLoading: Bool {
-    return rootContext?.isNotification ?? false
-  }
-  
+
   // Rule 1: Push/Pop context should be recursive
-  // Rule 2: It is forbidden to push Update context while on Refresh or Notification root stack
+  // Rule 2: It is forbidden to push Update context while on Refresh root stack
   // Rule 3: Refresh context shall be root stack
   var isUpdateAllowed: Bool {
     return rwContextStack.isEmpty || isRootUpdate
@@ -139,12 +130,11 @@ class QWTransactionStack {
   {
     switch rwContext.rw {
     case .notif:
-      break
+      assert(isRootRefresh,"Error: Notification can only be pushed on Refresh Root Stack")
     case .refresh:
       assert(rwContextStack.isEmpty,"Error: Refresh context can only be pushed on an empty stack")
     case .update:
       assert(!isRootRefresh,"Error: Update context can not be pushed on Refresh Root Stack")
-      assert(!isRootLoading,"Error: Update context can not be pushed on Loading Root Stack")
     }
     rwContextStack.append(rwContext)
   }
@@ -153,7 +143,7 @@ class QWTransactionStack {
   {
     if let topContext = rwContextStack.last
     {
-      if topContext == rwContext {
+      if topContext === rwContext {
         let _ = rwContextStack.popLast()
       } else {
         assert(false,"Error: DataUsage trying to pop context \(rwContext) which is not matching top context \(String(describing: rwContextStack.last))")

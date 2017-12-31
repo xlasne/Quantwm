@@ -167,7 +167,8 @@ class QWObserver: NSObject {
     // Normally performAction() should only read from the current dataset.
 
     // dataUsage is only defined in debug
-    if let _ = dataUsage {
+    if let _ = dataUsage,
+     QWConfiguration.CollectPropertyUsage.notIgnore {
       registrationUsage?.updateCollectorActionSet(collectorSet: self.registration.collectorPathSet)
       registrationUsage?.startCollecting()
       notificationClosure()
