@@ -319,6 +319,9 @@ extension QWMediator
             alreadyCheckedPathSet.insert(readPath)
           }
         }
+        for readPath in processedObserver.registration.collectorPathSet {
+          pathWalker?.applyReadOnlyPathAccess(path: readPath)
+        }
         for writePath in processedObserver.writtenPathSet {
           pathWalker?.applyWritePathAccess(path: writePath)
         }
@@ -430,7 +433,7 @@ extension QWMediator
         }
         return nodeIsUpdated
     })
-    print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
+//    print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
     return isUpdated
   }
 
@@ -523,15 +526,6 @@ extension QWMediator
     self.refreshUICalledWhileContextStackWasNotEmpty = true
     self.popContext(writeContext)
   }
-
-  // Reserved for special usage
-  public func updateActionAnd_NO_REFRESH(owner: AnyObject?, handler: ()->())
-  {
-    let writeContext = self.pushUpdateContext(owner)
-    handler()
-    self.popContext(writeContext)
-  }
-
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
   public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: AnyObject?, escapingHandler: @escaping ()->())

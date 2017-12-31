@@ -10,7 +10,7 @@ import Foundation
 
 enum QWRegistrationType {
   case AlwaysTrigger
-  case Collector
+  case Collector(QWPath)
   case HardScheduling
   case SmartScheduling
 }
@@ -109,10 +109,17 @@ public final class QWRegistration: NSObject, Encodable
    Step 2:
    - Register a QWCollector object
 
+   TODO:
+   - Replace collectorPath by a collector param containing registration
+   - Use Observer dirty counter as collector param
+   - Make any registration become collector when used as collector param
+   - Detect that a collector is not present playing its role.
+   - Detect that a collector is not correctly incrementing its property ?
    */
 
   public convenience init(collectorWithReadMap collectedMap: QWMap,
               name: String,
+              writtenMap: QWMap = QWMap(pathArray:[]),
               collectorMap: QWMap,
               schedulingPriority: Int? = nil) {
 
@@ -124,14 +131,13 @@ public final class QWRegistration: NSObject, Encodable
 
     assert(!collectedMap.qwPathSet.isEmpty,"QWCollector \(name): readMap shall not be empty")
     assert(collectorMap.qwPathSet.count == 1,"QWCollector \(name): collectorMap shall only contains one property path")
-    if let path = collectorMap.qwPathSet.first {
-      assert(path.type == .property, "QWCollector \(name): collectorPath shall be a property path")
-    }
+    let collectorPath = collectorMap.qwPathSet.first!
+    assert(collectorPath.type == .property, "QWCollector \(name): collectorPath shall be a property path")
 
-    self.init(registrationType: QWRegistrationType.Collector,
+    self.init(registrationType: QWRegistrationType.Collector(collectorPath),
                readMap: collectedMap,
                name: name,
-               writtenMap: collectorMap,
+               writtenMap: writtenMap + collectorMap,
                schedulingPriority: schedulingPriority)
   }
 
@@ -184,16 +190,27 @@ public final class QWRegistration: NSObject, Encodable
               schedulingPriority: nil)
   }
 
-  public func injectCollectors(_ collectorSet: Set<QWRegistration>) {
+  public func injectCollectors(collectorSet: Set<QWRegistration>) {
     self.collectorPathSet = []
     for reg in collectorSet {
-      assert(reg.writtenPathSet.count == 1)
-      assert(reg.registrationType == .Collector)
-      if let collectorPath = reg.writtenPathSet.first {
+      switch reg.registrationType {
+      case .Collector(let collectorPath):
         if self.readPathSet.contains(collectorPath) {
           self.collectorPathSet.formUnion(reg.readPathSet)
+          self.collectorPathSet.formUnion(reg.writtenPathSet)
         }
+      default:
+        break
       }
+    }
+  }
+
+  var isCollector: Bool {
+    switch registrationType {
+    case .Collector:
+      return true
+    default:
+      return false
     }
   }
 

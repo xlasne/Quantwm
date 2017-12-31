@@ -62,6 +62,8 @@ open class QWCounter: NSObject, Codable {
   private static var queue = DispatchQueue(label: "nodeIdGenerator.quantwm")
   private (set) static var nodeIdGenerator: NodeId = 0
 
+  var activated: Bool = true
+
   // Unique NodeId Generator
   static func generateUniqueNodeId() -> NodeId {
     var nodeId: NodeId = -1
@@ -97,6 +99,8 @@ open class QWCounter: NSObject, Codable {
   
   public func read(_ property: QWProperty)
   {
+    if !activated { return }
+
     let childKey = property
     if !Thread.isMainThread {
       assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
@@ -109,6 +113,8 @@ open class QWCounter: NSObject, Codable {
   }
 
   public func read(_ property: QWProperty, options: QWCounterOption = .none) {
+    if !activated { return }
+
     if !options.contains(.backgroundRead) {
       let childKey = property.propKey
       if !Thread.isMainThread {
@@ -125,6 +131,8 @@ open class QWCounter: NSObject, Codable {
   }
 
   public func write(_ property: QWProperty, options: QWCounterOption = .none) {
+    if !activated { return }
+
     if !options.contains(.backgroundWrite) {
       let childKey = property.propKey
       if !Thread.isMainThread {

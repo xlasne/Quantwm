@@ -60,9 +60,8 @@ public class QWDependencyMgr: Encodable {
     // without registering to them in the read set.
     let collectorSet = observerSet
       .map({$0.registration})
-      .filter({$0.registrationType == QWRegistrationType.Collector})
     for registration in registrationSet {
-      registration.injectCollectors(Set(collectorSet))
+      registration.injectCollectors(collectorSet: Set(collectorSet))
     }
 
     // Start computation

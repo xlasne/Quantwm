@@ -44,11 +44,14 @@ class PlaylistCollectionViewModelTest: XCTestCase {
     func testWithRegistration() {
 
         let playlistUpdatedREG: QWRegistration = QWRegistration(
-            selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration),
-            readMap: viewModel!.mapForPlaylistCollectionDataSource,
+            smartWithReadMap: viewModel!.mapForPlaylistCollectionDataSource,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
         dataModel!.qwMediator.updateActionAndRefresh(owner: self) {
-            self.viewModel!.registerObserver(target: self, registration: playlistUpdatedREG)
+            self.viewModel!.registerObserver(
+                registration: playlistUpdatedREG,
+                target: self,
+                selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration)
+            )
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 1)
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 2)
             DeezerPlaylistStub.importPlaylistChunk(dataModel: dataModel!, index: 2, chunk: 3)

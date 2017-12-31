@@ -67,6 +67,11 @@ class QuantwmTest: XCTestCase {
 
     class MyClass: QWRoot
     {
+        let qwMediator = QWMediator()
+        func getQWMediator() -> QWMediator {
+            return qwMediator
+        }
+
         func getPropertyArray() -> [QWProperty] {
             return []
         }
@@ -246,11 +251,15 @@ class QuantwmTest: XCTestCase {
             .appending(MyClass.testStructK)
             .appending(TestStruct.numberK).map
 
-        let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          readMap: qwPath,
-                                          name: "testBasic")
-        self.base.getQWMediator().registerObserver(target: testCall,
-                                                   registration: registration)
+        let registration = QWRegistration(
+            smartWithReadMap: qwPath,
+            name: "testBasic")
+
+        self.base.getQWMediator().registerObserver(
+            registration: registration,
+            target: testCall,
+            selector: #selector(TestCall.testCall)
+        )
 
         self.base.getQWMediator().refreshUI()
         XCTAssert(testCall.checkIfCalled() == true, "Initial state")
@@ -269,11 +278,15 @@ class QuantwmTest: XCTestCase {
         let keypath = QWPath(root: TestBase.testRootK)
             .appending(TestBase.optNumberK).map
 
-        let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          readMap: keypath,
-                                          name: "testOptionalCall")
+        let registration = QWRegistration(
+            smartWithReadMap: keypath,
+            name: "testOptionalCall")
 
-        self.base.getQWMediator().registerObserver(target: testCall, registration: registration)
+        self.base.getQWMediator().registerObserver(
+            registration: registration,
+            target: testCall,
+            selector: #selector(TestCall.testCall)
+        )
         self.base.getQWMediator().refreshUI()
         XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -305,10 +318,15 @@ class QuantwmTest: XCTestCase {
         let keypath = QWPath(root: TestBase.testRootK)
             .appending(TestBase.lazyNumberK).map
 
-        let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          readMap: keypath,
-                                          name: "testLazyCall")
-        self.base.getQWMediator().registerObserver(target: testCall, registration: registration)
+        let registration = QWRegistration(
+            smartWithReadMap: keypath,
+            name: "testLazyCall")
+
+        self.base.getQWMediator().registerObserver(
+            registration: registration,
+            target: testCall,
+            selector: #selector(TestCall.testCall)
+        )
         self.base.getQWMediator().refreshUI()
         XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -334,10 +352,17 @@ class QuantwmTest: XCTestCase {
             .appending(TestBase.testClassK)
             .appending(MyClass.testDictK).map
 
-        let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          readMap: keypath,
-                                          name: "TestDict")
-        self.base.getQWMediator().registerObserver(target: testCall, registration: registration)
+        let registration = QWRegistration(
+            smartWithReadMap: keypath,
+            name: "TestDict"
+        )
+
+        self.base.getQWMediator().registerObserver(
+            registration: registration,
+            target: testCall,
+            selector: #selector(TestCall.testCall)
+        )
+
         self.base.getQWMediator().refreshUI()
         XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
@@ -359,10 +384,17 @@ class QuantwmTest: XCTestCase {
             .appending(TestStruct.numberK)
             .map
 
-        let registration = QWRegistration(selector: #selector(TestCall.testCall),
-                                          readMap: keypath,
-                                          name: "testDict2")
-        self.base.getQWMediator().registerObserver(target: testCall, registration: registration)
+        let registration = QWRegistration(
+            smartWithReadMap: keypath,
+            name: "TestDict2"
+        )
+
+        self.base.getQWMediator().registerObserver(
+            registration: registration,
+            target: testCall,
+            selector: #selector(TestCall.testCall)
+        )
+
         self.base.getQWMediator().refreshUI()
         XCTAssert(testCall.checkIfCalled() == true, "Initial state")
 
