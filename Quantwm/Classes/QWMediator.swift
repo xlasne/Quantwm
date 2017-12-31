@@ -228,15 +228,15 @@ extension QWMediator
 
     // First, perform Update transaction for priority Scheduling
     // push Update context on root, avoiding refresh UI during configuration refresh
-    let outerUpdateContext = RWContext(UpdateWithOwner: self)
+    let outerUpdateContext = RWContext(updateOwner: "QWMediator")
     qwTransactionStack.pushContext(outerUpdateContext)
 
     var currentPriority: Int? = nil
     while let processedObserver =  getFirstHardcodedObserver(observerSet: observerSet,
                                                              priority: currentPriority)
     {
-      if let target = processedObserver.target {
-        let updateContext = RWContext(UpdateWithOwner: target)
+      if let _ = processedObserver.target {
+        let updateContext = RWContext(updateOwner: processedObserver.registration.name)
         qwTransactionStack.pushContext(updateContext)
 
         // Evaluate the pathStateManager associated to it
@@ -267,7 +267,7 @@ extension QWMediator
     var alreadyCheckedPathSet: Set<QWPath> = []
     
     // then push Root Refresh context on the empty root stack
-    let refreshContext = RWContext(refreshOwner: self)
+    let refreshContext = RWContext(refreshOwner: "QWMediator")
     qwTransactionStack.pushContext(refreshContext)
 
     // mark the whole tree with No Access level
@@ -297,10 +297,10 @@ extension QWMediator
     {
       let processedObserver = setOfObserversToNotify.removeFirst()
       
-      if let target = processedObserver.target {
+      if let _ = processedObserver.target {
 
         // Push Notification context on TransactionStack
-        let roContext = RWContext(NotificationWithOwner: target,
+        let roContext = RWContext(notificationOwner: processedObserver.registration.name,
                                   registrationUsage: processedObserver.registrationUsage)
         
         qwTransactionStack.pushContext(roContext)
@@ -519,7 +519,7 @@ extension QWMediator
 
 extension QWMediator
 {
-  public func updateActionAndRefresh(owner: AnyObject?, handler: ()->())
+  public func updateActionAndRefresh(owner: String, handler: ()->())
   {
     let writeContext = self.pushUpdateContext(owner)
     handler()
@@ -528,7 +528,7 @@ extension QWMediator
   }
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI
-  public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: AnyObject?, escapingHandler: @escaping ()->())
+  public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: String, escapingHandler: @escaping ()->())
   {
     if !qwTransactionStack.isRootRefresh {
       //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync scheduled immediately")
@@ -551,13 +551,13 @@ extension QWMediator
     }
   }
 
-  public func asynchronousRefresh<Value>(owner: AnyObject, token: QWObserverToken?, handler: ()->(Value)) -> Value
+  public func asynchronousRefresh<Value>(owner: String, token: QWObserverToken?, handler: ()->(Value)) -> Value
   {
     if let token = token,
       let registrationUsage = token.registrationUsage {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: token.currentTag)
       dataUsage?.disableMonitoring()
-      let refreshContext = RWContext(NotificationWithOwner: owner,
+      let refreshContext = RWContext(notificationOwner: owner,
                                      registrationUsage: registrationUsage)
       qwTransactionStack.pushContext(refreshContext)
       if registrationUsage.registration.readPathSet.isEmpty {
@@ -580,9 +580,9 @@ extension QWMediator
   }
 
 
-  fileprivate func pushUpdateContext(_ owner: AnyObject?) -> RWContext
+  fileprivate func pushUpdateContext(_ owner: String) -> RWContext
   {
-    let updateContext = RWContext(UpdateWithOwner:owner)
+    let updateContext = RWContext(updateOwner:owner)
     // this is the first update on the stack
     // enable the model write
     if qwTransactionStack.isStackEmpty {

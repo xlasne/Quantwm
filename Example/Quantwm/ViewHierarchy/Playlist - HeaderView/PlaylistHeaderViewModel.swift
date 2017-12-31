@@ -9,7 +9,7 @@
 import UIKit
 import Quantwm
 
-class PlaylistHeaderViewModel: GenericViewModel<DataModel>
+class PlaylistHeaderViewModel: QWViewModel<DataModel>
 {
 
     static let currentPlaylistHeaderMap = QWModel.root.selectedPlaylist_Read

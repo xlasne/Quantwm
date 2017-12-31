@@ -31,7 +31,7 @@ struct RWContext: Equatable, CustomDebugStringConvertible
     case refresh
   }
   let rw : RW
-  weak var owner: AnyObject?
+  var owner: String
   weak var registrationUsage: QWRegistrationUsage? = nil
 
   var isUpdating: Bool {
@@ -46,23 +46,23 @@ struct RWContext: Equatable, CustomDebugStringConvertible
     return self.rw == RW.refresh
   }
   
-  init(rw: RW, owner:AnyObject?) {
+  init(rw: RW, owner:String) {
     self.rw = rw
     self.owner = owner
   }
 
-  init(NotificationWithOwner owner:AnyObject?, registrationUsage: QWRegistrationUsage?) {
+  init(notificationOwner owner:String, registrationUsage: QWRegistrationUsage?) {
     self.rw = RW.notif
     self.owner = owner
     self.registrationUsage = registrationUsage
   }
   
-  init(UpdateWithOwner owner:AnyObject?) {
+  init(updateOwner owner:String) {
     self.rw = RW.update
     self.owner = owner
   }
   
-  init(refreshOwner:AnyObject?) {
+  init(refreshOwner:String) {
     self.rw = RW.refresh
     self.owner = refreshOwner
   }
@@ -70,9 +70,9 @@ struct RWContext: Equatable, CustomDebugStringConvertible
   var debugDescription: String {
     switch rw {
     case .notif:
-      return "Loading - \(String(describing: owner))"
+      return "Loading - \(owner)"
     case .update:
-      return "Update - \(String(describing: owner))"
+      return "Update - \(owner)"
     case .refresh:
       return "Refresh"
     }
@@ -81,7 +81,7 @@ struct RWContext: Equatable, CustomDebugStringConvertible
 
 func ==(lhs: RWContext, rhs: RWContext) -> Bool {
   let areEqual = lhs.rw.rawValue == rhs.rw.rawValue &&
-    lhs.owner === rhs.owner
+    lhs.owner == rhs.owner
   return areEqual
 }
 

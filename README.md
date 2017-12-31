@@ -231,10 +231,10 @@ To select a write node and all its children: QWModel.root.selectedPlaylist_allWr
 
 ### View Model
 
-View Model shall inherit from GenericViewModel<YourRootClass>
+View Model shall inherit from QWViewModel<YourRootClass>
 
 ```swift
-class PlaylistHeaderViewModel: GenericViewModel<DataModel>
+class PlaylistHeaderViewModel: QWViewModel<DataModel>
 {
   public init(dataModel : Model, owner: String) {}
 

@@ -48,7 +48,7 @@ class NetworkMgr: NSObject, DeezerAPI {
     // To be called just after application launch
     func postInit(dataModel: DataModel) {
         self.dataModel = dataModel
-        dataModel.qwMediator.updateActionAndRefresh(owner: self) {
+        dataModel.qwMediator.updateActionAndRefresh(owner: "NetworkMgr") {
             dataModel.qwMediator.registerObserver(
                 registration: NetworkMgr.playlistSelectedREG,
                 target: self,

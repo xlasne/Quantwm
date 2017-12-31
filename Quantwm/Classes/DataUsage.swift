@@ -28,7 +28,7 @@ let QUANTUM_MVVM_DEBUG = true
 import Foundation
 
 
-public class RW_Action: Equatable, CustomStringConvertible, Hashable {
+class RW_Action: Equatable, CustomStringConvertible, Hashable {
   let nodeId: NodeId?
   let propertyDesc: QWPropertyID
 
@@ -55,7 +55,7 @@ public class RW_Action: Equatable, CustomStringConvertible, Hashable {
   }
 }
 
-public func ==(lhs: RW_Action, rhs: RW_Action) -> Bool
+func ==(lhs: RW_Action, rhs: RW_Action) -> Bool
 {
   return lhs.nodeId == rhs.nodeId && lhs.propertyDesc == rhs.propertyDesc
 }

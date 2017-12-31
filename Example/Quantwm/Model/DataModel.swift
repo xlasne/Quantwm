@@ -41,7 +41,7 @@ class DataModel : QWRoot_S, QWNode_S  {
             qwRoot: self,
             rootProperty: DataModel.dataModelK)
 
-        qwMediator.updateActionAndRefresh(owner: self) {
+        qwMediator.updateActionAndRefresh(owner: "DataModel") {
             networkMgr.postInit(dataModel: self)
             coordinator.postInit(dataModel: self)
         }
@@ -54,7 +54,7 @@ class DataModel : QWRoot_S, QWNode_S  {
         networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
             print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
             if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: me) {
+                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
                     me.playlistsCollection.importChunck(chunk: indexedPlaylist)
                 }
             }
@@ -63,7 +63,7 @@ class DataModel : QWRoot_S, QWNode_S  {
         networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
             print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
             if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: me) {
+                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
                     me.trackListCollection.importChunck(chunk: indexedTrack)
                 }
             }

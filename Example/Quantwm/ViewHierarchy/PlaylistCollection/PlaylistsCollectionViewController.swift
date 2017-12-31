@@ -19,7 +19,11 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
     override  func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let model = QWModel.root.playlistsCollection
-        let viewModel = PlaylistsCollectionViewModel(dataModel: dataModel, owner: "PlaylistsCollectionViewController", playlistCollectionModel: model)
+        let viewModel = PlaylistsCollectionViewModel(
+            dataModel: dataModel,
+            owner: "PlaylistsCollectionViewController",
+            playlistCollectionModel: model)
+
         navigationController?.setToolbarHidden(true, animated: true)
         self.viewModel = viewModel
         playlistUpdatedRegistration = playlistUpdatedREG(viewModel: viewModel)
@@ -103,7 +107,7 @@ extension PlaylistsCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
 
-        let result = viewModel?.asynchronousRefresh(target: self, token: refreshToken) {
+        let result = viewModel?.asynchronousRefresh(token: refreshToken) {
             return viewModel?.playlistCount()
         }
         return result ?? 0
@@ -115,7 +119,7 @@ extension PlaylistsCollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! PlaylistCell
 
-        let coverInfo = viewModel?.asynchronousRefresh(target: self, token: refreshToken) {
+        let coverInfo = viewModel?.asynchronousRefresh(token: refreshToken) {
             return viewModel?.playlistCoverInfoForIndexPath(indexPath: indexPath)
         }
         cell.configureCell(coverInfo: coverInfo)

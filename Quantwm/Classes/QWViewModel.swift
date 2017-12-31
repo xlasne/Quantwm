@@ -1,5 +1,5 @@
 //
-//  GenericViewModel.swift
+//  QWViewModel.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 18/05/16.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-open class GenericViewModel<Model: QWRoot> : NSObject {
+open class QWViewModel<Model: QWRoot> : NSObject {
   open unowned var dataModel: Model
 
   var qwMediator : QWMediator {
     return dataModel.getQWMediator()
   }
 
-  open let owner: NSString
+  open let owner: String
   public init(dataModel : Model, owner: String)
   {
     self.dataModel = dataModel
-    self.owner = NSString(string: owner)
+    self.owner = owner
     super.init()
   }
   // MARK: - Registration
@@ -47,7 +47,7 @@ open class GenericViewModel<Model: QWRoot> : NSObject {
 
 
   // Not mandatory. If not performed, may generate a warning.
-  open func unregisterDataSet(target: NSObject) {
+  open func unregisterDataSet(target: AnyObject) {
       qwMediator.unregisterRegistrationWithTarget(target)
   }
 
@@ -70,8 +70,8 @@ open class GenericViewModel<Model: QWRoot> : NSObject {
     return qwMediator.getCurrentObserverToken()
   }
 
-  open func asynchronousRefresh<Value>(target: NSObject, token: QWObserverToken?, handler: ()->(Value)) -> Value {
-    return qwMediator.asynchronousRefresh(owner: target,
+  open func asynchronousRefresh<Value>(token: QWObserverToken?, handler: ()->(Value)) -> Value {
+    return qwMediator.asynchronousRefresh(owner: owner,
                                    token: token,
                                    handler: handler)
   }

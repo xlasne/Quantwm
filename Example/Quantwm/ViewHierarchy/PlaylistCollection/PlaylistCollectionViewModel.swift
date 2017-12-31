@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import Quantwm
 
-class PlaylistsCollectionViewModel: GenericViewModel<DataModel>
+class PlaylistsCollectionViewModel: QWViewModel<DataModel>
 {
     let playlistCollectionModel: PlaylistsCollectionQWModel
 

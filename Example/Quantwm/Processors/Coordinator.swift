@@ -20,7 +20,7 @@ class Coordinator: NSObject {
     func postInit(dataModel: DataModel)
     {
         self.dataModel = dataModel
-        dataModel.qwMediator.updateActionAndRefresh(owner: self) {
+        dataModel.qwMediator.updateActionAndRefresh(owner: "Coordinator") {
         dataModel.qwMediator.registerObserver(
             registration: Coordinator.userIdUpdatedREG,
             target: self,

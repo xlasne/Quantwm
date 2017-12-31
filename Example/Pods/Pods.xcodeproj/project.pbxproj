@@ -27,7 +27,7 @@
 		13138796866347D8E8A77F341EFF74A3 /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8334CA98BAC1AA74078C356FE321593 /* CombineLatest.swift */; };
 		14F48E17B5858694768859D44F0EE718 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3BC9B5306ECEA210016F832E7B9E81 /* SwiftSupport.swift */; };
 		15011CA885E0D4CB373576CBCAAB7491 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7271E5B3F06DD577465324919906C28 /* PriorityQueue.swift */; };
-		15D0B7A7DA7A73C8631F82DD36AC49F3 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */; };
+		15D0B7A7DA7A73C8631F82DD36AC49F3 /* QWViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C4C522CE8B82927886EC46939E6BB4 /* QWViewModel.swift */; };
 		1777B87FE059064BA67A3A758B1DB0AF /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91FB341A772C105797F82AAC058EE4B /* RefCountDisposable.swift */; };
 		196047C8B8B3477939236FFF44787A9A /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0602F3C61E568599954D242737E9676E /* GroupedObservable.swift */; };
 		19FA7C187BADD888DA28F313A0929D15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
@@ -326,7 +326,7 @@
 		05AD4E0A2C582BC0D7BBBE7F16F20704 /* Switch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Switch.swift; path = RxSwift/Observables/Switch.swift; sourceTree = "<group>"; };
 		0602F3C61E568599954D242737E9676E /* GroupedObservable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GroupedObservable.swift; path = RxSwift/GroupedObservable.swift; sourceTree = "<group>"; };
 		06AAB3F8B5173A3C344DD37E2281596F /* Enumerated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Enumerated.swift; path = RxSwift/Observables/Enumerated.swift; sourceTree = "<group>"; };
-		07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GenericViewModel.swift; path = Quantwm/Classes/GenericViewModel.swift; sourceTree = "<group>"; };
+		07C4C522CE8B82927886EC46939E6BB4 /* QWViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QWViewModel.swift; path = Quantwm/Classes/QWViewModel.swift; sourceTree = "<group>"; };
 		07E67F9B83B73ABE4E478A3F510AF192 /* AlamofireImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-prefix.pch"; sourceTree = "<group>"; };
 		0A10DB8A7E46BB3E81BA8B154A5DA2A1 /* RxSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-prefix.pch"; sourceTree = "<group>"; };
 		0AC9840DCAA0CED3C299BFBCE027E5FC /* AsyncLock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncLock.swift; path = RxSwift/Concurrency/AsyncLock.swift; sourceTree = "<group>"; };
@@ -1043,7 +1043,7 @@
 			isa = PBXGroup;
 			children = (
 				9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */,
-				07C4C522CE8B82927886EC46939E6BB4 /* GenericViewModel.swift */,
+				07C4C522CE8B82927886EC46939E6BB4 /* QWViewModel.swift */,
 				714D6F786037406EF5D175A35B07491E /* QWCounter.swift */,
 				AFBC3C93F65E85B94750F07368F61448 /* QWDependencyMgr.swift */,
 				DB2B36570CCE498B208B3E1E3647EAD3 /* QWMap.swift */,
@@ -1332,7 +1332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3260E9C995A6C001E435A86DE9417BB /* DataUsage.swift in Sources */,
-				15D0B7A7DA7A73C8631F82DD36AC49F3 /* GenericViewModel.swift in Sources */,
+				15D0B7A7DA7A73C8631F82DD36AC49F3 /* QWViewModel.swift in Sources */,
 				492BB553B631D9A6C68E34A7909838AC /* Quantwm-dummy.m in Sources */,
 				9FB5BBD5F3287559B28C48B8BCF6ADE9 /* QWCounter.swift in Sources */,
 				DC281F75AC7C79F4721A634B57DB4605 /* QWDependencyMgr.swift in Sources */,

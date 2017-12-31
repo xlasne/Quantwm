@@ -9,7 +9,7 @@
 import UIKit
 import Quantwm
 
-class TrackListViewModel: GenericViewModel<DataModel>
+class TrackListViewModel: QWViewModel<DataModel>
 {
     let trackListCollectionModel: TrackListCollectionQWModel
 
