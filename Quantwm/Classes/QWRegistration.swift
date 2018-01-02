@@ -10,7 +10,7 @@ import Foundation
 
 enum QWRegistrationType {
   case AlwaysTrigger
-  case Collector(QWPath)
+  case Collector
   case HardScheduling
   case SmartScheduling
 }
@@ -30,12 +30,15 @@ public final class QWRegistration: NSObject, Encodable
   let writtenPathSet: Set<QWPath>
   let schedulingPriority: Int?
   let registrationType: QWRegistrationType
+  var collectors:[QWRegistration]
   var collectorPathSet: Set<QWPath> = []   // Contains collector values which can be read, but does not require registration to because their contract is managed via Collector.
+
 
   internal init(registrationType: QWRegistrationType,
        readMap: QWMap,
        name: String,
        writtenMap: QWMap = QWMap(pathArray : []),
+       collectors: [QWRegistration] = [],
        schedulingPriority: Int?)
   {
     self.registrationType = registrationType
@@ -43,6 +46,8 @@ public final class QWRegistration: NSObject, Encodable
     self.name = name
     self.writtenPathSet = writtenMap.qwPathSet
     self.schedulingPriority = schedulingPriority
+    self.collectors = collectors
+    self.collectorPathSet = QWRegistration.getCollectorPath(collectors: collectors)
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
@@ -118,32 +123,29 @@ public final class QWRegistration: NSObject, Encodable
    */
 
   public convenience init(collectorWithReadMap collectedMap: QWMap,
-              name: String,
-              writtenMap: QWMap = QWMap(pathArray:[]),
-              collectorMap: QWMap,
-              schedulingPriority: Int? = nil) {
+                          name: String,
+                          writtenMap: QWMap?,
+                          collectors: [QWRegistration] = [],
+                          schedulingPriority: Int? = nil) {
 
-    for path in collectedMap.qwPathSet {
-      if path.access == .writePath {
-        assert(false, "Error: Registration \(name) contains a write path in collectedMap : \(path)")
-      }
-    }
+    let writeMap = writtenMap ?? QWMap(pathArray:[])
 
     assert(!collectedMap.qwPathSet.isEmpty,"QWCollector \(name): readMap shall not be empty")
-    assert(collectorMap.qwPathSet.count == 1,"QWCollector \(name): collectorMap shall only contains one property path")
-    let collectorPath = collectorMap.qwPathSet.first!
-    assert(collectorPath.type == .property, "QWCollector \(name): collectorPath shall be a property path")
 
-    self.init(registrationType: QWRegistrationType.Collector(collectorPath),
-               readMap: collectedMap,
-               name: name,
-               writtenMap: writtenMap + collectorMap,
-               schedulingPriority: schedulingPriority)
+    self.init(registrationType: QWRegistrationType.Collector,
+              readMap: collectedMap,
+              name: name,
+              writtenMap: writeMap,
+              collectors: collectors,
+              schedulingPriority: schedulingPriority)
   }
 
   public convenience init(smartWithReadMap readMap: QWMap,
               name: String,
-              writtenMap: QWMap = QWMap(pathArray : [])) {
+              writtenMap: QWMap? = nil,
+              collectors: [QWRegistration] = []) {
+
+    let writeMap = writtenMap ?? QWMap(pathArray:[])
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
@@ -151,33 +153,44 @@ public final class QWRegistration: NSObject, Encodable
       }
     }
 
-    for path in writtenMap.qwPathSet {
+    for path in writeMap.qwPathSet {
       if path.access == .readPath {
         assert(false, "Error: Registration \(name) contains a read in writePath : \(path)")
       }
     }
 
+    for reg in collectors {
+      assert(!reg.readPathSet.isEmpty,"Error: Collector \(reg.name) readMap shall not be empty")
+    }
+    
     self.init(registrationType: QWRegistrationType.SmartScheduling,
                readMap: readMap,
                name: name,
-               writtenMap: writtenMap,
+               writtenMap: writeMap,
+               collectors: collectors,
                schedulingPriority: nil)
   }
 
   public convenience init(hardWithReadMap readMap: QWMap,
               name: String,
-              schedulingPriority: Int) {
+              schedulingPriority: Int,
+              collectors: [QWRegistration] = []) {
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
         assert(false, "Error: Registration \(name) contains a write readPath : \(path)")
       }
+    }
+
+    for reg in collectors {
+      assert(!reg.readPathSet.isEmpty,"Error: Collector \(reg.name) readMap shall not be empty")
     }
 
     self.init(registrationType: QWRegistrationType.HardScheduling,
                readMap: readMap,
                name: name,
                writtenMap: QWMap(pathArray : []),
+               collectors: collectors,
                schedulingPriority: schedulingPriority)
   }
 
@@ -190,30 +203,15 @@ public final class QWRegistration: NSObject, Encodable
               schedulingPriority: nil)
   }
 
-  public func injectCollectors(collectorSet: Set<QWRegistration>) {
-    self.collectorPathSet = []
-    for reg in collectorSet {
-      switch reg.registrationType {
-      case .Collector(let collectorPath):
-        if self.readPathSet.contains(collectorPath) {
-          self.collectorPathSet.formUnion(reg.readPathSet)
-          self.collectorPathSet.formUnion(reg.writtenPathSet)
-        }
-      default:
-        break
-      }
+  public static func getCollectorPath(collectors: [QWRegistration]) -> Set<QWPath> {
+    var collectorPaths: Set<QWPath> = []
+    for reg in collectors {
+      collectorPaths.formUnion(reg.readPathSet)
+      collectorPaths.formUnion(reg.writtenPathSet)
+      collectorPaths.formUnion(reg.collectorPathSet)
     }
+    return collectorPaths
   }
-
-  var isCollector: Bool {
-    switch registrationType {
-    case .Collector:
-      return true
-    default:
-      return false
-    }
-  }
-
 }
 
 

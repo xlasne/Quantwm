@@ -37,7 +37,7 @@ public class QWConfiguration {
 
   public static var ReadNonRegisteredProperty: Policy = .isAssert
   public static var WriteNonRegisteredProperty: Policy = .isAssert
-  public static var CollectPropertyUsage: Policy = .isIgnore
+  public static var CollectPropertyUsage: Policy = .isAssert
 
   public static var CheckQuantwmStack: Policy = .isAssert
   public static var CheckPropertyConsistency: Policy = .isAssert

@@ -244,7 +244,6 @@ extension QWMediator
         for readPath in processedObserver.observedPathSet
         {
           if let pathStateManager = self.pathStateManagerDict[readPath] {
-            pathWalker?.applyReadOnlyPathAccess(path: readPath)
             pathStateManager.readAndCompareTrace(rootNode: rootNode)
           }
         }
@@ -362,6 +361,7 @@ extension QWMediator
     var usedObservervable: Set<QWPath> = []
     for observer in observerSet
     {
+      observer.hasBeenDirty = false
       for readPath in observer.observedPathSet
       {
         usedObservervable.insert(readPath)
@@ -557,9 +557,13 @@ extension QWMediator
       let registrationUsage = token.registrationUsage {
       self.dataUsage = QuantwmDataUsage.registerContext(self.qwTransactionStack, currentTag: token.currentTag)
       dataUsage?.disableMonitoring()
-      let refreshContext = RWContext(notificationOwner: owner,
-                                     registrationUsage: registrationUsage)
+
+      let refreshContext = RWContext(refreshOwner: "QWMediator")
       qwTransactionStack.pushContext(refreshContext)
+      
+      let notificationContext = RWContext(notificationOwner: owner,
+                                     registrationUsage: registrationUsage)
+      qwTransactionStack.pushContext(notificationContext)
       if registrationUsage.registration.readPathSet.isEmpty {
         dataUsage?.activateWriteMonitoring()
       } else {
@@ -570,8 +574,10 @@ extension QWMediator
       registrationUsage.stopCollecting()
       dataUsage?.disableMonitoring()
       // Pop Notification context on TransactionStack
-      qwTransactionStack.popContext(refreshContext)
+      qwTransactionStack.popContext(notificationContext)
       QuantwmDataUsage.unregisterContext(currentTag: token.currentTag)
+
+      qwTransactionStack.popContext(refreshContext)
       dataUsage = nil
       return value
     } else {

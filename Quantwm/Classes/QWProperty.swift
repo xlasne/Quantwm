@@ -84,7 +84,7 @@ public class QWPropProperty<Root, Value>: QWProperty
   public init(
     propertyKeypath: KeyPath<Root,Value>,
     description: String)
-  {
+    {
     self.getter = { (root: Root)->Value in
       return root[keyPath: propertyKeypath]
       }

@@ -7,6 +7,20 @@
 //
 import Foundation
 
+// Implementation via getter method provides the flexibility
+// to have a customized way of acessing the monitored node.
+public protocol QWNode
+{
+  func getQWCounter() -> QWCounter
+  func getPropertyArray() -> [QWProperty]
+}
+
+public protocol QWModelProperty {
+  static func getPropertyArray() -> [QWProperty]
+}
+
+
+
 // The root node shall be an object, in order to keep a weak pointer on it.
 public protocol QWRoot: class, QWNode
 {
@@ -21,17 +35,6 @@ public extension QWRoot {
   }
 }
 
-// Implementation via getter method provides the flexibility
-// to have a customized way of acessing the monitored node.
-public protocol QWNode
-{
-  func getQWCounter() -> QWCounter
-  func getPropertyArray() -> [QWProperty]
-}
-
-public protocol QWModelProperty {
-  static func getPropertyArray() -> [QWProperty]
-}
 
 
 

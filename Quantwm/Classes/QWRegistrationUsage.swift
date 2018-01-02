@@ -73,11 +73,6 @@ public class QWRegistrationUsage {
     collectorActionSet = []
   }
 
-  func updateCollectorActionSet(collectorSet: Set<QWPath>) {
-    let collectorProperties = QWRegistrationUsage.convertToProperty(paths: registration.collectorPathSet)
-    self.configuredCollectorPropertySet = collectorProperties
-  }
-
   func stopCollecting() {
     
     let commonReadPropertySet = commonProperties(actionSet: readActionSet, propertySet: configuredReadPropertySet)

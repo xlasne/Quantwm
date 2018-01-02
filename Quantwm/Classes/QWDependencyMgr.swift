@@ -34,13 +34,13 @@ public class QWDependencyMgr: Encodable {
 
   static func isDependencyRequired(observerSet: Set<QWObserver>) -> Bool {
     let observedSetCount = observerSet
-      .filter() {$0.hasBeenProcessed == false}
+      .filter() {$0.hasBeenDependencyOrdered == false}
       .count
     return observedSetCount > 0
   }
 
   init(observerSet: Set<QWObserver>) {
-    observerSet.forEach({$0.hasBeenProcessed = true})
+    observerSet.forEach({$0.hasBeenDependencyOrdered = true})
     
     self.registrationSet = Set(observerSet.map({$0.registration}))
     self.registrationSet = registrationSet
@@ -58,10 +58,26 @@ public class QWDependencyMgr: Encodable {
     // then the collectorMap is updated.
     // Thus, registering to the collectorMap entitle to read the properties in collector read set
     // without registering to them in the read set.
-    let collectorSet = observerSet
-      .map({$0.registration})
-    for registration in registrationSet {
-      registration.injectCollectors(collectorSet: Set(collectorSet))
+    func findCollectors(reg: QWRegistration) -> QWObserver? {
+      let filteredObserver = observerSet
+        .filter({$0.registration.name == reg.name})
+      assert(filteredObserver.count == 1 ,"Collector \(reg.name) is declared as collector and is registered \(filteredObserver.count) times")
+      return filteredObserver.first
+    }
+
+    for observer in observerSet {
+      if observer.registration.collectors.count > 0 {
+        observer.collectorObserver = []
+        for collectorReg in observer.registration.collectors {
+          if let collectorObs = findCollectors(reg: collectorReg) {
+            observer.collectorObserver.append(collectorObs)
+          } else {
+            assert(false,"Collector \(collectorReg.name) is declared as collector by \(observer.registration.name), but not active")
+          }
+        }
+      } else {
+        observer.collectorObserver = []
+      }
     }
 
     // Start computation

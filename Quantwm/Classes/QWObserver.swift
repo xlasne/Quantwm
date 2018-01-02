@@ -20,9 +20,9 @@ class QWObserver: NSObject {
     self.notificationClosure = notificationClosure
 
     switch registration.registrationType {
-    case .AlwaysTrigger:
-      self.registrationUsage = QWRegistrationUsage(registration: registration)
     case .Collector:
+      self.registrationUsage = QWRegistrationUsage(registration: registration)
+    case .AlwaysTrigger:
       self.registrationUsage = QWRegistrationUsage(registration: registration)
     case .SmartScheduling:
       self.registrationUsage = QWRegistrationUsage(registration: registration)
@@ -35,9 +35,11 @@ class QWObserver: NSObject {
 
   }
 
+  // hasBeenDependencyOrdered is set to true after its dependency ordering
+  var hasBeenDependencyOrdered = false
+
   // hasBeenProcessed is set to true after its scheduling
   var hasBeenProcessed = false
-  var hasBeenDependencyOrdered = false
 
   let registration: QWRegistration
 
@@ -50,6 +52,9 @@ class QWObserver: NSObject {
   // notificationClosure is called when readSet is dirty
   var notificationClosure: () -> ()
 
+  // Set by QWDependencyMgr with the associated Collectors
+  var collectorObserver:[QWObserver] = []
+  var hasBeenDirty: Bool = true
 
   // The set of PropertyDescription which can be written during the action
   // And enable exception to the write interdiction
@@ -134,6 +139,12 @@ class QWObserver: NSObject {
       }
       observedPathsCounter[keypath] = currentChangeCount
     }
+
+    for collector  in collectorObserver {
+      if collector.hasBeenDirty {
+        isDirty = true
+      }
+    }
     
     if forcedDirty.isDirty() {
       desc = forcedDirty.description
@@ -144,8 +155,7 @@ class QWObserver: NSObject {
     if isDirty {
       return (isDirty:true, description: desc)
     }
-    
-    
+
     return (isDirty:false, description: "Not Dirty")
   }
 
@@ -158,6 +168,7 @@ class QWObserver: NSObject {
     }
     
     let checkDirty = self.updateDirtyStatus(dataDict)
+    hasBeenDirty = checkDirty.isDirty
     if  !checkDirty.isDirty {
       return
     }
@@ -169,7 +180,6 @@ class QWObserver: NSObject {
     // dataUsage is only defined in debug
     if let _ = dataUsage,
      QWConfiguration.CollectPropertyUsage.notIgnore {
-      registrationUsage?.updateCollectorActionSet(collectorSet: self.registration.collectorPathSet)
       registrationUsage?.startCollecting()
       notificationClosure()
       registrationUsage?.stopCollecting()
