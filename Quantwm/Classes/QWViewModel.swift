@@ -8,36 +8,33 @@
 
 import Foundation
 
-open class QWViewModel<Mediator: QWMediator>: NSObject {
+public protocol QWViewModel {
 
-  public unowned var qwMediator : Mediator
+  func getMediator() -> QWMediator
+  var modelOwner: String { get }
 
-  open let owner: String
-  public init(mediator: Mediator, owner: String)
-  {
-    self.qwMediator = mediator
-    self.owner = owner
-    super.init()
-  }
+}
+
+public extension QWViewModel {
 
   // MARK: - Registration
-  open func registerObserver(registration: QWRegistration,
+  func registerObserver(registration: QWRegistration,
                              target: NSObject,
                              selector: Selector,
                              maxNbRegistrationWithSameName: Int? = nil) {
 
-    qwMediator.registerObserver(registration: registration,
+    getMediator().registerObserver(registration: registration,
                                 target: target,
                                 selector: selector,
                                 maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
   }
 
-  open func registerObserver(registration: QWRegistration,
+  func registerObserver(registration: QWRegistration,
                              target: AnyObject,
                              notificationClosure: @escaping () -> (),
                              maxNbRegistrationWithSameName: Int? = nil) {
 
-    qwMediator.registerObserver(registration: registration,
+    getMediator().registerObserver(registration: registration,
                                 target: target,
                                 notificationClosure: notificationClosure,
                                 maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
@@ -45,18 +42,19 @@ open class QWViewModel<Mediator: QWMediator>: NSObject {
 
 
   // Not mandatory. If not performed, generates a warning when 2 similar objects are registered.
-  open func unregisterDataSet(target: AnyObject) {
-      qwMediator.unregisterRegistrationWithTarget(target)
+  func unregisterDataSet(target: AnyObject) {
+    getMediator().unregisterRegistrationWithTarget(target)
   }
 
   // MARK: - Repository Observer wrappers
-  open var isUnderRefresh: Bool {
-    return qwMediator.isUnderRefresh
+  var isUnderRefresh: Bool {
+    return getMediator().isUnderRefresh
   }
 
-  open func updateActionAndRefresh(handler: ()->()) {
+
+  func updateActionAndRefresh(handler: ()->()) {
     if !isUnderRefresh {
-      qwMediator.updateActionAndRefresh(owner: owner,
+      getMediator().updateActionAndRefresh(owner: modelOwner,
                                         handler: handler)
     }
     else {
@@ -64,16 +62,18 @@ open class QWViewModel<Mediator: QWMediator>: NSObject {
     }
   }
 
-  open func refreshToken() -> QWObserverToken? {
-    return qwMediator.getCurrentObserverToken()
+
+  func refreshToken() -> QWObserverToken? {
+    return getMediator().getCurrentObserverToken()
   }
 
-  open func asynchronousRefresh<Value>(token: QWObserverToken?, handler: ()->(Value)) -> Value {
-    return qwMediator.asynchronousRefresh(owner: owner,
-                                   token: token,
-                                   handler: handler)
+  func asynchronousRefresh<Value>(token: QWObserverToken?, handler: ()->(Value)) -> Value {
+    return getMediator().asynchronousRefresh(owner: modelOwner,
+                                          token: token,
+                                          handler: handler)
   }
 
 }
+
 
 

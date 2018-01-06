@@ -179,8 +179,10 @@ When the type of the node is a complex type (array, dictionary, etc ...), use th
 var _headerArray: [HeaderTitle] = []
 ```
 
+TODO: Improve sourcery script to detect it more frequently
+
 #### allowBackgroundRead , allowBackgroundWrite
-To disable the main-thread only access for a monitored property, at your your own risk:
+To disable the main-thread only access for a monitored property, under your control:
 
 ```swift
 // sourcery: allowBackgroundRead
@@ -226,7 +228,6 @@ To select a write node: QWModel.root.playlistsCollection.selectedPlaylist_Write
 
 To select a read node and all its children: QWModel.root.selectedPlaylist_allRead
 To select a write node and all its children: QWModel.root.selectedPlaylist_allWrite
-
 
 ### View Model
 

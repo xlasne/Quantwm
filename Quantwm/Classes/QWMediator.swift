@@ -529,10 +529,15 @@ extension QWMediator
 {
   public func updateActionAndRefresh(owner: String, handler: ()->())
   {
-    let writeContext = self.pushUpdateContext(owner)
-    handler()
-    self.refreshUICalledWhileContextStackWasNotEmpty = true
-    self.popContext(writeContext)
+    if !isUnderRefresh {
+      let writeContext = self.pushUpdateContext(owner)
+      handler()
+      self.refreshUICalledWhileContextStackWasNotEmpty = true
+      self.popContext(writeContext)
+    }
+    else {
+      assert(false, "Warning: Trying to update during refresh")
+    }
   }
 
   // The viewModelInputProcessinghandler shall do the Update access + RefreshUI

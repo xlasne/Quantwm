@@ -19,6 +19,7 @@ class Mediator: QWMediator {
     }
 }
 
+// GetMediator helper
 protocol GetMediator {
     var qwMediator: Mediator { get }
 }
@@ -32,7 +33,21 @@ extension GetMediator {
     }
 }
 
-class ViewModel: QWViewModel<Mediator> {
+// View Model customization adopting QWViewModel protocol
+// Having a local qwMediator reference help debugging with access to all registrations
+class ViewModel: QWViewModel {
+
+    var modelOwner: String
+    unowned var qwMediator: Mediator
+
+    init(mediator: Mediator, owner: String) {
+        self.qwMediator = mediator
+        self.modelOwner = owner
+    }
+
+    func getMediator() -> QWMediator {
+        return qwMediator
+    }
 
     // The forceUnwrap depends on your architecture
     // If model is never changing,
