@@ -8,31 +8,40 @@
 
 import UIKit
 import Quantwm
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var disposeBag = DisposeBag()
 
     let qwMediator = Mediator()
 
     var dataModel: DataModel? = nil
-
-    var networkMgr: NetworkMgr  = NetworkMgr()
+    var networkMgr: NetworkMgr?  = nil
+    var coordinator: Coordinator? = nil
 
     let themeColor = UIColor(red: 182.0/255.0, green: 182.0/255.0, blue: 182.0/255.0, alpha: 1.0)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window?.tintColor = themeColor
-        dataModel = DataModel(networkMgr: self.networkMgr)
+
+        let dataModel = DataModel()
+        self.dataModel = dataModel
+        qwMediator.updateActionAndRefresh(owner: "DataModel") {
+            coordinator = Coordinator(mediator: qwMediator)
+            networkMgr = NetworkMgr(mediator: qwMediator)
+        }
+
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-        dataModel?.applicationBecomeInactive()
+        disposeBag = DisposeBag()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -46,7 +55,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        dataModel?.applicationBecomeActive()
+
+        networkMgr?.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
+            print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
+            if let me = self {
+                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
+                    me.dataModel?.playlistsCollection.importChunck(chunk: indexedPlaylist)
+                }
+            }
+        }
+
+        networkMgr?.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
+            print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
+            if let me = self {
+                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
+                    me.dataModel?.trackListCollection.importChunck(chunk: indexedTrack)
+                }
+            }
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

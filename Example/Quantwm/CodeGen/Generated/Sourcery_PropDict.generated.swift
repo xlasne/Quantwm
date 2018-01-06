@@ -3,6 +3,7 @@
 
 registrationList = [
    Coordinator.userIdUpdatedREG,
+   NetworkMgr.userIdUpdatedREG,
    NetworkMgr.playlistSelectedREG,
    PlaylistHeaderViewController.playlistREG,
 ]

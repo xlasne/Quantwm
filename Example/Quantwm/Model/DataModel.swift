@@ -8,7 +8,6 @@
 
 import UIKit
 import Foundation
-import RxSwift
 import Quantwm
 
 
@@ -16,54 +15,14 @@ class DataModel : QWRoot_S, QWNode_S, GetMediator {
 
     static let debug_userID = 10
 
-    unowned var networkMgr: DeezerAPI
-
-    var coordinator: Coordinator = Coordinator()
-
-    init(networkMgr: DeezerAPI) {
-
-        self.networkMgr = networkMgr
-
+    init() {
         _userId = DataModel.debug_userID
         _playlistsCollection.updateUserId(userId: userId)
-
         qwMediator.registerRoot(
             model: self,
             rootProperty: DataModel.dataModelK)
-
-        qwMediator.updateActionAndRefresh(owner: "DataModel") {
-            networkMgr.postInit(dataModel: self)
-            coordinator.postInit(dataModel: self)
-        }
     }
 
-    var disposeBag = DisposeBag()
-
-    func applicationBecomeActive() {
-
-        networkMgr.subscribeToPlaylist(disposeBag: disposeBag) {[weak self] (indexedPlaylist: PlaylistChunk) in
-            print("Data Model handler Playlist index:\(indexedPlaylist.index) count:\(indexedPlaylist.playlists.count)")
-            if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
-                    me.playlistsCollection.importChunck(chunk: indexedPlaylist)
-                }
-            }
-        }
-
-        networkMgr.subscribeToTrack(disposeBag: disposeBag) {[weak self] (indexedTrack: TrackChunk) in
-            print("Data Model handler Tracks index:\(indexedTrack.index) count:\(indexedTrack.data.count)")
-            if let me = self {
-                me.qwMediator.updateActionAndRefresh(owner: "DataModel") {
-                    me.trackListCollection.importChunck(chunk: indexedTrack)
-                }
-            }
-        }
-
-    }
-
-    func applicationBecomeInactive() {
-        disposeBag = DisposeBag()
-    }
 
     // The model is:
     //   DataModel

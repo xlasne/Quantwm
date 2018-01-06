@@ -201,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				255C5D411FE12DB900F30682 /* DurationFormater.swift */,
+				25DFE8C22000BEA000A7A4BC /* Quantwm.swift */,
 				255C5D431FE12DB900F30682 /* Utils.swift */,
 				255C5D441FE12DB900F30682 /* XibView.swift */,
 			);
@@ -361,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				25FDDADF1FE12B5800E16C74 /* Coordinator.swift */,
+				255C5D331FE12D7500F30682 /* Network */,
 			);
 			path = Processors;
 			sourceTree = "<group>";
@@ -378,7 +380,6 @@
 		25FDDADE1FE12B1A00E16C74 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				25DFE8C22000BEA000A7A4BC /* Quantwm.swift */,
 				25FDDAE01FE12B5800E16C74 /* DataModel.swift */,
 				255C5D7F1FE13AC600F30682 /* PlaylistsCollection */,
 				255C5D7B1FE13AC600F30682 /* TrackCollection */,
@@ -415,9 +416,8 @@
 				255C5D871FE13C4500F30682 /* Resources */,
 				255C5D551FE134DA00F30682 /* CodeGen */,
 				255C5D401FE12DB900F30682 /* Helpers */,
-				255C5D331FE12D7500F30682 /* Network */,
-				257159851FE40F8300776530 /* Processors */,
 				25FDDADE1FE12B1A00E16C74 /* Model */,
+				257159851FE40F8300776530 /* Processors */,
 				255C5D5D1FE136E100F30682 /* ViewHierarchy */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,

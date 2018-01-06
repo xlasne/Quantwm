@@ -12,8 +12,9 @@ import Quantwm
 class PlaylistHeaderViewModel: ViewModel
 {
 
-    static let currentPlaylistHeaderMap = QWModel.root.selectedPlaylist_Read
-    + QWModel.root.selectedTracklist.all_Read
+    static let currentPlaylistHeaderMap =
+        QWModel.root.selectedPlaylist_Read
+            + QWModel.root.selectedTracklist.all_Read
 
     func playlistHeaderInfoSelectedPlaylist() -> PlaylistHeaderInfo? {
         if let playlist = dataModel.selectedPlaylist {

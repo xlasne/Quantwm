@@ -31,13 +31,11 @@ public extension QWViewModel {
 
   func registerObserver(registration: QWRegistration,
                              target: AnyObject,
-                             notificationClosure: @escaping () -> (),
-                             maxNbRegistrationWithSameName: Int? = nil) {
-
+                             notificationClosure: @escaping () -> ())
+  {
     getMediator().registerObserver(registration: registration,
                                 target: target,
-                                notificationClosure: notificationClosure,
-                                maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
+                                notificationClosure: notificationClosure)
   }
 
 

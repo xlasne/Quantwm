@@ -14,17 +14,15 @@ import RxSwift
 import Quantwm
 
 protocol DeezerAPI: class, DeezerTracksAPI, DeezerPlaylistAPI {
-    func postInit(dataModel: DataModel)
 }
 
 //TODO: Reachability
 //TODO: Network conditioning tests
 
-class NetworkMgr: NSObject, DeezerAPI {
+class NetworkMgr: ViewModel, DeezerAPI, GetMediator {
 
     //MARK: - Init & configuration
 
-    weak var dataModel: DataModel? = nil
     let deezerPlaylist = DeezerPlaylist()
     let deezerTracks = DeezerTracks()
 
@@ -41,20 +39,34 @@ class NetworkMgr: NSObject, DeezerAPI {
         imageDownloader.imageCache?.removeAllImages()
     }
 
-    override init() {
-        super.init()
-    }
+    init(mediator: Mediator) {
+        super.init(mediator: mediator, owner: "NetworkMgr")
+        qwMediator.updateActionAndRefresh(owner: "NetworkMgr") {
+            registerObserver(
+                registration: NetworkMgr.userIdUpdatedREG,
+                target: self) { [weak self] in
+                    self?.loadPlaylistsForUser()
+            }
 
-    // To be called just after application launch
-    func postInit(dataModel: DataModel) {
-        self.dataModel = dataModel
-        dataModel.qwMediator.updateActionAndRefresh(owner: "NetworkMgr") {
-            dataModel.qwMediator.registerObserver(
+
+            registerObserver(
                 registration: NetworkMgr.playlistSelectedREG,
-                target: self,
-                selector: #selector(NetworkMgr.loadSelectedPlaylistTracks))
+                target: self) { [weak self] in
+                    self?.loadSelectedPlaylistTracks()
+            }
         }
     }
+
+
+    static let userIdUpdatedREG: QWRegistration = QWRegistration(
+        hardWithReadMap: QWModel.root.userId_Read,
+        name: "NetworkMgr.userIdUpdated",
+        schedulingPriority: -1)
+
+    func loadPlaylistsForUser() {
+        getRxPlaylist(userId: dataModel.userId)
+    }
+
 
     //MARK: - GET Request: Set of tracks of selected playlist
     // Triggered by the selection of a playlist
@@ -64,10 +76,11 @@ class NetworkMgr: NSObject, DeezerAPI {
         name: "NetworkMgr.loadSelectedPlaylistTracks")
 
     @objc func loadSelectedPlaylistTracks() {
-        if let playlistId = dataModel?.selectedPlaylistId {
+        if let playlistId = dataModel.selectedPlaylistId {
             self.getRxTrack(playlistId: playlistId)
         }
     }
+
 }
 
 extension NetworkMgr: DeezerPlaylistAPI {

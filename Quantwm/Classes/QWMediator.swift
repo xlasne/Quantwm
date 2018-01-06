@@ -471,14 +471,23 @@ extension QWMediator
 
     self.registerObserver(registration: registration,
                           target: target,
-                          notificationClosure: notificationClosure,
-                          maxNbRegistrationWithSameName: maxNbRegistrationWithSameName)
+                          maxNbRegistrationWithSameName: maxNbRegistrationWithSameName,
+                          notificationClosure: notificationClosure)
+  }
+
+  public func registerObserver(registration reg: QWRegistration,
+                               target: AnyObject,
+                               notificationClosure: @escaping () -> ()) {
+    self.registerObserver(registration: reg,
+                          target: target,
+                          maxNbRegistrationWithSameName: nil,
+                          notificationClosure: notificationClosure)
   }
 
   public func registerObserver(registration reg: QWRegistration,
                         target: AnyObject,
-                        notificationClosure: @escaping () -> (),
-                        maxNbRegistrationWithSameName: Int? = nil)
+                        maxNbRegistrationWithSameName: Int?,
+                        notificationClosure: @escaping () -> ())
   {
     let qwPathSet = reg.readPathSet
 

@@ -9,39 +9,31 @@
 import Foundation
 import Quantwm
 
-// The role of this class is to validate Data Model consistency after inputs
-// - UserID selection
-// - Playlist Update
-class Coordinator: NSObject {
+// The normal role of this class is to update View Herarchy state, but the example is too simple.
+// Here, it is to validate Data Model consistency after userId update
 
-    weak var dataModel: DataModel?
+class Coordinator: ViewModel {
 
-    // Shall be called after QWMediator is rooted
-    func postInit(dataModel: DataModel)
-    {
-        self.dataModel = dataModel
-        dataModel.qwMediator.updateActionAndRefresh(owner: "Coordinator") {
-        dataModel.qwMediator.registerObserver(
-            registration: Coordinator.userIdUpdatedREG,
-            target: self,
-            selector: #selector(Coordinator.userIdUpdated))
+    init(mediator: Mediator) {
+        super.init(mediator: mediator, owner: "Coordinator")
+        qwMediator.updateActionAndRefresh(owner: "Coordinator") {
+            qwMediator.registerObserver(
+                registration: Coordinator.userIdUpdatedREG,
+                target: self) {
+                    [weak self] in
+                    self?.userIdUpdated()
+                }
         }
     }
 
     static let userIdUpdatedREG: QWRegistration = QWRegistration(
-        smartWithReadMap: QWModel.root.userId_Read,
+        hardWithReadMap: QWModel.root.userId_Read,
         name: "Coordinator.userIdUpdated",
-        writtenMap: QWModel.root.playlistsCollection.all_Write +
-            QWModel.root.selectedPlaylistId_Write +
-            QWModel.root.trackListCollection.all_Write)
+        schedulingPriority: -2)
 
     var previousUserId: UserID? = nil
 
     @objc func userIdUpdated() {
-        guard let dataModel = dataModel else {
-            assert(false, "dataModel not existing in Coordinator")
-            return
-        }
         if dataModel.userId != previousUserId {
             previousUserId = dataModel.userId
             let userId = dataModel.userId
@@ -49,9 +41,8 @@ class Coordinator: NSObject {
             dataModel.playlistsCollection.updateUserId(userId: userId)
             let playlistIdArray = dataModel.playlistsCollection.playlistArray.map({$0.id})
             dataModel.trackListCollection.updateTracks(playlistIdArray: playlistIdArray)
-            dataModel.networkMgr.getRxPlaylist(userId: userId)
         }
-        dataModel.qwMediator.getCurrentObserverToken()?.displayUsage()
+        qwMediator.getCurrentObserverToken()?.displayUsage()
     }
 
 }
