@@ -31,7 +31,7 @@ class QWObserver: NSObject {
     }
 
     super.init()
-    print("QWObserver: R(\(registration.readPathSet.count)) W(\(registration.writtenPathSet.count)) target \(name).")
+    Swift.print("QWObserver: R(\(registration.readPathSet.count)) W(\(registration.writtenPathSet.count)) target \(name).")
 
   }
 
@@ -163,7 +163,7 @@ class QWObserver: NSObject {
   {
     // Let check this if target has been released since last removal.
     guard let _ = target else {
-      print("Warning: QWObserver \(name). Attempt to perform refresh with nil target")
+      Swift.print("Warning: QWObserver \(name). Attempt to perform refresh with nil target")
       return
     }
     
@@ -173,7 +173,7 @@ class QWObserver: NSObject {
       return
     }
     
-    print("Refresh \(self.name) because \(checkDirty.description)")
+    Swift.print("Refresh \(self.name) because \(checkDirty.description)")
     
     // Normally performAction() should only read from the current dataset.
 

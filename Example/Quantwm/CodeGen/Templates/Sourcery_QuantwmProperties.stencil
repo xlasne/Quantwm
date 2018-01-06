@@ -3,14 +3,6 @@
 
     // MARK: - Sourcery
 
-{% if type.implements.QWRoot_S %}
-    let qwMediator = QWMediator()
-    func getQWMediator() -> QWMediator
-    {
-      return qwMediator
-    }
-
-{% endif %}
 {% if type.implements.QWNode_S %}
     // QWNode protocol
     func getQWCounter() -> QWCounter {

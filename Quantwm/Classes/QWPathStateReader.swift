@@ -93,7 +93,7 @@ class QWNodeState {
 
 //    let myChangeCounter = myNode.getQWCounter()
 //    if (andAllChilds) {
-//      print("ReadChain: Prop\(chain) node: \(myChangeCounter.changeCountDict)")
+//      Swift.print("ReadChain: Prop\(chain) node: \(myChangeCounter.changeCountDict)")
 //    }
 
     var properties: [QWProperty] = []

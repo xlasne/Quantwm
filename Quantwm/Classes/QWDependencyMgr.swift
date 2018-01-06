@@ -205,7 +205,7 @@ public class QWDependencyMgr: Encodable {
     do {
       let jsonData = try jsonEncoder.encode(self)
       let jsonString = String(data: jsonData, encoding: .utf8)
-      print("JSON String : " + jsonString!)
+      Swift.print("JSON String : " + jsonString!)
     }
     catch {}
   }

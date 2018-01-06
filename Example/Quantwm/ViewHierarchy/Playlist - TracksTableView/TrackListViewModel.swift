@@ -13,10 +13,10 @@ class TrackListViewModel: QWViewModel<DataModel>
 {
     let trackListCollectionModel: TrackListCollectionQWModel
 
-    init(dataModel: DataModel, owner: String,
+    init(mediator: QWMediator<DataModel>, owner: String,
          trackListCollectionModel: TrackListCollectionQWModel) {
         self.trackListCollectionModel = trackListCollectionModel
-        super.init(dataModel: dataModel, owner: owner)
+        super.init(mediator: mediator, owner: owner)
     }
 
     // Datasource for tracks table view

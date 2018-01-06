@@ -8,20 +8,23 @@
 
 import Foundation
 
-open class QWViewModel<Model: QWRoot> : NSObject {
-  open unowned var dataModel: Model
 
-  var qwMediator : QWMediator {
-    return dataModel.getQWMediator()
+open class QWViewModel<Model: QWRoot> : NSObject {
+
+  unowned var qwMediator : QWMediator<Model>
+
+  public var dataModel: Model {
+    return qwMediator.getRoot()!
   }
 
   open let owner: String
-  public init(dataModel : Model, owner: String)
+  public init(mediator: QWMediator<Model>, owner: String)
   {
-    self.dataModel = dataModel
+    self.qwMediator = mediator
     self.owner = owner
     super.init()
   }
+
   // MARK: - Registration
   open func registerObserver(registration: QWRegistration,
                              target: NSObject,
@@ -46,7 +49,7 @@ open class QWViewModel<Model: QWRoot> : NSObject {
   }
 
 
-  // Not mandatory. If not performed, may generate a warning.
+  // Not mandatory. If not performed, generates a warning when 2 similar objects are registered.
   open func unregisterDataSet(target: AnyObject) {
       qwMediator.unregisterRegistrationWithTarget(target)
   }

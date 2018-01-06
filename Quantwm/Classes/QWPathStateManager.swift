@@ -45,9 +45,9 @@ class QWPathTraceManager
     if let _ = self.nodeChain {
       self.nodeChain = nil
       self.updateCounter += 1
-      print("QWPathTraceManager: \(keypath) dirty. Rootnode has changed to nil")
+      Swift.print("QWPathTraceManager: \(keypath) dirty. Rootnode has changed to nil")
     } else {
-      print("QWPathTraceManager: \(keypath) clean. No Rootnode")
+      Swift.print("QWPathTraceManager: \(keypath) clean. No Rootnode")
     }
     return
   }
@@ -65,9 +65,9 @@ class QWPathTraceManager
     self.updatedNodeChain = updatedNodeChain
     if comparison.isDirty {
       self.updateCounter += (comparison.isDirty ? 1 : 0)
-      print("QWPathTraceManager: \(keypath) : \(comparison.description) counter updated to \(updateCounter)")
+      Swift.print("QWPathTraceManager: \(keypath) : \(comparison.description) counter updated to \(updateCounter)")
     } else {
-//      print("QWPathTraceManager: \(keypath) : \(comparison.description)")
+//      Swift.print("QWPathTraceManager: \(keypath) : \(comparison.description)")
     }
     
   }

@@ -9,7 +9,7 @@
 import UIKit
 import Quantwm
 
-class TracklistTableViewController: UITableViewController, MyModel {
+class TracklistTableViewController: UITableViewController, Mediator {
 
     fileprivate let cellIdentifier: String = "trackCell"
 
@@ -36,7 +36,7 @@ class TracklistTableViewController: UITableViewController, MyModel {
         super.viewWillAppear(animated)
 
         let viewModel = TrackListViewModel(
-            dataModel: dataModel,
+            mediator: qwMediator,
             owner: "TracklistTableViewController",
             trackListCollectionModel: QWModel.root.trackListCollection)
 

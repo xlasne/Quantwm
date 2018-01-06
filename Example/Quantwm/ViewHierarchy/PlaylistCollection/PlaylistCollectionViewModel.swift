@@ -14,10 +14,10 @@ class PlaylistsCollectionViewModel: QWViewModel<DataModel>
 {
     let playlistCollectionModel: PlaylistsCollectionQWModel
 
-    init(dataModel: DataModel, owner: String,
+    init(mediator: QWMediator<DataModel>, owner: String,
                   playlistCollectionModel: PlaylistsCollectionQWModel) {
         self.playlistCollectionModel = playlistCollectionModel
-        super.init(dataModel: dataModel, owner: owner)
+        super.init(mediator: mediator, owner: owner)
     }
 
     // User Actions

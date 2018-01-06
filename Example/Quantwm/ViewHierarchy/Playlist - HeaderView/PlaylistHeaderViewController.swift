@@ -9,7 +9,7 @@
 import UIKit
 import Quantwm
 
-class PlaylistHeaderViewController: UIViewController, MyModel {
+class PlaylistHeaderViewController: UIViewController, Mediator {
 
     // Xib view allows to have IBInspectable Views in storyboard
     @IBOutlet weak var headerContainerView: XibView!
@@ -23,7 +23,8 @@ class PlaylistHeaderViewController: UIViewController, MyModel {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: false)
 
-        viewModel = PlaylistHeaderViewModel(dataModel: dataModel, owner: "PlaylistViewController")
+        viewModel = PlaylistHeaderViewModel(mediator: qwMediator,
+                                            owner: "PlaylistViewController")
         viewModel?.updateActionAndRefresh {
             viewModel?.registerObserver(
                 registration: PlaylistHeaderViewController.playlistREG,

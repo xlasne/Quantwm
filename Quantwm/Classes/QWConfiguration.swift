@@ -25,7 +25,7 @@ public class QWConfiguration {
       case .isAssert:
         assert(false,errorStr)
       case .isPrint:
-        print(errorStr)
+        Swift.print(errorStr)
       case .isIgnore:
         break
       }

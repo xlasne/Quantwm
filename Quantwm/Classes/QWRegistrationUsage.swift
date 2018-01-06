@@ -93,17 +93,17 @@ public class QWRegistrationUsage {
     if (unionReadDescription == configuredReadPropertySet) &&
       (unionWriteDescription == configuredWritePropertySet)
     {
-      print("QWRegistrationUsage cumulated: Info: \(name) matches exactly its QWRegistration")
+      Swift.print("QWRegistrationUsage cumulated: Info: \(name) matches exactly its QWRegistration")
     }
 
     let deltaRead = configuredReadPropertySet.subtracting(unionReadDescription)
     if !deltaRead.isEmpty {
-      print("QWRegistrationUsage cumulated: Info: Read of \(name) does not perform read of \(deltaRead.map({$0.propDescription})) which is part of the QWRegistration.")
+      Swift.print("QWRegistrationUsage cumulated: Info: Read of \(name) does not perform read of \(deltaRead.map({$0.propDescription})) which is part of the QWRegistration.")
     }
 
     let deltaWrite = configuredWritePropertySet.subtracting(unionWriteDescription)
     if !deltaWrite.isEmpty {
-      print("QWRegistrationUsage cumulated: Info: Write of \(name) does not perform write of \(deltaWrite.map({$0.propDescription})) which is part of the QWRegistration.")
+      Swift.print("QWRegistrationUsage cumulated: Info: Write of \(name) does not perform write of \(deltaWrite.map({$0.propDescription})) which is part of the QWRegistration.")
     }
   }
 

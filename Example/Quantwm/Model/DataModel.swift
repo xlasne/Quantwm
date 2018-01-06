@@ -11,34 +11,26 @@ import Foundation
 import RxSwift
 import Quantwm
 
-protocol MyModel {
-    var dataModel: DataModel { get }
-}
-
-// Valid in the view hiearchy
-extension MyModel {
-    var dataModel: DataModel {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.dataModel!
-    }
-}
 
 class DataModel : QWRoot_S, QWNode_S  {
 
     static let debug_userID = 10
 
     unowned var networkMgr: DeezerAPI
+    unowned var qwMediator: QWMediator<DataModel>
+
     var coordinator: Coordinator = Coordinator()
 
-    init(networkMgr: DeezerAPI) {
+    init(networkMgr: DeezerAPI, qwMediator: QWMediator<DataModel>) {
 
         self.networkMgr = networkMgr
-        _userId = DataModel.debug_userID
+        self.qwMediator = qwMediator
 
+        _userId = DataModel.debug_userID
         _playlistsCollection.updateUserId(userId: userId)
 
         qwMediator.registerRoot(
-            qwRoot: self,
+            model: self,
             rootProperty: DataModel.dataModelK)
 
         qwMediator.updateActionAndRefresh(owner: "DataModel") {
@@ -147,12 +139,6 @@ class DataModel : QWRoot_S, QWNode_S  {
     // sourcery:inline:DataModel.QuantwmDeclarationInline
 
     // MARK: - Sourcery
-
-    let qwMediator = QWMediator()
-    func getQWMediator() -> QWMediator
-    {
-      return qwMediator
-    }
 
     // QWNode protocol
     func getQWCounter() -> QWCounter {

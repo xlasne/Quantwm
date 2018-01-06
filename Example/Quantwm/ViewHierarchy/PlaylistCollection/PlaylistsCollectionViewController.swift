@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 import Quantwm
 
-final class PlaylistsCollectionViewController: UICollectionViewController, MyModel {
+final class PlaylistsCollectionViewController: UICollectionViewController, Mediator {
 
     @IBOutlet weak var titleItem: UINavigationItem!
     
@@ -20,7 +20,7 @@ final class PlaylistsCollectionViewController: UICollectionViewController, MyMod
         super.viewWillAppear(animated)
         let model = QWModel.root.playlistsCollection
         let viewModel = PlaylistsCollectionViewModel(
-            dataModel: dataModel,
+            mediator: qwMediator,
             owner: "PlaylistsCollectionViewController",
             playlistCollectionModel: model)
 

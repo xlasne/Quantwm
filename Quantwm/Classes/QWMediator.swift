@@ -8,11 +8,12 @@
 
 import Foundation
 
-public class QWMediator: NSObject {
+public class QWMediator<Model:QWRoot>: NSObject {
+
   
   var rootDescriptor: QWPropertyID? = nil  // Set at first root registration
   // A Mediator is associated to a unique root type
-  weak var rootObject: QWRoot? = nil
+  weak var rootObject: Model? = nil
 
   var dependencyMgr: QWDependencyMgr = QWDependencyMgr(observerSet:[])
 
@@ -68,7 +69,7 @@ public class QWMediator: NSObject {
   // This node does not have to remember this monitoring
   // On node deletion, this registration will end
   // To unregister root, call, qwMediator.unregisterRootNode(property: PropertyDescription)
-  open func registerRoot(qwRoot: QWRoot, rootProperty: QWRootProperty)
+  open func registerRoot(model qwRoot: Model, rootProperty: QWRootProperty)
   {
     if let rootDescriptor = self.rootDescriptor {
       if rootProperty.descriptor != rootDescriptor {
@@ -81,24 +82,30 @@ public class QWMediator: NSObject {
 
     if let rootObject = self.rootObject {
       if rootObject === qwRoot {
-        print("Data Observer: register again Root \(rootDescription)")
+        Swift.print("Data Observer: register again Root \(rootDescription)")
       } else {
-        print("Data Observer: register and update Root \(rootDescription) ")
+        Swift.print("Data Observer: register and update Root \(rootDescription) ")
       }
     } else {
-      print("Data Observer: register and create Root \(rootDescription)")
+      Swift.print("Data Observer: register and create Root \(rootDescription)")
     }
     rootObject = qwRoot
+    currentCommit = nil
     // No need to delete previous QWPathTrace.
     // The unicity of the QWCounter determines if the properties have changed.
   }
 
+  public func getRoot() -> Model? {
+    return self.rootObject
+  }
   
-  open func unregisterRootNode()
+  open func unregisterRootNode(qwRoot: QWRoot)
   {
-    rootObject = nil
+    if rootObject === qwRoot {
+      rootObject = nil
+    }
     if let rootDesc = rootDescriptor {
-      print("Data Observer: unregister Root \(rootDesc.propDescription.description)")
+      Swift.print("Data Observer: unregister Root \(rootDesc.propDescription.description)")
     }
   }
 
@@ -136,10 +143,10 @@ public class QWMediator: NSObject {
   {
     let keypath = pathStateManager.qwPath
     if let _ = self.pathStateManagerDict[keypath] {
-      //print("Data Observer: register again \(keypath)")
+      //Swift.print("Data Observer: register again \(keypath)")
       return
     }
-    //print("Data Observer: register and create \(keypath)")
+    //Swift.print("Data Observer: register and create \(keypath)")
     self.pathStateManagerDict[keypath] = pathStateManager
   }
   
@@ -148,10 +155,10 @@ public class QWMediator: NSObject {
     let keypath = pathStateManager.qwPath
     if let _ = self.pathStateManagerDict[keypath]
     {
-      //print("Data Observer: unregistering \(keypath)")
+      //Swift.print("Data Observer: unregistering \(keypath)")
       pathStateManagerDict[keypath] = nil
     } else {
-      //print("Data Observer: Error of unregistering qwCounter \(keypath) - data is not registered")
+      //Swift.print("Data Observer: Error of unregistering qwCounter \(keypath) - data is not registered")
     }
   }
 
@@ -176,22 +183,22 @@ extension QWMediator
     }
 
     if qwTransactionStack.isRootRefresh {
-      //print("Info: Call of RefreshUI inside RefreshUI ignored")
+      //Swift.print("Info: Call of RefreshUI inside RefreshUI ignored")
       return
     }
     
     if !qwTransactionStack.isRefreshAllowed {
       refreshUICalledWhileContextStackWasNotEmpty = true
-      //print("Info: Call of RefreshUI will be delayed until context stack is empty")
+      //Swift.print("Info: Call of RefreshUI will be delayed until context stack is empty")
       return
     }
 
     guard let rootNode = rootObject else {
-      print("Start RefreshUI cancelled: rootObject is nil")
+      Swift.print("Start RefreshUI cancelled: rootObject is nil")
       return
     }
     
-    print("Start RefreshUI")
+    Swift.print("Start RefreshUI")
 
     // MARK: Cleanup
 
@@ -376,8 +383,8 @@ extension QWMediator
     }
     
     refreshUICalledWhileContextStackWasNotEmpty = false
-    print("List of active QWObserver: \(observerSet.map({$0.name}))")
-    print("End of refreshUI")
+    Swift.print("List of active QWObserver: \(observerSet.map({$0.name}))")
+    Swift.print("End of refreshUI")
 
     // This is the end of the write.
 
@@ -400,7 +407,7 @@ extension QWMediator
           if isUpdated == true { return true }
           let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
           if nodeIsUpdated {
-            print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
+            Swift.print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
           }
           return nodeIsUpdated
       })
@@ -428,12 +435,12 @@ extension QWMediator
         if isUpdated == true { return true }
         let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
         if nodeIsUpdated {
-          print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-          //          print(" \(node.getQWCounter().changeCountDict)")
+          Swift.print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
+          //          Swift.print(" \(node.getQWCounter().changeCountDict)")
         }
         return nodeIsUpdated
     })
-//    print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
+//    Swift.print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
     return isUpdated
   }
 
@@ -480,7 +487,7 @@ extension QWMediator
 
     if let _ = self.getObserverForTarget(target, name: reg.name)
     {
-      print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Delete it before with unregisterRegistrationWithTarget")
+      Swift.print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Delete it before with unregisterRegistrationWithTarget")
       self.unregisterRegistrationWithTarget(target, name: reg.name)
     }
 
@@ -491,7 +498,7 @@ extension QWMediator
       }
     } else {
       if sameTypeArray.count > 0 {
-        print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Check that object are not leaking or increment maxNbRegistrationWithSameName to the number of allowed instance or set maxNbRegistrationWithSameName = 0 to disable check")
+        Swift.print("Warning: multiple dataset registration for the same (target:\(target),name:\(reg.name)). Check that object are not leaking or increment maxNbRegistrationWithSameName to the number of allowed instance or set maxNbRegistrationWithSameName = 0 to disable check")
       }
     }
 
@@ -531,13 +538,13 @@ extension QWMediator
   public func updateActionAndRefreshSynchronouslyIfPossibleElseAsync(owner: String, escapingHandler: @escaping ()->())
   {
     if !qwTransactionStack.isRootRefresh {
-      //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync scheduled immediately")
+      //Swift.print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync scheduled immediately")
       updateActionAndRefresh(owner: owner, handler: escapingHandler)
     } else {
       // Update is not allowed. Perform this Action update asynchronously on the main thread
       DispatchQueue.main.async {[weak self]  in
         // Modifications are performed while on the main thread which serialize update
-        //print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync dispatch begin")
+        //Swift.print("updateActionAndRefreshSynchronouslyIfPossibleElseAsync dispatch begin")
         self?.updateActionAndRefresh(owner: owner, handler: escapingHandler)
       }
     }

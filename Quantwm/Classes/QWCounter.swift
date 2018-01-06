@@ -268,7 +268,7 @@ open class QWCounter: NSObject, Codable {
   // Increment changeCount for a property
   fileprivate func setDirty(_ property: QWProperty)
   {
-//    print("Monitoring Node: Child \(property.propDescription) dirty")
+//    Swift.print("Monitoring Node: Child \(property.propDescription) dirty")
 
     if let previousValue = self.changeCountDict[property.propKey] {
       self.changeCountDict[property.propKey] = previousValue + 1
@@ -345,7 +345,7 @@ open class QWCounter: NSObject, Codable {
           assert(false,"Node has been written out of update phase")
         }
       case .UpdateAllowed:
-        print("Error: allowUpdate performed twice on the same node \(nodeName)")
+        Swift.print("Error: allowUpdate performed twice on the same node \(nodeName)")
 //        assert(false,"allowUpdate performed twice on the same node")
       }
     }
