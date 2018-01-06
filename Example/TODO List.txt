@@ -26,7 +26,7 @@ DONE: Replace most of DataUsage by a QWRegistrationUsage
 DONE: Add Registration Options:
     allowBackgroundRead
     allowBackgroundWrite
-    contextual
+    discardable
     ++++++++++++Not an option
     ReadOnly         -> Sourcery
     Node / Property  -> Sourcery

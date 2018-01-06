@@ -38,7 +38,6 @@
 		25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4CD6F1FE1537E000EA8E3 /* Tests_Quantwm.swift */; };
 		25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */; };
 		25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */; };
-		25D4CD7A1FE153E5000EA8E3 /* DeezerNetworkStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */; };
 		25D4CD7B1FE153E5000EA8E3 /* DeezerPlaylistStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */; };
 		25D4CD7C1FE153E5000EA8E3 /* PlaylistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D951FE13E1B00F30682 /* PlaylistTest.swift */; };
 		25D4CD7D1FE153EB000EA8E3 /* DeezerPlaylist1.json in Resources */ = {isa = PBXBuildFile; fileRef = 255C5D8F1FE13E1B00F30682 /* DeezerPlaylist1.json */; };
@@ -102,7 +101,6 @@
 		255C5D881FE13C5B00F30682 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		255C5D891FE13C5C00F30682 /* DZ_Logo_CMYK_W.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DZ_Logo_CMYK_W.png; sourceTree = "<group>"; };
 		255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerCollectionTest.swift; sourceTree = "<group>"; };
-		255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerNetworkStub.swift; sourceTree = "<group>"; };
 		255C5D8F1FE13E1B00F30682 /* DeezerPlaylist1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist1.json; sourceTree = "<group>"; };
 		255C5D901FE13E1B00F30682 /* DeezerPlaylist2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist2.json; sourceTree = "<group>"; };
 		255C5D911FE13E1B00F30682 /* DeezerPlaylist3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DeezerPlaylist3.json; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 				255C5D931FE13E1B00F30682 /* DeezerPlaylist5.json */,
 				255C5D991FE13E1B00F30682 /* PlaylistCollectionViewModelTest.swift */,
 				255C5D8D1FE13E1B00F30682 /* DeezerCollectionTest.swift */,
-				255C5D8E1FE13E1B00F30682 /* DeezerNetworkStub.swift */,
 				255C5D941FE13E1B00F30682 /* DeezerPlaylistStub.swift */,
 				255C5D951FE13E1B00F30682 /* PlaylistTest.swift */,
 			);
@@ -737,7 +734,6 @@
 				25D4CD7C1FE153E5000EA8E3 /* PlaylistTest.swift in Sources */,
 				25D4CD7B1FE153E5000EA8E3 /* DeezerPlaylistStub.swift in Sources */,
 				25D4CD791FE153E5000EA8E3 /* DeezerCollectionTest.swift in Sources */,
-				25D4CD7A1FE153E5000EA8E3 /* DeezerNetworkStub.swift in Sources */,
 				25D4CD771FE153E5000EA8E3 /* PlaylistCollectionViewModelTest.swift in Sources */,
 				25D4CD701FE1537E000EA8E3 /* Tests_Quantwm.swift in Sources */,
 			);

@@ -47,7 +47,7 @@ self.qwCounter.read({{ propertyKName }}, options: .backgroundRead)
 {% if prop|annotated:"readOnly" %}
 {% else %}
       set {
-        self.qwCounter.write({{ propertyKName }}{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"contextual" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"contextual" %}, .contextual{% endif %}]{% endif %})
+        self.qwCounter.write({{ propertyKName }}{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"discardable" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"discardable" %}, .discardable{% endif %}]{% endif %})
         {{ prop.name }} = newValue
       {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
       }

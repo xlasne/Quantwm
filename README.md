@@ -47,7 +47,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ```
 - Build your project, and include the file CodeGen/Generated/Sourcery_QuantwmModel.generated.Swift in your project.
 
-- Include the SourceryProtocols.swift file in your project, in order to have sourcery autogenerating these protocols for you.
+- Include the Quantwm.swift file in your project, in order to have sourcery autogenerating these protocols for you.
 
 ```swift
 protocol QWNode_S: QWNode {}
@@ -168,9 +168,9 @@ static let dataModelK = QWRootProperty(rootType: DataModel.self,
 
 Then the modifiers are:
 
-#### contextual
+#### discardable
 
-// sourcery: contextual
+// sourcery: discardable
 Will be used in a future version of Quantwm, to indicate properties whose update shall not trigger a save of the document.
 
 #### readOnly
@@ -187,7 +187,7 @@ When the type of the node is a complex type (array, dictionary, etc ...), use th
 var _headerArray: [HeaderTitle] = []
 ```
 
-TODO: Improve sourcery script to detect it more frequently
+TODO: Improve sourcery script to detect type correctly
 
 #### allowBackgroundRead , allowBackgroundWrite
 To disable the main-thread only access for a monitored property, under your control:
@@ -199,7 +199,7 @@ To disable the main-thread only access for a monitored property, under your cont
 
 #### Computed Properties
 
-For the moment, Quantwm only support Read Only computed properties.
+Quantwm supports Read Only computed properties.
 The dependencies inherited from the computed property computation
 shall be specified in a static variable, and added with sourcery: dependency modifier.
 
@@ -239,12 +239,12 @@ To select a write node and all its children: QWModel.root.selectedPlaylist_allWr
 
 ### View Model
 
-View Model shall inherit from QWViewModel<YourRootClass>
+View Model shall inherit from VIewModel deifned in Quantwm.swift
 
 ```swift
-class PlaylistHeaderViewModel: QWViewModel<DataModel>
+class PlaylistHeaderViewModel: ViewModel
 {
-  public init(dataModel : Model, owner: String) {}
+    init(mediator: Mediator, owner: String) { ... }
 
 }
 ```
@@ -256,16 +256,17 @@ I usually create them in viewWillAppear and perform registration immediately:
 override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    viewModel = PlaylistHeaderViewModel(dataModel: dataModel, owner: "PlaylistViewController")
+    viewModel = PlaylistHeaderViewModel(mediator: qwMediator,
+        owner: "PlaylistViewController")
     viewModel?.updateActionAndRefresh {
         viewModel?.registerObserver(
             registration: PlaylistHeaderViewController.playlistREG,
             target: self,
-            selector: #selector(PlaylistHeaderViewController.playlistUpdated))
+            selector: #selector(PlaylistHeaderViewController.playlistUpdated)
+            )
     }
 }
 ```
-
 and unregister / delete them in viewDidDisappear:
 
 ```swift
@@ -278,6 +279,26 @@ override func viewDidDisappear(_ animated: Bool) {
 
 #### View Model Action
 
+During a Data Model update, all read and write shall be performed inside an Update Transaction.
+Perform them inside the viewModel updateActionAndRefresh closure.
+
+```swift
+
+    // User Selection
+    func selectPreviousUser() {
+        updateActionAndRefresh {
+            if dataModel.userId > 1 {
+                dataModel.userId -= 1
+            }
+        }
+    }
+
+```
+The rule is that on an Action, the ViewController shall just update the model via an update transaction.
+ViewController User Interface updates are triggered by the notifications.
+
+
+### Registrations
 
 
 

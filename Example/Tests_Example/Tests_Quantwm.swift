@@ -10,10 +10,7 @@ import XCTest
 
 import Quantwm
 
-
-
 class QuantwmTest: XCTestCase {
-
 
     class TestStruct: QWNode
     {
@@ -209,7 +206,7 @@ class QuantwmTest: XCTestCase {
 
             // End of init
 
-            qwMediator.registerRoot(qwRoot: self,
+            qwMediator.registerRoot(model: self,
                                     rootProperty: TestBase.testRootK)
         }
     }

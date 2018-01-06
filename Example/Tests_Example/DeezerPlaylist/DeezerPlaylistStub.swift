@@ -56,6 +56,4 @@ class DeezerPlaylistStub
         let playlistChunk = jsonChunk.indexedPlaylists(userId: dataModel.userId, index: index)
         dataModel.playlistsCollection.importChunck(chunk: playlistChunk)
     }
-
-
 }

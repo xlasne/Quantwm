@@ -22,7 +22,7 @@ typealias NodeId = Int32
 //ReadOnly
 //allowBackgroundRead
 //allowBackgroundWrite
-//contextual
+//discardable
 
 
 public struct QWCounterOption: OptionSet {
@@ -35,7 +35,7 @@ public struct QWCounterOption: OptionSet {
   public static let none            = QWCounterOption(rawValue: 0)
   public static let backgroundRead  = QWCounterOption(rawValue: 1)   // versus read on main thread only
   public static let backgroundWrite = QWCounterOption(rawValue: 2)  // versus write on main thread only
-  public static let contextual      = QWCounterOption(rawValue: 4)       // versus normal
+  public static let discardable      = QWCounterOption(rawValue: 4)       // versus normal
 }
 
 
@@ -142,7 +142,7 @@ open class QWCounter: NSObject, Codable {
     self.setDirty(property)
 
     // Contextual: Does not clear of the commit tag / stageChange -> does not trigger a save
-    if !options.contains(.contextual) {
+    if !options.contains(.discardable) {
       stageChange()
     }
 
@@ -293,7 +293,7 @@ open class QWCounter: NSObject, Codable {
   // A commit tag is set on each node of the tree at the end of the model update
   // The committer knows how to scan the tree, QWCounter only manage his local node.
   // The tag is set on the node, not on each properties.
-  // On each *stored* (versus *contextual*) property change, the current tag is cleared
+  // On each *stored* (versus *discardable*) property change, the current tag is cleared
   // When the tag is set recursively, it also recursively collect the information if the previous
   // tag was cleared or not, indicating if the node (and thus the tree) has been updated.
 

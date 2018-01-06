@@ -11,11 +11,14 @@ import Foundation
 import Quantwm
 
 
-class DataModel : QWRoot_S, QWNode_S, GetMediator {
+class DataModel : QWRoot_S, QWNode_S {
 
     static let debug_userID = 10
 
-    init() {
+    unowned var qwMediator: Mediator
+
+    init(mediator: Mediator) {
+        qwMediator = mediator
         _userId = DataModel.debug_userID
         _playlistsCollection.updateUserId(userId: userId)
         qwMediator.registerRoot(

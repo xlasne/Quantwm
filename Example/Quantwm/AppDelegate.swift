@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window?.tintColor = themeColor
 
-        let dataModel = DataModel()
+        let dataModel = DataModel(mediator: qwMediator)
         self.dataModel = dataModel
         qwMediator.updateActionAndRefresh(owner: "DataModel") {
             coordinator = Coordinator(mediator: qwMediator)
