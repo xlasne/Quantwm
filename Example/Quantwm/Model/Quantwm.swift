@@ -9,6 +9,10 @@
 import Foundation
 import Quantwm
 
+protocol QWNode_S: QWNode {}
+protocol QWRoot_S: QWRoot {}
+
+// DataModel shall be compliant with QWRoot
 class Mediator: QWMediator {
     func registerRoot(model: DataModel, rootProperty: QWRootProperty) {
         super.registerRoot(model: model, rootProperty: rootProperty)
@@ -58,7 +62,3 @@ class ViewModel: QWViewModel {
         return qwMediator.getRoot()!
     }
 }
-
-
-
-

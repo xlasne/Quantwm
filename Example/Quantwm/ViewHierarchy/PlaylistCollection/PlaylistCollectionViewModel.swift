@@ -54,37 +54,19 @@ class PlaylistsCollectionViewModel: ViewModel
             PlaylistsCollection.playlistsDataSourceMap(root: playlistCollectionModel)
     }
 
+
+    // Accessor: experimental try
+    let totalAccessor =
+        QWModel.root.playlistsCollectionGetter
+            |> QWModel.root.playlistsCollection.totalGetter
+
     func getTitle() -> String {
         var title = "\(dataModel.userId)"
-        let total = totalAccessor3(dataModel)
+        let total = totalAccessor(dataModel)
         if total != -1 {
             title += " \(dataModel.playlistsCollection.playlistsCount)/\(total)"
         }
         return title
-    }
-
-    static let accessor = (
-        a: QWModel.root.playlistsCollectionGetter,
-        b: QWModel.root.playlistsCollection.totalGetter)
-
-    let totalAccessor: (DataModel) -> Int = { (root: DataModel) -> Int in
-        let collection = PlaylistsCollectionViewModel.accessor.a(root)
-        let total = PlaylistsCollectionViewModel.accessor.b(collection)
-        return total
-    }
-
-    let totalAccessor2: (DataModel) -> Int = { (root: DataModel) -> Int in
-        return root[keyPath:\DataModel.playlistsCollection.total]
-    }
-
-    let totalAccessor3 = QWModel.root.playlistsCollectionGetter
-                        |> QWModel.root.playlistsCollection.totalGetter
-
-    let totalAccessor4: (DataModel) -> Int = { (root: DataModel) -> Int in
-        let keypath1 = \DataModel.playlistsCollection
-        let keypath2 = \PlaylistsCollection.total
-        let keypath = keypath1.appending(path: keypath2)
-        return root[keyPath:keypath]
     }
 
     // MARK: - Data Source for Playlist Collection
@@ -141,7 +123,6 @@ class PlaylistsCollectionViewModel: ViewModel
     }
 
 }
-
 
 infix operator |>: AdditionPrecedence
 

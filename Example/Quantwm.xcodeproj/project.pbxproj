@@ -14,7 +14,6 @@
 		255C5D3E1FE12D7500F30682 /* DeezerTrackCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D391FE12D7500F30682 /* DeezerTrackCollection.swift */; };
 		255C5D3F1FE12D7500F30682 /* TrackJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D3A1FE12D7500F30682 /* TrackJSON.swift */; };
 		255C5D451FE12DBA00F30682 /* DurationFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D411FE12DB900F30682 /* DurationFormater.swift */; };
-		255C5D461FE12DBA00F30682 /* SourceryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D421FE12DB900F30682 /* SourceryProtocols.swift */; };
 		255C5D471FE12DBA00F30682 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D431FE12DB900F30682 /* Utils.swift */; };
 		255C5D481FE12DBA00F30682 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D441FE12DB900F30682 /* XibView.swift */; };
 		255C5D6F1FE1370300F30682 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C5D601FE1370300F30682 /* PlaylistCell.swift */; };
@@ -78,7 +77,6 @@
 		255C5D391FE12D7500F30682 /* DeezerTrackCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeezerTrackCollection.swift; sourceTree = "<group>"; };
 		255C5D3A1FE12D7500F30682 /* TrackJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackJSON.swift; sourceTree = "<group>"; };
 		255C5D411FE12DB900F30682 /* DurationFormater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationFormater.swift; sourceTree = "<group>"; };
-		255C5D421FE12DB900F30682 /* SourceryProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceryProtocols.swift; sourceTree = "<group>"; };
 		255C5D431FE12DB900F30682 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		255C5D441FE12DB900F30682 /* XibView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
 		255C5D571FE134DA00F30682 /* Sourcery_PropDict.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sourcery_PropDict.generated.swift; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				255C5D411FE12DB900F30682 /* DurationFormater.swift */,
-				255C5D421FE12DB900F30682 /* SourceryProtocols.swift */,
 				255C5D431FE12DB900F30682 /* Utils.swift */,
 				255C5D441FE12DB900F30682 /* XibView.swift */,
 			);
@@ -771,7 +768,6 @@
 				25FDDAE11FE12B5800E16C74 /* Coordinator.swift in Sources */,
 				255C5D761FE1370300F30682 /* TrackListViewModel.swift in Sources */,
 				255C5D731FE1370300F30682 /* TrackCell.swift in Sources */,
-				255C5D461FE12DBA00F30682 /* SourceryProtocols.swift in Sources */,
 				255C5D7A1FE1370300F30682 /* PlaylistHeaderViewModel.swift in Sources */,
 				255C5D771FE1370300F30682 /* PlaylistHeaderView.swift in Sources */,
 				255C5D751FE1370300F30682 /* TracklistTableViewController.swift in Sources */,

@@ -88,7 +88,7 @@ class MyClass: QWNode_S {
 }
 ```
 
-- Your Model shall have a root class, containing all the monitored properties.
+- Your Model shall have a Root class, containing all the monitored properties / node in a tree.
 This root class shall have the additional QWRoot_S protocol (for model generation), and be a class, not a struct.
 
 ```swift
@@ -96,6 +96,14 @@ class DataModel : QWRoot_S, QWNode_S  {
   ...
 }
 ```
+### QWMediator and ViewModel Customization
+
+See Quantwm.swift in the Project example to see how to customize:
+- The access ot the QWMediator
+- The access to your data model
+- Your generic View Model
+
+QWMediator shall be owned by the NSDocument or AppDelegate class.
 
 
 ### Model Property generation
