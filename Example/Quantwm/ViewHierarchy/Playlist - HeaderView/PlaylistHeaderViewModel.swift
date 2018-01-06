@@ -2,14 +2,14 @@
 //  PlaylistHeaderViewModel.swift
 //  deezer
 //
-//  Created by Xavier on 03/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 03/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
 import Quantwm
 
-class PlaylistHeaderViewModel: QWViewModel<DataModel>
+class PlaylistHeaderViewModel: ViewModel
 {
 
     static let currentPlaylistHeaderMap = QWModel.root.selectedPlaylist_Read

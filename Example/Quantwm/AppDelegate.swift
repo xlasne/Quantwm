@@ -9,23 +9,12 @@
 import UIKit
 import Quantwm
 
-protocol Mediator {
-    var qwMediator: QWMediator<DataModel> { get }
-}
-
-extension Mediator {
-    var qwMediator: QWMediator<DataModel> {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.qwMediator
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    let qwMediator = QWMediator<DataModel>()
+    let qwMediator = Mediator()
 
     var dataModel: DataModel? = nil
 
@@ -36,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window?.tintColor = themeColor
-        dataModel = DataModel(networkMgr: self.networkMgr, qwMediator: qwMediator)
+        dataModel = DataModel(networkMgr: self.networkMgr)
         return true
     }
 

@@ -3,22 +3,17 @@
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 18/05/16.
-//  Copyright © 2016 XL Software Solutions. => MIT License
+//  Copyright  MIT License
 //
 
 import Foundation
 
+open class QWViewModel<Mediator: QWMediator>: NSObject {
 
-open class QWViewModel<Model: QWRoot> : NSObject {
-
-  unowned var qwMediator : QWMediator<Model>
-
-  public var dataModel: Model {
-    return qwMediator.getRoot()!
-  }
+  public unowned var qwMediator : Mediator
 
   open let owner: String
-  public init(mediator: QWMediator<Model>, owner: String)
+  public init(mediator: Mediator, owner: String)
   {
     self.qwMediator = mediator
     self.owner = owner

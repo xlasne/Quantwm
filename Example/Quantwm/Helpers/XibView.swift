@@ -2,7 +2,7 @@
 //  XibView.swift
 //  deezer
 //
-//  Created by Xavier on 03/12/2017.
+//  Created by Xavier Lasne on 03/12/2017.
 //  Copied from
 // https://medium.com/zenchef-tech-and-product/how-to-visualize-reusable-xibs-in-storyboards-using-ibdesignable-c0488c7f525d//
 

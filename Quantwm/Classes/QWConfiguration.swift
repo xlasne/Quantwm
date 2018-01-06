@@ -2,8 +2,8 @@
 //  QWConfiguration.swift
 //  Spiky
 //
-//  Created by Xavier on 31/12/2017.
-//  Copyright © 2017 XL Software Solutions. All rights reserved.
+//  Created by Xavier Lasne on 31/12/2017.
+//  MIT License
 //
 
 import Foundation

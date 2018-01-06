@@ -3,7 +3,7 @@
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 15/04/16.
-//  Copyright © 2016 XL Software Solutions. => MIT License
+//  Copyright  MIT License
 //
 
 // On refresh start, Observable are computed and parse the whole monitored data hierarchy to track updates.

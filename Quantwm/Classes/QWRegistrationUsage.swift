@@ -2,7 +2,7 @@
 //  QWRegistrationUsage.swift
 //  Quantwm
 //
-//  Created by Xavier on 17/12/2017.
+//  Created by Xavier Lasne on 17/12/2017.
 //
 
 import Foundation

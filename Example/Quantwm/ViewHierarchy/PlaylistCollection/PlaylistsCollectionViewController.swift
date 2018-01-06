@@ -2,15 +2,15 @@
 //  PlaylistsCollectionViewController.swift
 //  deezer
 //
-//  Created by Xavier on 02/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 02/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
 import AlamofireImage
 import Quantwm
 
-final class PlaylistsCollectionViewController: UICollectionViewController, Mediator {
+final class PlaylistsCollectionViewController: UICollectionViewController, GetMediator {
 
     @IBOutlet weak var titleItem: UINavigationItem!
     

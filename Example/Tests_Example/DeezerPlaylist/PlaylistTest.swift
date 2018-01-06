@@ -3,8 +3,8 @@
 //  PlaylistTest.swift
 //  deezerTests
 //
-//  Created by Xavier on 09/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 09/12/2017.
+//  Copyright  MIT License
 //
 
 import XCTest

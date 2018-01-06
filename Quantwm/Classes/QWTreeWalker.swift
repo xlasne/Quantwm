@@ -2,8 +2,8 @@
 //  QWTreeWalker.swift
 //  Spiky
 //
-//  Created by Xavier on 19/11/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 19/11/2017.
+//  Copyright  MIT License
 //
 
 import Foundation

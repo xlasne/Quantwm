@@ -2,19 +2,19 @@
 //  PlaylistsCollectionViewModel.swift
 //  deezer
 //
-//  Created by Xavier on 02/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 02/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
 import RxSwift
 import Quantwm
 
-class PlaylistsCollectionViewModel: QWViewModel<DataModel>
+class PlaylistsCollectionViewModel: ViewModel
 {
     let playlistCollectionModel: PlaylistsCollectionQWModel
 
-    init(mediator: QWMediator<DataModel>, owner: String,
+    init(mediator: Mediator, owner: String,
                   playlistCollectionModel: PlaylistsCollectionQWModel) {
         self.playlistCollectionModel = playlistCollectionModel
         super.init(mediator: mediator, owner: owner)

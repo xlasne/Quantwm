@@ -2,7 +2,7 @@
 //  Tracklist.swift
 //  Quantwm_Example
 //
-//  Created by Xavier on 20/12/2017.
+//  Created by Xavier Lasne on 20/12/2017.
 //  Copyright © 2017 CocoaPods. All rights reserved.
 //
 

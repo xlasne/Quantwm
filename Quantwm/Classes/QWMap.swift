@@ -2,8 +2,8 @@
 //  QWMap.swift
 //  Spiky
 //
-//  Created by Xavier on 30/11/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 30/11/2017.
+//  Copyright  MIT License
 //
 
 import Foundation

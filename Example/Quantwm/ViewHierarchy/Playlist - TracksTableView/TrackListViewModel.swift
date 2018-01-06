@@ -2,18 +2,18 @@
 //  TrackListViewModel.swift
 //  deezer
 //
-//  Created by Xavier on 03/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 03/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
 import Quantwm
 
-class TrackListViewModel: QWViewModel<DataModel>
+class TrackListViewModel: ViewModel
 {
     let trackListCollectionModel: TrackListCollectionQWModel
 
-    init(mediator: QWMediator<DataModel>, owner: String,
+    init(mediator: Mediator, owner: String,
          trackListCollectionModel: TrackListCollectionQWModel) {
         self.trackListCollectionModel = trackListCollectionModel
         super.init(mediator: mediator, owner: owner)

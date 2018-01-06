@@ -2,14 +2,14 @@
 //  PlaylistHeaderViewController.swift
 //  deezer
 //
-//  Created by Xavier on 03/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 03/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
 import Quantwm
 
-class PlaylistHeaderViewController: UIViewController, Mediator {
+class PlaylistHeaderViewController: UIViewController, GetMediator {
 
     // Xib view allows to have IBInspectable Views in storyboard
     @IBOutlet weak var headerContainerView: XibView!

@@ -2,8 +2,8 @@
 //  DataModel.swift
 //  deezer
 //
-//  Created by Xavier on 02/12/2017.
-//  Copyright © 2017 XL Software Solutions. => MIT License
+//  Created by Xavier Lasne on 02/12/2017.
+//  Copyright  MIT License
 //
 
 import UIKit
@@ -12,19 +12,17 @@ import RxSwift
 import Quantwm
 
 
-class DataModel : QWRoot_S, QWNode_S  {
+class DataModel : QWRoot_S, QWNode_S, GetMediator {
 
     static let debug_userID = 10
 
     unowned var networkMgr: DeezerAPI
-    unowned var qwMediator: QWMediator<DataModel>
 
     var coordinator: Coordinator = Coordinator()
 
-    init(networkMgr: DeezerAPI, qwMediator: QWMediator<DataModel>) {
+    init(networkMgr: DeezerAPI) {
 
         self.networkMgr = networkMgr
-        self.qwMediator = qwMediator
 
         _userId = DataModel.debug_userID
         _playlistsCollection.updateUserId(userId: userId)

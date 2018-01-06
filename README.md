@@ -52,7 +52,6 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ```swift
 protocol QWNode_S: QWNode {}
 protocol QWRoot_S: QWRoot {}
-protocol QWMediatorOwner_S: QWMediatorOwner {}
 ```
 
 ### Model QWNode instrumentation
@@ -90,7 +89,7 @@ class MyClass: QWNode_S {
 ```
 
 - Your Model shall have a root class, containing all the monitored properties.
-This root class shall have the additional QWRoot_S protocol, and be a class, not a struct.
+This root class shall have the additional QWRoot_S protocol (for model generation), and be a class, not a struct.
 
 ```swift
 class DataModel : QWRoot_S, QWNode_S  {

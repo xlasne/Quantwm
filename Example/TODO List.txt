@@ -35,18 +35,17 @@ DONE: Add Registration Options:
     setProc          -> Sourcery
 
 DONE: Manage the inserting of new priorityScheduling registration during Priority Scheduling
-
+DONE: Move qwMediator at Application / Document level instead of below DataModel
 
 WIP: Write a good ReadMe
 - Add DebugLevel
 - Add more tests
 
+- Configure read of model without token
+- Reject registrations to priority level higher than the current one during Hard scheduling
 - Shield for reload
 - Data Processor instead of computed Property
-
-//TODO: and reject registrations to priority level higher than the current one.
-
 - PrettyPrint Model
 - PrettyPrint Registration
 - Split Quantwm into Model and Mediator
-
+- Find a way to convert SmartScheduling into HardScheduling for release mode, for performance gain.

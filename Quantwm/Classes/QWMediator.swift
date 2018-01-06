@@ -3,25 +3,18 @@
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 18/04/16.
-//  Copyright © 2016 XL Software Solutions. => MIT License
+//  Copyright  MIT License
 //
 
 import Foundation
 
-public class QWMediator<Model:QWRoot>: NSObject {
+open class QWMediator: NSObject {
 
-  
   var rootDescriptor: QWPropertyID? = nil  // Set at first root registration
   // A Mediator is associated to a unique root type
-  weak var rootObject: Model? = nil
+  weak var rootObject: QWRoot? = nil
 
   var dependencyMgr: QWDependencyMgr = QWDependencyMgr(observerSet:[])
-
-  // Root Node of the Model to be archived
-  weak var modelRootNode: QWRoot?
-
-  // Indicates that model shall be saved
-  var modelUpdatedClosure: ((Bool)->())?
 
   var endOfRefreshOnceClosureArray:[(()->())] = []
   public func registerEndOfRefreshOnce(closure: @escaping (()->())) {
@@ -31,12 +24,20 @@ public class QWMediator<Model:QWRoot>: NSObject {
   // Commit Tag
   var currentCommit: String?
 
+  // Undo Managment
+  // Root Node of the Model to be archived
+  weak var modelRootNode: QWRoot?
+
+  // Indicates that model shall be saved
+  var modelUpdatedClosure: ((Bool)->())?
+
   // Model update monitoring regisration - perform check and undo storage
   // at end of each event loop where changes have been detected
   func registerModel(modelRootNode: QWRoot, modelUpdatedClosure: @escaping (Bool)->()) {
     self.modelRootNode = modelRootNode
     self.modelUpdatedClosure = modelUpdatedClosure
   }
+
 
   // Dictionary of QWPathTraceManager
   // QWPathTraceManager are monitoring a keypath, comparing old and new state from refresh to refresh
@@ -69,7 +70,7 @@ public class QWMediator<Model:QWRoot>: NSObject {
   // This node does not have to remember this monitoring
   // On node deletion, this registration will end
   // To unregister root, call, qwMediator.unregisterRootNode(property: PropertyDescription)
-  open func registerRoot(model qwRoot: Model, rootProperty: QWRootProperty)
+  open func registerRoot(model qwRoot: QWRoot, rootProperty: QWRootProperty)
   {
     if let rootDescriptor = self.rootDescriptor {
       if rootProperty.descriptor != rootDescriptor {
@@ -95,7 +96,7 @@ public class QWMediator<Model:QWRoot>: NSObject {
     // The unicity of the QWCounter determines if the properties have changed.
   }
 
-  public func getRoot() -> Model? {
+  public func getRoot() -> QWRoot? {
     return self.rootObject
   }
   
@@ -618,7 +619,6 @@ extension QWMediator
       self.refreshUI()
     }
   }
-
 }
 
 public struct QWObserverToken {

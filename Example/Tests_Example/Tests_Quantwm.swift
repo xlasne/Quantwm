@@ -2,7 +2,7 @@
 //  Tests_Example.swift
 //  Tests_Example
 //
-//  Created by Xavier on 13/12/2017.
+//  Created by Xavier Lasne on 13/12/2017.
 //  Copyright © 2017 CocoaPods. All rights reserved.
 //
 
