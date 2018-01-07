@@ -194,7 +194,7 @@ public final class QWRegistration: NSObject, Encodable
                schedulingPriority: schedulingPriority)
   }
 
-  public convenience init(alwaysRefreshWithName name: String) {
+  public convenience init(recurringWithName name: String) {
 
     self.init(registrationType: QWRegistrationType.AlwaysTrigger,
               readMap: QWMap(pathArray : []),
