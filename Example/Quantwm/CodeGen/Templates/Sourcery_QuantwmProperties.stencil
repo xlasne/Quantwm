@@ -1,0 +1,61 @@
+{% for type in types.all %}
+// sourcery:inline:{{ type.name }}.QuantwmDeclarationInline
+
+    // MARK: - Sourcery
+
+{% if type.implements.QWNode_S %}
+    // QWNode protocol
+    func getQWCounter() -> QWCounter {
+      return qwCounter
+    }
+    let qwCounter = QWCounter(name:"{{ type.name }}")
+    func getPropertyArray() -> [QWProperty] {
+        return {{ type.name }}QWModel.getPropertyArray()
+    }
+
+{% endif %}
+
+{% if type.implements.QWNode_S %}
+{% for prop in type.instanceVariables %}
+{% if prop|annotated:"property" %}
+    // Quantwm Property: {{ prop.name|replace:"_","" }}
+    static let {{ prop.name|replace:"_","" }}K = QWPropProperty(
+        propertyKeypath: \{{type.name}}.{{prop.name|replace:"_",""}},
+        description: "{{ prop.name }}")
+    {% endif %}
+{% if prop|annotated:"node" %}
+    // Quantwm Node:  {{ prop.name|replace:"_","" }}
+    static let {{ prop.name|replace:"_","" }}K = QWNodeProperty(
+        keypath: \{{type.name}}.{{prop.name|replace:"_",""}},
+        description: "{{ prop.name }}")
+{% endif %}
+{% if prop|annotated:"property" or prop|annotated:"node" or prop|annotated:"sharedProperty" %}
+{% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
+{% set propertyKName %}{% ifnot prop|annotated:"sharedProperty" %}{{type.name}}.{{monitoredName}}K{% else %}{{prop.annotations.sharedProperty}}{% endif %}{% endset %}
+{% if prop.readAccess == "public" or prop.readAccess == "open" or prop.readAccess == "internal" %}
+//FIXME: Variable {{ prop.name }} shall be fileprivate
+{% endif %}
+    var {{ monitoredName }} : {{ prop.typeName }} {
+      get {
+{% if prop|annotated:"allowBackgroundRead" %}
+self.qwCounter.read({{ propertyKName }}, options: .backgroundRead)
+{% else %}
+        self.qwCounter.read({{ propertyKName }})
+{% endif %}
+        return {{ prop.name }}
+      }
+{% if prop|annotated:"readOnly" %}
+{% else %}
+      set {
+        self.qwCounter.write({{ propertyKName }}{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"discardable" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"discardable" %}, .discardable{% endif %}]{% endif %})
+        {{ prop.name }} = newValue
+      {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
+      }
+{% endif %}
+    }
+{% endif %}
+{% endfor %}
+{% endif %}
+// sourcery:end
+{% endfor %}
+

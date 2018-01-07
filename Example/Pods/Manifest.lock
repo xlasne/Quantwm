@@ -1,0 +1,36 @@
+PODS:
+  - Alamofire (4.6.0)
+  - AlamofireImage (3.3.0):
+    - Alamofire (~> 4.5)
+  - Quantwm (0.2.0)
+  - RxAlamofire (4.0.0):
+    - RxAlamofire/Core (= 4.0.0)
+  - RxAlamofire/Core (4.0.0):
+    - Alamofire (~> 4.5)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.0.0)
+  - Sourcery (0.9.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.5)
+  - AlamofireImage (~> 3.3)
+  - Quantwm (from `../`)
+  - RxAlamofire (~> 4.0)
+  - RxSwift (~> 4.0)
+  - Sourcery (~> 0.9.0)
+
+EXTERNAL SOURCES:
+  Quantwm:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  Quantwm: 37348cd2095dc8b172faf8f79c07b068a9767aa1
+  RxAlamofire: 6ea579ac53bf14cb4bc7049a3866e5a769989b1d
+  RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
+  Sourcery: e3829460a1fa0bcd3b689e6087a89cc063cd2289
+
+PODFILE CHECKSUM: 994c782d11d402bbbab8250f9e727c00e64eabb7
+
+COCOAPODS: 1.3.1

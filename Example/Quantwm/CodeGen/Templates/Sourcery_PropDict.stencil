@@ -1,0 +1,11 @@
+registrationList = [
+{% for type in types.all %}
+{% for var in type.staticVariables %}
+{% if var.name|hasSuffix:"REG" %}
+   {{type.name}}.{{ var.name }},
+{% endif %}
+{% endfor %}
+{% endfor %}
+]
+
+
