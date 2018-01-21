@@ -62,25 +62,6 @@ class DataModel : QWRoot_S, QWNode_S {
     // sourcery: node
     fileprivate var _trackListCollection : TrackListCollection = TrackListCollection()
 
-
-    // MARK: - Computed Properties
-    // Shall be read-only
-    // Dependencies shall be added manually and injected in Model via sourcery dependency annotation.
-
-    static let selectedPlaylistDependencies =
-        QWModel.root.selectedPlaylistId_Read +
-        PlaylistsCollection.playlistsDataSourceMap(root: QWModel.root.playlistsCollection)
-
-    // sourcery: property
-    // sourcery: readOnly
-    // sourcery: dependency = "DataModel.selectedPlaylistDependencies"
-    fileprivate var _selectedPlaylist: Playlist? {
-        if let playlistId = selectedPlaylistId {
-            return playlistsCollection.playlist(playlistId: playlistId)
-        }
-        return nil
-    }
-
     static let selectedTracklistDependencies =
         QWModel.root.selectedPlaylistId_Read
         + QWModel.root.trackListCollection.trackDict.all_Read
@@ -164,16 +145,6 @@ class DataModel : QWRoot_S, QWNode_S {
       set {
         self.qwCounter.write(DataModel.trackListCollectionK)
         _trackListCollection = newValue
-      }
-    }
-    // Quantwm Property: selectedPlaylist
-    static let selectedPlaylistK = QWPropProperty(
-        propertyKeypath: \DataModel.selectedPlaylist,
-        description: "_selectedPlaylist")
-    var selectedPlaylist : Playlist? {
-      get {
-        self.qwCounter.read(DataModel.selectedPlaylistK)
-        return _selectedPlaylist
       }
     }
     // Quantwm Node:  selectedTracklist

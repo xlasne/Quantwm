@@ -40,7 +40,9 @@ class PlaylistHeaderViewController: UIViewController, GetMediator {
     }
 
     static let playlistREG: QWRegistration = QWRegistration(
-        smartWithReadMap: PlaylistHeaderViewModel.currentPlaylistHeaderMap,
+        smartWithReadMap: QWModel.root.selectedPlaylistId_Read
+            + QWModel.root.playlistsCollection.playlistArray_Read
+            + QWModel.root.selectedTracklist.all_Read,
         name: "PlaylistHeaderViewController.playlistUpdated")
     
     @objc func playlistUpdated() {

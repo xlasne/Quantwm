@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// QWMediator shall be owned by NSApplication or NSDocument, in order to be
+/// persistent in case of Data Model reload.
+/// QWMediator manages a single Data Model, which must register itself with registerRoot()
 open class QWMediator: NSObject {
 
   var rootDescriptor: QWPropertyID? = nil  // Set at first root registration
@@ -42,7 +45,7 @@ open class QWMediator: NSObject {
   // Dictionary of QWPathTraceManager
   // QWPathTraceManager are monitoring a keypath, comparing old and new state from refresh to refresh
   // QWPathTraceManager is initialized with { root: QWRootProperty, chain: [QWProperty]}
-  // QWPathTraceManager compute, store and compare difference of QWPathTraceReader
+  // QWPathTraceManager compute, store and compare difference of QWPathTraceSnapshot
   // from QWRootHandle objects.
   var pathStateManagerDict: [QWPath:QWPathTraceManager] = [:]
   

@@ -125,11 +125,6 @@ extension PlaylistsCollection // Data Source
 
     // MARK: - GETTERS
 
-    // Data Source for playlistArray
-    static func playlistsDataSourceMap(root: PlaylistsCollectionQWModel) -> QWMap {
-        return root.playlistArray_Read
-    }
-
     var playlistsCount: Int {
         return playlistArray.count
     }

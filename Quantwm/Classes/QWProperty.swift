@@ -30,6 +30,8 @@ func ==(lhs: QWPropertyID, rhs: QWPropertyID) -> Bool {
     && (lhs.isNode == rhs.isNode)
 }
 
+/// Root Data Model property.
+/// Wraps the data model type and a String identifier
 public class QWRootProperty: Equatable, Encodable
 {
 

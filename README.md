@@ -93,7 +93,14 @@ This root class shall have the additional QWRoot_S protocol (for model generatio
 
 ```swift
 class DataModel : QWRoot_S, QWNode_S  {
+  // sourcery: root
+  static let dataModelK = QWRootProperty(rootType: DataModel.self,
+  rootId: "dataModel")
   ...
+
+  // sourcery:inline:DataModel.QuantwmDeclarationInline
+  // sourcery:end
+
 }
 ```
 ### QWMediator and ViewModel Customization
@@ -225,8 +232,7 @@ fileprivate var _selectedPlaylist: Playlist? {
 
 #### Model Scheme
 
-Once your model is instrumented, Sourcery_QuantwmModel.generated.Swift contains the generated model scheme,
-allowing to easily select the read and write path.
+Once your model is instrumented, Sourcery_QuantwmModel.generated.Swift contains the generated model scheme, allowing to easily select the read and write path.
 
 To select a read property: QWModel.root.playlistsCollection.playlistArray_Read
 To select a write property: QWModel.root.playlistsCollection.playlistArray_Write
@@ -239,7 +245,7 @@ To select a write node and all its children: QWModel.root.selectedPlaylist_allWr
 
 ### View Model
 
-View Model shall inherit from VIewModel deifned in Quantwm.swift
+View Model shall inherit from ViewModel defined in Quantwm.swift
 
 ```swift
 class PlaylistHeaderViewModel: ViewModel
@@ -248,7 +254,8 @@ class PlaylistHeaderViewModel: ViewModel
 
 }
 ```
-ViewModel are normally owned by View Controllers.
+Each ViewController shall owns the ViewModel(s) associated to its Views.
+Each Processor shall owns the ViewModel associated to its processing.
 
 I usually create them in viewWillAppear and perform registration immediately:
 
@@ -279,11 +286,12 @@ override func viewDidDisappear(_ animated: Bool) {
 
 #### View Model Action
 
-During a Data Model update, all read and write shall be performed inside an Update Transaction.
-Perform them inside the viewModel updateActionAndRefresh closure.
+During an Action processing, the Data Model update shall be performed in an update transaction, which contains the updateActionAndRefresh closure. Inside this closure, perform the Base property update, and the potential registration. Update Transactions can be nested. If several update are needed, wrap them into a higher level update transaction in order to have a single Action Update Transaction per event loop. The closure of the root transaction triggers the sending of
+
+
+During a HardScheduling too, perform update of the Data Model derived properties andthe (un)registration of the Child View Controllers inside an update transaction.
 
 ```swift
-
     // User Selection
     func selectPreviousUser() {
         updateActionAndRefresh {
@@ -292,15 +300,16 @@ Perform them inside the viewModel updateActionAndRefresh closure.
             }
         }
     }
-
 ```
+
 The rule is that on an Action, the ViewController shall just update the model via an update transaction.
 ViewController User Interface updates are triggered by the notifications.
+There should be only one updateActionAndRefresh call per event loop. If multiple update or registrations are performed,
 
 
 ### Registrations
 
-
+Registrations are detailled in QWRegistration file.
 
 
 ## Installation

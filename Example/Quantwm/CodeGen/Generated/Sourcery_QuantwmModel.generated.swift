@@ -93,12 +93,6 @@ class DataModelQWModel
     // MARK: Computed Variables Array
 
 
-    lazy fileprivate var selectedPlaylist: QWPath = path.appending(DataModel.selectedPlaylistK)
-    var selectedPlaylist_Read: QWMap {
-        return selectedPlaylist.map
-            + DataModel.selectedPlaylistDependencies
-    }
-
     // node: Computed selectedTracklist
     var selectedTracklist:TracklistQWModel {
         return TracklistQWModel(path: path.appending(DataModel.selectedTracklistK), readDependency:DataModel.selectedTracklistDependencies)
@@ -131,11 +125,6 @@ class DataModelQWModel
     }
 
 
-    // property: selectedPlaylist
-    func selectedPlaylistGetter(_ root:DataModel) -> Playlist? {
-        return root[keyPath:\DataModel.selectedPlaylist]
-    }
-
     // node: Getter selectedTracklist
     func selectedTracklistGetter(_ root:DataModel) -> Tracklist? {
         return root[keyPath:\DataModel.selectedTracklist]
@@ -160,7 +149,6 @@ class DataModelQWModel
         pathArray.append(path.appending(DataModel.selectedPlaylistIdK).readWrite(read: read))
         pathArray += playlistsCollection.allPathGetter(read: read)
         pathArray += trackListCollection.allPathGetter(read: read)
-        pathArray.append(path.appending(DataModel.selectedPlaylistK).readWrite(read: read))
         pathArray += selectedTracklist.allPathGetter(read: read)
         return pathArray
     }
@@ -172,7 +160,6 @@ class DataModelQWModel
         DataModel.selectedPlaylistIdK,  // property
         DataModel.playlistsCollectionK,   // node
         DataModel.trackListCollectionK,   // node
-        DataModel.selectedPlaylistK,  // property
         DataModel.selectedTracklistK,   // node
     ]
 }

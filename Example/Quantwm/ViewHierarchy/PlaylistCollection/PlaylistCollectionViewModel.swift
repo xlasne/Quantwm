@@ -12,13 +12,7 @@ import Quantwm
 
 class PlaylistsCollectionViewModel: ViewModel
 {
-    let playlistCollectionModel: PlaylistsCollectionQWModel
 
-    init(mediator: Mediator, owner: String,
-                  playlistCollectionModel: PlaylistsCollectionQWModel) {
-        self.playlistCollectionModel = playlistCollectionModel
-        super.init(mediator: mediator, owner: owner)
-    }
 
     // User Actions
 
@@ -48,12 +42,6 @@ class PlaylistsCollectionViewModel: ViewModel
     }
 
     // MARK: - Get Title
-    var mapForTitle: QWMap {
-        return QWModel.root.userId_Read +
-            playlistCollectionModel.total_Read +
-            PlaylistsCollection.playlistsDataSourceMap(root: playlistCollectionModel)
-    }
-
 
     // Accessor: experimental try
     let totalAccessor =
@@ -70,14 +58,6 @@ class PlaylistsCollectionViewModel: ViewModel
     }
 
     // MARK: - Data Source for Playlist Collection
-
-    // Normally, I would write this:
-    // static let playlistCollectionDataSourceMap = QWModel.root.playlistsCollection.all
-    // But to show example for more complex situation, let's do as if there was
-    // multiple playlistsCollection in the model
-    var mapForPlaylistCollectionDataSource: QWMap {
-        return PlaylistsCollection.playlistsDataSourceMap(root: playlistCollectionModel)
-    }
 
     // This map gives access to the 3 functions below for reading the model only
 

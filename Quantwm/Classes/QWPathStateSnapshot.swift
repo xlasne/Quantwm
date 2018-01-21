@@ -1,5 +1,5 @@
 //
-//  QWPathTraceReader.swift
+//  QWPathTraceSnapshot.swift
 //  QUANTWM
 //
 //  Created by Xavier Lasne on 07/05/16.
@@ -8,12 +8,29 @@
 
 import Foundation
 
-public protocol QWPathTraceReader {
+/// QWPathTraceSnapshot allows to take 'snapshots' of QWPath.
+/// Each snapshot is generated via init(rootObject: QWRoot, qwPath: QWPath).
+/// snapshot contains a tree of NodeId and property counter matching the defined QWPath.
+public protocol QWPathTraceSnapshot {
+
+  /// Generate a QWPathTraceSnapshot
+  ///
+  /// - Parameters:
+  ///   - rootObject: QWRoot of the model
+  ///   - qwPath: QWPath. May be a Property QWPath, Node QWPath or Subtree QWPath
   init(rootObject: QWRoot, qwPath: QWPath)
-  func compareWithPreviousState(_ previousPathState: QWPathTraceReader?) -> (isDirty:Bool, description: String)
+
+  /// compareWithPreviousState:
+  ///
+  /// - Parameter previousPathState: QWPathTraceSnapshot generated with the same QWPath
+  /// - Returns: (isDirty:Bool, description: String)
+  ///   isDirty means that some QWPath property write counters are different,
+  ///   or that some path NodeId are different,
+  ///   or that model has changed - QWRoot release, unregister or register.
+  func compareWithPreviousState(_ previousPathState: QWPathTraceSnapshot?) -> (isDirty:Bool, description: String)
 }
 
-class QWPathTrace: QWPathTraceReader {
+class QWPathTrace: QWPathTraceSnapshot {
 
   let node: QWNodeState
 
@@ -23,20 +40,20 @@ class QWPathTrace: QWPathTraceReader {
     self.node = QWNodeState(rootObject: rootObject, parentProp: prop, qwPath: qwPath)
   }
 
-  func compareWithPreviousState(_ previousPathState: QWPathTraceReader?) -> (isDirty: Bool, description: String) {
+  func compareWithPreviousState(_ previousPathState: QWPathTraceSnapshot?) -> (isDirty: Bool, description: String) {
     guard let previousPathState = previousPathState else {
       return (isDirty:true, description: "Node created")
     }
     if let chain = previousPathState as? QWPathTrace {
       return node.compareWithPreviousState(chain.node)
     }
-    return (isDirty:true, description: "Different QWPathTraceReader type")
+    return (isDirty:true, description: "Different QWPathTraceSnapshot type")
   }
 }
 
 class QWNodeState {
 
-  // Capture an observable value of a monitored node or a child node
+  // Capture an snapshot value of a monitored node or a child node
 
   // Capture qwCounterId
   var qwCounterId: NodeId

@@ -12,12 +12,9 @@ import Quantwm
 class PlaylistHeaderViewModel: ViewModel
 {
 
-    static let currentPlaylistHeaderMap =
-        QWModel.root.selectedPlaylist_Read
-            + QWModel.root.selectedTracklist.all_Read
-
     func playlistHeaderInfoSelectedPlaylist() -> PlaylistHeaderInfo? {
-        if let playlist = dataModel.selectedPlaylist {
+        if let playlistId = dataModel.selectedPlaylistId,
+            let playlist = dataModel.playlistsCollection.playlist(playlistId: playlistId) {
             var imageUrl:URL? = nil
             var largeImageUrl:URL? = nil
             if let urlStr = playlist.picture_medium {

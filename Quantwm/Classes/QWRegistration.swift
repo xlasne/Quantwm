@@ -15,7 +15,55 @@ enum QWRegistrationType {
   case SmartScheduling
 }
 
-public final class QWRegistration: NSObject, Encodable
+
+public class QWCollector: QWRegistration
+{
+
+  /// Initialization of a QWCollector, a specialized QWRegistration
+  /// similar to a Smart Registration or Hard Registration depending on schedulingPriority,
+  /// which can be monitored like a property via the collectors parameters.
+  /// If Client A includes the QWCollector B in its registration, then A will be notified
+  /// each time B is activated.
+  /// Using collector is useful for performance when registering to a large collection of items
+  /// via a sub-tree path: The collector monitor this collection,
+  /// and factorize this read access for other registrations.
+  ///
+  /// If scheduling priority is defined: Hard Registration
+  /// Read Access: Any property
+  /// Write Access: Any property
+  ///
+  /// If scheduling priority is nil: Smart Registration
+  /// Read Access: includes the collectedMap, the writtenMap,
+  /// and recursive access to the collectors collectedMap and writtenMap.
+  /// Write Access: writtenMap
+  ///
+  /// - Parameters:
+  ///   - collectedMap: QWMap of the read paths triggering the notification.
+  ///   - name: String identifying this registration.
+  ///   - writtenMap: QWMap of the write paths. The written property is the last property of each write path.
+  ///   - collectors: Optional array of QWCollectors.
+  ///   - schedulingPriority: Optional Priority.
+  public init(collectorWithReadMap collectedMap: QWMap,
+                          name: String,
+                          writtenMap: QWMap?,
+                          collectors: [QWCollector] = [],
+                          schedulingPriority: Int? = nil) {
+
+    let writeMap = writtenMap ?? QWMap(pathArray:[])
+
+    assert(!collectedMap.qwPathSet.isEmpty,"QWCollector \(name): readMap shall not be empty")
+
+    super.init(registrationType: QWRegistrationType.Collector,
+              readMap: collectedMap,
+              name: name,
+              writtenMap: writeMap,
+              collectors: collectors,
+              schedulingPriority: schedulingPriority)
+  }
+}
+
+/// QWRegistration: 
+public class QWRegistration: NSObject, Encodable
 {
 
   enum CodingKeys: String, CodingKey {
@@ -30,7 +78,7 @@ public final class QWRegistration: NSObject, Encodable
   let writtenPathSet: Set<QWPath>
   let schedulingPriority: Int?
   let registrationType: QWRegistrationType
-  var collectors:[QWRegistration]
+  var collectors:[QWCollector]
   var collectorPathSet: Set<QWPath> = []   // Contains collector values which can be read, but does not require registration to because their contract is managed via Collector.
 
 
@@ -38,7 +86,7 @@ public final class QWRegistration: NSObject, Encodable
        readMap: QWMap,
        name: String,
        writtenMap: QWMap = QWMap(pathArray : []),
-       collectors: [QWRegistration] = [],
+       collectors: [QWCollector] = [],
        schedulingPriority: Int?)
   {
     self.registrationType = registrationType
@@ -71,79 +119,23 @@ public final class QWRegistration: NSObject, Encodable
     return readPathSet.isEmpty
   }
 
-  /*
-   Collector Registration:
-   - Collected Set
-   - Collector Counter
-
-   Rule:
-   - If any property of the Collected set is modified, then Collector counter is incremented.
-   - Collector Counter can be incremented without Collected set update (update of non monitored property).
-   - Once a notification with Collector-Read has been sent, no change to the Collected set is allowed
-
-   Subscription as Write:
-   - Collected Set is included in the registration Read Set
-   - Collector property is included in the WrittenSet
-
-   Subscription as Read:
-   - Collected Set is included as properties which can be read, but do not need to be registered.
-   - Collector property is part of the read set
-
-   ** Active Collector **
-   - Any component updating a property of the read set shall increment the collector.
-
-   Scheduling:
-   - Hard scheduling:
-   - No need to declare it in write
-   - Smart Scheduling:
-   - Registration can declare the collectorPath in write or read
-   - The collector level is computed based on collectorPath level.
-
-
-   ** Passive Collector **
-   - Collector is scheduled as a normal Processing in Smart scheduling.
-   with read and write set
-   - On activation, the incrementClosure is performed.
-   - This is a regular registration, with a closure instead of a selector
-   -> Need to replace selector by closure
-
-   Scheduling:
-
-   Step 1:
-   - Define a QWCollector object
-   Step 2:
-   - Register a QWCollector object
-
-   TODO:
-   - Replace collectorPath by a collector param containing registration
-   - Use Observer dirty counter as collector param
-   - Make any registration become collector when used as collector param
-   - Detect that a collector is not present playing its role.
-   - Detect that a collector is not correctly incrementing its property ?
-   */
-
-  public convenience init(collectorWithReadMap collectedMap: QWMap,
-                          name: String,
-                          writtenMap: QWMap?,
-                          collectors: [QWRegistration] = [],
-                          schedulingPriority: Int? = nil) {
-
-    let writeMap = writtenMap ?? QWMap(pathArray:[])
-
-    assert(!collectedMap.qwPathSet.isEmpty,"QWCollector \(name): readMap shall not be empty")
-
-    self.init(registrationType: QWRegistrationType.Collector,
-              readMap: collectedMap,
-              name: name,
-              writtenMap: writeMap,
-              collectors: collectors,
-              schedulingPriority: schedulingPriority)
-  }
-
+  /// Smart Registration
+  /// Scheduling: After Hard Registration, and before Recurring Registration
+  /// Notification is triggered if any readMap property has changed since the last notification, or if readMap is empty.
+  /// The scheduling order is computed based on the dependency level,
+  /// which guaranty that readMap input property will not change until the end of the event loop.
+  /// Read Access: readMap + recursive access to the collectors collectedMap and writtenMap.
+  /// Write Access: limited to writtenMap
+  ///
+  /// - Parameters:
+  ///   - readMap: QWMap of Read Path
+  ///   - name: String identifying this registration.
+  ///   - writtenMap: QWMap of the write paths. The written property is the last property of each write path.
+  ///   - collectors: Array of QWCollectors, may be empty.
   public convenience init(smartWithReadMap readMap: QWMap,
               name: String,
               writtenMap: QWMap? = nil,
-              collectors: [QWRegistration] = []) {
+              collectors: [QWCollector] = []) {
 
     let writeMap = writtenMap ?? QWMap(pathArray:[])
 
@@ -159,10 +151,6 @@ public final class QWRegistration: NSObject, Encodable
       }
     }
 
-    for reg in collectors {
-      assert(!reg.readPathSet.isEmpty,"Error: Collector \(reg.name) readMap shall not be empty")
-    }
-    
     self.init(registrationType: QWRegistrationType.SmartScheduling,
                readMap: readMap,
                name: name,
@@ -171,19 +159,27 @@ public final class QWRegistration: NSObject, Encodable
                schedulingPriority: nil)
   }
 
+  /// Hard Registration
+  /// Scheduling: Before Smart and Recurring Registration
+  /// The scheduling order is computed based on the increasing schedulingPriority
+  /// Notification is triggered if any readMap property has changed since the last notification
+  /// Read Access: Any property
+  /// Write Access: Any property
+  ///
+  /// - Parameters:
+  ///   - readMap: QWMap of Read Path
+  ///   - name: String identifying this registration.
+  ///   - writtenMap: QWMap of the write paths. The written property is the last property of each write path.
+  ///   - collectors: Array of QWCollectors, may be empty.
   public convenience init(hardWithReadMap readMap: QWMap,
               name: String,
               schedulingPriority: Int,
-              collectors: [QWRegistration] = []) {
+              collectors: [QWCollector] = []) {
 
     for path in readMap.qwPathSet {
       if path.access == .writePath {
         assert(false, "Error: Registration \(name) contains a write readPath : \(path)")
       }
-    }
-
-    for reg in collectors {
-      assert(!reg.readPathSet.isEmpty,"Error: Collector \(reg.name) readMap shall not be empty")
     }
 
     self.init(registrationType: QWRegistrationType.HardScheduling,
@@ -194,6 +190,14 @@ public final class QWRegistration: NSObject, Encodable
                schedulingPriority: schedulingPriority)
   }
 
+  /// Recurring Registration
+  /// Scheduling: After Hard and Smart Registration
+  /// Notification is triggered at each updateAndRefresh() call
+  /// Read Access: Any property
+  /// Write Access: No write allowed
+  ///
+  /// - Parameters:
+  ///   - recurringWithName: String identifying this registration.
   public convenience init(recurringWithName name: String) {
 
     self.init(registrationType: QWRegistrationType.AlwaysTrigger,

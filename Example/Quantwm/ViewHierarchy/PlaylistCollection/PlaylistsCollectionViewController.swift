@@ -18,23 +18,20 @@ final class PlaylistsCollectionViewController: UICollectionViewController, GetMe
 
     override  func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let model = QWModel.root.playlistsCollection
         let viewModel = PlaylistsCollectionViewModel(
             mediator: qwMediator,
-            owner: "PlaylistsCollectionViewController",
-            playlistCollectionModel: model)
+            owner: "PlaylistsCollectionViewController")
 
         navigationController?.setToolbarHidden(true, animated: true)
         self.viewModel = viewModel
-        playlistUpdatedRegistration = playlistUpdatedREG(viewModel: viewModel)
         installsStandardGestureForInteractiveMovement = true
         viewModel.updateActionAndRefresh {
             viewModel.registerObserver(
-                registration: playlistUpdatedREG(viewModel: viewModel),
+                registration: PlaylistsCollectionViewController.playlistUpdatedREG,
                 target: self,
                 selector: #selector(PlaylistsCollectionViewController.playlistsCollectionUpdated))
             viewModel.registerObserver(
-                registration: userIdREG(viewModel: viewModel),
+                registration: PlaylistsCollectionViewController.userIdREG,
                 target: self,
                 selector: #selector(PlaylistsCollectionViewController.titleUpdated))
         }
@@ -53,11 +50,9 @@ final class PlaylistsCollectionViewController: UICollectionViewController, GetMe
 
     var playlistUpdatedRegistration: QWRegistration?
 
-    func playlistUpdatedREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
-        return QWRegistration(
-            smartWithReadMap: viewModel.mapForPlaylistCollectionDataSource,
+    static let playlistUpdatedREG = QWRegistration(
+            smartWithReadMap: QWModel.root.playlistsCollection_allRead,
             name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
-    }
 
     var refreshToken: QWObserverToken?
     @objc func playlistsCollectionUpdated() {
@@ -65,11 +60,11 @@ final class PlaylistsCollectionViewController: UICollectionViewController, GetMe
         collectionView?.reloadData()
     }
 
-    func userIdREG(viewModel: PlaylistsCollectionViewModel) -> QWRegistration {
-        return QWRegistration(
-        smartWithReadMap: viewModel.mapForTitle,
+    static let userIdREG = QWRegistration(
+        smartWithReadMap: QWModel.root.userId_Read +
+            QWModel.root.playlistsCollection.total_Read +
+            QWModel.root.playlistsCollection.playlistArray_Read,
         name: "PlaylistsCollectionViewController.titleUpdated")
-    }
 
     @objc func titleUpdated() {
         if let title = viewModel?.getTitle() {

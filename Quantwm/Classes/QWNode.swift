@@ -22,13 +22,23 @@ public protocol QWModelProperty {
 
 
 // The root node shall be an object, in order to keep a weak pointer on it.
+
+/// QWRoot is the model Root.
+/// QWRoot shall register itself via QWMediator.registerRoot()
+/// QWRoot is the root of all the QWPath registered to the mediator
+/// QWRoot is the root of the QWModel generated via Sourcery Sourcery_QuantwmModel.stencil
+/// QWRoot shall have a root property like:
+/// //sourcery: root
+/// static let dataModelK = QWRootProperty(rootType: DataModel.self, rootId: "dataModel")
+/// Check Quantwm.swift for Mediator customization for referencing the DataModel
 public protocol QWRoot: class, QWNode
 {
-  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceReader
+  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceSnapshot
 }
 
 public extension QWRoot {
-  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceReader
+  /// Generate
+  func generateQWPathTrace(qwPath: QWPath) -> QWPathTraceSnapshot
   {
     return QWPathTrace(rootObject: self, qwPath: qwPath)
   }

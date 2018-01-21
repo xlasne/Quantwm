@@ -21,8 +21,8 @@ class QWPathTraceManager
   // At each readAndCompareTrace:
   // updatedNodeChain is compared versus updatedNodeChain ?? nodeChain
   // updateCounter is incremented if different
-  private var nodeChain: QWPathTraceReader?
-  private var updatedNodeChain: QWPathTraceReader?
+  private var nodeChain: QWPathTraceSnapshot?
+  private var updatedNodeChain: QWPathTraceSnapshot?
   private(set) var updateCounter: Int = 0
   
   var keypathBase: String {
@@ -57,7 +57,7 @@ class QWPathTraceManager
 
     // The root node is not nil.
     // Let's read  and compare the chains
-    let updatedNodeChain: QWPathTraceReader = rootNode.generateQWPathTrace(qwPath: qwPath)
+    let updatedNodeChain: QWPathTraceSnapshot = rootNode.generateQWPathTrace(qwPath: qwPath)
 
     // If self.updatedNodeChain is not nil, we are resuming from a suspendRefresh, and must check additional changes, else this is a start refresh
     let previousPathState = self.updatedNodeChain ?? self.nodeChain

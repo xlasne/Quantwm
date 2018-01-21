@@ -6,6 +6,8 @@ registrationList = [
    NetworkMgr.userIdUpdatedREG,
    NetworkMgr.playlistSelectedREG,
    PlaylistHeaderViewController.playlistREG,
+   PlaylistsCollectionViewController.playlistUpdatedREG,
+   PlaylistsCollectionViewController.userIdREG,
 ]
 
 
