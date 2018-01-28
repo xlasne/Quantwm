@@ -97,11 +97,11 @@ class DataModel : QWRoot_S, QWNode_S {
         description: "_userId")
     var userId : UserID {
       get {
-        self.qwCounter.read(DataModel.userIdK)
+        self.qwCounter.read(DataModel.userIdK, backgroundRead: false, storageOptions:.stored)
         return _userId
       }
       set {
-        self.qwCounter.write(DataModel.userIdK)
+        self.qwCounter.write(DataModel.userIdK,backgroundWrite: false, storageOptions:.stored)
         _userId = newValue
       }
     }
@@ -111,11 +111,11 @@ class DataModel : QWRoot_S, QWNode_S {
         description: "_selectedPlaylistId")
     var selectedPlaylistId : PlaylistID? {
       get {
-        self.qwCounter.read(DataModel.selectedPlaylistIdK)
+        self.qwCounter.read(DataModel.selectedPlaylistIdK, backgroundRead: false, storageOptions:.stored)
         return _selectedPlaylistId
       }
       set {
-        self.qwCounter.write(DataModel.selectedPlaylistIdK)
+        self.qwCounter.write(DataModel.selectedPlaylistIdK,backgroundWrite: false, storageOptions:.stored)
         _selectedPlaylistId = newValue
       }
     }
@@ -125,11 +125,11 @@ class DataModel : QWRoot_S, QWNode_S {
         description: "_playlistsCollection")
     var playlistsCollection : PlaylistsCollection {
       get {
-        self.qwCounter.read(DataModel.playlistsCollectionK)
+        self.qwCounter.read(DataModel.playlistsCollectionK, backgroundRead: false, storageOptions:.stored)
         return _playlistsCollection
       }
       set {
-        self.qwCounter.write(DataModel.playlistsCollectionK)
+        self.qwCounter.write(DataModel.playlistsCollectionK,backgroundWrite: false, storageOptions:.stored)
         _playlistsCollection = newValue
       }
     }
@@ -139,11 +139,11 @@ class DataModel : QWRoot_S, QWNode_S {
         description: "_trackListCollection")
     var trackListCollection : TrackListCollection {
       get {
-        self.qwCounter.read(DataModel.trackListCollectionK)
+        self.qwCounter.read(DataModel.trackListCollectionK, backgroundRead: false, storageOptions:.stored)
         return _trackListCollection
       }
       set {
-        self.qwCounter.write(DataModel.trackListCollectionK)
+        self.qwCounter.write(DataModel.trackListCollectionK,backgroundWrite: false, storageOptions:.stored)
         _trackListCollection = newValue
       }
     }
@@ -153,7 +153,7 @@ class DataModel : QWRoot_S, QWNode_S {
         description: "_selectedTracklist")
     var selectedTracklist : Tracklist? {
       get {
-        self.qwCounter.read(DataModel.selectedTracklistK)
+        self.qwCounter.read(DataModel.selectedTracklistK, backgroundRead: false, storageOptions:.stored)
         return _selectedTracklist
       }
     }

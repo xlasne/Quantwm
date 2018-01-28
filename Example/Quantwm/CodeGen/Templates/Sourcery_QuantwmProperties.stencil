@@ -32,24 +32,20 @@
 {% if prop|annotated:"property" or prop|annotated:"node" or prop|annotated:"sharedProperty" %}
 {% set monitoredName %}{{prop.name|replace:"_",""}}{% endset %}
 {% set propertyKName %}{% ifnot prop|annotated:"sharedProperty" %}{{type.name}}.{{monitoredName}}K{% else %}{{prop.annotations.sharedProperty}}{% endif %}{% endset %}
+{% set propertyKStorage %}, storageOptions:{% if prop|annotated:"derived" %}.derived{% else %}{% if prop|annotated:"discardable" %}.discardable{% else %}.stored{% endif %}{% endif %}{% endset %}
 {% if prop.readAccess == "public" or prop.readAccess == "open" or prop.readAccess == "internal" %}
 //FIXME: Variable {{ prop.name }} shall be fileprivate
 {% endif %}
     var {{ monitoredName }} : {{ prop.typeName }} {
       get {
-{% if prop|annotated:"allowBackgroundRead" %}
-self.qwCounter.read({{ propertyKName }}, options: .backgroundRead)
-{% else %}
-        self.qwCounter.read({{ propertyKName }})
-{% endif %}
+        self.qwCounter.read({{ propertyKName }}, backgroundRead: {% if prop|annotated:"allowBackgroundRead" %}true{% else %}false{% endif %}{{ propertyKStorage }})
         return {{ prop.name }}
       }
-{% if prop|annotated:"readOnly" %}
-{% else %}
+{% ifnot prop|annotated:"readOnly" %}
       set {
-        self.qwCounter.write({{ propertyKName }}{% if prop|annotated:"allowBackgroundWrite" or prop|annotated:"discardable" %}, options : [.none{% if prop|annotated:"allowBackgroundWrite" %}, .backgroundWrite{% endif %}{% if prop|annotated:"discardable" %}, .discardable{% endif %}]{% endif %})
+        self.qwCounter.write({{ propertyKName }},backgroundWrite: {% if prop|annotated:"allowBackgroundWrite" %}true{% else %}false{% endif %}{{ propertyKStorage }})
         {{ prop.name }} = newValue
-      {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
+        {% if prop|annotated:"setProc" %}{{ prop.annotations.setProc }}{% endif %}
       }
 {% endif %}
     }

@@ -20,23 +20,77 @@ import Foundation
 typealias NodeId = Int32
 
 //ReadOnly
+
 //allowBackgroundRead
+
 //allowBackgroundWrite
-//discardable
+
+//not discardable or
+//discardable: Discardable generates an Undo step marked as Discardable
+//derived: Derived
 
 
-public struct QWCounterOption: OptionSet {
+public struct QWCounterAccessOption: OptionSet {
   public let rawValue: Int
 
-  public init(rawValue: QWCounterOption.RawValue) {
+  public init(rawValue: QWCounterAccessOption.RawValue) {
     self.rawValue = rawValue & 7
   }
 
-  public static let none            = QWCounterOption(rawValue: 0)
-  public static let backgroundRead  = QWCounterOption(rawValue: 1)   // versus read on main thread only
-  public static let backgroundWrite = QWCounterOption(rawValue: 2)  // versus write on main thread only
-  public static let discardable      = QWCounterOption(rawValue: 4)       // versus normal
+  public static let none            = QWCounterAccessOption(rawValue: 0)
+  public static let backgroundRead  = QWCounterAccessOption(rawValue: 1)  // versus read on main thread only
+  public static let backgroundWrite = QWCounterAccessOption(rawValue: 2)  // versus write on main thread only
 }
+
+public enum QWCounterStorageOption {
+  case stored
+  case discardable
+  case derived
+}
+
+public enum QWStorageDecision {
+  case noChange
+  case discardableChange
+  case storedChange
+
+  func reduce(_ decision: QWStorageDecision) -> QWStorageDecision {
+    switch (self, decision) {
+    case (.storedChange, _):
+      return .storedChange
+    case (_, .storedChange):
+      return .storedChange
+    case (.discardableChange, _):
+      return .discardableChange
+    case (_, .discardableChange):
+      return .discardableChange
+    case (.noChange, .noChange):
+      return .noChange
+    }
+  }
+
+  var isUpdated: Bool {
+    switch self {
+    case .noChange:
+      return false
+    case .discardableChange:
+      return true
+    case .storedChange:
+      return true
+    }
+  }
+
+  var isDiscardable: Bool {
+    switch self {
+    case .noChange:
+      return false
+    case .discardableChange:
+      return true
+    case .storedChange:
+      return false
+    }
+  }
+}
+
 
 
 
@@ -96,26 +150,13 @@ open class QWCounter: NSObject, Codable {
   var accessDict: [AnyKeyPath:QWCounterAccess] = [:]
 
   //MARK: - Read / Write monitoring
-  
-  public func read(_ property: QWProperty)
-  {
+
+  public func read(_ property: QWProperty,
+                   backgroundRead: Bool = false,
+                   storageOptions: QWCounterStorageOption = .stored) {
     if !activated { return }
 
-    let childKey = property
-    if !Thread.isMainThread {
-      assert(false, "Monitored Node: Error: reading from \(childKey) from background thread is a severe error")
-    }
-    if let dataUsage = DataUsage.currentInstance(),
-      dataUsage.readMonitoringIsActive {
-      dataUsage.addRead(self, property: property.descriptor)
-      checkReadAccess(dataUsage: dataUsage, property: property)
-    }
-  }
-
-  public func read(_ property: QWProperty, options: QWCounterOption = .none) {
-    if !activated { return }
-
-    if !options.contains(.backgroundRead) {
+    if !backgroundRead {
       let childKey = property.propKey
       if !Thread.isMainThread {
         assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
@@ -130,10 +171,13 @@ open class QWCounter: NSObject, Codable {
 
   }
 
-  public func write(_ property: QWProperty, options: QWCounterOption = .none) {
+  public func write(_ property: QWProperty,
+                    backgroundWrite: Bool = false,
+                    storageOptions: QWCounterStorageOption = .stored)
+  {
     if !activated { return }
 
-    if !options.contains(.backgroundWrite) {
+    if !backgroundWrite {
       let childKey = property.propKey
       if !Thread.isMainThread {
         assert(false, "Monitored Node: Error: writing from \(childKey) from background thread is a severe error")
@@ -141,10 +185,7 @@ open class QWCounter: NSObject, Codable {
     }
     self.setDirty(property)
 
-    // Contextual: Does not clear of the commit tag / stageChange -> does not trigger a save
-    if !options.contains(.discardable) {
-      stageChange()
-    }
+    stageChange(storageOptions: storageOptions)
 
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property.descriptor)
@@ -313,20 +354,13 @@ open class QWCounter: NSObject, Codable {
     case Created
     case Committed(String)
     case UpdateAllowed(String)
+    case DiscardableWrite
     case Written
   }
 
   var state: UpdateState = .Created
 
   func commit(tag: String) {
-    if QWCounter.ASSERT_ON_VIOLATION {
-      switch state {
-      case .Committed(let previousTag):
-        assert(tag == previousTag,"commit tag shall match")
-      default:
-        break
-      }
-    }
     state = .Committed(tag)
   }
 
@@ -340,7 +374,7 @@ open class QWCounter: NSObject, Codable {
         }
       case .Committed(let previousTag):
         assert(tag == previousTag,"commit tag shall match")
-      case .Written:
+      case .Written, .DiscardableWrite:
         if tag.count > 0 {
           assert(false,"Node has been written out of update phase")
         }
@@ -352,7 +386,7 @@ open class QWCounter: NSObject, Codable {
     state = .UpdateAllowed(tag)
   }
 
-  func stageChange() {
+  func stageChange(storageOptions: QWCounterStorageOption) {
     if QWCounter.ASSERT_ON_VIOLATION {
       switch state {
       case .Committed:
@@ -361,25 +395,41 @@ open class QWCounter: NSObject, Codable {
         break
       }
     }
-    state = .Written
+
+    switch storageOptions {
+    case .stored:
+      state = .Written
+      break
+    case .discardable:
+      if case .Written = state   {
+        break
+      } else{
+        state = .DiscardableWrite
+      }
+    case .derived:
+      return   // Derived: Does not clear of the commit tag / stageChange
+               // -> does not trigger a save
+    }
   }
 
-  func isUpdated(tag: String) -> Bool {
+  func isUpdated(tag: String) -> QWStorageDecision {
     switch state {
     case .Created:
-      return true
+      return QWStorageDecision.storedChange
     case .Committed(let previousTag):
       if QWCounter.ASSERT_ON_VIOLATION {
         assert(tag == previousTag,"commit tag shall match")
       }
-      return false
+      return QWStorageDecision.noChange
     case .Written:
-      return true
+      return QWStorageDecision.storedChange
+    case .DiscardableWrite:
+      return QWStorageDecision.discardableChange
     case .UpdateAllowed(let previousTag):
       if QWCounter.ASSERT_ON_VIOLATION {
         assert(tag == previousTag,"commit tag shall match")
       }
-      return false
+      return QWStorageDecision.noChange
     }
   }
 

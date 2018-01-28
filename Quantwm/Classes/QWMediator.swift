@@ -32,15 +32,32 @@ open class QWMediator: NSObject {
   weak var modelRootNode: QWRoot?
 
   // Indicates that model shall be saved
-  var modelUpdatedClosure: ((Bool)->())?
+  var modelUpdatedClosure: (()->())?
 
   // Model update monitoring regisration - perform check and undo storage
   // at end of each event loop where changes have been detected
-  func registerModel(modelRootNode: QWRoot, modelUpdatedClosure: @escaping (Bool)->()) {
+  // Create sequence is:
+  /*
+   qwMediator.unregisterModel()
+   updateAndRefresh() {
+    dataModel = DataModel()
+   }
+   qwMediator.registerModel(modelRootNode: dataModel, modelUpdatedClosure: ... )
+  */
+
+  // Model shall be created under updateAndRefresh
+  func registerModel(modelRootNode: QWRoot, modelUpdatedClosure: @escaping ()->()) {
     self.modelRootNode = modelRootNode
     self.modelUpdatedClosure = modelUpdatedClosure
+    currentCommit = UUID().uuidString
+    QWTreeWalker.scanNodeTreeMap(fromParent: modelRootNode, closure: { (node: QWNode) in
+      node.getQWCounter().commit(tag: currentCommit!)
+    })
   }
 
+  func unregisterModel() {
+    self.modelUpdatedClosure = nil
+  }
 
   // Dictionary of QWPathTraceManager
   // QWPathTraceManager are monitoring a keypath, comparing old and new state from refresh to refresh
@@ -401,21 +418,10 @@ extension QWMediator
 
     // Undo Management: Check if the model has been updated
     // and call Undo Manager if needed
-    if let root = modelRootNode,
-      let modelUpdatedClosure = modelUpdatedClosure {
-      let tag = currentCommit ?? ""
-      let isUpdated = QWTreeWalker.scanNodeTreeReduce(
-        fromParent: root,
-        initialResult: false,
-        { (isUpdated, node) -> Bool in
-          if isUpdated == true { return true }
-          let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
-          if nodeIsUpdated {
-            Swift.print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-          }
-          return nodeIsUpdated
-      })
-      modelUpdatedClosure(isUpdated)
+    if let _ = modelRootNode,
+      let modelUpdatedClosure = modelUpdatedClosure
+    {
+      modelUpdatedClosure()
     }
 
     // Commit the changes
@@ -430,21 +436,31 @@ extension QWMediator
 
 
   // Used by Undo Management
-  public func isUpdated(parent: QWNode) -> Bool {
+  public func isUpdated(parent: QWNode) -> QWStorageDecision {
     let tag = currentCommit ?? ""
     let isUpdated = QWTreeWalker.scanNodeTreeReduce(
       fromParent: parent,
-      initialResult: false,
-      { (isUpdated, node) -> Bool in
-        if isUpdated == true { return true }
-        let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
-        if nodeIsUpdated {
-          Swift.print("IsUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-          //          Swift.print(" \(node.getQWCounter().changeCountDict)")
+      initialResult: QWStorageDecision.noChange,
+      { (storageDecision, node) -> QWStorageDecision in
+        switch storageDecision {
+        case .storedChange:
+          return .storedChange
+        case .noChange:
+          break
+        case .discardableChange:
+          break
         }
-        return nodeIsUpdated
+        let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
+        switch nodeIsUpdated {
+        case .noChange:
+          break
+        case .discardableChange:
+          Swift.print("IsDiscardableUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
+        case .storedChange:
+          Swift.print("IsStorageUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
+        }
+        return storageDecision.reduce(nodeIsUpdated)
     })
-//    Swift.print("Undo: isUpdated \(parent.getQWCounter().nodeName) = \(isUpdated)")
     return isUpdated
   }
 

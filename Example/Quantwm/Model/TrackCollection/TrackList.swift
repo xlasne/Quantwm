@@ -61,11 +61,11 @@ class Tracklist: QWNode_S, Codable {
         description: "_finalTracksArray")
     var finalTracksArray : [Track] {
       get {
-        self.qwCounter.read(Tracklist.finalTracksArrayK)
+        self.qwCounter.read(Tracklist.finalTracksArrayK, backgroundRead: false, storageOptions:.stored)
         return _finalTracksArray
       }
       set {
-        self.qwCounter.write(Tracklist.finalTracksArrayK)
+        self.qwCounter.write(Tracklist.finalTracksArrayK,backgroundWrite: false, storageOptions:.stored)
         _finalTracksArray = newValue
       }
     }

@@ -68,11 +68,11 @@ class TrackListCollection: QWNode_S, Codable {
         description: "_trackDict")
     var trackDict : [PlaylistID:Tracklist] {
       get {
-        self.qwCounter.read(TrackListCollection.trackDictK)
+        self.qwCounter.read(TrackListCollection.trackDictK, backgroundRead: false, storageOptions:.stored)
         return _trackDict
       }
       set {
-        self.qwCounter.write(TrackListCollection.trackDictK)
+        self.qwCounter.write(TrackListCollection.trackDictK,backgroundWrite: false, storageOptions:.stored)
         _trackDict = newValue
       }
     }

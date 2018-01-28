@@ -28,11 +28,11 @@ public class QWTreeWalker {
     }
   }
 
-  public static func scanNodeTreeReduce<Result>(fromParent parent: QWNode, initialResult: Result, _ nextPartialResult: (Result, QWNode) -> Result, level: Int = 0) -> Result {
+  static func scanNodeTreeReduce(fromParent parent: QWNode, initialResult: QWStorageDecision, _ nextPartialResult: (QWStorageDecision, QWNode) -> QWStorageDecision, level: Int = 0) -> QWStorageDecision {
     if level > 100 {
       assert(false,"Error scanNodeTreeReduce: Probable Recursive failure. Reached limit of 100 levels")
     }
-    var finalResult: Result = nextPartialResult(initialResult,parent)
+    var finalResult: QWStorageDecision = nextPartialResult(initialResult,parent)
     let propArray = parent.getPropertyArray()
     for property in propArray {
       let foundNodes: [QWNode] = property.getChildArray(node: parent)

@@ -94,11 +94,11 @@ class PlaylistsCollection: QWNode_S, Codable {
         description: "_playlistArray")
     var playlistArray : [Playlist] {
       get {
-        self.qwCounter.read(PlaylistsCollection.playlistArrayK)
+        self.qwCounter.read(PlaylistsCollection.playlistArrayK, backgroundRead: false, storageOptions:.stored)
         return _playlistArray
       }
       set {
-        self.qwCounter.write(PlaylistsCollection.playlistArrayK)
+        self.qwCounter.write(PlaylistsCollection.playlistArrayK,backgroundWrite: false, storageOptions:.stored)
         _playlistArray = newValue
       }
     }
@@ -108,11 +108,11 @@ class PlaylistsCollection: QWNode_S, Codable {
         description: "_total")
     var total : Int {
       get {
-        self.qwCounter.read(PlaylistsCollection.totalK)
+        self.qwCounter.read(PlaylistsCollection.totalK, backgroundRead: false, storageOptions:.stored)
         return _total
       }
       set {
-        self.qwCounter.write(PlaylistsCollection.totalK)
+        self.qwCounter.write(PlaylistsCollection.totalK,backgroundWrite: false, storageOptions:.stored)
         _total = newValue
       }
     }

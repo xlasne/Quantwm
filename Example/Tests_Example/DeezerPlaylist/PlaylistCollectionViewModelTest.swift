@@ -22,8 +22,7 @@ class PlaylistCollectionViewModelTest: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         dataModel = DataModel(mediator: qwMediator)
-        viewModel = PlaylistsCollectionViewModel(mediator: qwMediator, owner: "TestVM",
-            playlistCollectionModel:QWModel.root.playlistsCollection)
+        viewModel = PlaylistsCollectionViewModel(mediator: qwMediator, owner: "TestVM")
     }
 
     func testPartialImport() {
@@ -44,12 +43,9 @@ class PlaylistCollectionViewModelTest: XCTestCase {
 
     func testWithRegistration() {
 
-        let playlistUpdatedREG: QWRegistration = QWRegistration(
-            smartWithReadMap: viewModel.mapForPlaylistCollectionDataSource,
-            name: "PlaylistsCollectionViewController.playlistsCollectionUpdated")
         qwMediator.updateActionAndRefresh(owner: "PlaylistsCollectionViewController") {
             self.viewModel.registerObserver(
-                registration: playlistUpdatedREG,
+                registration: PlaylistsCollectionViewController.playlistUpdatedREG,
                 target: self,
                 selector: #selector(PlaylistCollectionViewModelTest.followUpTestWithRegistration)
             )
