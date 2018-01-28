@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Quantwm'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'Quantwm is a Data Model access layer, which send ordered notifications'
 
 # This description is used to generate tags and improve search results.
