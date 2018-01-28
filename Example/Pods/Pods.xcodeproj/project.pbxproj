@@ -40,6 +40,8 @@
 		2147BBBFA4538C846DFEB9BCB55C686B /* QWProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6980FF3CB74DCDD98761F8138C57543 /* QWProperty.swift */; };
 		2540F03E1FF93D4000352677 /* QWConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2540F03C1FF93CF400352677 /* QWConfiguration.swift */; };
 		25AE55E486BA1C898EA7291FD2F84747 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F2DA7DB87F1C104A960647291708C3 /* Error.swift */; };
+		25F36C22201E58B5006507C3 /* QWStorageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F36C1E201E589B006507C3 /* QWStorageState.swift */; };
+		25F36C23201E58B5006507C3 /* QWStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F36C1F201E589B006507C3 /* QWStorageManager.swift */; };
 		26479B07464784F3BF8C0853CA049976 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7B6B4C3E8F676A457C5FF16CEE7682 /* Foundation.framework */; };
 		2761B22412F85C8FB230E0CBCB99EEE6 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CF2DA4B989B1A1DAE7517F51E7A4BA /* ScheduledItem.swift */; };
 		278414176F789AB0268B7E5CA04E9BD1 /* InfiniteSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4BD4A9A9D22277C4E416A9170560 /* InfiniteSequence.swift */; };
@@ -358,6 +360,8 @@
 		241F785A75C2380D49D8163F8D1BDB8E /* RxSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RxSwift-umbrella.h"; sourceTree = "<group>"; };
 		24547D3C83BC31586420960391920929 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
 		2540F03C1FF93CF400352677 /* QWConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QWConfiguration.swift; path = Quantwm/Classes/QWConfiguration.swift; sourceTree = "<group>"; };
+		25F36C1E201E589B006507C3 /* QWStorageState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QWStorageState.swift; sourceTree = "<group>"; };
+		25F36C1F201E589B006507C3 /* QWStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QWStorageManager.swift; sourceTree = "<group>"; };
 		2688E25DF26BA6A4D3FDC695D14F2909 /* Quantwm-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quantwm-dummy.m"; sourceTree = "<group>"; };
 		2739CB7A8A23BE7D701F2F7DAE44CB20 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		28BC2C578BD1047F484956A70FD6D6F2 /* Concat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Concat.swift; path = RxSwift/Observables/Concat.swift; sourceTree = "<group>"; };
@@ -669,6 +673,16 @@
 				AABDE7BC78048C12886EC0DF605BE186 /* RxSwift.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		25F36C1D201E589B006507C3 /* StorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				25F36C1E201E589B006507C3 /* QWStorageState.swift */,
+				25F36C1F201E589B006507C3 /* QWStorageManager.swift */,
+			);
+			name = StorageManager;
+			path = Quantwm/Classes/StorageManager;
 			sourceTree = "<group>";
 		};
 		278550D14ED46E76A8C3F458B5E6177F /* iOS */ = {
@@ -1044,6 +1058,7 @@
 		EFE4585A8A49F9BA60384B0385CDDDEC /* Quantwm */ = {
 			isa = PBXGroup;
 			children = (
+				25F36C1D201E589B006507C3 /* StorageManager */,
 				2540F03C1FF93CF400352677 /* QWConfiguration.swift */,
 				9602F54C86E8130EBD75EBF6FCB28A7C /* DataUsage.swift */,
 				07C4C522CE8B82927886EC46939E6BB4 /* QWViewModel.swift */,
@@ -1339,6 +1354,7 @@
 				492BB553B631D9A6C68E34A7909838AC /* Quantwm-dummy.m in Sources */,
 				9FB5BBD5F3287559B28C48B8BCF6ADE9 /* QWCounter.swift in Sources */,
 				DC281F75AC7C79F4721A634B57DB4605 /* QWDependencyMgr.swift in Sources */,
+				25F36C22201E58B5006507C3 /* QWStorageState.swift in Sources */,
 				87C844C8EA46F0F4482032D682F97A1B /* QWMap.swift in Sources */,
 				2540F03E1FF93D4000352677 /* QWConfiguration.swift in Sources */,
 				7F51FD00D9CAB49AB28849E48EEDB88D /* QWMediator.swift in Sources */,
@@ -1347,6 +1363,7 @@
 				398A5DDF4859595A949D9C37D80BED9F /* QWPath.swift in Sources */,
 				AB0FA84805E5F6396E6E356DF657B641 /* QWPathStateManager.swift in Sources */,
 				80BC8B23131D305EA0E956A92B35F9CD /* QWPathStateSnapshot.swift in Sources */,
+				25F36C23201E58B5006507C3 /* QWStorageManager.swift in Sources */,
 				969D8EA2CE787C4532F89B7BBBB8CE74 /* QWPathWalker.swift in Sources */,
 				2147BBBFA4538C846DFEB9BCB55C686B /* QWProperty.swift in Sources */,
 				56D29B6FD3957F8D07B83541BEC3DE15 /* QWRegistration.swift in Sources */,

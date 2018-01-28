@@ -42,54 +42,6 @@ public struct QWCounterAccessOption: OptionSet {
   public static let backgroundWrite = QWCounterAccessOption(rawValue: 2)  // versus write on main thread only
 }
 
-public enum QWCounterStorageOption {
-  case stored
-  case discardable
-  case derived
-}
-
-public enum QWStorageDecision {
-  case noChange
-  case discardableChange
-  case storedChange
-
-  func reduce(_ decision: QWStorageDecision) -> QWStorageDecision {
-    switch (self, decision) {
-    case (.storedChange, _):
-      return .storedChange
-    case (_, .storedChange):
-      return .storedChange
-    case (.discardableChange, _):
-      return .discardableChange
-    case (_, .discardableChange):
-      return .discardableChange
-    case (.noChange, .noChange):
-      return .noChange
-    }
-  }
-
-  var isUpdated: Bool {
-    switch self {
-    case .noChange:
-      return false
-    case .discardableChange:
-      return true
-    case .storedChange:
-      return true
-    }
-  }
-
-  var isDiscardable: Bool {
-    switch self {
-    case .noChange:
-      return false
-    case .discardableChange:
-      return true
-    case .storedChange:
-      return false
-    }
-  }
-}
 
 
 
@@ -117,6 +69,7 @@ open class QWCounter: NSObject, Codable {
   private (set) static var nodeIdGenerator: NodeId = 0
 
   var activated: Bool = true
+  var storageState: QWStorageState = QWStorageState()
 
   // Unique NodeId Generator
   static func generateUniqueNodeId() -> NodeId {
@@ -185,7 +138,7 @@ open class QWCounter: NSObject, Codable {
     }
     self.setDirty(property)
 
-    stageChange(storageOptions: storageOptions)
+    storageState.stageChange(storageOptions: storageOptions)
 
     if let dataUsage = DataUsage.currentInstance() {
       dataUsage.addWrite(self, property: property.descriptor)
@@ -329,109 +282,6 @@ open class QWCounter: NSObject, Codable {
     }
   }
 
-  //MARK: - Tree update detection for Undo
-  //
-  // A commit tag is set on each node of the tree at the end of the model update
-  // The committer knows how to scan the tree, QWCounter only manage his local node.
-  // The tag is set on the node, not on each properties.
-  // On each *stored* (versus *discardable*) property change, the current tag is cleared
-  // When the tag is set recursively, it also recursively collect the information if the previous
-  // tag was cleared or not, indicating if the node (and thus the tree) has been updated.
-
-  //      Created--->Written
-  //         |         |
-  //         v         |
-  //  -->Committed()<--|
-  //  |      |
-  //  |      v
-  //  |--UpdateAllowed()
-  //  |      |
-  //  |      v
-  //  ----Written
-  //
-
-  enum UpdateState {
-    case Created
-    case Committed(String)
-    case UpdateAllowed(String)
-    case DiscardableWrite
-    case Written
-  }
-
-  var state: UpdateState = .Created
-
-  func commit(tag: String) {
-    state = .Committed(tag)
-  }
-
-  func allowUpdate(tag: String) {
-    if QWCounter.ASSERT_ON_VIOLATION {
-      switch state {
-      case .Created:
-        // On the very first creation, tag = "" disable this check
-        if tag.count > 0 {
-          assert(false,"Creation shall occur during update phase")
-        }
-      case .Committed(let previousTag):
-        assert(tag == previousTag,"commit tag shall match")
-      case .Written, .DiscardableWrite:
-        if tag.count > 0 {
-          assert(false,"Node has been written out of update phase")
-        }
-      case .UpdateAllowed:
-        Swift.print("Error: allowUpdate performed twice on the same node \(nodeName)")
-//        assert(false,"allowUpdate performed twice on the same node")
-      }
-    }
-    state = .UpdateAllowed(tag)
-  }
-
-  func stageChange(storageOptions: QWCounterStorageOption) {
-    if QWCounter.ASSERT_ON_VIOLATION {
-      switch state {
-      case .Committed:
-        assert(false,"Node write out of update phase")
-      default:
-        break
-      }
-    }
-
-    switch storageOptions {
-    case .stored:
-      state = .Written
-      break
-    case .discardable:
-      if case .Written = state   {
-        break
-      } else{
-        state = .DiscardableWrite
-      }
-    case .derived:
-      return   // Derived: Does not clear of the commit tag / stageChange
-               // -> does not trigger a save
-    }
-  }
-
-  func isUpdated(tag: String) -> QWStorageDecision {
-    switch state {
-    case .Created:
-      return QWStorageDecision.storedChange
-    case .Committed(let previousTag):
-      if QWCounter.ASSERT_ON_VIOLATION {
-        assert(tag == previousTag,"commit tag shall match")
-      }
-      return QWStorageDecision.noChange
-    case .Written:
-      return QWStorageDecision.storedChange
-    case .DiscardableWrite:
-      return QWStorageDecision.discardableChange
-    case .UpdateAllowed(let previousTag):
-      if QWCounter.ASSERT_ON_VIOLATION {
-        assert(tag == previousTag,"commit tag shall match")
-      }
-      return QWStorageDecision.noChange
-    }
-  }
 
 }
 

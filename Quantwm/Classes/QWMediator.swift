@@ -17,22 +17,14 @@ open class QWMediator: NSObject {
   // A Mediator is associated to a unique root type
   weak var rootObject: QWRoot? = nil
 
+  var storageManager: QWStorageManager = QWStorageManager()
+
   var dependencyMgr: QWDependencyMgr = QWDependencyMgr(observerSet:[])
 
   var endOfRefreshOnceClosureArray:[(()->())] = []
   public func registerEndOfRefreshOnce(closure: @escaping (()->())) {
     endOfRefreshOnceClosureArray.append(closure)
   }
-
-  // Commit Tag
-  var currentCommit: String?
-
-  // Undo Managment
-  // Root Node of the Model to be archived
-  weak var modelRootNode: QWRoot?
-
-  // Indicates that model shall be saved
-  var modelUpdatedClosure: (()->())?
 
   // Model update monitoring regisration - perform check and undo storage
   // at end of each event loop where changes have been detected
@@ -42,21 +34,18 @@ open class QWMediator: NSObject {
    updateAndRefresh() {
     dataModel = DataModel()
    }
-   qwMediator.registerModel(modelRootNode: dataModel, modelUpdatedClosure: ... )
+   qwMediator.registerStorageManager(modelRootNode: dataModel, modelUpdatedClosure: ... )
   */
 
   // Model shall be created under updateAndRefresh
-  func registerModel(modelRootNode: QWRoot, modelUpdatedClosure: @escaping ()->()) {
-    self.modelRootNode = modelRootNode
-    self.modelUpdatedClosure = modelUpdatedClosure
-    currentCommit = UUID().uuidString
-    QWTreeWalker.scanNodeTreeMap(fromParent: modelRootNode, closure: { (node: QWNode) in
-      node.getQWCounter().commit(tag: currentCommit!)
-    })
+  func registerStorageManager(modelRootNode: QWRoot, modelUpdatedClosure: @escaping ()->()) {
+    storageManager = QWStorageManager()
+    storageManager.registerModel(modelRootNode: modelRootNode,
+                                  modelUpdatedClosure: modelUpdatedClosure)
   }
 
-  func unregisterModel() {
-    self.modelUpdatedClosure = nil
+  func unregisterStorageManager() {
+    storageManager.unregisterModel()
   }
 
   // Dictionary of QWPathTraceManager
@@ -111,7 +100,6 @@ open class QWMediator: NSObject {
       Swift.print("Data Observer: register and create Root \(rootDescription)")
     }
     rootObject = qwRoot
-    currentCommit = nil
     // No need to delete previous QWPathTrace.
     // The unicity of the QWCounter determines if the properties have changed.
   }
@@ -418,50 +406,8 @@ extension QWMediator
 
     // Undo Management: Check if the model has been updated
     // and call Undo Manager if needed
-    if let _ = modelRootNode,
-      let modelUpdatedClosure = modelUpdatedClosure
-    {
-      modelUpdatedClosure()
-    }
+    storageManager.endOfRefreshHandler()
 
-    // Commit the changes
-    let commitTag = UUID().uuidString
-    currentCommit = commitTag
-    if let root = modelRootNode {
-      QWTreeWalker.scanNodeTreeMap(fromParent: root, closure: { (node: QWNode) in
-        node.getQWCounter().commit(tag: commitTag)
-      })
-    }
-  }
-
-
-  // Used by Undo Management
-  public func isUpdated(parent: QWNode) -> QWStorageDecision {
-    let tag = currentCommit ?? ""
-    let isUpdated = QWTreeWalker.scanNodeTreeReduce(
-      fromParent: parent,
-      initialResult: QWStorageDecision.noChange,
-      { (storageDecision, node) -> QWStorageDecision in
-        switch storageDecision {
-        case .storedChange:
-          return .storedChange
-        case .noChange:
-          break
-        case .discardableChange:
-          break
-        }
-        let nodeIsUpdated = node.getQWCounter().isUpdated(tag: tag)
-        switch nodeIsUpdated {
-        case .noChange:
-          break
-        case .discardableChange:
-          Swift.print("IsDiscardableUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-        case .storedChange:
-          Swift.print("IsStorageUpdated: \(node.getQWCounter().nodeName): \(node.getQWCounter().state)")
-        }
-        return storageDecision.reduce(nodeIsUpdated)
-    })
-    return isUpdated
   }
 
 }
@@ -633,12 +579,7 @@ extension QWMediator
     // this is the first update on the stack
     // enable the model write
     if qwTransactionStack.isStackEmpty {
-      let previousTag = currentCommit ?? ""
-      if let root = modelRootNode {
-        QWTreeWalker.scanNodeTreeMap(fromParent: root, closure: { (node: QWNode) in
-          node.getQWCounter().allowUpdate(tag: previousTag)
-        })
-      }
+      storageManager.beforeUpdateHandler()
     }
 
     qwTransactionStack.pushContext(updateContext)

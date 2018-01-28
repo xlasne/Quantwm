@@ -33,7 +33,7 @@ public class QWConfiguration {
   }
 
 
-  public static var QUANTWM_DEBUG = true
+  public static var QUANTWM_DEBUG = false
 
   public static var ReadNonRegisteredProperty: Policy = .isAssert
   public static var WriteNonRegisteredProperty: Policy = .isAssert
@@ -42,7 +42,6 @@ public class QWConfiguration {
   public static var CheckQuantwmStack: Policy = .isAssert
   public static var CheckPropertyConsistency: Policy = .isAssert
 
-
-
+  public static var StorageConsistency: Policy = .isAssert
 
 }
