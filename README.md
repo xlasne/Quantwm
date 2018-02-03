@@ -8,7 +8,7 @@
 Quantwm is a Swift framework, which takes binding concepts to a whole new level.
 It aggregates the good concepts of many other leading frameworks in a simple and powerful architecture pattern, in order to manage efficiently the most complex IOS or MacOS into a fully decoupled, MVVM, data centric, contract-based, Flux-like, synchronous, stateful architecture, with single-responsibility principle, well suited for complex or large team project.
 
-To understand the underlying concept, I encourage you to read the presentation in [QuantwmCocoaheadsJan2018.pdf](../QuantwmCocoaheadsJan2018.pdf)
+To understand the underlying concept, I encourage you to read the presentation in [QuantwmCocoaheadsJan2018.pdf](QuantwmCocoaheadsJan2018.pdf)
 
 As the framework manages all the dependencies between the model and its clients, and impose strict interaction rules aiming to eliminate as much as possible variability and dependencies between them, project can grow to large level of complexity while keeping code simple and stable. The reduction of interactions between components and application states reduce the exponential increase of possible state and execution scenario.
 
